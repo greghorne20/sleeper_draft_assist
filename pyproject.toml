@@ -1,0 +1,37 @@
+[project]
+name = "sleeper-draft-tools"
+version = "0.1.0"
+description = "Read-only Sleeper helpers for a personal fantasy football draft assistant"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "pyyaml>=6.0",
+]
+
+[project.scripts]
+sleeper-discover = "sleeper_draft.discover:cli"
+sleeper-batches = "sleeper_draft.batches:cli"
+sleeper-past-draft = "sleeper_draft.past_draft:cli"
+
+[dependency-groups]
+dev = [
+    "pytest>=8.0",
+    "ruff>=0.6",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/sleeper_draft"]
+
+[tool.ruff]
+line-length = 110
+target-version = "py39"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

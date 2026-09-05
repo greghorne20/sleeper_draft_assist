@@ -1,0 +1,222 @@
+batch: 3
+of: 8
+positions:
+- QB
+- RB
+- WR
+- TE
+count: 35
+ordering: sleeper search_rank ascending
+source: sleeper /players/nfl
+generated_at: 2026-09-05T14:00:17-0400
+players:
+- player_id: '13286'
+  name: Jadarian Price
+  pos: RB
+  team: SEA
+  bye: 11
+  search_rank: 56
+- player_id: '12489'
+  name: RJ Harvey
+  pos: RB
+  team: DEN
+  bye: 10
+  search_rank: 56
+- player_id: '7611'
+  name: Rhamondre Stevenson
+  pos: RB
+  team: NE
+  bye: 11
+  search_rank: 58
+- player_id: '10859'
+  name: Sam LaPorta
+  pos: TE
+  team: DET
+  bye: 6
+  search_rank: 59
+- player_id: '2216'
+  name: Mike Evans
+  pos: WR
+  team: SF
+  bye: 8
+  search_rank: 60
+- player_id: '12534'
+  name: Kyle Monangai
+  pos: RB
+  team: CHI
+  bye: 10
+  search_rank: 61
+- player_id: '13279'
+  name: Carnell Tate
+  pos: WR
+  team: TEN
+  bye: 9
+  search_rank: 61
+- player_id: '13281'
+  name: Jordyn Tyson
+  pos: WR
+  team: 'NO'
+  bye: 8
+  search_rank: 62
+- player_id: '3163'
+  name: Jared Goff
+  pos: QB
+  team: DET
+  bye: 6
+  search_rank: 63
+- player_id: '5967'
+  name: Tony Pollard
+  pos: RB
+  team: TEN
+  bye: 9
+  search_rank: 63
+- player_id: '12506'
+  name: Harold Fannin
+  pos: TE
+  team: CLE
+  bye: 11
+  search_rank: 63
+- player_id: '8167'
+  name: Christian Watson
+  pos: WR
+  team: GB
+  bye: 11
+  search_rank: 64
+- player_id: '6804'
+  name: Jordan Love
+  pos: QB
+  team: GB
+  bye: 11
+  search_rank: 65
+- player_id: '7021'
+  name: Rico Dowdle
+  pos: RB
+  team: PIT
+  bye: 9
+  search_rank: 65
+- player_id: '9484'
+  name: Tucker Kraft
+  pos: TE
+  team: GB
+  bye: 11
+  search_rank: 65
+- player_id: '11620'
+  name: Rome Odunze
+  pos: WR
+  team: CHI
+  bye: 10
+  search_rank: 65
+- player_id: '7594'
+  name: Chuba Hubbard
+  pos: RB
+  team: CAR
+  bye: 5
+  search_rank: 66
+- player_id: '421'
+  name: Matthew Stafford
+  pos: QB
+  team: LAR
+  bye: 11
+  search_rank: 67
+- player_id: '11586'
+  name: Blake Corum
+  pos: RB
+  team: LAR
+  bye: 11
+  search_rank: 68
+- player_id: '6806'
+  name: J.K. Dobbins
+  pos: RB
+  team: DEN
+  bye: 10
+  search_rank: 68
+- player_id: '7553'
+  name: Kyle Pitts
+  pos: TE
+  team: ATL
+  bye: 11
+  search_rank: 68
+- player_id: '9487'
+  name: Parker Washington
+  pos: WR
+  team: JAX
+  bye: 7
+  search_rank: 70
+- player_id: '4892'
+  name: Baker Mayfield
+  pos: QB
+  team: TB
+  bye: 10
+  search_rank: 72
+- player_id: '5045'
+  name: Courtland Sutton
+  pos: WR
+  team: DEN
+  bye: 10
+  search_rank: 72
+- player_id: '5846'
+  name: DK Metcalf
+  pos: WR
+  team: PIT
+  bye: 9
+  search_rank: 73
+- player_id: '11631'
+  name: Brian Thomas
+  pos: WR
+  team: JAX
+  bye: 7
+  search_rank: 74
+- player_id: '11628'
+  name: Marvin Harrison
+  pos: WR
+  team: ARI
+  bye: 14
+  search_rank: 74
+- player_id: '10232'
+  name: Michael Wilson
+  pos: WR
+  team: ARI
+  bye: 14
+  search_rank: 75
+- player_id: '5947'
+  name: Jakobi Meyers
+  pos: WR
+  team: JAX
+  bye: 7
+  search_rank: 77
+- player_id: '8154'
+  name: Brian Robinson
+  pos: RB
+  team: ATL
+  bye: 11
+  search_rank: 80
+- player_id: '10236'
+  name: Dalton Kincaid
+  pos: TE
+  team: BUF
+  bye: 7
+  search_rank: 81
+- player_id: '12493'
+  name: Oronde Gadsden
+  pos: TE
+  team: LAC
+  bye: 7
+  search_rank: 83
+- player_id: '4217'
+  name: George Kittle
+  pos: TE
+  team: SF
+  bye: 8
+  search_rank: 84
+- player_id: '4199'
+  name: Aaron Jones
+  pos: RB
+  team: MIN
+  bye: 6
+  search_rank: 85
+- player_id: '12545'
+  name: Tyler Shough
+  pos: QB
+  team: 'NO'
+  bye: 8
+  search_rank: 86

@@ -1,0 +1,222 @@
+batch: 2
+of: 8
+positions:
+- QB
+- RB
+- WR
+- TE
+count: 35
+ordering: sleeper search_rank ascending
+source: sleeper /players/nfl
+generated_at: 2026-09-05T14:00:17-0400
+players:
+- player_id: '11632'
+  name: Malik Nabers
+  pos: WR
+  team: NYG
+  bye: 8
+  search_rank: 27
+- player_id: '10229'
+  name: Rashee Rice
+  pos: WR
+  team: KC
+  bye: 5
+  search_rank: 29
+- player_id: '8144'
+  name: Chris Olave
+  pos: WR
+  team: 'NO'
+  bye: 8
+  search_rank: 30
+- player_id: '6797'
+  name: Justin Herbert
+  pos: QB
+  team: LAC
+  bye: 7
+  search_rank: 31
+- player_id: '11584'
+  name: Bucky Irving
+  pos: RB
+  team: TB
+  bye: 10
+  search_rank: 32
+- player_id: '7588'
+  name: Javonte Williams
+  pos: RB
+  team: DAL
+  bye: 14
+  search_rank: 32
+- player_id: '7525'
+  name: DeVonta Smith
+  pos: WR
+  team: PHI
+  bye: 10
+  search_rank: 32
+- player_id: '7543'
+  name: Travis Etienne
+  pos: RB
+  team: 'NO'
+  bye: 8
+  search_rank: 34
+- player_id: '12517'
+  name: Colston Loveland
+  pos: TE
+  team: CHI
+  bye: 10
+  search_rank: 35
+- player_id: '11635'
+  name: Ladd McConkey
+  pos: WR
+  team: LAC
+  bye: 7
+  search_rank: 35
+- player_id: '6801'
+  name: Tee Higgins
+  pos: WR
+  team: CIN
+  bye: 6
+  search_rank: 35
+- player_id: '12508'
+  name: Jaxson Dart
+  pos: QB
+  team: NYG
+  bye: 8
+  search_rank: 37
+- player_id: '12481'
+  name: Cam Skattebo
+  pos: RB
+  team: NYG
+  bye: 8
+  search_rank: 37
+- player_id: '12526'
+  name: Tetairoa McMillan
+  pos: WR
+  team: CAR
+  bye: 5
+  search_rank: 37
+- player_id: '4046'
+  name: Patrick Mahomes
+  pos: QB
+  team: KC
+  bye: 5
+  search_rank: 38
+- player_id: '12514'
+  name: Emeka Egbuka
+  pos: WR
+  team: TB
+  bye: 10
+  search_rank: 38
+- player_id: '8146'
+  name: Garrett Wilson
+  pos: WR
+  team: NYJ
+  bye: 13
+  search_rank: 38
+- player_id: '12529'
+  name: TreVeyon Henderson
+  pos: RB
+  team: NE
+  bye: 11
+  search_rank: 39
+- player_id: '3294'
+  name: Dak Prescott
+  pos: QB
+  team: DAL
+  bye: 14
+  search_rank: 40
+- player_id: '7523'
+  name: Trevor Lawrence
+  pos: QB
+  team: JAX
+  bye: 7
+  search_rank: 40
+- player_id: '12519'
+  name: Luther Burden
+  pos: WR
+  team: CHI
+  bye: 10
+  search_rank: 40
+- player_id: '9997'
+  name: Zay Flowers
+  pos: WR
+  team: BAL
+  bye: 13
+  search_rank: 41
+- player_id: '7526'
+  name: Jaylen Waddle
+  pos: WR
+  team: DEN
+  bye: 10
+  search_rank: 42
+- player_id: '11563'
+  name: Bo Nix
+  pos: QB
+  team: DEN
+  bye: 10
+  search_rank: 44
+- player_id: '12490'
+  name: Bhayshul Tuten
+  pos: RB
+  team: JAX
+  bye: 7
+  search_rank: 44
+- player_id: '5892'
+  name: David Montgomery
+  pos: RB
+  team: HOU
+  bye: 8
+  search_rank: 44
+- player_id: '12512'
+  name: Quinshon Judkins
+  pos: RB
+  team: CLE
+  bye: 11
+  search_rank: 45
+- player_id: '2133'
+  name: Davante Adams
+  pos: WR
+  team: LAR
+  bye: 11
+  search_rank: 46
+- player_id: '6790'
+  name: D'Andre Swift
+  pos: RB
+  team: CHI
+  bye: 10
+  search_rank: 47
+- player_id: '12518'
+  name: Tyler Warren
+  pos: TE
+  team: IND
+  bye: 13
+  search_rank: 47
+- player_id: '8228'
+  name: Jaylen Warren
+  pos: RB
+  team: PIT
+  bye: 9
+  search_rank: 52
+- player_id: '4983'
+  name: DJ Moore
+  pos: WR
+  team: BUF
+  bye: 7
+  search_rank: 52
+- player_id: '8148'
+  name: Jameson Williams
+  pos: WR
+  team: DET
+  bye: 6
+  search_rank: 53
+- player_id: '8183'
+  name: Brock Purdy
+  pos: QB
+  team: SF
+  bye: 8
+  search_rank: 54
+- player_id: '5927'
+  name: Terry McLaurin
+  pos: WR
+  team: WAS
+  bye: 7
+  search_rank: 54
