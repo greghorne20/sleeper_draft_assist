@@ -62,7 +62,7 @@ import os
 import sys
 import time
 from pathlib import Path
-from typing import Any
+from typing import Any, Callable
 
 from ..client import SleeperError
 from ..live import load_json, team_state, write_atomic
@@ -187,14 +187,29 @@ def load_briefs(path: Path) -> dict:
     return raw if isinstance(raw, dict) and isinstance(raw.get("rooms"), dict) else {"rooms": {}}
 
 
-def write_briefs(briefs: dict, state_dir: Path) -> Path:
-    """briefs.json for the page, briefs.md for reading, one file per seat.
+def write_briefs_json(briefs: dict, state_dir: Path) -> Path:
+    """Just the file the page polls, so a finished room is visible immediately.
 
-    Atomic, through the same helper the state uses -- serve.py reads these with
-    no coordination, so a truncated read is the failure to design out.
+    Called after every room completes rather than once per cycle. A first cycle
+    regenerates all twelve and takes over a minute; waiting for the slowest would
+    404 the endpoint for that whole time, and a restart inside the window would
+    throw away every room that had already finished.
     """
+    state_dir.mkdir(parents=True, exist_ok=True)
     path = state_dir / "briefs.json"
     write_atomic(path, json.dumps(briefs, indent=1) + "\n")
+    return path
+
+
+def write_briefs(briefs: dict, state_dir: Path) -> Path:
+    """The JSON plus the markdown, at the end of a cycle.
+
+    Atomic, through the same helper the state uses -- serve.py reads these with
+    no coordination, so a truncated read is the failure to design out. The
+    markdown is written once per cycle rather than per room: nothing polls it,
+    and rendering thirteen files after every completion is waste.
+    """
+    path = write_briefs_json(briefs, state_dir)
     write_atomic(state_dir / "briefs.md", B.render_briefs_md(briefs))
     teams = state_dir / "teams"
     teams.mkdir(parents=True, exist_ok=True)
@@ -203,8 +218,14 @@ def write_briefs(briefs: dict, state_dir: Path) -> Path:
     return path
 
 
-async def run_cycle(all_state: dict, board: dict, briefs: dict, args: argparse.Namespace) -> dict:
-    """One pass: pick the rooms that need work, generate them, merge the rest."""
+async def run_cycle(all_state: dict, board: dict, briefs: dict, args: argparse.Namespace,
+                    persist: Callable[[dict], Any] | None = None) -> dict:
+    """One pass: pick the rooms that need work, generate them, merge the rest.
+
+    `persist` is called with the whole document each time a room finishes, so the
+    page sees each brief as it lands instead of nothing until the slowest one is
+    done.
+    """
     available = B.available_index(board, all_state)
     targets = B.refresh_targets(all_state, briefs, args.hot_within, args.cold_every,
                                 mode=args.refresh)
@@ -276,16 +297,24 @@ async def run_cycle(all_state: dict, board: dict, briefs: dict, args: argparse.N
         return slot, B.new_room(seat, all_state, written, model=model,
                                 usage=usage, available=available)
 
-    for slot, room in await asyncio.gather(*(one(s) for s in ordered)):
-        rooms[str(slot)] = room
+    def document() -> dict:
+        return {
+            "generated_at": time.strftime("%Y-%m-%dT%H:%M:%S%z"),
+            "picks_made": picks_made,
+            "current_pick": all_state.get("current_pick"),
+            "model": args.model,
+            "rooms": rooms,
+        }
 
-    return {
-        "generated_at": time.strftime("%Y-%m-%dT%H:%M:%S%z"),
-        "picks_made": picks_made,
-        "current_pick": all_state.get("current_pick"),
-        "model": args.model,
-        "rooms": rooms,
-    }
+    # as_completed rather than gather: a room that finishes in 13 seconds should
+    # not wait on one that takes 70.
+    for finished in asyncio.as_completed([one(s) for s in ordered]):
+        slot, room = await finished
+        rooms[str(slot)] = room
+        if persist is not None:
+            persist(document())
+
+    return document()
 
 
 async def run(args: argparse.Namespace) -> int:
@@ -313,7 +342,13 @@ async def run(args: argparse.Namespace) -> int:
 
         if picks_made != seen:
             seen = picks_made
-            briefs = await run_cycle(all_state, board, load_briefs(briefs_path), args)
+            # The endpoint should exist as soon as this process does, so a 404
+            # means "no war room", not "the war room is still on its first cycle".
+            if not briefs_path.exists():
+                write_briefs_json({"rooms": {}, "picks_made": picks_made}, args.state_dir)
+            briefs = await run_cycle(
+                all_state, board, load_briefs(briefs_path), args,
+                persist=lambda doc: write_briefs_json(doc, args.state_dir))
             write_briefs(briefs, args.state_dir)
 
         if not args.watch:

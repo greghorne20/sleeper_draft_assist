@@ -207,6 +207,12 @@ is why `SleeperError` is the one exception type worth catching at the boundary.
     against the board the way `board.py` checks a rankings row — available-set membership, id and
     name agreeing, no K or DST — then retried once with the problems fed back, then refused. An
     unvalidated brief never reaches the page.
+  - **Briefs are written as each room lands, not once per cycle.** A first cycle regenerates all
+    twelve and takes over a minute; `asyncio.gather` held every result until the slowest
+    finished, so `/briefs.json` 404'd for 78 seconds after startup and a restart inside that
+    window threw away every room that had already completed. `as_completed` plus a `persist`
+    callback drops that to 3s for the endpoint and 18s for the first brief. The markdown is
+    still written once per cycle — nothing polls it.
   - **`refresh_targets` decides who regenerates.** Not all twelve on every pick: a room refreshes
     when it is near its turn, just picked, had its proposal drafted, errored, or aged out.
     `--refresh all` forces every seat, at roughly four times the cost.

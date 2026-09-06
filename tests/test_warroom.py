@@ -545,3 +545,51 @@ def test_a_missing_api_key_is_one_legible_line_not_a_traceback(monkeypatch):
     monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
     with pytest.raises(SleeperError, match="ANTHROPIC_API_KEY"):
         A.build_agent("x" * 6000, [], "claude-sonnet-5")
+
+
+def test_the_endpoint_exists_before_the_first_brief_does(tmp_path):
+    """So a 404 means "no war room", not "the war room is still working"."""
+    R.write_briefs_json({"rooms": {}, "picks_made": 0}, tmp_path)
+    doc = json.loads((tmp_path / "briefs.json").read_text())
+    assert doc["rooms"] == {}
+    assert not (tmp_path / "briefs.md").exists()   # markdown waits for the cycle
+
+
+def test_each_room_is_persisted_as_it_lands_not_after_the_slowest(
+        tmp_path, draft_artifacts, monkeypatch):
+    """The bug this fixes: gather() held every brief until the slowest finished,
+    so /briefs.json 404'd for the whole first cycle -- 78 seconds, measured."""
+    board, state = league(draft_artifacts, 14)
+    available = B.available_index(board, state)
+    written = a_brief(available)
+
+    async def instant(agent, prompt, avail, timeout):
+        return written, [], {"input_token_count": 1}, 0.01
+
+    monkeypatch.setattr(R, "build_agent", lambda *a, **k: object())
+    monkeypatch.setattr(R, "generate_with_timeout", instant)
+
+    sizes = []
+
+    def persist(doc):
+        sizes.append(len(doc["rooms"]))
+        R.write_briefs_json(doc, tmp_path)
+        # Every partial write has to be a document the page can render.
+        assert json.loads((tmp_path / "briefs.json").read_text())["rooms"]
+
+    args = runner_args(tmp_path, dry_run=False)
+    briefs = asyncio.run(R.run_cycle(state, board, {"rooms": {}}, args, persist=persist))
+
+    assert sizes == list(range(1, 13)), "each completion should persist, one room at a time"
+    assert len(briefs["rooms"]) == 12
+
+
+def test_a_cycle_with_nothing_to_do_never_persists(tmp_path, draft_artifacts):
+    board, state = league(draft_artifacts, 14)
+    available = B.available_index(board, state)
+    briefs = briefs_for(state, available=available)
+    # Only the hot rooms and the one that just picked are stale; target none.
+    args = runner_args(tmp_path, slot=1)
+    calls = []
+    asyncio.run(R.run_cycle(state, board, briefs, args, persist=calls.append))
+    assert calls == []
