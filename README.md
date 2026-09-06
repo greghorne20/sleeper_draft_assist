@@ -12,7 +12,12 @@ src/sleeper_draft/
     discover.py           league -> draft/scoring/roster config
     batches.py            ordered research list, chunked into YAML files
     past_draft.py         walk previous_league_id back, save a draft fixture
+    board.py              rankings + research notes -> the in-draft board
     yamlio.py             shared YAML output settings
+research/rankings_2026.json    aggregate rankings, keyed by name -- the board's input
+research/scouting_notes.json  one-line scouting + flags + handcuff pairs, keyed by player_id
+research/players/         one markdown note per player, filename ends in player_id
+draft/                    what the in-draft assistant reads (see "The draft/ directory")
 tests/                    offline tests; no test touches the network
 ```
 
@@ -110,6 +115,54 @@ pairs in the fixture. If your maths is right, every row matches.
 
 It refuses to save a draft whose pick count isn't `teams * rounds`; pass
 `--allow-partial` to override.
+
+### 4. `sleeper-board`
+
+```bash
+uv run sleeper-board
+uv run sleeper-board --rankings research/rankings_2026.json --out-dir draft
+```
+
+`research/rankings_2026.json` ranks players by **name**. Sleeper's live draft feed
+identifies picks by **`player_id`**. Nothing can be crossed off a board keyed by
+name, so this does that join once, offline, and writes `draft/board.json`,
+`draft/board.md` and `draft/pick_order.json`.
+
+`research/scouting_notes.json` is already keyed by `player_id` and is merged straight
+onto the board rows: a one-line scouting note, flags (`risk`, `riser`, `faller`,
+`value`, `handcuff`, `dead_zone`), and `handcuff_for` links pairing a backup to the
+starter he backs up. An unknown `player_id`, an unknown flag, or a `handcuff_for`
+pointing nowhere is a hard error -- a dropped note is research that silently
+disappears.
+
+Matching is on normalised name + fantasy position — accents, punctuation and
+generational suffixes folded away, and indexed on `fantasy_positions` rather than
+`position` so that players Sleeper files under a defensive position still match
+(Travis Hunter is `position: DB`, `fantasy_positions: [DB, WR]`). A ranking row that
+matches nothing, or matches two players the tiebreakers can't separate, is a hard
+error naming every offender; nothing is written. `NAME_ALIASES` carries the handful
+of spelling disagreements between the ranking sources and Sleeper.
+
+`pick_order.json` is generated from the snake + reversal-round rule and then checked
+against the rankings file's own pick map. A disagreement is an error — third-round
+reversal is undocumented by Sleeper, so two independent derivations have to agree
+before a draft gets planned around them.
+
+---
+
+## The `draft/` directory
+
+Everything the in-draft assistant reads, and nothing else:
+
+| File | What it is | Written by |
+|---|---|---|
+| `PLAYBOOK.md` | Standing doctrine: constraints, pick order, the pick algorithm, cliffs, thresholds, risk flags. Load first, every session. | hand-maintained |
+| `STRATEGY.md` | The reasoning behind the playbook: VORP math, structural approaches, QB/TE gap data, dead zone, handcuffing, stacking, slot playbooks, market inefficiencies, citations. | hand-maintained |
+| `board.md` | 208 ranked players grouped by tier, with `player_id`, source ranks and risk flags, plus a positional index and the researched-but-unranked bin. | `sleeper-board` |
+| `board.json` | The same board, machine-readable. | `sleeper-board` |
+| `pick_order.json` | `picks_by_slot` and `slot_by_pick` for all 12 slots x 13 rounds. | `sleeper-board` |
+
+The join key is `player_id` throughout: live pick -> board row -> `research/players/*-<player_id>.md`.
 
 ---
 

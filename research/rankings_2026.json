@@ -1,0 +1,4249 @@
+{
+ "meta": {
+  "title": "2026 Aggregate Fantasy Draft Rankings - 12-team half-PPR, Season 21",
+  "generated": "2026-09-05",
+  "scoring": "0.5 PPR, 4pt pass TD, 25 yds/passing pt, -2 INT, -2 fumble lost",
+  "player_pool": "QB/RB/WR/TE only - this league has NO kicker and NO defense slots",
+  "total_players_ranked": 208,
+  "sources": [
+   {
+    "name": "Fantasy Football Calculator 12-team half-PPR redraft ADP",
+    "date": "2026-09-05",
+    "sample": "2,879 mock drafts Aug 31-Sep 5",
+    "weight": 0.45,
+    "why": "Exact format match and the most current market read."
+   },
+   {
+    "name": "Rotoworld / NBC Sports Top 200 expert rankings",
+    "date": "2026-09-04",
+    "weight": 0.35,
+    "why": "Human expert judgment; reacts to news faster than ADP. Note their team labels are stale in places (they still list A.J. Brown on PHI and Deebo Samuel as a free agent)."
+   },
+   {
+    "name": "Underdog best-ball half-PPR ADP (via Sharp Football)",
+    "date": "2026-08-28",
+    "weight": 0.2,
+    "why": "Second independent market. Down-weighted because best ball inflates QB/TE and upside rookies, and it predates the Aug 30 Josh Jacobs news."
+   },
+   {
+    "name": "PFF half-PPR top 200 (Nathan Jahnke)",
+    "date": "2026-08-18",
+    "weight": "reference only",
+    "why": "Paywalled beyond the headline; used as a sanity check (Gibbs 1, Nacua WR1, Allen QB1 at 31, Bowers TE1 at 27)."
+   }
+  ],
+  "method": "Each source converted to a rank, blended on the weights above, then adjusted for (a) this league's roster structure and (b) news that postdates one or more sources. A soft penalty is applied at half weight when a source omits a player rather than dropping the signal."
+ },
+ "league": {
+  "name": "12-team half-PPR - Season 21",
+  "league_id": "LEAGUE_ID",
+  "teams": 12,
+  "rounds": 13,
+  "total_picks": 156,
+  "starters": [
+   "QB",
+   "RB",
+   "RB",
+   "WR",
+   "WR",
+   "TE",
+   "FLEX"
+  ],
+  "bench": 6,
+  "kicker_slots": 0,
+  "defense_slots": 0,
+  "ppr": 0.5,
+  "pass_td": 4,
+  "pass_yds_per_point": 25,
+  "int": -2,
+  "fumble_lost": -2,
+  "draft_type": "snake with 3rd-round reversal",
+  "reversal_round": 3,
+  "pick_timer_sec": 300
+ },
+ "draft_mechanics": {
+  "explanation": "Round 1 runs 1->12, round 2 runs 12->1, and round 3 ALSO runs 12->1 instead of flipping back. Normal snake resumes in round 4. The practical effect is that the reversal transfers value toward the back of round 1: slot 12 picks at 12, 13 and 25, while slot 1 picks at 1, 24 and 36.",
+  "implication_early_slot": "From slots 1-3 you get one elite player and then a 23-pick gap before your next two picks come almost together. Take the best player available at 1.01 and plan to pair two of the same position at the 2/3 turn.",
+  "implication_late_slot": "From slots 10-12 you get three picks inside the top 25. That is the strongest position in this format - you can leave round 3 with two RB1s and a WR1, or lock an elite TE plus two backs.",
+  "pick_numbers_by_draft_slot": {
+   "1": [
+    1,
+    24,
+    36,
+    37,
+    60,
+    61,
+    84,
+    85,
+    108,
+    109,
+    132,
+    133,
+    156
+   ],
+   "2": [
+    2,
+    23,
+    35,
+    38,
+    59,
+    62,
+    83,
+    86,
+    107,
+    110,
+    131,
+    134,
+    155
+   ],
+   "3": [
+    3,
+    22,
+    34,
+    39,
+    58,
+    63,
+    82,
+    87,
+    106,
+    111,
+    130,
+    135,
+    154
+   ],
+   "4": [
+    4,
+    21,
+    33,
+    40,
+    57,
+    64,
+    81,
+    88,
+    105,
+    112,
+    129,
+    136,
+    153
+   ],
+   "5": [
+    5,
+    20,
+    32,
+    41,
+    56,
+    65,
+    80,
+    89,
+    104,
+    113,
+    128,
+    137,
+    152
+   ],
+   "6": [
+    6,
+    19,
+    31,
+    42,
+    55,
+    66,
+    79,
+    90,
+    103,
+    114,
+    127,
+    138,
+    151
+   ],
+   "7": [
+    7,
+    18,
+    30,
+    43,
+    54,
+    67,
+    78,
+    91,
+    102,
+    115,
+    126,
+    139,
+    150
+   ],
+   "8": [
+    8,
+    17,
+    29,
+    44,
+    53,
+    68,
+    77,
+    92,
+    101,
+    116,
+    125,
+    140,
+    149
+   ],
+   "9": [
+    9,
+    16,
+    28,
+    45,
+    52,
+    69,
+    76,
+    93,
+    100,
+    117,
+    124,
+    141,
+    148
+   ],
+   "10": [
+    10,
+    15,
+    27,
+    46,
+    51,
+    70,
+    75,
+    94,
+    99,
+    118,
+    123,
+    142,
+    147
+   ],
+   "11": [
+    11,
+    14,
+    26,
+    47,
+    50,
+    71,
+    74,
+    95,
+    98,
+    119,
+    122,
+    143,
+    146
+   ],
+   "12": [
+    12,
+    13,
+    25,
+    48,
+    49,
+    72,
+    73,
+    96,
+    97,
+    120,
+    121,
+    144,
+    145
+   ]
+  }
+ },
+ "structural_notes": [
+  "NO KICKERS AND NO DEFENSES. roster_positions contains zero K and zero DST slots and enforce_position_limits is on, so those picks are unavailable and would be wasted anyway. Every other team in a normal league burns 2 of 15 picks there; here nobody does. This ranking contains only QB/RB/WR/TE. Do not draft a kicker or a defense under any circumstances.",
+  "Only 156 total picks. Anything past roughly rank 160 here will not be drafted, so late-round targets should be genuine upside swings, not depth.",
+  "One QB, 12 teams, 4-point passing TDs. Twelve starting QBs for twelve teams means the 12th-best QB is free. Waiting on QB is materially correct in this format. Rushing quarterbacks gain extra value because rush yards score at 10 yards per point versus 25 for passing yards.",
+  "One TE, no TE premium. Same logic as QB: there is a real cliff after the top two, but TE7 through TE14 are close to interchangeable. Either pay for Bowers/McBride or wait a long time - the middle is the trap.",
+  "Six bench spots and no K/DST to stash means every bench slot is live RB/WR upside. Handcuffs to your own starting RBs and high-variance receivers are worth more here than in a 15-round league.",
+  "Half PPR (0.5) sits between formats: pass-catching backs and slot receivers gain over standard scoring but not as much as full PPR. Do not import full-PPR rankings wholesale.",
+  "Replacement level: with 2RB + 2WR + 1 FLEX across 12 teams, roughly RB30 and WR30 are the waiver baseline. Value a player against that line, not against RB1."
+ ],
+ "risk_flags": {
+  "Josh Jacobs": "OUT INDEFINITELY - Commissioner's Exempt List",
+  "Ashton Jeanty": "Ankle - Week 1 unconfirmed, committee risk",
+  "Puka Nacua": "Under active NFL conduct review - in-season suspension possible",
+  "Sam LaPorta": "Injury question into Week 1",
+  "Jonathon Brooks": "Injury return uncertainty",
+  "Oronde Gadsden II": "Buried on the depth chart - avoid",
+  "Deebo Samuel Sr.": "Sources disagree on his team - verify before drafting"
+ },
+ "draft_day_plan": {
+  "core_principle": "Overall value declines smoothly here - there is no single cliff to game. The cliffs that ARE real are positional: after the top 2 TEs, after roughly RB22, and after roughly WR34. Draft against those, not against the overall list.",
+  "rounds_1_3": "Take the best available RB/WR. With only 2RB/2WR/1FLEX you need four to five genuinely startable RB/WR, and this is the only place to get them. Do not take a QB. Take a TE only if Bowers or McBride falls to you.",
+  "rounds_4_7": "Keep hammering RB/WR. This is where the FLEX spot and your first bench pieces get filled. If you missed the top 2 TEs, Loveland or Tyler Warren here is fine value; otherwise keep waiting.",
+  "rounds_8_10": "Take your one QB. QB8 through QB13 are separated by very little and any of them starts all season. If you have not taken a TE, take one now - the TE7-TE15 range is effectively interchangeable.",
+  "rounds_11_13": "Pure upside. No kickers, no defenses, so every one of these picks is a live RB/WR swing. Prioritise (a) the direct backup to your own starting RBs and (b) receivers with a path to volume if someone ahead of them misses time.",
+  "positional_targets": {
+   "RB": "5-6 total",
+   "WR": "5-6 total",
+   "QB": "1 (2 only if you take a high-variance starter)",
+   "TE": "1-2",
+   "K": "0",
+   "DST": "0"
+  },
+  "do_not_draft": [
+   "Any kicker",
+   "Any defense",
+   "Oronde Gadsden II"
+  ],
+  "waiver_watchlist": [
+   "Kaleb Johnson (GB) - first claim if he takes early-down work",
+   "Chris Brooks (GB)",
+   "Mike Washington Jr. if Jeanty misses Week 1"
+  ]
+ },
+ "draft_mechanics_pick_map_note": "pick_numbers_by_draft_slot is keyed by draft slot 1-12 and lists that slot's 13 overall pick numbers in round order.",
+ "players": [
+  {
+   "rank": 1,
+   "name": "Jahmyr Gibbs",
+   "pos": "RB",
+   "team": "DET",
+   "bye": 6,
+   "pos_rank": "RB1",
+   "tier": 1,
+   "tier_pos": 1,
+   "composite_score": 1.0,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 1.5,
+    "ffc_rank": 1,
+    "underdog_adp": 1.1,
+    "rotoworld_rank": 1
+   },
+   "value_vs_market": 0,
+   "note": null
+  },
+  {
+   "rank": 2,
+   "name": "Bijan Robinson",
+   "pos": "RB",
+   "team": "ATL",
+   "bye": 11,
+   "pos_rank": "RB2",
+   "tier": 1,
+   "tier_pos": 1,
+   "composite_score": 2.0,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 2.2,
+    "ffc_rank": 2,
+    "underdog_adp": 2.0,
+    "rotoworld_rank": 2
+   },
+   "value_vs_market": 0,
+   "note": null
+  },
+  {
+   "rank": 3,
+   "name": "Ja'Marr Chase",
+   "pos": "WR",
+   "team": "CIN",
+   "bye": 6,
+   "pos_rank": "WR1",
+   "tier": 1,
+   "tier_pos": 1,
+   "composite_score": 3.45,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 3.9,
+    "ffc_rank": 4,
+    "underdog_adp": 3.1,
+    "rotoworld_rank": 3
+   },
+   "value_vs_market": 1,
+   "note": null
+  },
+  {
+   "rank": 4,
+   "name": "Jaxon Smith-Njigba",
+   "pos": "WR",
+   "team": "SEA",
+   "bye": 11,
+   "pos_rank": "WR2",
+   "tier": 1,
+   "tier_pos": 1,
+   "composite_score": 5.0,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 5.6,
+    "ffc_rank": 5,
+    "underdog_adp": 5.5,
+    "rotoworld_rank": 5
+   },
+   "value_vs_market": 1,
+   "note": null
+  },
+  {
+   "rank": 5,
+   "name": "Christian McCaffrey",
+   "pos": "RB",
+   "team": "SF",
+   "bye": 8,
+   "pos_rank": "RB3",
+   "tier": 1,
+   "tier_pos": 1,
+   "composite_score": 6.45,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 6.2,
+    "ffc_rank": 7,
+    "underdog_adp": 6.0,
+    "rotoworld_rank": 6
+   },
+   "value_vs_market": 2,
+   "note": null
+  },
+  {
+   "rank": 6,
+   "name": "Puka Nacua",
+   "pos": "WR",
+   "team": "LAR",
+   "bye": 11,
+   "pos_rank": "WR3",
+   "tier": 1,
+   "tier_pos": 1,
+   "composite_score": 6.55,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 2.9,
+    "ffc_rank": 3,
+    "underdog_adp": 4.2,
+    "rotoworld_rank": 4
+   },
+   "value_vs_market": -3,
+   "note": "Led the NFL with 129 catches and 1,715 yards in 2025. Not suspended and expected to play Week 1, but remains under active NFL Personal Conduct Policy review - an in-season suspension is possible at any point."
+  },
+  {
+   "rank": 7,
+   "name": "Jonathan Taylor",
+   "pos": "RB",
+   "team": "IND",
+   "bye": 13,
+   "pos_rank": "RB4",
+   "tier": 1,
+   "tier_pos": 1,
+   "composite_score": 7.1,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 5.8,
+    "ffc_rank": 6,
+    "underdog_adp": 7.8,
+    "rotoworld_rank": 8
+   },
+   "value_vs_market": -1,
+   "note": null
+  },
+  {
+   "rank": 8,
+   "name": "Amon-Ra St. Brown",
+   "pos": "WR",
+   "team": "DET",
+   "bye": 6,
+   "pos_rank": "WR4",
+   "tier": 1,
+   "tier_pos": 1,
+   "composite_score": 7.45,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 7.6,
+    "ffc_rank": 8,
+    "underdog_adp": 7.1,
+    "rotoworld_rank": 7
+   },
+   "value_vs_market": 0,
+   "note": null
+  },
+  {
+   "rank": 9,
+   "name": "James Cook",
+   "pos": "RB",
+   "team": "BUF",
+   "bye": 7,
+   "pos_rank": "RB5",
+   "tier": 1,
+   "tier_pos": 1,
+   "composite_score": 9.9,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 9.3,
+    "ffc_rank": 9,
+    "underdog_adp": 10.1,
+    "rotoworld_rank": 11
+   },
+   "value_vs_market": 0,
+   "note": null
+  },
+  {
+   "rank": 10,
+   "name": "CeeDee Lamb",
+   "pos": "WR",
+   "team": "DAL",
+   "bye": 14,
+   "pos_rank": "WR5",
+   "tier": 1,
+   "tier_pos": 1,
+   "composite_score": 10.7,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 12.0,
+    "ffc_rank": 12,
+    "underdog_adp": 9.8,
+    "rotoworld_rank": 10
+   },
+   "value_vs_market": 2,
+   "note": null
+  },
+  {
+   "rank": 11,
+   "name": "Justin Jefferson",
+   "pos": "WR",
+   "team": "MIN",
+   "bye": 6,
+   "pos_rank": "WR6",
+   "tier": 1,
+   "tier_pos": 1,
+   "composite_score": 11.2,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 13.1,
+    "ffc_rank": 13,
+    "underdog_adp": 10.8,
+    "rotoworld_rank": 9
+   },
+   "value_vs_market": 2,
+   "note": null
+  },
+  {
+   "rank": 12,
+   "name": "De'Von Achane",
+   "pos": "RB",
+   "team": "MIA",
+   "bye": 6,
+   "pos_rank": "RB6",
+   "tier": 1,
+   "tier_pos": 1,
+   "composite_score": 13.1,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 10.9,
+    "ffc_rank": 11,
+    "underdog_adp": 16.9,
+    "rotoworld_rank": 13
+   },
+   "value_vs_market": -1,
+   "note": null
+  },
+  {
+   "rank": 13,
+   "name": "Saquon Barkley",
+   "pos": "RB",
+   "team": "PHI",
+   "bye": 10,
+   "pos_rank": "RB7",
+   "tier": 1,
+   "tier_pos": 1,
+   "composite_score": 13.8,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 16.5,
+    "ffc_rank": 16,
+    "underdog_adp": 13.0,
+    "rotoworld_rank": 12
+   },
+   "value_vs_market": 3,
+   "note": null
+  },
+  {
+   "rank": 14,
+   "name": "Derrick Henry",
+   "pos": "RB",
+   "team": "BAL",
+   "bye": 13,
+   "pos_rank": "RB8",
+   "tier": 1,
+   "tier_pos": 1,
+   "composite_score": 13.85,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 10.1,
+    "ffc_rank": 10,
+    "underdog_adp": 16.5,
+    "rotoworld_rank": 17
+   },
+   "value_vs_market": -4,
+   "note": null
+  },
+  {
+   "rank": 15,
+   "name": "Chase Brown",
+   "pos": "RB",
+   "team": "CIN",
+   "bye": 6,
+   "pos_rank": "RB9",
+   "tier": 1,
+   "tier_pos": 1,
+   "composite_score": 15.75,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 13.7,
+    "ffc_rank": 14,
+    "underdog_adp": 14.3,
+    "rotoworld_rank": 19
+   },
+   "value_vs_market": -1,
+   "note": null
+  },
+  {
+   "rank": 16,
+   "name": "Drake London",
+   "pos": "WR",
+   "team": "ATL",
+   "bye": 11,
+   "pos_rank": "WR7",
+   "tier": 1,
+   "tier_pos": 1,
+   "composite_score": 16.25,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 13.8,
+    "ffc_rank": 15,
+    "underdog_adp": 22.3,
+    "rotoworld_rank": 14
+   },
+   "value_vs_market": -1,
+   "note": null
+  },
+  {
+   "rank": 17,
+   "name": "Kenneth Walker III",
+   "pos": "RB",
+   "team": "KC",
+   "bye": 5,
+   "pos_rank": "RB10",
+   "tier": 1,
+   "tier_pos": 1,
+   "composite_score": 17.9,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 20.5,
+    "ffc_rank": 20,
+    "underdog_adp": 14.2,
+    "rotoworld_rank": 18
+   },
+   "value_vs_market": 3,
+   "note": null
+  },
+  {
+   "rank": 18,
+   "name": "A.J. Brown",
+   "pos": "WR",
+   "team": "NE",
+   "bye": 11,
+   "pos_rank": "WR8",
+   "tier": 1,
+   "tier_pos": 1,
+   "composite_score": 18.45,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 17.1,
+    "ffc_rank": 17,
+    "underdog_adp": 18.4,
+    "rotoworld_rank": 20
+   },
+   "value_vs_market": -1,
+   "note": null
+  },
+  {
+   "rank": 19,
+   "name": "Nico Collins",
+   "pos": "WR",
+   "team": "HOU",
+   "bye": 8,
+   "pos_rank": "WR9",
+   "tier": 1,
+   "tier_pos": 1,
+   "composite_score": 18.9,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 21.1,
+    "ffc_rank": 21,
+    "underdog_adp": 21.8,
+    "rotoworld_rank": 15
+   },
+   "value_vs_market": 2,
+   "note": null
+  },
+  {
+   "rank": 20,
+   "name": "Rashee Rice",
+   "pos": "WR",
+   "team": "KC",
+   "bye": 5,
+   "pos_rank": "WR10",
+   "tier": 2,
+   "tier_pos": 1,
+   "composite_score": 20.8,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 17.3,
+    "ffc_rank": 18,
+    "underdog_adp": 27.3,
+    "rotoworld_rank": 22
+   },
+   "value_vs_market": -2,
+   "note": null
+  },
+  {
+   "rank": 21,
+   "name": "Omarion Hampton",
+   "pos": "RB",
+   "team": "LAC",
+   "bye": 7,
+   "pos_rank": "RB11",
+   "tier": 2,
+   "tier_pos": 2,
+   "composite_score": 21.3,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 22.2,
+    "ffc_rank": 22,
+    "underdog_adp": 15.6,
+    "rotoworld_rank": 24
+   },
+   "value_vs_market": 1,
+   "note": null
+  },
+  {
+   "rank": 22,
+   "name": "George Pickens",
+   "pos": "WR",
+   "team": "DAL",
+   "bye": 14,
+   "pos_rank": "WR11",
+   "tier": 2,
+   "tier_pos": 1,
+   "composite_score": 21.4,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 19.3,
+    "ffc_rank": 19,
+    "underdog_adp": 23.6,
+    "rotoworld_rank": 23
+   },
+   "value_vs_market": -3,
+   "note": null
+  },
+  {
+   "rank": 23,
+   "name": "Malik Nabers",
+   "pos": "WR",
+   "team": "NYG",
+   "bye": 8,
+   "pos_rank": "WR12",
+   "tier": 2,
+   "tier_pos": 1,
+   "composite_score": 23.45,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 26.0,
+    "ffc_rank": 26,
+    "underdog_adp": 22.1,
+    "rotoworld_rank": 21
+   },
+   "value_vs_market": 3,
+   "note": null
+  },
+  {
+   "rank": 24,
+   "name": "Brock Bowers",
+   "pos": "TE",
+   "team": "LV",
+   "bye": 13,
+   "pos_rank": "TE1",
+   "tier": 2,
+   "tier_pos": 1,
+   "composite_score": 25.5,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 40.3,
+    "ffc_rank": 42,
+    "underdog_adp": 20.1,
+    "rotoworld_rank": 16
+   },
+   "value_vs_market": 18,
+   "note": null
+  },
+  {
+   "rank": 25,
+   "name": "Chris Olave",
+   "pos": "WR",
+   "team": "NO",
+   "bye": 8,
+   "pos_rank": "WR13",
+   "tier": 2,
+   "tier_pos": 1,
+   "composite_score": 25.55,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 23.2,
+    "ffc_rank": 25,
+    "underdog_adp": 27.3,
+    "rotoworld_rank": 26
+   },
+   "value_vs_market": 0,
+   "note": null
+  },
+  {
+   "rank": 26,
+   "name": "Ashton Jeanty",
+   "pos": "RB",
+   "team": "LV",
+   "bye": 13,
+   "pos_rank": "RB12",
+   "tier": 2,
+   "tier_pos": 2,
+   "composite_score": 27.7,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 23.1,
+    "ffc_rank": 23,
+    "underdog_adp": 16.3,
+    "rotoworld_rank": 29
+   },
+   "value_vs_market": -3,
+   "note": "Low ankle sprain Aug 23, has not practiced since. Raiders 'optimistic' for Sep 13 but unconfirmed, and Washington has carved out a role regardless."
+  },
+  {
+   "rank": 27,
+   "name": "Kyren Williams",
+   "pos": "RB",
+   "team": "LAR",
+   "bye": 11,
+   "pos_rank": "RB13",
+   "tier": 2,
+   "tier_pos": 2,
+   "composite_score": 27.95,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 27.6,
+    "ffc_rank": 27,
+    "underdog_adp": 30.8,
+    "rotoworld_rank": 28
+   },
+   "value_vs_market": 0,
+   "note": null
+  },
+  {
+   "rank": 28,
+   "name": "Jeremiyah Love",
+   "pos": "RB",
+   "team": "ARI",
+   "bye": 14,
+   "pos_rank": "RB14",
+   "tier": 2,
+   "tier_pos": 2,
+   "composite_score": 29.05,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 28.7,
+    "ffc_rank": 28,
+    "underdog_adp": 28.8,
+    "rotoworld_rank": 31
+   },
+   "value_vs_market": 0,
+   "note": null
+  },
+  {
+   "rank": 29,
+   "name": "Trey McBride",
+   "pos": "TE",
+   "team": "ARI",
+   "bye": 14,
+   "pos_rank": "TE2",
+   "tier": 2,
+   "tier_pos": 1,
+   "composite_score": 30.0,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 39.4,
+    "ffc_rank": 41,
+    "underdog_adp": 29.4,
+    "rotoworld_rank": 25
+   },
+   "value_vs_market": 12,
+   "note": null
+  },
+  {
+   "rank": 30,
+   "name": "Zay Flowers",
+   "pos": "WR",
+   "team": "BAL",
+   "bye": 13,
+   "pos_rank": "WR14",
+   "tier": 2,
+   "tier_pos": 2,
+   "composite_score": 30.15,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 23.1,
+    "ffc_rank": 24,
+    "underdog_adp": 31.2,
+    "rotoworld_rank": 37
+   },
+   "value_vs_market": -6,
+   "note": null
+  },
+  {
+   "rank": 31,
+   "name": "Javonte Williams",
+   "pos": "RB",
+   "team": "DAL",
+   "bye": 14,
+   "pos_rank": "RB15",
+   "tier": 2,
+   "tier_pos": 2,
+   "composite_score": 31.3,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 30.2,
+    "ffc_rank": 30,
+    "underdog_adp": 33.5,
+    "rotoworld_rank": 32
+   },
+   "value_vs_market": -1,
+   "note": null
+  },
+  {
+   "rank": 32,
+   "name": "Josh Allen",
+   "pos": "QB",
+   "team": "BUF",
+   "bye": 7,
+   "pos_rank": "QB1",
+   "tier": 2,
+   "tier_pos": 1,
+   "composite_score": 31.85,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 30.6,
+    "ffc_rank": 31,
+    "underdog_adp": 37.1,
+    "rotoworld_rank": 30
+   },
+   "value_vs_market": -1,
+   "note": null
+  },
+  {
+   "rank": 33,
+   "name": "DeVonta Smith",
+   "pos": "WR",
+   "team": "PHI",
+   "bye": 10,
+   "pos_rank": "WR15",
+   "tier": 2,
+   "tier_pos": 2,
+   "composite_score": 33.45,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 30.8,
+    "ffc_rank": 32,
+    "underdog_adp": 27.7,
+    "rotoworld_rank": 39
+   },
+   "value_vs_market": -1,
+   "note": null
+  },
+  {
+   "rank": 34,
+   "name": "Breece Hall",
+   "pos": "RB",
+   "team": "NYJ",
+   "bye": 13,
+   "pos_rank": "RB16",
+   "tier": 2,
+   "tier_pos": 2,
+   "composite_score": 34.1,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 31.6,
+    "ffc_rank": 34,
+    "underdog_adp": 30.9,
+    "rotoworld_rank": 36
+   },
+   "value_vs_market": 0,
+   "note": null
+  },
+  {
+   "rank": 35,
+   "name": "Travis Etienne Jr.",
+   "pos": "RB",
+   "team": "NO",
+   "bye": 8,
+   "pos_rank": "RB17",
+   "tier": 2,
+   "tier_pos": 2,
+   "composite_score": 34.1,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 37.4,
+    "ffc_rank": 37,
+    "underdog_adp": 40.3,
+    "rotoworld_rank": 27
+   },
+   "value_vs_market": 2,
+   "note": null
+  },
+  {
+   "rank": 36,
+   "name": "Tetairoa McMillan",
+   "pos": "WR",
+   "team": "CAR",
+   "bye": 5,
+   "pos_rank": "WR16",
+   "tier": 2,
+   "tier_pos": 2,
+   "composite_score": 34.6,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 31.4,
+    "ffc_rank": 33,
+    "underdog_adp": 40.6,
+    "rotoworld_rank": 33
+   },
+   "value_vs_market": -3,
+   "note": null
+  },
+  {
+   "rank": 37,
+   "name": "Tee Higgins",
+   "pos": "WR",
+   "team": "CIN",
+   "bye": 6,
+   "pos_rank": "WR17",
+   "tier": 2,
+   "tier_pos": 2,
+   "composite_score": 35.0,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 34.4,
+    "ffc_rank": 35,
+    "underdog_adp": 34.9,
+    "rotoworld_rank": 35
+   },
+   "value_vs_market": -2,
+   "note": null
+  },
+  {
+   "rank": 38,
+   "name": "Garrett Wilson",
+   "pos": "WR",
+   "team": "NYJ",
+   "bye": 13,
+   "pos_rank": "WR18",
+   "tier": 2,
+   "tier_pos": 2,
+   "composite_score": 36.95,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 29.5,
+    "ffc_rank": 29,
+    "underdog_adp": 39.0,
+    "rotoworld_rank": 46
+   },
+   "value_vs_market": -9,
+   "note": null
+  },
+  {
+   "rank": 39,
+   "name": "Ladd McConkey",
+   "pos": "WR",
+   "team": "LAC",
+   "bye": 7,
+   "pos_rank": "WR19",
+   "tier": 3,
+   "tier_pos": 2,
+   "composite_score": 39.45,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 40.6,
+    "ffc_rank": 43,
+    "underdog_adp": 33.6,
+    "rotoworld_rank": 38
+   },
+   "value_vs_market": 4,
+   "note": null
+  },
+  {
+   "rank": 40,
+   "name": "Emeka Egbuka",
+   "pos": "WR",
+   "team": "TB",
+   "bye": 10,
+   "pos_rank": "WR20",
+   "tier": 3,
+   "tier_pos": 2,
+   "composite_score": 40.2,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 35.3,
+    "ffc_rank": 36,
+    "underdog_adp": 35.5,
+    "rotoworld_rank": 48
+   },
+   "value_vs_market": -4,
+   "note": null
+  },
+  {
+   "rank": 41,
+   "name": "Cam Skattebo",
+   "pos": "RB",
+   "team": "NYG",
+   "bye": 8,
+   "pos_rank": "RB18",
+   "tier": 3,
+   "tier_pos": 3,
+   "composite_score": 41.55,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 38.3,
+    "ffc_rank": 40,
+    "underdog_adp": 46.2,
+    "rotoworld_rank": 41
+   },
+   "value_vs_market": -1,
+   "note": null
+  },
+  {
+   "rank": 42,
+   "name": "Jaylen Waddle",
+   "pos": "WR",
+   "team": "DEN",
+   "bye": 10,
+   "pos_rank": "WR21",
+   "tier": 3,
+   "tier_pos": 2,
+   "composite_score": 42.55,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 44.7,
+    "ffc_rank": 45,
+    "underdog_adp": 37.1,
+    "rotoworld_rank": 42
+   },
+   "value_vs_market": 3,
+   "note": null
+  },
+  {
+   "rank": 43,
+   "name": "D'Andre Swift",
+   "pos": "RB",
+   "team": "CHI",
+   "bye": 10,
+   "pos_rank": "RB19",
+   "tier": 3,
+   "tier_pos": 3,
+   "composite_score": 44.2,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 41.0,
+    "ffc_rank": 44,
+    "underdog_adp": 44.6,
+    "rotoworld_rank": 44
+   },
+   "value_vs_market": 1,
+   "note": null
+  },
+  {
+   "rank": 44,
+   "name": "Davante Adams",
+   "pos": "WR",
+   "team": "LAR",
+   "bye": 11,
+   "pos_rank": "WR22",
+   "tier": 3,
+   "tier_pos": 2,
+   "composite_score": 45.5,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 37.6,
+    "ffc_rank": 38,
+    "underdog_adp": 51.9,
+    "rotoworld_rank": 52
+   },
+   "value_vs_market": -6,
+   "note": null
+  },
+  {
+   "rank": 45,
+   "name": "Bucky Irving",
+   "pos": "RB",
+   "team": "TB",
+   "bye": 10,
+   "pos_rank": "RB20",
+   "tier": 3,
+   "tier_pos": 3,
+   "composite_score": 45.95,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 47.2,
+    "ffc_rank": 47,
+    "underdog_adp": 52.9,
+    "rotoworld_rank": 40
+   },
+   "value_vs_market": 2,
+   "note": null
+  },
+  {
+   "rank": 46,
+   "name": "Jameson Williams",
+   "pos": "WR",
+   "team": "DET",
+   "bye": 6,
+   "pos_rank": "WR23",
+   "tier": 3,
+   "tier_pos": 2,
+   "composite_score": 46.8,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 37.8,
+    "ffc_rank": 39,
+    "underdog_adp": 50.3,
+    "rotoworld_rank": 55
+   },
+   "value_vs_market": -7,
+   "note": null
+  },
+  {
+   "rank": 47,
+   "name": "Colston Loveland",
+   "pos": "TE",
+   "team": "CHI",
+   "bye": 10,
+   "pos_rank": "TE3",
+   "tier": 3,
+   "tier_pos": 2,
+   "composite_score": 49.05,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 58.2,
+    "ffc_rank": 59,
+    "underdog_adp": 43.6,
+    "rotoworld_rank": 34
+   },
+   "value_vs_market": 12,
+   "note": null
+  },
+  {
+   "rank": 48,
+   "name": "Terry McLaurin",
+   "pos": "WR",
+   "team": "WAS",
+   "bye": 7,
+   "pos_rank": "WR24",
+   "tier": 3,
+   "tier_pos": 2,
+   "composite_score": 49.2,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 45.0,
+    "ffc_rank": 46,
+    "underdog_adp": 49.0,
+    "rotoworld_rank": 54
+   },
+   "value_vs_market": -2,
+   "note": null
+  },
+  {
+   "rank": 49,
+   "name": "Quinshon Judkins",
+   "pos": "RB",
+   "team": "CLE",
+   "bye": 11,
+   "pos_rank": "RB21",
+   "tier": 3,
+   "tier_pos": 3,
+   "composite_score": 49.95,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 49.4,
+    "ffc_rank": 50,
+    "underdog_adp": 54.8,
+    "rotoworld_rank": 47
+   },
+   "value_vs_market": 1,
+   "note": null
+  },
+  {
+   "rank": 50,
+   "name": "David Montgomery",
+   "pos": "RB",
+   "team": "HOU",
+   "bye": 8,
+   "pos_rank": "RB22",
+   "tier": 3,
+   "tier_pos": 3,
+   "composite_score": 50.1,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 55.1,
+    "ffc_rank": 57,
+    "underdog_adp": 47.5,
+    "rotoworld_rank": 43
+   },
+   "value_vs_market": 7,
+   "note": null
+  },
+  {
+   "rank": 51,
+   "name": "Bhayshul Tuten",
+   "pos": "RB",
+   "team": "JAX",
+   "bye": 7,
+   "pos_rank": "RB23",
+   "tier": 3,
+   "tier_pos": 3,
+   "composite_score": 50.7,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 51.9,
+    "ffc_rank": 52,
+    "underdog_adp": 49.5,
+    "rotoworld_rank": 50
+   },
+   "value_vs_market": 1,
+   "note": null
+  },
+  {
+   "rank": 52,
+   "name": "Luther Burden III",
+   "pos": "WR",
+   "team": "CHI",
+   "bye": 10,
+   "pos_rank": "WR25",
+   "tier": 3,
+   "tier_pos": 3,
+   "composite_score": 52.6,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 53.6,
+    "ffc_rank": 53,
+    "underdog_adp": 44.5,
+    "rotoworld_rank": 57
+   },
+   "value_vs_market": 1,
+   "note": null
+  },
+  {
+   "rank": 53,
+   "name": "Mike Evans",
+   "pos": "WR",
+   "team": "SF",
+   "bye": 8,
+   "pos_rank": "WR26",
+   "tier": 3,
+   "tier_pos": 3,
+   "composite_score": 52.75,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 55.0,
+    "ffc_rank": 56,
+    "underdog_adp": 52.6,
+    "rotoworld_rank": 49
+   },
+   "value_vs_market": 3,
+   "note": null
+  },
+  {
+   "rank": 54,
+   "name": "Lamar Jackson",
+   "pos": "QB",
+   "team": "BAL",
+   "bye": 13,
+   "pos_rank": "QB2",
+   "tier": 3,
+   "tier_pos": 1,
+   "composite_score": 53.25,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 55.8,
+    "ffc_rank": 58,
+    "underdog_adp": 56.9,
+    "rotoworld_rank": 45
+   },
+   "value_vs_market": 4,
+   "note": null
+  },
+  {
+   "rank": 55,
+   "name": "DJ Moore",
+   "pos": "WR",
+   "team": "BUF",
+   "bye": 7,
+   "pos_rank": "WR27",
+   "tier": 3,
+   "tier_pos": 3,
+   "composite_score": 53.9,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 47.6,
+    "ffc_rank": 48,
+    "underdog_adp": 52.8,
+    "rotoworld_rank": 62
+   },
+   "value_vs_market": -7,
+   "note": null
+  },
+  {
+   "rank": 56,
+   "name": "Rome Odunze",
+   "pos": "WR",
+   "team": "CHI",
+   "bye": 10,
+   "pos_rank": "WR28",
+   "tier": 3,
+   "tier_pos": 3,
+   "composite_score": 55.2,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 48.8,
+    "ffc_rank": 49,
+    "underdog_adp": 58.0,
+    "rotoworld_rank": 61
+   },
+   "value_vs_market": -7,
+   "note": null
+  },
+  {
+   "rank": 57,
+   "name": "Christian Watson",
+   "pos": "WR",
+   "team": "GB",
+   "bye": 11,
+   "pos_rank": "WR29",
+   "tier": 3,
+   "tier_pos": 3,
+   "composite_score": 56.9,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 53.8,
+    "ffc_rank": 54,
+    "underdog_adp": 57.2,
+    "rotoworld_rank": 60
+   },
+   "value_vs_market": -3,
+   "note": null
+  },
+  {
+   "rank": 58,
+   "name": "Drake Maye",
+   "pos": "QB",
+   "team": "NE",
+   "bye": 11,
+   "pos_rank": "QB3",
+   "tier": 4,
+   "tier_pos": 1,
+   "composite_score": 59.25,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 51.8,
+    "ffc_rank": 51,
+    "underdog_adp": 67.2,
+    "rotoworld_rank": 66
+   },
+   "value_vs_market": -7,
+   "note": null
+  },
+  {
+   "rank": 59,
+   "name": "TreVeyon Henderson",
+   "pos": "RB",
+   "team": "NE",
+   "bye": 11,
+   "pos_rank": "RB24",
+   "tier": 4,
+   "tier_pos": 4,
+   "composite_score": 59.75,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 64.2,
+    "ffc_rank": 66,
+    "underdog_adp": 60.5,
+    "rotoworld_rank": 51
+   },
+   "value_vs_market": 7,
+   "note": null
+  },
+  {
+   "rank": 60,
+   "name": "Jadarian Price",
+   "pos": "RB",
+   "team": "SEA",
+   "bye": 11,
+   "pos_rank": "RB25",
+   "tier": 4,
+   "tier_pos": 4,
+   "composite_score": 61.6,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 67.1,
+    "ffc_rank": 69,
+    "underdog_adp": 59.4,
+    "rotoworld_rank": 53
+   },
+   "value_vs_market": 9,
+   "note": null
+  },
+  {
+   "rank": 61,
+   "name": "Parker Washington",
+   "pos": "WR",
+   "team": "JAX",
+   "bye": 7,
+   "pos_rank": "WR30",
+   "tier": 4,
+   "tier_pos": 3,
+   "composite_score": 62.4,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 63.1,
+    "ffc_rank": 64,
+    "underdog_adp": 56.1,
+    "rotoworld_rank": 64
+   },
+   "value_vs_market": 3,
+   "note": null
+  },
+  {
+   "rank": 62,
+   "name": "Jaylen Warren",
+   "pos": "RB",
+   "team": "PIT",
+   "bye": 9,
+   "pos_rank": "RB26",
+   "tier": 4,
+   "tier_pos": 4,
+   "composite_score": 65.1,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 63.1,
+    "ffc_rank": 63,
+    "underdog_adp": 70.1,
+    "rotoworld_rank": 65
+   },
+   "value_vs_market": 1,
+   "note": null
+  },
+  {
+   "rank": 63,
+   "name": "Tyler Warren",
+   "pos": "TE",
+   "team": "IND",
+   "bye": 13,
+   "pos_rank": "TE4",
+   "tier": 4,
+   "tier_pos": 2,
+   "composite_score": 66.15,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 69.4,
+    "ffc_rank": 71,
+    "underdog_adp": 63.3,
+    "rotoworld_rank": 56
+   },
+   "value_vs_market": 8,
+   "note": null
+  },
+  {
+   "rank": 64,
+   "name": "Rhamondre Stevenson",
+   "pos": "RB",
+   "team": "NE",
+   "bye": 11,
+   "pos_rank": "RB27",
+   "tier": 4,
+   "tier_pos": 4,
+   "composite_score": 67.9,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 62.9,
+    "ffc_rank": 62,
+    "underdog_adp": 68.0,
+    "rotoworld_rank": 76
+   },
+   "value_vs_market": -2,
+   "note": null
+  },
+  {
+   "rank": 65,
+   "name": "Carnell Tate",
+   "pos": "WR",
+   "team": "TEN",
+   "bye": 9,
+   "pos_rank": "WR31",
+   "tier": 4,
+   "tier_pos": 3,
+   "composite_score": 68.15,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 75.8,
+    "ffc_rank": 78,
+    "underdog_adp": 62.7,
+    "rotoworld_rank": 59
+   },
+   "value_vs_market": 13,
+   "note": null
+  },
+  {
+   "rank": 66,
+   "name": "Marvin Harrison Jr.",
+   "pos": "WR",
+   "team": "ARI",
+   "bye": 14,
+   "pos_rank": "WR32",
+   "tier": 4,
+   "tier_pos": 3,
+   "composite_score": 69.05,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 65.3,
+    "ffc_rank": 67,
+    "underdog_adp": 66.2,
+    "rotoworld_rank": 74
+   },
+   "value_vs_market": 1,
+   "note": null
+  },
+  {
+   "rank": 67,
+   "name": "DK Metcalf",
+   "pos": "WR",
+   "team": "PIT",
+   "bye": 9,
+   "pos_rank": "WR33",
+   "tier": 4,
+   "tier_pos": 3,
+   "composite_score": 69.05,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 63.2,
+    "ffc_rank": 65,
+    "underdog_adp": 74.4,
+    "rotoworld_rank": 72
+   },
+   "value_vs_market": -2,
+   "note": null
+  },
+  {
+   "rank": 68,
+   "name": "Brian Thomas Jr.",
+   "pos": "WR",
+   "team": "JAX",
+   "bye": 7,
+   "pos_rank": "WR34",
+   "tier": 4,
+   "tier_pos": 3,
+   "composite_score": 69.35,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 71.1,
+    "ffc_rank": 72,
+    "underdog_adp": 65.1,
+    "rotoworld_rank": 69
+   },
+   "value_vs_market": 4,
+   "note": null
+  },
+  {
+   "rank": 69,
+   "name": "Joe Burrow",
+   "pos": "QB",
+   "team": "CIN",
+   "bye": 6,
+   "pos_rank": "QB4",
+   "tier": 4,
+   "tier_pos": 2,
+   "composite_score": 69.4,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 54.3,
+    "ffc_rank": 55,
+    "underdog_adp": 68.7,
+    "rotoworld_rank": 63
+   },
+   "value_vs_market": -14,
+   "note": null
+  },
+  {
+   "rank": 70,
+   "name": "Jayden Daniels",
+   "pos": "QB",
+   "team": "WAS",
+   "bye": 7,
+   "pos_rank": "QB5",
+   "tier": 4,
+   "tier_pos": 2,
+   "composite_score": 70.4,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 73.9,
+    "ffc_rank": 74,
+    "underdog_adp": 69.9,
+    "rotoworld_rank": 58
+   },
+   "value_vs_market": 4,
+   "note": null
+  },
+  {
+   "rank": 71,
+   "name": "Tony Pollard",
+   "pos": "RB",
+   "team": "TEN",
+   "bye": 9,
+   "pos_rank": "RB28",
+   "tier": 4,
+   "tier_pos": 4,
+   "composite_score": 72.45,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 68.6,
+    "ffc_rank": 70,
+    "underdog_adp": 77.8,
+    "rotoworld_rank": 73
+   },
+   "value_vs_market": -1,
+   "note": null
+  },
+  {
+   "rank": 72,
+   "name": "Rico Dowdle",
+   "pos": "RB",
+   "team": "PIT",
+   "bye": 9,
+   "pos_rank": "RB29",
+   "tier": 4,
+   "tier_pos": 4,
+   "composite_score": 75.2,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 74.5,
+    "ffc_rank": 75,
+    "underdog_adp": 83.6,
+    "rotoworld_rank": 71
+   },
+   "value_vs_market": 3,
+   "note": null
+  },
+  {
+   "rank": 73,
+   "name": "Courtland Sutton",
+   "pos": "WR",
+   "team": "DEN",
+   "bye": 10,
+   "pos_rank": "WR35",
+   "tier": 4,
+   "tier_pos": 4,
+   "composite_score": 75.4,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 61.4,
+    "ffc_rank": 60,
+    "underdog_adp": 82.9,
+    "rotoworld_rank": 92
+   },
+   "value_vs_market": -13,
+   "note": null
+  },
+  {
+   "rank": 74,
+   "name": "Michael Wilson",
+   "pos": "WR",
+   "team": "ARI",
+   "bye": 14,
+   "pos_rank": "WR36",
+   "tier": 5,
+   "tier_pos": 4,
+   "composite_score": 79.95,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 72.9,
+    "ffc_rank": 73,
+    "underdog_adp": 90.9,
+    "rotoworld_rank": 82
+   },
+   "value_vs_market": -1,
+   "note": null
+  },
+  {
+   "rank": 75,
+   "name": "MarShawn Lloyd",
+   "pos": "RB",
+   "team": "GB",
+   "bye": 11,
+   "pos_rank": "RB30",
+   "tier": 5,
+   "tier_pos": 5,
+   "composite_score": 82.05,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 114.5,
+    "ffc_rank": 116,
+    "underdog_adp": 143.5,
+    "rotoworld_rank": 67
+   },
+   "value_vs_market": 41,
+   "note": "Lead Green Bay back with Jacobs on the exempt list. Only 7 career touches and an injury history, but the touches are there now. Biggest post-cutdown riser."
+  },
+  {
+   "rank": 76,
+   "name": "J.K. Dobbins",
+   "pos": "RB",
+   "team": "DEN",
+   "bye": 10,
+   "pos_rank": "RB31",
+   "tier": 5,
+   "tier_pos": 5,
+   "composite_score": 82.75,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 79.5,
+    "ffc_rank": 81,
+    "underdog_adp": 96.2,
+    "rotoworld_rank": 78
+   },
+   "value_vs_market": 5,
+   "note": null
+  },
+  {
+   "rank": 77,
+   "name": "Harold Fannin Jr.",
+   "pos": "TE",
+   "team": "CLE",
+   "bye": 11,
+   "pos_rank": "TE5",
+   "tier": 5,
+   "tier_pos": 3,
+   "composite_score": 83.05,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 76.0,
+    "ffc_rank": 79,
+    "underdog_adp": 104.9,
+    "rotoworld_rank": 70
+   },
+   "value_vs_market": 2,
+   "note": null
+  },
+  {
+   "rank": 78,
+   "name": "Jalen Hurts",
+   "pos": "QB",
+   "team": "PHI",
+   "bye": 10,
+   "pos_rank": "QB6",
+   "tier": 5,
+   "tier_pos": 2,
+   "composite_score": 83.1,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 81.5,
+    "ffc_rank": 82,
+    "underdog_adp": 72.4,
+    "rotoworld_rank": 80
+   },
+   "value_vs_market": 4,
+   "note": null
+  },
+  {
+   "rank": 79,
+   "name": "Dak Prescott",
+   "pos": "QB",
+   "team": "DAL",
+   "bye": 14,
+   "pos_rank": "QB7",
+   "tier": 5,
+   "tier_pos": 2,
+   "composite_score": 84.8,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 65.8,
+    "ffc_rank": 68,
+    "underdog_adp": 80.5,
+    "rotoworld_rank": 84
+   },
+   "value_vs_market": -11,
+   "note": null
+  },
+  {
+   "rank": 80,
+   "name": "Chris Godwin Jr.",
+   "pos": "WR",
+   "team": "TB",
+   "bye": 10,
+   "pos_rank": "WR37",
+   "tier": 5,
+   "tier_pos": 4,
+   "composite_score": 85.55,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 78.0,
+    "ffc_rank": 80,
+    "underdog_adp": 84.3,
+    "rotoworld_rank": 93
+   },
+   "value_vs_market": 0,
+   "note": null
+  },
+  {
+   "rank": 81,
+   "name": "Jayden Reed",
+   "pos": "WR",
+   "team": "GB",
+   "bye": 11,
+   "pos_rank": "WR38",
+   "tier": 5,
+   "tier_pos": 4,
+   "composite_score": 85.7,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 85.5,
+    "ffc_rank": 85,
+    "underdog_adp": 78.1,
+    "rotoworld_rank": 91
+   },
+   "value_vs_market": 4,
+   "note": null
+  },
+  {
+   "rank": 82,
+   "name": "Jordan Addison",
+   "pos": "WR",
+   "team": "MIN",
+   "bye": 6,
+   "pos_rank": "WR39",
+   "tier": 5,
+   "tier_pos": 4,
+   "composite_score": 85.7,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 90.4,
+    "ffc_rank": 91,
+    "underdog_adp": 89.0,
+    "rotoworld_rank": 77
+   },
+   "value_vs_market": 9,
+   "note": null
+  },
+  {
+   "rank": 83,
+   "name": "Alec Pierce",
+   "pos": "WR",
+   "team": "IND",
+   "bye": 13,
+   "pos_rank": "WR40",
+   "tier": 5,
+   "tier_pos": 4,
+   "composite_score": 86.5,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 61.7,
+    "ffc_rank": 61,
+    "underdog_adp": 94.4,
+    "rotoworld_rank": 115
+   },
+   "value_vs_market": -22,
+   "note": null
+  },
+  {
+   "rank": 84,
+   "name": "Jonathon Brooks",
+   "pos": "RB",
+   "team": "CAR",
+   "bye": 5,
+   "pos_rank": "RB32",
+   "tier": 5,
+   "tier_pos": 5,
+   "composite_score": 87.65,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 90.5,
+    "ffc_rank": 92,
+    "underdog_adp": 76.5,
+    "rotoworld_rank": 75
+   },
+   "value_vs_market": 8,
+   "note": "Still an injury-return question mark; sources are split."
+  },
+  {
+   "rank": 85,
+   "name": "Tucker Kraft",
+   "pos": "TE",
+   "team": "GB",
+   "bye": 11,
+   "pos_rank": "TE6",
+   "tier": 5,
+   "tier_pos": 3,
+   "composite_score": 87.85,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 93.5,
+    "ffc_rank": 94,
+    "underdog_adp": 77.2,
+    "rotoworld_rank": 81
+   },
+   "value_vs_market": 9,
+   "note": null
+  },
+  {
+   "rank": 86,
+   "name": "Josh Downs",
+   "pos": "WR",
+   "team": "IND",
+   "bye": 13,
+   "pos_rank": "WR41",
+   "tier": 5,
+   "tier_pos": 4,
+   "composite_score": 90.65,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 94.5,
+    "ffc_rank": 95,
+    "underdog_adp": 83.3,
+    "rotoworld_rank": 90
+   },
+   "value_vs_market": 9,
+   "note": null
+  },
+  {
+   "rank": 87,
+   "name": "Chuba Hubbard",
+   "pos": "RB",
+   "team": "CAR",
+   "bye": 5,
+   "pos_rank": "RB33",
+   "tier": 5,
+   "tier_pos": 5,
+   "composite_score": 92.1,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 87.9,
+    "ffc_rank": 88,
+    "underdog_adp": 98.2,
+    "rotoworld_rank": 94
+   },
+   "value_vs_market": 1,
+   "note": null
+  },
+  {
+   "rank": 88,
+   "name": "Quentin Johnston",
+   "pos": "WR",
+   "team": "LAC",
+   "bye": 7,
+   "pos_rank": "WR42",
+   "tier": 5,
+   "tier_pos": 4,
+   "composite_score": 92.5,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 85.0,
+    "ffc_rank": 84,
+    "underdog_adp": 75.0,
+    "rotoworld_rank": 114
+   },
+   "value_vs_market": -4,
+   "note": null
+  },
+  {
+   "rank": 89,
+   "name": "Caleb Williams",
+   "pos": "QB",
+   "team": "CHI",
+   "bye": 10,
+   "pos_rank": "QB8",
+   "tier": 5,
+   "tier_pos": 3,
+   "composite_score": 92.6,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 88.6,
+    "ffc_rank": 89,
+    "underdog_adp": 73.5,
+    "rotoworld_rank": 89
+   },
+   "value_vs_market": 0,
+   "note": null
+  },
+  {
+   "rank": 90,
+   "name": "Blake Corum",
+   "pos": "RB",
+   "team": "LAR",
+   "bye": 11,
+   "pos_rank": "RB34",
+   "tier": 5,
+   "tier_pos": 5,
+   "composite_score": 94.3,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 117.7,
+    "ffc_rank": 118,
+    "underdog_adp": 87.3,
+    "rotoworld_rank": 68
+   },
+   "value_vs_market": 28,
+   "note": null
+  },
+  {
+   "rank": 91,
+   "name": "RJ Harvey",
+   "pos": "RB",
+   "team": "DEN",
+   "bye": 10,
+   "pos_rank": "RB35",
+   "tier": 5,
+   "tier_pos": 5,
+   "composite_score": 94.75,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 108.0,
+    "ffc_rank": 110,
+    "underdog_adp": 87.7,
+    "rotoworld_rank": 79
+   },
+   "value_vs_market": 19,
+   "note": null
+  },
+  {
+   "rank": 92,
+   "name": "Jakobi Meyers",
+   "pos": "WR",
+   "team": "JAX",
+   "bye": 7,
+   "pos_rank": "WR43",
+   "tier": 6,
+   "tier_pos": 5,
+   "composite_score": 98.0,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 87.8,
+    "ffc_rank": 87,
+    "underdog_adp": 120.4,
+    "rotoworld_rank": 99
+   },
+   "value_vs_market": -5,
+   "note": null
+  },
+  {
+   "rank": 93,
+   "name": "Stefon Diggs",
+   "pos": "WR",
+   "team": "WAS",
+   "bye": 7,
+   "pos_rank": "WR44",
+   "tier": 6,
+   "tier_pos": 5,
+   "composite_score": 99.45,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 96.9,
+    "ffc_rank": 98,
+    "underdog_adp": 94.0,
+    "rotoworld_rank": 105
+   },
+   "value_vs_market": 5,
+   "note": null
+  },
+  {
+   "rank": 94,
+   "name": "Kyle Monangai",
+   "pos": "RB",
+   "team": "CHI",
+   "bye": 10,
+   "pos_rank": "RB36",
+   "tier": 6,
+   "tier_pos": 6,
+   "composite_score": 101.1,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 107.2,
+    "ffc_rank": 109,
+    "underdog_adp": 107.0,
+    "rotoworld_rank": 87
+   },
+   "value_vs_market": 15,
+   "note": null
+  },
+  {
+   "rank": 95,
+   "name": "Wan'Dale Robinson",
+   "pos": "WR",
+   "team": "TEN",
+   "bye": 9,
+   "pos_rank": "WR45",
+   "tier": 6,
+   "tier_pos": 5,
+   "composite_score": 101.2,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 94.7,
+    "ffc_rank": 96,
+    "underdog_adp": 113.9,
+    "rotoworld_rank": 100
+   },
+   "value_vs_market": 1,
+   "note": null
+  },
+  {
+   "rank": 96,
+   "name": "Michael Pittman Jr.",
+   "pos": "WR",
+   "team": "PIT",
+   "bye": 9,
+   "pos_rank": "WR46",
+   "tier": 6,
+   "tier_pos": 5,
+   "composite_score": 101.3,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 81.7,
+    "ffc_rank": 83,
+    "underdog_adp": 101.5,
+    "rotoworld_rank": 125
+   },
+   "value_vs_market": -13,
+   "note": null
+  },
+  {
+   "rank": 97,
+   "name": "Makai Lemon",
+   "pos": "WR",
+   "team": "PHI",
+   "bye": 10,
+   "pos_rank": "WR47",
+   "tier": 6,
+   "tier_pos": 5,
+   "composite_score": 101.75,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 129.3,
+    "ffc_rank": 126,
+    "underdog_adp": 80.8,
+    "rotoworld_rank": 83
+   },
+   "value_vs_market": 29,
+   "note": null
+  },
+  {
+   "rank": 98,
+   "name": "Xavier Worthy",
+   "pos": "WR",
+   "team": "KC",
+   "bye": 5,
+   "pos_rank": "WR48",
+   "tier": 6,
+   "tier_pos": 5,
+   "composite_score": 102.35,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 97.8,
+    "ffc_rank": 99,
+    "underdog_adp": 107.0,
+    "rotoworld_rank": 104
+   },
+   "value_vs_market": 1,
+   "note": null
+  },
+  {
+   "rank": 99,
+   "name": "Kenny Gainwell",
+   "pos": "RB",
+   "team": "TB",
+   "bye": 10,
+   "pos_rank": "RB37",
+   "tier": 6,
+   "tier_pos": 6,
+   "composite_score": 103.4,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 100.4,
+    "ffc_rank": 102,
+    "underdog_adp": 109.1,
+    "rotoworld_rank": 102
+   },
+   "value_vs_market": 3,
+   "note": null
+  },
+  {
+   "rank": 100,
+   "name": "Justin Herbert",
+   "pos": "QB",
+   "team": "LAC",
+   "bye": 7,
+   "pos_rank": "QB9",
+   "tier": 6,
+   "tier_pos": 3,
+   "composite_score": 103.7,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 104.3,
+    "ffc_rank": 107,
+    "underdog_adp": 84.2,
+    "rotoworld_rank": 85
+   },
+   "value_vs_market": 7,
+   "note": null
+  },
+  {
+   "rank": 101,
+   "name": "Romeo Doubs",
+   "pos": "WR",
+   "team": "NE",
+   "bye": 11,
+   "pos_rank": "WR49",
+   "tier": 6,
+   "tier_pos": 5,
+   "composite_score": 104.65,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 99.0,
+    "ffc_rank": 100,
+    "underdog_adp": 116.9,
+    "rotoworld_rank": 103
+   },
+   "value_vs_market": -1,
+   "note": null
+  },
+  {
+   "rank": 102,
+   "name": "Jacory Croskey-Merritt",
+   "pos": "RB",
+   "team": "WAS",
+   "bye": 7,
+   "pos_rank": "RB38",
+   "tier": 6,
+   "tier_pos": 6,
+   "composite_score": 105.55,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 101.2,
+    "ffc_rank": 103,
+    "underdog_adp": 100.2,
+    "rotoworld_rank": 112
+   },
+   "value_vs_market": 1,
+   "note": null
+  },
+  {
+   "rank": 103,
+   "name": "Patrick Mahomes",
+   "pos": "QB",
+   "team": "KC",
+   "bye": 5,
+   "pos_rank": "QB10",
+   "tier": 6,
+   "tier_pos": 3,
+   "composite_score": 105.75,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 103.9,
+    "ffc_rank": 105,
+    "underdog_adp": 97.7,
+    "rotoworld_rank": 86
+   },
+   "value_vs_market": 2,
+   "note": null
+  },
+  {
+   "rank": 104,
+   "name": "Brock Purdy",
+   "pos": "QB",
+   "team": "SF",
+   "bye": 8,
+   "pos_rank": "QB11",
+   "tier": 6,
+   "tier_pos": 3,
+   "composite_score": 106.1,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 86.3,
+    "ffc_rank": 86,
+    "underdog_adp": 103.0,
+    "rotoworld_rank": 108
+   },
+   "value_vs_market": -18,
+   "note": null
+  },
+  {
+   "rank": 105,
+   "name": "Kyle Pitts Sr.",
+   "pos": "TE",
+   "team": "ATL",
+   "bye": 11,
+   "pos_rank": "TE7",
+   "tier": 6,
+   "tier_pos": 4,
+   "composite_score": 106.3,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 94.9,
+    "ffc_rank": 97,
+    "underdog_adp": 102.3,
+    "rotoworld_rank": 95
+   },
+   "value_vs_market": -8,
+   "note": null
+  },
+  {
+   "rank": 106,
+   "name": "Matthew Stafford",
+   "pos": "QB",
+   "team": "LAR",
+   "bye": 11,
+   "pos_rank": "QB12",
+   "tier": 6,
+   "tier_pos": 3,
+   "composite_score": 106.45,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 75.5,
+    "ffc_rank": 77,
+    "underdog_adp": 111.0,
+    "rotoworld_rank": 116
+   },
+   "value_vs_market": -29,
+   "note": null
+  },
+  {
+   "rank": 107,
+   "name": "Aaron Jones Sr.",
+   "pos": "RB",
+   "team": "MIN",
+   "bye": 6,
+   "pos_rank": "RB39",
+   "tier": 6,
+   "tier_pos": 6,
+   "composite_score": 107.05,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 104.2,
+    "ffc_rank": 106,
+    "underdog_adp": 127.9,
+    "rotoworld_rank": 97
+   },
+   "value_vs_market": -1,
+   "note": null
+  },
+  {
+   "rank": 108,
+   "name": "Matthew Golden",
+   "pos": "WR",
+   "team": "GB",
+   "bye": 11,
+   "pos_rank": "WR50",
+   "tier": 6,
+   "tier_pos": 5,
+   "composite_score": 107.6,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 99.2,
+    "ffc_rank": 101,
+    "underdog_adp": 100.1,
+    "rotoworld_rank": 121
+   },
+   "value_vs_market": -7,
+   "note": null
+  },
+  {
+   "rank": 109,
+   "name": "Jordan Mason",
+   "pos": "RB",
+   "team": "MIN",
+   "bye": 6,
+   "pos_rank": "RB40",
+   "tier": 6,
+   "tier_pos": 6,
+   "composite_score": 108.55,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 110.4,
+    "ffc_rank": 113,
+    "underdog_adp": 97.2,
+    "rotoworld_rank": 110
+   },
+   "value_vs_market": 4,
+   "note": null
+  },
+  {
+   "rank": 110,
+   "name": "George Kittle",
+   "pos": "TE",
+   "team": "SF",
+   "bye": 8,
+   "pos_rank": "TE8",
+   "tier": 6,
+   "tier_pos": 4,
+   "composite_score": 111.85,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 89.8,
+    "ffc_rank": 90,
+    "underdog_adp": 112.1,
+    "rotoworld_rank": 113
+   },
+   "value_vs_market": -20,
+   "note": null
+  },
+  {
+   "rank": 111,
+   "name": "KC Concepcion",
+   "pos": "WR",
+   "team": "CLE",
+   "bye": 11,
+   "pos_rank": "WR51",
+   "tier": 6,
+   "tier_pos": 5,
+   "composite_score": 112.3,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 113.9,
+    "ffc_rank": 115,
+    "underdog_adp": 111.3,
+    "rotoworld_rank": 109
+   },
+   "value_vs_market": 4,
+   "note": null
+  },
+  {
+   "rank": 112,
+   "name": "Rachaad White",
+   "pos": "RB",
+   "team": "WAS",
+   "bye": 7,
+   "pos_rank": "RB41",
+   "tier": 6,
+   "tier_pos": 6,
+   "composite_score": 113.2,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 127.9,
+    "ffc_rank": 124,
+    "underdog_adp": 117.7,
+    "rotoworld_rank": 96
+   },
+   "value_vs_market": 12,
+   "note": null
+  },
+  {
+   "rank": 113,
+   "name": "Sam LaPorta",
+   "pos": "TE",
+   "team": "DET",
+   "bye": 6,
+   "pos_rank": "TE9",
+   "tier": 6,
+   "tier_pos": 4,
+   "composite_score": 114.95,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 109.7,
+    "ffc_rank": 111,
+    "underdog_adp": 90.3,
+    "rotoworld_rank": 88
+   },
+   "value_vs_market": -2,
+   "note": "Carrying an injury question into Week 1; ADP standard deviation is among the widest at the position."
+  },
+  {
+   "rank": 114,
+   "name": "Trevor Lawrence",
+   "pos": "QB",
+   "team": "JAX",
+   "bye": 7,
+   "pos_rank": "QB13",
+   "tier": 6,
+   "tier_pos": 3,
+   "composite_score": 115.05,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 92.5,
+    "ffc_rank": 93,
+    "underdog_adp": 86.8,
+    "rotoworld_rank": 120
+   },
+   "value_vs_market": -21,
+   "note": null
+  },
+  {
+   "rank": 115,
+   "name": "De'Zhaun Stribling",
+   "pos": "WR",
+   "team": "SF",
+   "bye": 8,
+   "pos_rank": "WR52",
+   "tier": 7,
+   "tier_pos": 5,
+   "composite_score": 119.95,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 124.4,
+    "ffc_rank": 122,
+    "underdog_adp": 110.7,
+    "rotoworld_rank": 123
+   },
+   "value_vs_market": 7,
+   "note": null
+  },
+  {
+   "rank": 116,
+   "name": "Khalil Shakir",
+   "pos": "WR",
+   "team": "BUF",
+   "bye": 7,
+   "pos_rank": "WR53",
+   "tier": 7,
+   "tier_pos": 5,
+   "composite_score": 119.95,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 106.3,
+    "ffc_rank": 108,
+    "underdog_adp": 131.2,
+    "rotoworld_rank": 129
+   },
+   "value_vs_market": -8,
+   "note": null
+  },
+  {
+   "rank": 117,
+   "name": "Jaxson Dart",
+   "pos": "QB",
+   "team": "NYG",
+   "bye": 8,
+   "pos_rank": "QB14",
+   "tier": 7,
+   "tier_pos": 4,
+   "composite_score": 120.55,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 122.9,
+    "ffc_rank": 121,
+    "underdog_adp": 104.1,
+    "rotoworld_rank": 98
+   },
+   "value_vs_market": 4,
+   "note": null
+  },
+  {
+   "rank": 118,
+   "name": "Jalen Coker",
+   "pos": "WR",
+   "team": "CAR",
+   "bye": 5,
+   "pos_rank": "WR54",
+   "tier": 7,
+   "tier_pos": 6,
+   "composite_score": 125.7,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 114.9,
+    "ffc_rank": 117,
+    "underdog_adp": 129.7,
+    "rotoworld_rank": 135
+   },
+   "value_vs_market": -1,
+   "note": null
+  },
+  {
+   "rank": 119,
+   "name": "Jared Goff",
+   "pos": "QB",
+   "team": "DET",
+   "bye": 6,
+   "pos_rank": "QB15",
+   "tier": 7,
+   "tier_pos": 4,
+   "composite_score": 126.8,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 101.2,
+    "ffc_rank": 104,
+    "underdog_adp": 112.0,
+    "rotoworld_rank": 124
+   },
+   "value_vs_market": -15,
+   "note": null
+  },
+  {
+   "rank": 120,
+   "name": "Deebo Samuel Sr.",
+   "pos": "WR",
+   "team": "SF",
+   "bye": 8,
+   "pos_rank": "WR55",
+   "tier": 7,
+   "tier_pos": 6,
+   "composite_score": 126.9,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 109.8,
+    "ffc_rank": 112,
+    "underdog_adp": 128.0,
+    "rotoworld_rank": 134
+   },
+   "value_vs_market": -8,
+   "note": "Rotoworld still lists him as a free agent while both ADP feeds have him in San Francisco - verify his status before drafting."
+  },
+  {
+   "rank": 121,
+   "name": "Josh Jacobs",
+   "pos": "RB",
+   "team": "GB",
+   "bye": 11,
+   "pos_rank": "RB42",
+   "tier": 7,
+   "tier_pos": 7,
+   "composite_score": 128.05,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 75.0,
+    "ffc_rank": 76,
+    "underdog_adp": 43.1,
+    "rotoworld_rank": 107
+   },
+   "value_vs_market": -45,
+   "note": "On NFL Commissioner's Exempt List since Aug 30 - cannot practice or play, no timetable. Misdemeanor battery charges; court date Sep 10. Zero Week 1 value."
+  },
+  {
+   "rank": 122,
+   "name": "Woody Marks",
+   "pos": "RB",
+   "team": "HOU",
+   "bye": 8,
+   "pos_rank": "RB43",
+   "tier": 7,
+   "tier_pos": 7,
+   "composite_score": 128.9,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 135.5,
+    "ffc_rank": 133,
+    "underdog_adp": 137.6,
+    "rotoworld_rank": 119
+   },
+   "value_vs_market": 11,
+   "note": null
+  },
+  {
+   "rank": 123,
+   "name": "Rashid Shaheed",
+   "pos": "WR",
+   "team": "SEA",
+   "bye": 11,
+   "pos_rank": "WR56",
+   "tier": 7,
+   "tier_pos": 6,
+   "composite_score": 129.55,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 118.5,
+    "ffc_rank": 119,
+    "underdog_adp": 134.8,
+    "rotoworld_rank": 140
+   },
+   "value_vs_market": -4,
+   "note": null
+  },
+  {
+   "rank": 124,
+   "name": "Chris Rodriguez Jr.",
+   "pos": "RB",
+   "team": "JAX",
+   "bye": 7,
+   "pos_rank": "RB44",
+   "tier": 7,
+   "tier_pos": 7,
+   "composite_score": 129.7,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 155.3,
+    "ffc_rank": 155,
+    "underdog_adp": 123.5,
+    "rotoworld_rank": 101
+   },
+   "value_vs_market": 31,
+   "note": null
+  },
+  {
+   "rank": 125,
+   "name": "Bo Nix",
+   "pos": "QB",
+   "team": "DEN",
+   "bye": 10,
+   "pos_rank": "QB16",
+   "tier": 7,
+   "tier_pos": 4,
+   "composite_score": 131.3,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 112.0,
+    "ffc_rank": 114,
+    "underdog_adp": 106.6,
+    "rotoworld_rank": 128
+   },
+   "value_vs_market": -11,
+   "note": null
+  },
+  {
+   "rank": 126,
+   "name": "Travis Kelce",
+   "pos": "TE",
+   "team": "KC",
+   "bye": 5,
+   "pos_rank": "TE10",
+   "tier": 8,
+   "tier_pos": 5,
+   "composite_score": 134.1,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 132.3,
+    "ffc_rank": 128,
+    "underdog_adp": 123.7,
+    "rotoworld_rank": 122
+   },
+   "value_vs_market": 2,
+   "note": null
+  },
+  {
+   "rank": 127,
+   "name": "Kyler Murray",
+   "pos": "QB",
+   "team": "MIN",
+   "bye": 6,
+   "pos_rank": "QB17",
+   "tier": 8,
+   "tier_pos": 4,
+   "composite_score": 135.35,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 132.9,
+    "ffc_rank": 129,
+    "underdog_adp": 114.5,
+    "rotoworld_rank": 126
+   },
+   "value_vs_market": 2,
+   "note": null
+  },
+  {
+   "rank": 128,
+   "name": "Dalton Kincaid",
+   "pos": "TE",
+   "team": "BUF",
+   "bye": 7,
+   "pos_rank": "TE11",
+   "tier": 8,
+   "tier_pos": 5,
+   "composite_score": 135.75,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 143.8,
+    "ffc_rank": 142,
+    "underdog_adp": 120.1,
+    "rotoworld_rank": 111
+   },
+   "value_vs_market": 14,
+   "note": null
+  },
+  {
+   "rank": 129,
+   "name": "Dallas Goedert",
+   "pos": "TE",
+   "team": "PHI",
+   "bye": 10,
+   "pos_rank": "TE12",
+   "tier": 8,
+   "tier_pos": 5,
+   "composite_score": 135.95,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 119.3,
+    "ffc_rank": 120,
+    "underdog_adp": 132.5,
+    "rotoworld_rank": 133
+   },
+   "value_vs_market": -9,
+   "note": null
+  },
+  {
+   "rank": 130,
+   "name": "Tyjae Spears",
+   "pos": "RB",
+   "team": "TEN",
+   "bye": 9,
+   "pos_rank": "RB45",
+   "tier": 8,
+   "tier_pos": 7,
+   "composite_score": 137.15,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 137.2,
+    "ffc_rank": 134,
+    "underdog_adp": 155.3,
+    "rotoworld_rank": 131
+   },
+   "value_vs_market": 4,
+   "note": null
+  },
+  {
+   "rank": 131,
+   "name": "Keaton Mitchell",
+   "pos": "RB",
+   "team": "LAC",
+   "bye": 7,
+   "pos_rank": "RB46",
+   "tier": 8,
+   "tier_pos": 7,
+   "composite_score": 137.15,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 156.0,
+    "ffc_rank": 156,
+    "underdog_adp": 130.1,
+    "rotoworld_rank": 117
+   },
+   "value_vs_market": 25,
+   "note": null
+  },
+  {
+   "rank": 132,
+   "name": "Mike Washington Jr.",
+   "pos": "RB",
+   "team": "LV",
+   "bye": 13,
+   "pos_rank": "RB47",
+   "tier": 8,
+   "tier_pos": 7,
+   "composite_score": 137.25,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 158.4,
+    "ffc_rank": 160,
+    "underdog_adp": 147.2,
+    "rotoworld_rank": 155
+   },
+   "value_vs_market": 28,
+   "note": "Rookie 4th-rounder running with the ones while Jeanty is out. Kubiak has said he expects Washington involved even when Jeanty is healthy."
+  },
+  {
+   "rank": 133,
+   "name": "Tre Tucker",
+   "pos": "WR",
+   "team": "LV",
+   "bye": 13,
+   "pos_rank": "WR57",
+   "tier": 8,
+   "tier_pos": 6,
+   "composite_score": 138.55,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 129.1,
+    "ffc_rank": 125,
+    "underdog_adp": 151.6,
+    "rotoworld_rank": 150
+   },
+   "value_vs_market": -8,
+   "note": null
+  },
+  {
+   "rank": 134,
+   "name": "Mark Andrews",
+   "pos": "TE",
+   "team": "BAL",
+   "bye": 13,
+   "pos_rank": "TE13",
+   "tier": 8,
+   "tier_pos": 5,
+   "composite_score": 139.0,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 134.2,
+    "ffc_rank": 131,
+    "underdog_adp": 134.2,
+    "rotoworld_rank": 127
+   },
+   "value_vs_market": -3,
+   "note": null
+  },
+  {
+   "rank": 135,
+   "name": "Jordan Love",
+   "pos": "QB",
+   "team": "GB",
+   "bye": 11,
+   "pos_rank": "QB18",
+   "tier": 8,
+   "tier_pos": 4,
+   "composite_score": 139.3,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 146.7,
+    "ffc_rank": 144,
+    "underdog_adp": 116.6,
+    "rotoworld_rank": 106
+   },
+   "value_vs_market": 9,
+   "note": null
+  },
+  {
+   "rank": 136,
+   "name": "Jordyn Tyson",
+   "pos": "WR",
+   "team": "NO",
+   "bye": 8,
+   "pos_rank": "WR58",
+   "tier": 8,
+   "tier_pos": 6,
+   "composite_score": 139.65,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 158.8,
+    "ffc_rank": 163,
+    "underdog_adp": 90.2,
+    "rotoworld_rank": 138
+   },
+   "value_vs_market": 27,
+   "note": null
+  },
+  {
+   "rank": 137,
+   "name": "Tyler Allgeier",
+   "pos": "RB",
+   "team": "ARI",
+   "bye": 14,
+   "pos_rank": "RB48",
+   "tier": 8,
+   "tier_pos": 7,
+   "composite_score": 140.6,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 152.0,
+    "ffc_rank": 150,
+    "underdog_adp": 139.4,
+    "rotoworld_rank": 130
+   },
+   "value_vs_market": 13,
+   "note": null
+  },
+  {
+   "rank": 138,
+   "name": "Denzel Boston",
+   "pos": "WR",
+   "team": "CLE",
+   "bye": 11,
+   "pos_rank": "WR59",
+   "tier": 8,
+   "tier_pos": 6,
+   "composite_score": 141.4,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 138.1,
+    "ffc_rank": 135,
+    "underdog_adp": 142.0,
+    "rotoworld_rank": 151
+   },
+   "value_vs_market": -3,
+   "note": null
+  },
+  {
+   "rank": 139,
+   "name": "Jake Ferguson",
+   "pos": "TE",
+   "team": "DAL",
+   "bye": 14,
+   "pos_rank": "TE14",
+   "tier": 8,
+   "tier_pos": 5,
+   "composite_score": 141.85,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 146.7,
+    "ffc_rank": 143,
+    "underdog_adp": 135.9,
+    "rotoworld_rank": 118
+   },
+   "value_vs_market": 4,
+   "note": null
+  },
+  {
+   "rank": 140,
+   "name": "Jonah Coleman",
+   "pos": "RB",
+   "team": "DEN",
+   "bye": 10,
+   "pos_rank": "RB49",
+   "tier": 8,
+   "tier_pos": 7,
+   "composite_score": 141.9,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 149.1,
+    "ffc_rank": 146,
+    "underdog_adp": 143.9,
+    "rotoworld_rank": 136
+   },
+   "value_vs_market": 6,
+   "note": null
+  },
+  {
+   "rank": 141,
+   "name": "Jalen McMillan",
+   "pos": "WR",
+   "team": "TB",
+   "bye": 10,
+   "pos_rank": "WR60",
+   "tier": 8,
+   "tier_pos": 6,
+   "composite_score": 142.65,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 132.2,
+    "ffc_rank": 127,
+    "underdog_adp": 158.2,
+    "rotoworld_rank": 154
+   },
+   "value_vs_market": -14,
+   "note": null
+  },
+  {
+   "rank": 142,
+   "name": "Baker Mayfield",
+   "pos": "QB",
+   "team": "TB",
+   "bye": 10,
+   "pos_rank": "QB19",
+   "tier": 8,
+   "tier_pos": 5,
+   "composite_score": 144.0,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 134.8,
+    "ffc_rank": 132,
+    "underdog_adp": 123.1,
+    "rotoworld_rank": 132
+   },
+   "value_vs_market": -10,
+   "note": null
+  },
+  {
+   "rank": 143,
+   "name": "Keenan Allen",
+   "pos": "WR",
+   "team": "IND",
+   "bye": 13,
+   "pos_rank": "WR61",
+   "tier": 8,
+   "tier_pos": 6,
+   "composite_score": 144.05,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 139.9,
+    "ffc_rank": 137,
+    "underdog_adp": 154.4,
+    "rotoworld_rank": 148
+   },
+   "value_vs_market": -6,
+   "note": null
+  },
+  {
+   "rank": 144,
+   "name": "Isaiah Likely",
+   "pos": "TE",
+   "team": "NYG",
+   "bye": 8,
+   "pos_rank": "TE15",
+   "tier": 8,
+   "tier_pos": 5,
+   "composite_score": 144.65,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 133.7,
+    "ffc_rank": 130,
+    "underdog_adp": 126.8,
+    "rotoworld_rank": 149
+   },
+   "value_vs_market": -14,
+   "note": null
+  },
+  {
+   "rank": 145,
+   "name": "Jauan Jennings",
+   "pos": "WR",
+   "team": "MIN",
+   "bye": 6,
+   "pos_rank": "WR62",
+   "tier": 8,
+   "tier_pos": 6,
+   "composite_score": 145.45,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 142.6,
+    "ffc_rank": 140,
+    "underdog_adp": 174.8,
+    "rotoworld_rank": 139
+   },
+   "value_vs_market": -5,
+   "note": null
+  },
+  {
+   "rank": 146,
+   "name": "Jerry Jeudy",
+   "pos": "WR",
+   "team": "CLE",
+   "bye": 11,
+   "pos_rank": "WR63",
+   "tier": 9,
+   "tier_pos": 7,
+   "composite_score": 151.7,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 126.1,
+    "ffc_rank": 123,
+    "underdog_adp": 204.3,
+    "rotoworld_rank": 169
+   },
+   "value_vs_market": -23,
+   "note": null
+  },
+  {
+   "rank": 147,
+   "name": "Zach Charbonnet",
+   "pos": "RB",
+   "team": "SEA",
+   "bye": 11,
+   "pos_rank": "RB50",
+   "tier": 9,
+   "tier_pos": 7,
+   "composite_score": 152.05,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 139.4,
+    "ffc_rank": 136,
+    "underdog_adp": 163.5,
+    "rotoworld_rank": 167
+   },
+   "value_vs_market": -11,
+   "note": null
+  },
+  {
+   "rank": 148,
+   "name": "Tyler Shough",
+   "pos": "QB",
+   "team": "NO",
+   "bye": 8,
+   "pos_rank": "QB20",
+   "tier": 9,
+   "tier_pos": 5,
+   "composite_score": 152.7,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 142.7,
+    "ffc_rank": 141,
+    "underdog_adp": 127.1,
+    "rotoworld_rank": 143
+   },
+   "value_vs_market": -7,
+   "note": null
+  },
+  {
+   "rank": 149,
+   "name": "Juwan Johnson",
+   "pos": "TE",
+   "team": "NO",
+   "bye": 8,
+   "pos_rank": "TE16",
+   "tier": 9,
+   "tier_pos": 6,
+   "composite_score": 156.6,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 154.7,
+    "ffc_rank": 153,
+    "underdog_adp": 142.0,
+    "rotoworld_rank": 145
+   },
+   "value_vs_market": 4,
+   "note": null
+  },
+  {
+   "rank": 150,
+   "name": "Braelon Allen",
+   "pos": "RB",
+   "team": "NYJ",
+   "bye": 13,
+   "pos_rank": "RB51",
+   "tier": 9,
+   "tier_pos": 8,
+   "composite_score": 158.45,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 156.1,
+    "ffc_rank": 157,
+    "underdog_adp": 185.6,
+    "rotoworld_rank": 152
+   },
+   "value_vs_market": 7,
+   "note": null
+  },
+  {
+   "rank": 151,
+   "name": "Calvin Ridley",
+   "pos": "WR",
+   "team": "TEN",
+   "bye": 9,
+   "pos_rank": "WR64",
+   "tier": 9,
+   "tier_pos": 7,
+   "composite_score": 158.85,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 140.9,
+    "ffc_rank": 139,
+    "underdog_adp": 204.1,
+    "rotoworld_rank": 170
+   },
+   "value_vs_market": -12,
+   "note": null
+  },
+  {
+   "rank": 152,
+   "name": "Sam Darnold",
+   "pos": "QB",
+   "team": "SEA",
+   "bye": 11,
+   "pos_rank": "QB21",
+   "tier": 9,
+   "tier_pos": 5,
+   "composite_score": 158.95,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 152.0,
+    "ffc_rank": 149,
+    "underdog_adp": 143.3,
+    "rotoworld_rank": 142
+   },
+   "value_vs_market": -3,
+   "note": null
+  },
+  {
+   "rank": 153,
+   "name": "Malik Washington",
+   "pos": "WR",
+   "team": "MIA",
+   "bye": 6,
+   "pos_rank": "WR65",
+   "tier": 9,
+   "tier_pos": 7,
+   "composite_score": 159.05,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 148.2,
+    "ffc_rank": 145,
+    "underdog_adp": 174.5,
+    "rotoworld_rank": 172
+   },
+   "value_vs_market": -8,
+   "note": null
+  },
+  {
+   "rank": 154,
+   "name": "Jalen Nailor",
+   "pos": "WR",
+   "team": "LV",
+   "bye": 13,
+   "pos_rank": "WR66",
+   "tier": 9,
+   "tier_pos": 7,
+   "composite_score": 160.6,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 149.1,
+    "ffc_rank": 147,
+    "underdog_adp": 152.2,
+    "rotoworld_rank": 183
+   },
+   "value_vs_market": -7,
+   "note": null
+  },
+  {
+   "rank": 155,
+   "name": "Travis Hunter",
+   "pos": "WR",
+   "team": "JAX",
+   "bye": 7,
+   "pos_rank": "WR67",
+   "tier": 9,
+   "tier_pos": 7,
+   "composite_score": 160.95,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 161.9,
+    "ffc_rank": 173,
+    "underdog_adp": 160.6,
+    "rotoworld_rank": 146
+   },
+   "value_vs_market": 18,
+   "note": "Has collapsed to WR60-65 across every source. Treat as a bench flier only."
+  },
+  {
+   "rank": 156,
+   "name": "Ja'Kobi Lane",
+   "pos": "WR",
+   "team": "BAL",
+   "bye": 13,
+   "pos_rank": "WR68",
+   "tier": 9,
+   "tier_pos": 7,
+   "composite_score": 161.55,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 161.2,
+    "ffc_rank": 171,
+    "underdog_adp": 151.7,
+    "rotoworld_rank": 156
+   },
+   "value_vs_market": 15,
+   "note": null
+  },
+  {
+   "rank": 157,
+   "name": "Dylan Sampson",
+   "pos": "RB",
+   "team": "CLE",
+   "bye": 11,
+   "pos_rank": "RB52",
+   "tier": 9,
+   "tier_pos": 8,
+   "composite_score": 162.35,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 166.7,
+    "ffc_rank": 180,
+    "underdog_adp": 170.0,
+    "rotoworld_rank": 137
+   },
+   "value_vs_market": 23,
+   "note": null
+  },
+  {
+   "rank": 158,
+   "name": "Dontayvion Wicks",
+   "pos": "WR",
+   "team": "PHI",
+   "bye": 10,
+   "pos_rank": "WR69",
+   "tier": 9,
+   "tier_pos": 7,
+   "composite_score": 162.75,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 157.2,
+    "ffc_rank": 158,
+    "underdog_adp": 160.5,
+    "rotoworld_rank": 171
+   },
+   "value_vs_market": 0,
+   "note": null
+  },
+  {
+   "rank": 159,
+   "name": "Adonai Mitchell",
+   "pos": "WR",
+   "team": "NYJ",
+   "bye": 13,
+   "pos_rank": "WR70",
+   "tier": 9,
+   "tier_pos": 7,
+   "composite_score": 163.15,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 158.5,
+    "ffc_rank": 162,
+    "underdog_adp": 169.5,
+    "rotoworld_rank": 163
+   },
+   "value_vs_market": 3,
+   "note": null
+  },
+  {
+   "rank": 160,
+   "name": "Brian Robinson Jr.",
+   "pos": "RB",
+   "team": "ATL",
+   "bye": 11,
+   "pos_rank": "RB53",
+   "tier": 9,
+   "tier_pos": 8,
+   "composite_score": 163.25,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 161.3,
+    "ffc_rank": 172,
+    "underdog_adp": 184.7,
+    "rotoworld_rank": 147
+   },
+   "value_vs_market": 12,
+   "note": null
+  },
+  {
+   "rank": 161,
+   "name": "Brenton Strange",
+   "pos": "TE",
+   "team": "JAX",
+   "bye": 7,
+   "pos_rank": "TE17",
+   "tier": 9,
+   "tier_pos": 6,
+   "composite_score": 164.25,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 154.9,
+    "ffc_rank": 154,
+    "underdog_adp": 151.1,
+    "rotoworld_rank": 161
+   },
+   "value_vs_market": -7,
+   "note": null
+  },
+  {
+   "rank": 162,
+   "name": "Emmett Johnson",
+   "pos": "RB",
+   "team": "KC",
+   "bye": 5,
+   "pos_rank": "RB54",
+   "tier": 9,
+   "tier_pos": 8,
+   "composite_score": 165.1,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 165.9,
+    "ffc_rank": 179,
+    "underdog_adp": 188.5,
+    "rotoworld_rank": 141
+   },
+   "value_vs_market": 17,
+   "note": null
+  },
+  {
+   "rank": 163,
+   "name": "Kayshon Boutte",
+   "pos": "WR",
+   "team": "HOU",
+   "bye": 8,
+   "pos_rank": "WR71",
+   "tier": 9,
+   "tier_pos": 7,
+   "composite_score": 165.9,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 151.9,
+    "ffc_rank": 148,
+    "underdog_adp": 182.1,
+    "rotoworld_rank": 186
+   },
+   "value_vs_market": -15,
+   "note": null
+  },
+  {
+   "rank": 164,
+   "name": "Cooper Kupp",
+   "pos": "WR",
+   "team": "SEA",
+   "bye": 11,
+   "pos_rank": "WR72",
+   "tier": 10,
+   "tier_pos": 7,
+   "composite_score": 168.4,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 152.7,
+    "ffc_rank": 151,
+    "underdog_adp": 212.1,
+    "rotoworld_rank": 179
+   },
+   "value_vs_market": -13,
+   "note": null
+  },
+  {
+   "rank": 165,
+   "name": "Rashod Bateman",
+   "pos": "WR",
+   "team": "BAL",
+   "bye": 13,
+   "pos_rank": "WR73",
+   "tier": 10,
+   "tier_pos": 7,
+   "composite_score": 169.0,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 140.0,
+    "ffc_rank": 138,
+    "underdog_adp": 212.0,
+    "rotoworld_rank": 198
+   },
+   "value_vs_market": -27,
+   "note": null
+  },
+  {
+   "rank": 166,
+   "name": "Tank Bigsby",
+   "pos": "RB",
+   "team": "PHI",
+   "bye": 10,
+   "pos_rank": "RB55",
+   "tier": 10,
+   "tier_pos": 8,
+   "composite_score": 169.25,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 160.5,
+    "ffc_rank": 169,
+    "underdog_adp": 151.9,
+    "rotoworld_rank": 180
+   },
+   "value_vs_market": 3,
+   "note": null
+  },
+  {
+   "rank": 167,
+   "name": "Hunter Henry",
+   "pos": "TE",
+   "team": "NE",
+   "bye": 11,
+   "pos_rank": "TE18",
+   "tier": 10,
+   "tier_pos": 6,
+   "composite_score": 170.35,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 160.4,
+    "ffc_rank": 168,
+    "underdog_adp": 155.1,
+    "rotoworld_rank": 157
+   },
+   "value_vs_market": 1,
+   "note": null
+  },
+  {
+   "rank": 168,
+   "name": "Caleb Douglas",
+   "pos": "WR",
+   "team": "MIA",
+   "bye": 6,
+   "pos_rank": "WR74",
+   "tier": 10,
+   "tier_pos": 8,
+   "composite_score": 173.8,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 173.0,
+    "ffc_rank": 187,
+    "underdog_adp": 179.1,
+    "rotoworld_rank": 159
+   },
+   "value_vs_market": 19,
+   "note": null
+  },
+  {
+   "rank": 169,
+   "name": "Tyrone Tracy Jr.",
+   "pos": "RB",
+   "team": "NYG",
+   "bye": 8,
+   "pos_rank": "RB56",
+   "tier": 10,
+   "tier_pos": 8,
+   "composite_score": 173.85,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 160.9,
+    "ffc_rank": 170,
+    "underdog_adp": 155.8,
+    "rotoworld_rank": 189
+   },
+   "value_vs_market": 1,
+   "note": null
+  },
+  {
+   "rank": 170,
+   "name": "Kaleb Johnson",
+   "pos": "RB",
+   "team": "GB",
+   "bye": 11,
+   "pos_rank": "RB57",
+   "tier": 10,
+   "tier_pos": 8,
+   "composite_score": 173.85,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": null,
+    "ffc_rank": null,
+    "underdog_adp": null,
+    "rotoworld_rank": null
+   },
+   "value_vs_market": null,
+   "note": "Acquired by Green Bay from Pittsburgh on Aug 30, the same day Josh Jacobs was placed on the exempt list. Appears in no published ranking yet. Not a draft pick in 13 rounds - make him your first waiver claim if he takes the early-down work."
+  },
+  {
+   "rank": 171,
+   "name": "Ryan Flournoy",
+   "pos": "WR",
+   "team": "DAL",
+   "bye": 14,
+   "pos_rank": "WR75",
+   "tier": 10,
+   "tier_pos": 8,
+   "composite_score": 174.45,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 157.5,
+    "ffc_rank": 159,
+    "underdog_adp": 169.5,
+    "rotoworld_rank": null
+   },
+   "value_vs_market": -12,
+   "note": null
+  },
+  {
+   "rank": 172,
+   "name": "Chig Okonkwo",
+   "pos": "TE",
+   "team": "WAS",
+   "bye": 7,
+   "pos_rank": "TE19",
+   "tier": 10,
+   "tier_pos": 6,
+   "composite_score": 174.75,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 171.1,
+    "ffc_rank": 184,
+    "underdog_adp": 148.5,
+    "rotoworld_rank": 153
+   },
+   "value_vs_market": 12,
+   "note": null
+  },
+  {
+   "rank": 173,
+   "name": "Kaelon Black",
+   "pos": "RB",
+   "team": "SF",
+   "bye": 8,
+   "pos_rank": "RB58",
+   "tier": 10,
+   "tier_pos": 8,
+   "composite_score": 175.2,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 159.2,
+    "ffc_rank": 164,
+    "underdog_adp": 190.4,
+    "rotoworld_rank": 188
+   },
+   "value_vs_market": -9,
+   "note": null
+  },
+  {
+   "rank": 174,
+   "name": "Dalton Schultz",
+   "pos": "TE",
+   "team": "HOU",
+   "bye": 8,
+   "pos_rank": "TE20",
+   "tier": 10,
+   "tier_pos": 6,
+   "composite_score": 176.1,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 153.8,
+    "ffc_rank": 152,
+    "underdog_adp": 161.1,
+    "rotoworld_rank": 190
+   },
+   "value_vs_market": -22,
+   "note": null
+  },
+  {
+   "rank": 175,
+   "name": "C.J. Stroud",
+   "pos": "QB",
+   "team": "HOU",
+   "bye": 8,
+   "pos_rank": "QB22",
+   "tier": 10,
+   "tier_pos": 6,
+   "composite_score": 176.8,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 162.6,
+    "ffc_rank": 174,
+    "underdog_adp": 147.7,
+    "rotoworld_rank": 158
+   },
+   "value_vs_market": -1,
+   "note": null
+  },
+  {
+   "rank": 176,
+   "name": "Cyrus Allen",
+   "pos": "WR",
+   "team": "KC",
+   "bye": 5,
+   "pos_rank": "WR76",
+   "tier": 10,
+   "tier_pos": 8,
+   "composite_score": 177.1,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 171.2,
+    "ffc_rank": 185,
+    "underdog_adp": 163.7,
+    "rotoworld_rank": 175
+   },
+   "value_vs_market": 9,
+   "note": null
+  },
+  {
+   "rank": 177,
+   "name": "Isiah Pacheco",
+   "pos": "RB",
+   "team": "DET",
+   "bye": 6,
+   "pos_rank": "RB59",
+   "tier": 10,
+   "tier_pos": 8,
+   "composite_score": 177.25,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 159.3,
+    "ffc_rank": 165,
+    "underdog_adp": 191.5,
+    "rotoworld_rank": 192
+   },
+   "value_vs_market": -12,
+   "note": null
+  },
+  {
+   "rank": 178,
+   "name": "T.J. Hockenson",
+   "pos": "TE",
+   "team": "MIN",
+   "bye": 6,
+   "pos_rank": "TE21",
+   "tier": 10,
+   "tier_pos": 6,
+   "composite_score": 177.4,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 160.2,
+    "ffc_rank": 166,
+    "underdog_adp": 168.8,
+    "rotoworld_rank": 174
+   },
+   "value_vs_market": -12,
+   "note": null
+  },
+  {
+   "rank": 179,
+   "name": "Omar Cooper Jr.",
+   "pos": "WR",
+   "team": "NYJ",
+   "bye": 13,
+   "pos_rank": "WR77",
+   "tier": 10,
+   "tier_pos": 8,
+   "composite_score": 178.3,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": null,
+    "ffc_rank": null,
+    "underdog_adp": null,
+    "rotoworld_rank": 144
+   },
+   "value_vs_market": null,
+   "note": null
+  },
+  {
+   "rank": 180,
+   "name": "Chris Bell",
+   "pos": "WR",
+   "team": "MIA",
+   "bye": 6,
+   "pos_rank": "WR78",
+   "tier": 10,
+   "tier_pos": 8,
+   "composite_score": 178.65,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 169.6,
+    "ffc_rank": 182,
+    "underdog_adp": 200.0,
+    "rotoworld_rank": 173
+   },
+   "value_vs_market": 2,
+   "note": null
+  },
+  {
+   "rank": 181,
+   "name": "Jaylin Noel",
+   "pos": "WR",
+   "team": "HOU",
+   "bye": 8,
+   "pos_rank": "WR79",
+   "tier": 10,
+   "tier_pos": 8,
+   "composite_score": 179.6,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 164.6,
+    "ffc_rank": 177,
+    "underdog_adp": 201.4,
+    "rotoworld_rank": 181
+   },
+   "value_vs_market": -4,
+   "note": null
+  },
+  {
+   "rank": 182,
+   "name": "Daniel Jones",
+   "pos": "QB",
+   "team": "IND",
+   "bye": 13,
+   "pos_rank": "QB23",
+   "tier": 10,
+   "tier_pos": 6,
+   "composite_score": 180.1,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 163.5,
+    "ffc_rank": 176,
+    "underdog_adp": 145.1,
+    "rotoworld_rank": 166
+   },
+   "value_vs_market": -6,
+   "note": null
+  },
+  {
+   "rank": 183,
+   "name": "DeVaughn Vele",
+   "pos": "WR",
+   "team": "NO",
+   "bye": 8,
+   "pos_rank": "WR80",
+   "tier": 10,
+   "tier_pos": 8,
+   "composite_score": 180.4,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 163.0,
+    "ffc_rank": 175,
+    "underdog_adp": 186.9,
+    "rotoworld_rank": 191
+   },
+   "value_vs_market": -8,
+   "note": null
+  },
+  {
+   "rank": 184,
+   "name": "Malik Willis",
+   "pos": "QB",
+   "team": "MIA",
+   "bye": 6,
+   "pos_rank": "QB24",
+   "tier": 10,
+   "tier_pos": 6,
+   "composite_score": 180.85,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 164.9,
+    "ffc_rank": 178,
+    "underdog_adp": 134.3,
+    "rotoworld_rank": 177
+   },
+   "value_vs_market": -6,
+   "note": null
+  },
+  {
+   "rank": 185,
+   "name": "Ray Davis",
+   "pos": "RB",
+   "team": "BUF",
+   "bye": 7,
+   "pos_rank": "RB60",
+   "tier": 10,
+   "tier_pos": 8,
+   "composite_score": 181.24,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 160.3,
+    "ffc_rank": 167,
+    "underdog_adp": 187.0,
+    "rotoworld_rank": null
+   },
+   "value_vs_market": -18,
+   "note": null
+  },
+  {
+   "rank": 186,
+   "name": "Alvin Kamara",
+   "pos": "RB",
+   "team": "NO",
+   "bye": 8,
+   "pos_rank": "RB61",
+   "tier": 10,
+   "tier_pos": 8,
+   "composite_score": 181.4,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 158.5,
+    "ffc_rank": 161,
+    "underdog_adp": 189.3,
+    "rotoworld_rank": 193
+   },
+   "value_vs_market": -25,
+   "note": "Falling in both ADP feeds over the last two weeks."
+  },
+  {
+   "rank": 187,
+   "name": "Germie Bernard",
+   "pos": "WR",
+   "team": "PIT",
+   "bye": 9,
+   "pos_rank": "WR81",
+   "tier": 11,
+   "tier_pos": 9,
+   "composite_score": 186.59,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": null,
+    "ffc_rank": null,
+    "underdog_adp": null,
+    "rotoworld_rank": 160
+   },
+   "value_vs_market": null,
+   "note": null
+  },
+  {
+   "rank": 188,
+   "name": "Tre Harris",
+   "pos": "WR",
+   "team": "LAC",
+   "bye": 7,
+   "pos_rank": "WR82",
+   "tier": 11,
+   "tier_pos": 9,
+   "composite_score": 187.63,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": null,
+    "ffc_rank": null,
+    "underdog_adp": null,
+    "rotoworld_rank": 162
+   },
+   "value_vs_market": null,
+   "note": null
+  },
+  {
+   "rank": 189,
+   "name": "Pat Bryant",
+   "pos": "WR",
+   "team": "DEN",
+   "bye": 10,
+   "pos_rank": "WR83",
+   "tier": 11,
+   "tier_pos": 9,
+   "composite_score": 188.67,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": null,
+    "ffc_rank": null,
+    "underdog_adp": null,
+    "rotoworld_rank": 164
+   },
+   "value_vs_market": null,
+   "note": null
+  },
+  {
+   "rank": 190,
+   "name": "Ted Hurst",
+   "pos": "WR",
+   "team": "TB",
+   "bye": 10,
+   "pos_rank": "WR84",
+   "tier": 11,
+   "tier_pos": 9,
+   "composite_score": 189.19,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": null,
+    "ffc_rank": null,
+    "underdog_adp": null,
+    "rotoworld_rank": 165
+   },
+   "value_vs_market": null,
+   "note": null
+  },
+  {
+   "rank": 191,
+   "name": "Isaac TeSlaa",
+   "pos": "WR",
+   "team": "DET",
+   "bye": 6,
+   "pos_rank": "WR85",
+   "tier": 11,
+   "tier_pos": 9,
+   "composite_score": 191.0,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 183.7,
+    "ffc_rank": 189,
+    "underdog_adp": 204.2,
+    "rotoworld_rank": 197
+   },
+   "value_vs_market": -2,
+   "note": null
+  },
+  {
+   "rank": 192,
+   "name": "Troy Franklin",
+   "pos": "WR",
+   "team": "DEN",
+   "bye": 10,
+   "pos_rank": "WR86",
+   "tier": 11,
+   "tier_pos": 9,
+   "composite_score": 194.33,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 170.2,
+    "ffc_rank": 183,
+    "underdog_adp": 215.2,
+    "rotoworld_rank": null
+   },
+   "value_vs_market": -9,
+   "note": null
+  },
+  {
+   "rank": 193,
+   "name": "Sean Tucker",
+   "pos": "RB",
+   "team": "TB",
+   "bye": 10,
+   "pos_rank": "RB62",
+   "tier": 11,
+   "tier_pos": 9,
+   "composite_score": 194.89,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": null,
+    "ffc_rank": null,
+    "underdog_adp": null,
+    "rotoworld_rank": 176
+   },
+   "value_vs_market": null,
+   "note": null
+  },
+  {
+   "rank": 194,
+   "name": "Justice Hill",
+   "pos": "RB",
+   "team": "BAL",
+   "bye": 13,
+   "pos_rank": "RB63",
+   "tier": 11,
+   "tier_pos": 9,
+   "composite_score": 195.48,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 172.2,
+    "ffc_rank": 186,
+    "underdog_adp": 213.1,
+    "rotoworld_rank": null
+   },
+   "value_vs_market": -8,
+   "note": null
+  },
+  {
+   "rank": 195,
+   "name": "Zachariah Branch",
+   "pos": "WR",
+   "team": "ATL",
+   "bye": 11,
+   "pos_rank": "WR87",
+   "tier": 11,
+   "tier_pos": 9,
+   "composite_score": 195.93,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": null,
+    "ffc_rank": null,
+    "underdog_adp": null,
+    "rotoworld_rank": 178
+   },
+   "value_vs_market": null,
+   "note": null
+  },
+  {
+   "rank": 196,
+   "name": "Terrance Ferguson",
+   "pos": "TE",
+   "team": "LAR",
+   "bye": 11,
+   "pos_rank": "TE22",
+   "tier": 11,
+   "tier_pos": 7,
+   "composite_score": 197.33,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 176.3,
+    "ffc_rank": 188,
+    "underdog_adp": 158.1,
+    "rotoworld_rank": null
+   },
+   "value_vs_market": -8,
+   "note": null
+  },
+  {
+   "rank": 197,
+   "name": "Nick Singleton",
+   "pos": "RB",
+   "team": "TEN",
+   "bye": 9,
+   "pos_rank": "RB64",
+   "tier": 11,
+   "tier_pos": 9,
+   "composite_score": 198.0,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": null,
+    "ffc_rank": null,
+    "underdog_adp": null,
+    "rotoworld_rank": 182
+   },
+   "value_vs_market": null,
+   "note": null
+  },
+  {
+   "rank": 198,
+   "name": "Malik Davis",
+   "pos": "RB",
+   "team": "DAL",
+   "bye": 14,
+   "pos_rank": "RB65",
+   "tier": 11,
+   "tier_pos": 9,
+   "composite_score": 199.04,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": null,
+    "ffc_rank": null,
+    "underdog_adp": null,
+    "rotoworld_rank": 184
+   },
+   "value_vs_market": null,
+   "note": null
+  },
+  {
+   "rank": 199,
+   "name": "Bryce Lance",
+   "pos": "WR",
+   "team": "NO",
+   "bye": 8,
+   "pos_rank": "WR88",
+   "tier": 11,
+   "tier_pos": 9,
+   "composite_score": 200.59,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": null,
+    "ffc_rank": null,
+    "underdog_adp": null,
+    "rotoworld_rank": 187
+   },
+   "value_vs_market": null,
+   "note": null
+  },
+  {
+   "rank": 200,
+   "name": "Kaytron Allen",
+   "pos": "RB",
+   "team": "WAS",
+   "bye": 7,
+   "pos_rank": "RB66",
+   "tier": 12,
+   "tier_pos": 9,
+   "composite_score": 204.22,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": null,
+    "ffc_rank": null,
+    "underdog_adp": null,
+    "rotoworld_rank": 194
+   },
+   "value_vs_market": null,
+   "note": null
+  },
+  {
+   "rank": 201,
+   "name": "Jacoby Brissett",
+   "pos": "QB",
+   "team": "ARI",
+   "bye": 14,
+   "pos_rank": "QB25",
+   "tier": 12,
+   "tier_pos": 7,
+   "composite_score": 204.58,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": 168.2,
+    "ffc_rank": 181,
+    "underdog_adp": 200.8,
+    "rotoworld_rank": null
+   },
+   "value_vs_market": -20,
+   "note": null
+  },
+  {
+   "rank": 202,
+   "name": "George Holani",
+   "pos": "RB",
+   "team": "SEA",
+   "bye": 11,
+   "pos_rank": "RB67",
+   "tier": 12,
+   "tier_pos": 9,
+   "composite_score": 204.74,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": null,
+    "ffc_rank": null,
+    "underdog_adp": null,
+    "rotoworld_rank": 195
+   },
+   "value_vs_market": null,
+   "note": null
+  },
+  {
+   "rank": 203,
+   "name": "Kenyon Sadiq",
+   "pos": "TE",
+   "team": "NYJ",
+   "bye": 13,
+   "pos_rank": "TE23",
+   "tier": 12,
+   "tier_pos": 7,
+   "composite_score": 208.56,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": null,
+    "ffc_rank": null,
+    "underdog_adp": null,
+    "rotoworld_rank": 185
+   },
+   "value_vs_market": null,
+   "note": null
+  },
+  {
+   "rank": 204,
+   "name": "Darren Waller",
+   "pos": "TE",
+   "team": "CAR",
+   "bye": 5,
+   "pos_rank": "TE24",
+   "tier": 12,
+   "tier_pos": 7,
+   "composite_score": 209.71,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": null,
+    "ffc_rank": null,
+    "underdog_adp": 209.5,
+    "rotoworld_rank": 200
+   },
+   "value_vs_market": null,
+   "note": null
+  },
+  {
+   "rank": 205,
+   "name": "DeMario Douglas",
+   "pos": "WR",
+   "team": "NE",
+   "bye": 11,
+   "pos_rank": "WR89",
+   "tier": 12,
+   "tier_pos": 9,
+   "composite_score": 209.88,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": null,
+    "ffc_rank": null,
+    "underdog_adp": 214.0,
+    "rotoworld_rank": null
+   },
+   "value_vs_market": null,
+   "note": null
+  },
+  {
+   "rank": 206,
+   "name": "A.J. Barner",
+   "pos": "TE",
+   "team": "SEA",
+   "bye": 11,
+   "pos_rank": "TE25",
+   "tier": 12,
+   "tier_pos": 7,
+   "composite_score": 214.26,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": null,
+    "ffc_rank": null,
+    "underdog_adp": null,
+    "rotoworld_rank": 196
+   },
+   "value_vs_market": null,
+   "note": null
+  },
+  {
+   "rank": 207,
+   "name": "Michael Penix Jr.",
+   "pos": "QB",
+   "team": "ATL",
+   "bye": 11,
+   "pos_rank": "QB26",
+   "tier": 12,
+   "tier_pos": 7,
+   "composite_score": 215.03,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": null,
+    "ffc_rank": null,
+    "underdog_adp": 212.2,
+    "rotoworld_rank": 199
+   },
+   "value_vs_market": null,
+   "note": null
+  },
+  {
+   "rank": 208,
+   "name": "Oronde Gadsden II",
+   "pos": "TE",
+   "team": "LAC",
+   "bye": 7,
+   "pos_rank": "TE26",
+   "tier": 12,
+   "tier_pos": 7,
+   "composite_score": 228.45,
+   "source_ranks": {
+    "ffc_halfppr_12team_adp": null,
+    "ffc_rank": null,
+    "underdog_adp": 192.8,
+    "rotoworld_rank": 168
+   },
+   "value_vs_market": null,
+   "note": "Working behind both Charlie Kolar and David Njoku in preseason. Route share was already thin; now looks undraftable in a 13-round league."
+  }
+ ]
+}

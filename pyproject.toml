@@ -12,6 +12,7 @@ dependencies = [
 sleeper-discover = "sleeper_draft.discover:cli"
 sleeper-batches = "sleeper_draft.batches:cli"
 sleeper-past-draft = "sleeper_draft.past_draft:cli"
+sleeper-board = "sleeper_draft.board:cli"
 
 [dependency-groups]
 dev = [
