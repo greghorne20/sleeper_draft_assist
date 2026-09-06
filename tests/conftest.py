@@ -367,6 +367,34 @@ def draft_artifacts(tmp_path, players_cache, rankings_file, notes_dir, scouting_
     return out
 
 
+def make_keeper_picks(order: dict, board: dict, rounds_by_slot: dict[int, int]) -> list[dict]:
+    """Keepers as Sleeper feeds them: ordinary picks carrying `is_keeper`, at the
+    pick number their round cost implies.
+
+    That is the shape the pick maths has to survive -- they arrive before the
+    draft opens, scattered across the board rather than filling 1..N, so a
+    "picks made" count says nothing about which pick is next.
+    """
+    picks = []
+    for index, (slot, rnd) in enumerate(sorted(rounds_by_slot.items())):
+        pick_no = int(order["picks_by_slot"][str(slot)][rnd - 1])
+        row = board["players"][index]
+        picks.append({
+            "pick_no": pick_no,
+            "round": rnd,
+            "draft_slot": slot,
+            "roster_id": slot,
+            "player_id": row["player_id"],
+            "is_keeper": True,
+            "metadata": {
+                "first_name": row["name"].split()[0],
+                "last_name": " ".join(row["name"].split()[1:]),
+                "position": row["pos"], "team": row["team"],
+            },
+        })
+    return sorted(picks, key=lambda p: p["pick_no"])
+
+
 def make_picks(order: dict, board: dict, count: int) -> list[dict]:
     """`count` picks in draft order, taking the board from the top.
 
