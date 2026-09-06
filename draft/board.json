@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-05T22:32:55-0400",
+ "generated_at": "2026-09-05T22:50:05-0400",
  "join_key": "player_id",
  "source": {
   "rankings": "research/rankings_2026.json",
@@ -39,7 +39,7 @@
   "draft_mechanics": "Round 1 runs 1->12, round 2 runs 12->1, and round 3 ALSO runs 12->1 instead of flipping back. Normal snake resumes in round 4. The practical effect is that the reversal transfers value toward the back of round 1: slot 12 picks at 12, 13 and 25, while slot 1 picks at 1, 24 and 36."
  },
  "league": {
-  "league_name": "12-team half-PPR - Season 21",
+  "league_name": "12-team half-PPR - Season 22",
   "league_id": "LEAGUE_ID",
   "draft_id": "DRAFT_ID",
   "season": "2026",

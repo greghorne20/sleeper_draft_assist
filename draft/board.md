@@ -1,4 +1,4 @@
-# Draft board — 12-team half-PPR - Season 21 (2026)
+# Draft board — 12-team half-PPR - Season 22 (2026)
 
 12 teams · 13 rounds · snake w/ round-3 reversal · starters QB/RB/RB/WR/WR/TE/FLEX · **no K, no DST**
 
