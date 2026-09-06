@@ -476,7 +476,7 @@ function renderBoard(s) {
   else { turn.textContent = "Waiting"; }
 
   if (s.my_slot == null) {
-    $("until").innerHTML = `Slot not set — pass <b>--slot</b> for pick timing.`;
+    $("until").textContent = "Choose a war room to see a team's picks and timing.";
   } else if (s.survive_until_pick != null) {
     $("until").innerHTML = `<b>${s.picks_before_horizon}</b> picks by others, then you're up at <b>${s.survive_until_pick}</b>`;
   } else if (s.my_next_pick != null) {
@@ -499,7 +499,13 @@ function renderRail(s) {
 }
 
 function renderRoster(s) {
-  if (s.my_slot == null) { $("roster").innerHTML = `<div class="empty">No slot set.</div>`; return; }
+  if (s.my_slot == null) {
+    $("roster-title").textContent = "Team";
+    $("roster-note").textContent = "";
+    $("roster").innerHTML =
+      `<div class="empty">Choose a war room above to see that team's roster and open slots.</div>`;
+    return;
+  }
   const r = s.my_roster || [], need = s.roster || {}, counts = need.counts || {};
   $("roster-title").textContent = s.my_team_name || "My team";
   $("roster-note").textContent = `${r.length} picked`;
@@ -726,15 +732,16 @@ async function tick() {
   try {
     latestBriefs = await fetchBriefs();
     const res = await fetch("/state.json", { cache: "no-store" });
-    if (res.status === 404) { stale("Waiting for the first poll…"); return; }
+    if (res.status === 404) { stale("Waiting for the draft feed…"); return; }
     if (!res.ok) { stale(`Server returned ${res.status}.`); return; }
     const s = await res.json();
     if (s.generated_at !== lastStamp) { lastStamp = s.generated_at; lastChange = Date.now(); }
     render(s);
     const age = Math.round((Date.now() - lastChange) / 1000);
-    stale(age > STALE_AFTER_S ? `No new poll for ${age}s — is sleeper-live still running?` : null);
+    stale(age > STALE_AFTER_S
+      ? `Live updates stopped ${age}s ago — this board may be out of date.` : null);
   } catch (err) {
-    stale(`Cannot reach the server (${err.message}) — is sleeper-live still running?`);
+    stale(`Can't reach the draft feed (${err.message}) — this board may be out of date.`);
   }
 }
 
