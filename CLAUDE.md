@@ -226,9 +226,18 @@ is why `SleeperError` is the one exception type worth catching at the boundary.
     exactly when the next brief needs it. `--no-cache` exists to re-measure.
   - **Most of the input is the agentic loop, not the prompt.** Every tool result re-sends the
     conversation, so a brief that reads three notes pays for the system prompt four times —
-    which is exactly why caching a byte-identical prefix across twelve rooms pays off. What is
-    left is per-room input and output; reducing that means fewer tool round trips, which is
-    prompt work rather than plumbing.
+    which is exactly why caching a byte-identical prefix across twelve rooms pays off.
+  - **Hot rooms get Sonnet, cold rooms get Haiku**, split on the same `hot_slots()` the refresh
+    trigger uses so the two cannot drift. Output is over half a Sonnet brief's cost and caching
+    cannot touch it, so the cheap model is the lever that remains. Warm, measured: Sonnet
+    ~$0.0825, Haiku ~$0.0212. **The brief you act on is always Sonnet's** — a room within
+    `--hot-within` picks of its turn regenerates every single pick, so by the time you are on
+    the clock yours has been rewritten several times by the better model.
+  - **Whole-draft cost, simulated across all 156 picks with the real trigger and pick order:**
+    one model uncached ~$152, one model cached ~$84, cached + split ~$57 (574 hot + 444 cold).
+    Sensitive to what the briefs name: a proposal that gets drafted regenerates that room, so
+    briefs that keep recommending players who go immediately push it towards `--refresh all`
+    (1,884 generations). Tuning `--hot-within 1 --cold-every 12` takes it to ~$34.
 
 `yamlio.py` — one shared `dump_yaml` so `discover` and `batches` emit identical style
 (`sort_keys=False` to preserve field order; PyYAML's resolver quotes traps like the team

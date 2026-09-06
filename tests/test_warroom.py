@@ -392,7 +392,7 @@ def runner_args(tmp_path, **kw):
                 playbook=Path("draft/PLAYBOOK.md"), model="test-model", refresh="hot",
                 slot=None, hot_within=B.HOT_WITHIN, cold_every=B.COLD_EVERY, timeout=5.0,
                 concurrency=2, watch=False, interval=1.0, once=True, dry_run=True,
-                no_cache=False, cache_ttl="1h")
+                no_cache=False, cache_ttl="1h", cold_model="claude-haiku-4-5")
     base.update(kw)
     return argparse.Namespace(**base)
 
@@ -483,3 +483,56 @@ def test_the_real_system_prompt_clears_the_caching_floor():
     text = A.load_instructions(Path("draft/PLAYBOOK.md"))
     assert len(text) >= A.MIN_CACHEABLE_CHARS
     assert isinstance(A.system_blocks(text, cache=True), list)
+
+
+# --- the hot/cold model split ------------------------------------------------
+
+
+def test_hot_slots_are_the_ones_near_their_turn(draft_artifacts):
+    """One definition, used by both the refresh trigger and the model choice."""
+    _, state = league(draft_artifacts, 14)
+    assert state["current_pick"] == 15
+    # Round 2 runs 12->1 under 3RR, so picks 15..18 are slots 10, 9, 8, 7.
+    assert B.hot_slots(state, hot_within=3) == {7, 8, 9, 10}
+    assert B.hot_slots(state, hot_within=0) == {10}
+    assert B.hot_slots(state, hot_within=1) == {9, 10}
+
+
+def test_no_room_is_hot_once_the_draft_is_over(draft_artifacts):
+    _, state = league(draft_artifacts, 156)
+    assert state["current_pick"] is None
+    assert B.hot_slots(state) == set()
+
+
+def test_the_refresh_trigger_and_the_model_choice_share_hot_slots(draft_artifacts):
+    """If these ever diverge, a room could regenerate on the cheap model every
+    pick while nobody notices it is the one being read."""
+    board, state = league(draft_artifacts, 14)
+    available = B.available_index(board, state)
+    hot = B.hot_slots(state, B.HOT_WITHIN)
+    targets = B.refresh_targets(state, briefs_for(state, available=available))
+    assert hot <= targets, "every hot room must also be a refresh target"
+
+
+def test_haiku_needs_a_longer_prefix_before_caching_is_worth_offering():
+    """Anthropic's cache floor is twice as high for Haiku, and a prefix under it
+    is silently not cached rather than refused."""
+    assert A.cache_floor_chars("claude-haiku-4-5") > A.cache_floor_chars("claude-sonnet-5")
+    middling = "x" * 6000
+    assert isinstance(A.system_blocks(middling, True, model="claude-sonnet-5"), list)
+    assert A.system_blocks(middling, True, model="claude-haiku-4-5") == middling
+
+
+def test_the_real_prompt_clears_both_models_floors():
+    text = A.load_instructions(Path("draft/PLAYBOOK.md"))
+    for model in ("claude-sonnet-5", "claude-haiku-4-5"):
+        assert isinstance(A.system_blocks(text, True, model=model), list), model
+
+
+def test_one_model_everywhere_when_cold_matches_hot(tmp_path, draft_artifacts):
+    """Setting --cold-model equal to --model must not leave cold rooms on Haiku."""
+    board, state = league(draft_artifacts, 14)
+    args = runner_args(tmp_path, model="claude-sonnet-5", cold_model="claude-sonnet-5")
+    briefs = asyncio.run(R.run_cycle(state, board, {"rooms": {}}, args))
+    assert briefs["rooms"] == {}          # dry run, so nothing generated
+    assert (tmp_path / "prompts").exists()

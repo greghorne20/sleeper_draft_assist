@@ -22,25 +22,35 @@ WHAT A FAILURE DOES
     Keeps the previous brief and marks it. A room that times out or errors never
     blanks its panel, never blocks the other eleven, and never stops the loop.
 
+WHICH MODEL WRITES WHICH BRIEF
+    Rooms within --hot-within picks of their turn get --model; everything else
+    gets --cold-model. Over a full draft that is 574 hot and 444 cold, and the
+    cold ones are planning notes nobody is reading closely. The brief you
+    actually act on is always the better model's: a room that close to its turn
+    regenerates on every single pick, so by the time you are on the clock yours
+    has been rewritten several times over.
+
 WHAT IT COSTS, MEASURED
-    One room against the real board, same state, back to back on Sonnet:
+    Per warm brief, one room, real board:
 
-        --no-cache   in 29,210  out 4,065  cache_read      0   ~$0.149
-        cached       in 11,445  out 2,432  cache_read 17,946   ~$0.076
+        sonnet  in 11,200  read 17,900  out 2,900   ~$0.0825
+        haiku   in 15,115  read 14,418  out   928   ~$0.0212
 
-    Total input volume is the same either way; caching moves 61% of it from
-    $3/MTok to $0.30/MTok, which is where the halving comes from. Output is
-    unaffected and varies run to run with how many tool calls the model makes,
-    so treat the latency difference (51s vs 30s here) as indicative, not exact.
+    Simulated across all 156 picks with the real pick order and the real trigger:
 
-    Most of the input is the agentic loop, not the prompt: every tool result
-    re-sends the conversation, so a brief that reads three research notes pays
-    for the system prompt four times. That is precisely why caching pays -- the
-    prefix is byte-identical across all twelve rooms and every poll of a draft,
-    so one write is read back dozens of times.
+        one model, no cache                        1,018 gens   ~$152
+        one model, cached                          1,018 gens   ~$84
+        hot/cold split, cached (the default)   574 + 444 gens   ~$57
 
-    The remaining cost is uncached per-room input and output. Reducing it means
-    fewer tool round trips, which is prompt work rather than plumbing.
+    Two things drive this and neither is the prompt. Most of the input is the
+    agentic loop -- every tool result re-sends the conversation, so a brief that
+    reads three notes pays for the system prompt four times, which is exactly why
+    caching a byte-identical prefix pays. And output is over half of a Sonnet
+    brief's cost, which caching cannot touch; that is what the cold model is for.
+
+    The count is sensitive to what the briefs recommend. A brief whose proposal
+    gets drafted regenerates that room, so if briefs mostly name players who go
+    immediately the trigger degenerates towards --refresh all (1,884 gens).
 """
 
 from __future__ import annotations
@@ -52,11 +62,18 @@ import os
 import sys
 import time
 from pathlib import Path
+from typing import Any
 
 from ..client import SleeperError
 from ..live import load_json, team_state, write_atomic
 from . import brief as B
-from .agent import DEFAULT_MODEL, build_agent, generate_with_timeout, load_instructions
+from .agent import (
+    DEFAULT_COLD_MODEL,
+    DEFAULT_MODEL,
+    build_agent,
+    generate_with_timeout,
+    load_instructions,
+)
 from .tools import build_tools
 
 # How many rooms may be generating at once. Twelve concurrent calls is fine for
@@ -115,6 +132,11 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--playbook", type=Path, default=Path("draft/PLAYBOOK.md"))
     p.add_argument("--model", default=os.environ.get("ANTHROPIC_CHAT_MODEL", DEFAULT_MODEL),
                    help=f"Anthropic model (or ANTHROPIC_CHAT_MODEL; default {DEFAULT_MODEL})")
+    p.add_argument("--cold-model",
+                   default=os.environ.get("ANTHROPIC_COLD_MODEL", DEFAULT_COLD_MODEL),
+                   help=f"Model for rooms nowhere near their turn (or ANTHROPIC_COLD_MODEL; "
+                        f"default {DEFAULT_COLD_MODEL}). Set it equal to --model to use one "
+                        f"model for everything.")
     p.add_argument("--refresh", choices=("hot", "all"), default="hot",
                    help="hot: only rooms this pick invalidated (default). all: every seat, "
                         "every pick -- roughly four times the cost.")
@@ -197,8 +219,10 @@ async def run_cycle(all_state: dict, board: dict, briefs: dict, args: argparse.N
         return {**briefs, "picks_made": picks_made, "rooms": rooms}
 
     ordered = sorted(targets)
-    print(f"pick {picks_made}: regenerating {len(ordered)} room(s): "
-          + ", ".join(str(s) for s in ordered), file=sys.stderr)
+    warm = B.hot_slots(all_state, args.hot_within) & targets
+    print(f"pick {picks_made}: regenerating {len(ordered)} room(s) -- "
+          f"{len(warm)} near their turn on {args.model}, "
+          f"{len(ordered) - len(warm)} on {args.cold_model}", file=sys.stderr)
 
     if args.dry_run:
         out = args.state_dir / "prompts"
@@ -210,31 +234,46 @@ async def run_cycle(all_state: dict, board: dict, briefs: dict, args: argparse.N
             print(f"  slot {slot}: {len(prompt)} chars -> {out}/slot-{slot}.md", file=sys.stderr)
         return {**briefs, "picks_made": picks_made, "rooms": rooms}
 
-    agent = build_agent(load_instructions(args.playbook),
-                        build_tools(board, available), args.model,
-                        cache=not args.no_cache, ttl=args.cache_ttl)
+    # One agent per model, not per room: a run carries no session, and the tools
+    # are bound to this poll's board, which every seat shares.
+    instructions = load_instructions(args.playbook)
+    tools = build_tools(board, available)
+    agents: dict[str, Any] = {}
+
+    def agent_for(model: str) -> Any:
+        if model not in agents:
+            agents[model] = build_agent(instructions, tools, model,
+                                        cache=not args.no_cache, ttl=args.cache_ttl)
+        return agents[model]
+
+    # The rooms someone is actually reading get the better model. Most rooms over
+    # a draft are nowhere near their turn, and a brief written forty picks out is
+    # a planning note -- the cheaper model is the right tool for it. Same
+    # definition of "hot" the refresh trigger uses, so the two cannot drift.
+    hot = B.hot_slots(all_state, args.hot_within) if args.cold_model != args.model else set(ordered)
     gate = asyncio.Semaphore(args.concurrency)
 
     async def one(slot: int) -> tuple[int, dict]:
+        model = args.model if slot in hot else args.cold_model
         seat = team_state(all_state, slot)
         previous = rooms.get(str(slot))
         prompt = B.build_prompt(seat, all_state, previous)
         async with gate:
             written, problems, usage, took = await generate_with_timeout(
-                agent, prompt, available, args.timeout)
+                agent_for(model), prompt, available, args.timeout)
         if written is None:
             why = "; ".join(problems) or "unknown"
-            print(f"  slot {slot}: FAILED after {took:.1f}s -- {why}", file=sys.stderr)
+            print(f"  slot {slot} [{model}]: FAILED after {took:.1f}s -- {why}", file=sys.stderr)
             if previous:
                 kept = dict(previous)
                 kept["status"] = "error"
                 kept["error"] = why
                 return slot, kept
-            return slot, B.new_room(seat, all_state, None, model=args.model,
+            return slot, B.new_room(seat, all_state, None, model=model,
                                     status="error", error=why)
-        print(f"  slot {slot}: {written.pick.name} ({written.pick.pos}) in {took:.1f}s",
-              file=sys.stderr)
-        return slot, B.new_room(seat, all_state, written, model=args.model,
+        print(f"  slot {slot} [{model}]: {written.pick.name} ({written.pick.pos}) "
+              f"in {took:.1f}s", file=sys.stderr)
+        return slot, B.new_room(seat, all_state, written, model=model,
                                 usage=usage, available=available)
 
     for slot, room in await asyncio.gather(*(one(s) for s in ordered)):
