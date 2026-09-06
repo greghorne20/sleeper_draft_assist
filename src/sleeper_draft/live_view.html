@@ -445,7 +445,7 @@ function renderBoard(s) {
   $("pick-of").textContent = `of ${s.total_picks} · Round ${s.current_round}`;
 
   if (s.is_my_turn) { turn.textContent = "You're on the clock"; turn.classList.add("mine"); }
-  else if (s.on_the_clock_slot != null) { turn.textContent = `Slot ${s.on_the_clock_slot} picking`; }
+  else if (s.on_the_clock_slot != null) { turn.textContent = `${teamLabel(s, s.on_the_clock_slot)} picking`; }
   else { turn.textContent = "Waiting"; }
 
   if (s.my_slot == null) {
@@ -468,7 +468,7 @@ function renderRail(s) {
     const next = n === s.my_next_pick;
     return `<span class="cell${spent ? " spent" : ""}${next ? " next" : ""}">${n}</span>`;
   }).join("");
-  rail.innerHTML = `<span class="lab">Slot ${s.my_slot} picks</span>${cells}`;
+  rail.innerHTML = `<span class="lab">${esc(teamLabel(s, s.my_slot))} picks</span>${cells}`;
 }
 
 function renderRoster(s) {
@@ -536,7 +536,7 @@ function renderRecent(s) {
       <td class="n"><span class="rk">${dash(p.pick_no)}</span></td>
       <td>${posChip(p.pos, p.pos)}</td>
       <td><span class="nm">${esc(p.name)}</span>
-          <span class="meta"> ${p.draft_slot === s.my_slot ? "you" : "slot " + dash(p.draft_slot)}${p.rank ? " · #" + p.rank : ""}</span></td>
+          <span class="meta"> ${p.draft_slot === s.my_slot ? "you" : esc(teamLabel(s, p.draft_slot))}${p.rank ? " · #" + p.rank : ""}</span></td>
     </tr>`).join("")}</tbody></table>`;
 }
 
@@ -564,6 +564,13 @@ function seatState(lg, slot) {
       (p) => Object.assign({}, p, { leaving: ids.has(p.player_id) }));
   }
   return out;
+}
+
+/* What to call a seat -- the same fallback `team_label` applies in live.py, so
+   the page and NOW.md never call the same team two different things. */
+function teamLabel(s, slot) {
+  if (slot == null) return "an unknown seat";
+  return (s.team_names || {})[String(slot)] || `slot ${slot}`;
 }
 
 /* Which seat is being read. The hash so a war room can bookmark its own view;

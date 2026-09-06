@@ -194,7 +194,7 @@ def test_now_md_carries_the_decision_surface(draft_artifacts):
     state = state_after(draft_artifacts, 5, my_slot=12)
     md = live.render_now_md(state)
     assert "## Pick 6 of 156" in md
-    assert "On the clock: slot 6" in md
+    assert "On the clock: Slot 6" in md   # no names known: the seat is its own name
     assert "## My roster" in md
     assert "## Best available" in md
     assert "## Tiers remaining" in md
@@ -437,6 +437,34 @@ def test_war_rooms_carry_team_names_and_fall_back_to_the_slot(draft_artifacts):
     assert state["war_rooms"]["3"]["name"] == "Comeback Kids"
     assert state["war_rooms"]["7"]["name"] == "Slot 7"
     assert "Comeback Kids" in live.render_now_md(live.team_state(state, 3))
+
+
+def test_seats_are_named_not_numbered_wherever_they_are_shown(draft_artifacts):
+    """A slot number identifies a seat to the pick maths; a name identifies it
+    to a person. Everywhere a team is *shown*, it is shown by name."""
+    names = {n: f"Team {chr(64 + n)}" for n in range(1, 13)}
+    state = all_state(draft_artifacts, 14, names=names)
+    md = live.render_now_md(live.team_state(state, 12))
+
+    assert f"On the clock: {names[state['on_the_clock_slot']]}" in md
+    assert "On the clock: slot" not in md
+    # My own line keeps the number too -- the 3RR pick table is indexed by it.
+    assert "- Me: **Team L** (slot 12)" in md
+    # Recent picks name the drafting team rather than numbering it -- except
+    # mine, which says "you" rather than repeating my own name back at me.
+    for entry in state["recent_picks"]:
+        expected = "**you**" if entry["draft_slot"] == 12 else names[entry["draft_slot"]]
+        assert f"` {expected}:" in md
+    assert "` slot " not in md
+    assert "Team L:" not in md
+
+
+def test_team_label_falls_back_to_the_slot_it_cannot_name(draft_artifacts):
+    state = live.team_state(all_state(draft_artifacts, 5, names={2: "Sunday Scaries"}), 2)
+    assert live.team_label(state, 2) == "Sunday Scaries"
+    assert live.team_label(state, 9) == "Slot 9"
+    assert live.team_label(state, 99) == "slot 99"   # not a seat in this draft
+    assert live.team_label(state, None) == "an unknown seat"
 
 
 def test_keepers_leave_the_board_and_are_labelled(draft_artifacts):

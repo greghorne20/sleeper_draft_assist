@@ -236,8 +236,16 @@ def roster_needs(roster: list[dict], roster_positions: list[str]) -> dict:
 LEAGUE_ONLY_FIELDS = ("war_rooms", "rosters_by_slot", "default_slot")
 
 
+def team_label(state: dict, slot: object) -> str:
+    """What to call a seat. The slot number is the only identity Sleeper
+    guarantees, but a name is what anyone at the table actually says."""
+    if slot is None:
+        return "an unknown seat"
+    return (state.get("team_names") or {}).get(str(slot)) or f"slot {slot}"
+
+
 def summarize_league(board: dict, order: dict, draft: dict, picks: list[dict],
-                     available_limit: int) -> dict:
+                     available_limit: int, team_names: dict[int, str] | None = None) -> dict:
     """The seat-independent half of the state. Pure, so it tests without HTTP.
 
     Keepers arrive here as ordinary picks carrying `is_keeper`, at the pick
@@ -305,6 +313,11 @@ def summarize_league(board: dict, order: dict, draft: dict, picks: list[dict],
         if entry["pos"]:
             run[entry["pos"]] = run.get(entry["pos"], 0) + 1
 
+    # Resolved for every seat up front, fallbacks included, so no renderer has
+    # to carry its own "or slot N" branch.
+    named = {key: (team_names or {}).get(int(key)) or f"Slot {key}"
+             for key in order["picks_by_slot"]}
+
     return {
         "generated_at": time.strftime("%Y-%m-%dT%H:%M:%S%z"),
         "draft_id": draft.get("draft_id"),
@@ -313,6 +326,7 @@ def summarize_league(board: dict, order: dict, draft: dict, picks: list[dict],
         "teams": teams,
         "rounds": rounds,
         "roster_positions": league.get("roster_positions") or [],
+        "team_names": named,
         "total_picks": total_picks,
         "picks_made": picks_made,
         "picks_remaining": total_picks - picks_made,
@@ -428,11 +442,11 @@ def summarize_all(board: dict, order: dict, draft: dict, picks: list[dict],
     own. It is deliberately not part of any seat's state, so a war room reads
     the same whoever is looking at it.
     """
-    league = summarize_league(board, order, draft, picks, available_limit)
+    league = summarize_league(board, order, draft, picks, available_limit, team_names)
     war_rooms = {}
     for key in sorted(order["picks_by_slot"], key=int):
         view = slot_view(league, order, int(key), cushion)
-        view["name"] = (team_names or {}).get(int(key)) or f"Slot {key}"
+        view["name"] = league["team_names"][key]
         war_rooms[key] = view
     return {**league, "cushion": cushion, "default_slot": default_slot,
             "war_rooms": war_rooms}
@@ -450,9 +464,10 @@ def team_state(all_state: dict, slot: int | None) -> dict:
 
 
 def summarize(board: dict, order: dict, draft: dict, picks: list[dict],
-              my_slot: int | None, cushion: int, available_limit: int) -> dict:
+              my_slot: int | None, cushion: int, available_limit: int,
+              team_names: dict[int, str] | None = None) -> dict:
     """One seat's whole state. The shape `render_now_md` and the tests expect."""
-    league = summarize_league(board, order, draft, picks, available_limit)
+    league = summarize_league(board, order, draft, picks, available_limit, team_names)
     view = slot_view(league, order, my_slot, cushion) if my_slot else empty_view(league)
     return flatten(league, view, cushion)
 
@@ -491,7 +506,7 @@ def _player_table(rows: list[dict], horizon: int | None) -> list[str]:
 def render_now_md(state: dict) -> str:
     out: list[str] = []
     seat = state.get("my_team_name") or (
-        f"slot {state['my_slot']}" if state.get("my_slot") else None)
+        team_label(state, state["my_slot"]) if state.get("my_slot") else None)
     title = f"# Draft state — {state.get('league_name') or 'league'}"
     out.append(f"{title} — {seat}" if seat else title)
     out.append("")
@@ -504,14 +519,15 @@ def render_now_md(state: dict) -> str:
         out.append("")
     else:
         turn = "**YOUR PICK — you are on the clock.**" if state["is_my_turn"] else (
-            f"On the clock: slot {state['on_the_clock_slot']}."
+            f"On the clock: {team_label(state, state['on_the_clock_slot'])}."
         )
         out.append(f"## Pick {state['current_pick']} of {state['total_picks']} "
                    f"(round {state['current_round']}) — {turn}")
         out.append("")
         out.append(f"- {state['picks_made']} picks made, {state['picks_remaining']} remaining.")
         if state["my_slot"]:
-            out.append(f"- My slot: **{state['my_slot']}** · my picks: "
+            out.append(f"- Me: **{team_label(state, state['my_slot'])}** "
+                       f"(slot {state['my_slot']}) · my picks: "
                        + ", ".join(str(n) for n in state["my_picks"]))
             if state["my_next_pick"]:
                 out.append(f"- My next pick: **{state['my_next_pick']}**"
@@ -591,11 +607,13 @@ def render_now_md(state: dict) -> str:
         out.append(f"Position run over the last {len(state['recent_picks'])} picks: {run}")
         out.append("")
         for entry in reversed(state["recent_picks"]):
-            mine = " ← me" if entry["draft_slot"] == state["my_slot"] else ""
+            # "you" rather than my own team name, which `← me` would only repeat.
+            who = ("**you**" if entry["draft_slot"] == state["my_slot"]
+                   else team_label(state, entry["draft_slot"]))
             rank = f"#{entry['rank']}" if entry["rank"] else "unranked"
             kept = " _(keeper)_" if entry.get("is_keeper") else ""
-            out.append(f"- `{entry['pick_no']}` slot {entry['draft_slot']}: "
-                       f"{entry['name']} ({entry['pos']}, {rank}){kept}{mine}")
+            out.append(f"- `{entry['pick_no']}` {who}: "
+                       f"{entry['name']} ({entry['pos']}, {rank}){kept}")
         out.append("")
 
     if state["off_board_picks"]:
@@ -719,7 +737,8 @@ def main() -> int:
                           team_names)
         if state["picks_made"] != last_seen:
             last_seen = state["picks_made"]
-            where = (f"pick {state['current_pick']} (slot {state['on_the_clock_slot']})"
+            where = (f"pick {state['current_pick']} "
+                     f"({team_label(state, state['on_the_clock_slot'])})"
                      if state["current_pick"] else "complete")
             mine = " -- YOUR PICK" if state["is_my_turn"] else ""
             print(f"{state['picks_made']}/{state['total_picks']} picks · {where}{mine}",
