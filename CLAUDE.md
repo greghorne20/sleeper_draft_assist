@@ -10,6 +10,11 @@ commands turn a Sleeper league into offline artifacts: a config YAML, chunked pl
 batches, a past-draft JSON fixture, the in-draft board, the live draft state, and the keeper
 eligibility ruling.
 
+**Two modes of session, and they are not alike.** Building the tools is an engineering task
+and this file describes it. **Advising during a live draft is not** — for that, read
+`.claude/skills/draft-day/SKILL.md`, which frames the session, routes to the right files and
+fixes the answer shape. `AGENTS.md` points non-Claude-Code agents at the same file.
+
 **The end use is live: during the draft, a TUI assistant reads `draft/` while `sleeper-live`
 polls Sleeper.** `draft/PLAYBOOK.md` is the standing doctrine and is loaded first every session;
 `draft/board.md` is the ranked board; `draft/state/NOW.md` is what is true right now. See "The
@@ -29,6 +34,8 @@ research/batches/    the input lists those notes were written from
 draft/               PLAYBOOK.md + STRATEGY.md (hand-maintained) + board.md/board.json/
                      pick_order.json (generated) -- what the in-draft assistant reads
 draft/state/         NOW.md + state.json, rewritten every poll (gitignored)
+.claude/skills/      draft-day/SKILL.md -- the in-draft conversational framing
+AGENTS.md            points non-Claude-Code agents at that skill
 ```
 
 The modules use **relative imports** (`from .client import ...`), so run them via the console

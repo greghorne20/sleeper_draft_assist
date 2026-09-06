@@ -25,6 +25,28 @@ draft/                    what the in-draft assistant reads (see "The draft/ dir
 tests/                    offline tests; no test touches the network
 ```
 
+## Talking to an assistant during the draft
+
+The point of all of this is to sit next to a coding agent on draft night and ask "who do
+I take?". That is not an engineering conversation, and an agent in a code repo will
+default to treating it as one.
+
+`.claude/skills/draft-day/SKILL.md` fixes that. It frames the session as draft advice,
+routes each kind of question to the right file, fixes the answer shape (a verdict, one
+line of why tied to a PLAYBOOK rule, and the next-best alternative), and states the rules
+that must not be broken -- never recommend a drafted player, never suggest a kicker,
+re-read `draft/state/NOW.md` before every answer because a poller is rewriting it.
+
+Claude Code picks it up on its own from the question. Other agents read `AGENTS.md` at the
+repo root, which points at the same file, so there is one copy of the framing.
+
+Run the watcher in one terminal and talk to the agent in another:
+
+```bash
+make watch SLOT=12     # terminal 1: polls, serves the page, rewrites NOW.md
+                       # terminal 2: your agent, reading draft/
+```
+
 ## Make targets
 
 `make help` lists everything. The targets are thin wrappers over the `uv run`
