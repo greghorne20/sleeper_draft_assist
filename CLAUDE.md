@@ -133,9 +133,14 @@ is why `SleeperError` is the one exception type worth catching at the boundary.
   **not** `SimpleHTTPRequestHandler` — never joining a request path to a directory makes
   traversal impossible by construction rather than by sanitising. `log_message` is a no-op so
   request logs do not bury the poll output. The poll loop and the server share nothing but the
-  filesystem. The page is vanilla JS with no build step and no CDN, re-renders in place to keep
-  scroll position, and shows a banner when polls stop arriving — a silently frozen page during
-  a draft is the dangerous failure. Two tests parse the field names the page reads and assert
+  filesystem. The page is vanilla JS with no build step and no libraries, re-renders in place to
+  keep scroll position, and shows a banner when polls stop arriving — a silently frozen page
+  during a draft is the dangerous failure. It is a dashboard, so state is encoded in form as
+  well as number: position colour chips, a pick rail showing the 3RR cluster, tier bars that
+  turn red at the two-left tier-break trigger. Google Fonts is the one external request, with a
+  full fallback stack; the data path is localhost only. Theme tokens are defined in the bare
+  `:root` and only *redefined* by the dark blocks — never define a colour solely inside a media
+  query, or the un-stamped default renders one theme on the other's ground. Two tests parse the field names the page reads and assert
   they all exist in a generated state, so binding to a dropped field fails the suite.
 - **`keepers.py`** — rules who may keep whom. Reuses `past_draft.walk_back` to reach last
   season, then reads that season's draft, final rosters and the full transaction log. Eligible

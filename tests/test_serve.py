@@ -48,7 +48,7 @@ def test_root_serves_the_page(server):
     assert status == 200
     assert headers["Content-Type"] == "text/html; charset=utf-8"
     assert body == serve.ASSET.read_bytes()
-    assert b"<title>Draft state</title>" in body
+    assert b"<title>Draft Room</title>" in body
 
 
 def test_index_html_is_the_same_page(server):

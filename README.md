@@ -15,7 +15,7 @@ src/sleeper_draft/
     board.py              rankings + research notes -> the in-draft board
     live.py               poll the live draft -> the current-state files
     serve.py              two-route stdlib server for the live page
-    live_view.html        the live page itself (vanilla, no build, no CDN)
+    live_view.html        the live page itself (vanilla JS, no build step)
     keepers.py            last season's draft + rosters + trades -> keeper eligibility
     yamlio.py             shared YAML output settings
 research/rankings_2026.json    aggregate rankings, keyed by name -- the board's input
@@ -220,8 +220,20 @@ mid-draft while looking perfectly healthy.
 The page fetches every few seconds and re-renders in place, so your scroll
 position in the available list survives an update. It shows the same things as
 `NOW.md` in the same order, warns visibly if a poll stops arriving, and needs no
-build step and no CDN (draft-day wifi is not worth betting the board on). When
-polling stops -- draft over, or a one-shot run -- the page stays up until Ctrl-C.
+build step. When polling stops -- draft over, or a one-shot run -- the page stays
+up until Ctrl-C.
+
+Positions are colour-coded the way every fantasy board is (QB magenta, RB green,
+WR blue, TE amber), so you scan by shape rather than reading. The pick rail
+across the top shows your own pick numbers with the next one ringed, which makes
+the third-round-reversal cluster visible -- slot 12's 12 · 13 · 25. Tier counts
+are drawn as bars and turn red at two or fewer left, which is the tier-break
+trigger from `PLAYBOOK.md`.
+
+Fonts come from Google Fonts with a full system fallback stack, so the page is
+readable if that fails; the *data* never depends on anything but localhost. The
+tool needs the internet to poll Sleeper anyway, so this adds no failure mode
+that matters.
 
 **`--host` defaults to `127.0.0.1`.** `--host 0.0.0.0` publishes your at-risk
 list, roster plan and scouting notes to everyone on the network, which is
