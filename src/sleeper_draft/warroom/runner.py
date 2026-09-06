@@ -77,8 +77,10 @@ from .agent import (
 from .tools import build_tools
 
 # How many rooms may be generating at once. Twelve concurrent calls is fine for
-# the API and miserable to read in a log.
-CONCURRENCY = 6
+# the API and miserable to read in a log. Eight is the number that keeps a
+# typical refresh to one wave -- at the current triggers a pick invalidates ~6.7
+# rooms, and a gate below that turns one 70s cycle into two.
+CONCURRENCY = 8
 
 # A brief that arrives after the pick it was written for is worth nothing -- but
 # measured against the real board, one room with tool calls takes ~70s, so this
@@ -218,6 +220,16 @@ def write_briefs(briefs: dict, state_dir: Path) -> Path:
     return path
 
 
+def refresh_order(targets: set[int], warm: set[int]) -> list[int]:
+    """Hot rooms first, then by slot number.
+
+    The semaphore lets `--concurrency` rooms through at a time, so plain slot
+    order would put a planning note forty picks out ahead of the room that is on
+    the clock -- and the brief anyone acts on is the one that would be waiting.
+    """
+    return sorted(targets, key=lambda slot: (slot not in warm, slot))
+
+
 async def run_cycle(all_state: dict, board: dict, briefs: dict, args: argparse.Namespace,
                     persist: Callable[[dict], Any] | None = None) -> dict:
     """One pass: pick the rooms that need work, generate them, merge the rest.
@@ -239,8 +251,8 @@ async def run_cycle(all_state: dict, board: dict, briefs: dict, args: argparse.N
         print(f"pick {picks_made}: nothing to regenerate", file=sys.stderr)
         return {**briefs, "picks_made": picks_made, "rooms": rooms}
 
-    ordered = sorted(targets)
     warm = B.hot_slots(all_state, args.hot_within) & targets
+    ordered = refresh_order(targets, warm)
     print(f"pick {picks_made}: regenerating {len(ordered)} room(s) -- "
           f"{len(warm)} near their turn on {args.model}, "
           f"{len(ordered) - len(warm)} on {args.cold_model}", file=sys.stderr)

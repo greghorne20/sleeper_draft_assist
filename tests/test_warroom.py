@@ -159,9 +159,27 @@ def test_rooms_near_their_turn_and_the_team_that_just_picked_regenerate(draft_ar
     assert state["current_pick"] == 15
 
     targets = B.refresh_targets(state, briefs_for(state, available=available))
-    # Under 3RR round 2 runs 12->1, so picks 15..18 belong to slots 10, 9, 8, 7.
-    # Slot 11 made pick 14, so its roster just changed.
-    assert targets == {7, 8, 9, 10, 11}
+    # HOT_WITHIN is 5, so picks 15..20 are the hot window. Under 3RR round 2 runs
+    # 12->1, which puts those on slots 10, 9, 8, 7, 6, 5. Slot 11 made pick 14,
+    # so its roster just changed.
+    assert B.HOT_WITHIN == 5
+    assert targets == {5, 6, 7, 8, 9, 10, 11}
+
+
+def test_hot_rooms_generate_before_cold_ones(draft_artifacts):
+    """The gate admits --concurrency at a time, so order is latency: a room on
+    the clock must not queue behind a planning note forty picks out."""
+    board, state = league(draft_artifacts, 14)
+    available = B.available_index(board, state)
+    targets = B.refresh_targets(state, briefs_for(state, available=available))
+    warm = B.hot_slots(state, B.HOT_WITHIN) & targets
+    ordered = R.refresh_order(targets, warm)
+
+    assert set(ordered) == targets
+    assert ordered[:len(warm)] == sorted(warm)
+    assert ordered[len(warm):] == sorted(targets - warm)
+    # Slot 11 only refreshes because it just picked; slot 10 is on the clock.
+    assert ordered.index(10) < ordered.index(11)
 
 
 def test_a_room_with_no_brief_always_regenerates(draft_artifacts):

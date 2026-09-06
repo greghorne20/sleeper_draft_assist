@@ -225,7 +225,14 @@ is why `SleeperError` is the one exception type worth catching at the boundary.
     still written once per cycle — nothing polls it.
   - **`refresh_targets` decides who regenerates.** Not all twelve on every pick: a room refreshes
     when it is near its turn, just picked, had its proposal drafted, errored, or aged out.
-    `--refresh all` forces every seat, at roughly four times the cost.
+    `--refresh all` forces every seat, at roughly four times the cost. The window is
+    `--hot-within 5 --cold-every 4` — raised from 3/6 once the bill turned out to have headroom,
+    because a room five picks out is already being read.
+  - **Hot rooms generate first.** `refresh_order` orders the cycle, not `sorted()`. The
+    semaphore admits `--concurrency` at a time, so slot order would queue the room on the clock
+    behind a planning note forty picks out. `--concurrency` is 8 rather than 6 for the same
+    reason: a pick now invalidates ~6.7 rooms, and a gate under that turns one 70s cycle into
+    two — which would spend the raised cadence on latency instead of freshness.
   - **Cross-team needs are colour, not an urgency input.** The prompt says so outright. Twelve
     rooms reading each other's needs and all reaching a round early is a feedback loop market ADP
     does not have, so `leaving` stays anchored to ADP.
@@ -250,10 +257,13 @@ is why `SleeperError` is the one exception type worth catching at the boundary.
     `--hot-within` picks of its turn regenerates every single pick, so by the time you are on
     the clock yours has been rewritten several times by the better model.
   - **Whole-draft cost, simulated across all 156 picks with the real trigger and pick order:**
-    one model uncached ~$152, one model cached ~$84, cached + split ~$57 (574 hot + 444 cold).
-    Sensitive to what the briefs name: a proposal that gets drafted regenerates that room, so
-    briefs that keep recommending players who go immediately push it towards `--refresh all`
-    (1,884 generations). Tuning `--hot-within 1 --cold-every 12` takes it to ~$34.
+    at the original `3/6` window, one model uncached ~$152, one model cached ~$84, cached +
+    split ~$57 (574 hot + 444 cold). Sensitive to what the briefs name: a proposal that gets
+    drafted regenerates that room, so briefs that keep recommending players who go immediately
+    push it towards `--refresh all` (1,884 generations). Tuning `--hot-within 1 --cold-every 12`
+    takes it to ~$34. The `5/4` default now shipped costs about 1.4x the `3/6` one — a second
+    simulation, holding the proposal-collision trigger out, puts the same pair at ~$69 against
+    ~$49, and the ratio is the part to trust rather than either absolute.
 
 `yamlio.py` — one shared `dump_yaml` so `discover` and `batches` emit identical style
 (`sort_keys=False` to preserve field order; PyYAML's resolver quotes traps like the team
