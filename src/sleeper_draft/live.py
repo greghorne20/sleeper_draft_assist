@@ -282,7 +282,13 @@ def summarize(board: dict, order: dict, draft: dict, picks: list[dict],
     # The pick a player must survive until to still be there for me. On the
     # clock that is my following pick; otherwise it is this one.
     horizon = my_after_next if is_my_turn else my_next
-    picks_before_horizon = (horizon - current_pick - 1) if (horizon and current_pick) else None
+    # How many picks OTHER teams make between now and the horizon. On the clock I
+    # consume current_pick myself, so it is not one of theirs; waiting, it is.
+    # PLAYBOOK D3 states the on-the-clock form (next - current - 1); the waiting
+    # form is one larger because current_pick has not been used up yet.
+    picks_before_horizon = (
+        horizon - current_pick - (1 if is_my_turn else 0)
+    ) if (horizon and current_pick) else None
 
     my_roster = by_roster.get(my_slot, []) if my_slot else []
     needs = roster_needs(my_roster, league.get("roster_positions") or [])

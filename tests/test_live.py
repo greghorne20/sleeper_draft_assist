@@ -38,18 +38,49 @@ def test_pick_clock_tracks_the_3rr_order(draft_artifacts):
 
 def test_horizon_is_the_following_pick_when_on_the_clock(draft_artifacts):
     state = state_after(draft_artifacts, 12, my_slot=12)
-    # On the clock at 13, so what matters is surviving to 25: 11 picks by others.
+    # On the clock at 13. I take 13 myself, so the picks I have to survive are
+    # 14..24 -- eleven of them -- before 25 comes back to me.
+    assert state["is_my_turn"] is True
     assert state["survive_until_pick"] == 25
     assert state["picks_before_horizon"] == 11
 
 
 def test_horizon_is_my_next_pick_when_waiting(draft_artifacts):
     state = state_after(draft_artifacts, 5, my_slot=12)
-    # Pick 6 is up, mine is 12. Five other teams pick first.
+    # Pick 6 is up and it is not mine, so picks 6..11 are all other teams --
+    # six of them -- and then I pick at 12. current_pick counts here precisely
+    # because I have not used it.
     assert state["is_my_turn"] is False
     assert state["my_next_pick"] == 12
     assert state["survive_until_pick"] == 12
-    assert state["picks_before_horizon"] == 5
+    assert state["picks_before_horizon"] == 6
+
+
+def test_the_count_is_the_picks_actually_made_by_other_teams(draft_artifacts):
+    """Walk the whole first round and check the count against a literal tally."""
+    board, order = artifacts(draft_artifacts)
+    for made in range(0, 24):
+        picks = make_picks(order, board, made)
+        state = live.summarize(board, order, DRAFT, picks, 12, 4, 30)
+        horizon, current = state["survive_until_pick"], state["current_pick"]
+        if horizon is None or current is None:
+            continue
+        mine = set(state["my_picks"])
+        # Every pick strictly before the horizon that is not one I make myself.
+        expected = len([n for n in range(current, horizon) if n not in mine])
+        assert state["picks_before_horizon"] == expected, (
+            f"{made} made, on the clock={state['is_my_turn']}, "
+            f"current={current}, horizon={horizon}"
+        )
+
+
+def test_one_pick_away_counts_exactly_one(draft_artifacts):
+    board, order = artifacts(draft_artifacts)
+    # Slot 12 picks at 12; with 10 made, pick 11 is up and only slot 11 is ahead.
+    state = live.summarize(board, order, DRAFT, make_picks(order, board, 10), 12, 4, 30)
+    assert state["current_pick"] == 11
+    assert state["my_next_pick"] == 12
+    assert state["picks_before_horizon"] == 1
 
 
 def test_drafted_players_leave_the_available_board(draft_artifacts):
