@@ -87,8 +87,10 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--available", type=int, default=30,
                    help="How many available players to list (default 30)")
     p.add_argument("--watch", action="store_true", help="Poll until the draft completes")
-    p.add_argument("--interval", type=float, default=10.0,
-                   help="Seconds between polls when --watch (default 10)")
+    p.add_argument("--interval", type=float, default=2.0,
+                   help="Seconds between polls when --watch (default 2). The clock catching "
+                        "up is what anyone at the table notices, and one picks request every "
+                        "two seconds is a fraction of the rate the client already allows.")
     p.add_argument("--serve", action="store_true",
                    help="Also serve a live HTML view of the state")
     p.add_argument("--port", type=int, default=_env_int("PORT") or 8765,
@@ -785,11 +787,22 @@ def resolve_team_names(client: SleeperClient, league_id: str | None,
                          "the draft order is not drawn yet")
 
 
+# How often the draft object itself is re-read. Picks change every few seconds;
+# the draft's own status changes about twice in its life, so re-fetching it on
+# every poll doubles the request rate to watch a field that is almost always the
+# same. Thirty seconds is finer resolution than anyone needs on "paused", and it
+# is what buys the budget to poll the picks more often.
+DRAFT_REFRESH_S = 30.0
+
+
 def poll_once(client: SleeperClient, draft_id: str, board: dict, order: dict,
               my_slot: int | None, args: argparse.Namespace,
               team_names: dict[int, str] | None = None,
-              seating_provisional: bool = False) -> dict:
-    draft = client.get_draft(draft_id)
+              seating_provisional: bool = False,
+              draft: dict | None = None) -> dict:
+    """One poll. `draft` reuses an already-fetched draft object; omit it to fetch."""
+    if draft is None:
+        draft = client.get_draft(draft_id)
     picks = client.get_draft_picks(draft_id)
     all_state = summarize_all(board, order, draft, picks, args.cushion, args.available,
                               team_names, my_slot, seating_provisional)
@@ -830,9 +843,15 @@ def main() -> int:
                   "your board, roster plan and at-risk list", file=sys.stderr)
 
     last_seen = -1
+    # `draft` was fetched above for the slot and name lookups, so the first poll
+    # already has one in hand.
+    draft_fetched_at = time.monotonic()
     while True:
+        if time.monotonic() - draft_fetched_at >= DRAFT_REFRESH_S:
+            draft = client.get_draft(str(draft_id))
+            draft_fetched_at = time.monotonic()
         state = poll_once(client, str(draft_id), board, order, my_slot, args,
-                          team_names, provisional)
+                          team_names, provisional, draft=draft)
         if state["picks_made"] != last_seen:
             last_seen = state["picks_made"]
             where = (f"pick {state['current_pick']} "

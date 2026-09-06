@@ -16,7 +16,7 @@ set -uo pipefail
 
 : "${PORT:=8765}"
 : "${HOST:=0.0.0.0}"
-: "${POLL_INTERVAL:=10}"
+: "${POLL_INTERVAL:=2}"
 : "${RESTART_DELAY:=5}"
 
 log() { printf '[%s] %s\n' "$1" "${*:2}" >&2; }

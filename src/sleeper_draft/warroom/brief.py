@@ -39,11 +39,13 @@ from ..live import _player_table, team_label
 FORBIDDEN_POSITIONS = ("K", "DEF", "DST")
 
 # How close a room has to be to its next pick before every single pick
-# regenerates it.
-HOT_WITHIN = 3
+# regenerates it. Five rather than three: a room five out is already being read,
+# and the whole-draft bill is the constraint that sets this -- ~$69 simulated
+# against ~$49 at three, which is headroom this league has.
+HOT_WITHIN = 5
 
 # A room nowhere near its turn still refreshes this often, so no tab goes stale.
-COLD_EVERY = 6
+COLD_EVERY = 4
 
 
 class Candidate(BaseModel):

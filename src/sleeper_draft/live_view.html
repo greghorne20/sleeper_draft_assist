@@ -373,7 +373,13 @@ footer { padding: 0 20px 30px; color: var(--muted); font-size: 12.5px; }
 
 <script>
 "use strict";
-const REFRESH_MS = 4000, STALE_AFTER_S = 120;
+/* One second, not four. The clock changing is the thing anyone actually watches,
+   and most of the lag anyone notices was this timer. Both JSON routes answer 304
+   to a conditional request, so an unchanged poll costs a header exchange -- see
+   serve.py's note on no-cache. `cache: "no-cache"` is what makes the browser
+   send If-None-Match at all; "no-store" would bypass the cache and re-download
+   ~70KB every second. */
+const REFRESH_MS = 1000, STALE_AFTER_S = 120;
 const $ = (id) => document.getElementById(id);
 let lastStamp = null, lastChange = Date.now(), latestAll = null, latestBriefs = null;
 
@@ -724,7 +730,7 @@ function stale(msg) {
    is not running, and a parse error must not take the board down with it. */
 async function fetchBriefs() {
   try {
-    const res = await fetch("/briefs.json", { cache: "no-store" });
+    const res = await fetch("/briefs.json", { cache: "no-cache" });
     return res.ok ? await res.json() : null;
   } catch (err) {
     return null;
@@ -734,7 +740,7 @@ async function fetchBriefs() {
 async function tick() {
   try {
     latestBriefs = await fetchBriefs();
-    const res = await fetch("/state.json", { cache: "no-store" });
+    const res = await fetch("/state.json", { cache: "no-cache" });
     if (res.status === 404) { stale("Waiting for the draft feed…"); return; }
     if (!res.ok) { stale(`Server returned ${res.status}.`); return; }
     const s = await res.json();
