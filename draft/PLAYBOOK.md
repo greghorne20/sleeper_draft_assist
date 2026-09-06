@@ -14,7 +14,7 @@ This file is the operational subset — the part you actually run during the dra
 |---|---|
 | **What is true right now — whose pick, my roster, who's at risk** | `draft/state/NOW.md` (rewritten every poll by `sleeper-live`) |
 | League rules, scoring, roster slots | `config.yaml` (fetched from Sleeper — authoritative) |
-| The ranked board, tiers, ADP, risk flags | `draft/board.md` (human) · `draft/board.json` (machine) |
+| The ranked board, tiers, ADP, risk flags | `draft/board.md` — read this one |
 | My pick numbers for a given draft slot | `draft/pick_order.json` — or the table in §3 |
 | Everything known about one player | `research/players/*.md` — **the filename ends in the Sleeper `player_id`** |
 | Why a rule says what it says — VORP math, gap data, citations | `draft/STRATEGY.md` |
@@ -26,6 +26,10 @@ This file is the operational subset — the part you actually run during the dra
 `player_id` → board row → `research/players/*-<player_id>.md`.
 
 Regenerate the board with `uv run sleeper-board` (offline; reads the cached players dump).
+
+The `.json` files next to them — `board.json`, `pick_order.json`, `state/state.json` — are inputs
+for tooling, not for reading. They carry the same information several times larger, because JSON
+repeats every field name on every row. Read the `.md`.
 
 ---
 

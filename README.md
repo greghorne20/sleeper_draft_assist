@@ -197,6 +197,11 @@ Everything the in-draft assistant reads, and nothing else:
 
 The join key is `player_id` throughout: live pick -> board row -> `research/players/*-<player_id>.md`.
 
+The `.md` files are for reading; the `.json` files are inputs for tooling. They hold the same
+information 4-7x larger, because JSON repeats every field name on every row. `board.json` and
+`pick_order.json` are what `sleeper-live` parses; `state/state.json` is there for a renderer or
+status line, and carries only the fields a live view displays.
+
 ---
 
 ## What's actually in `/players/nfl`

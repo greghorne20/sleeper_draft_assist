@@ -453,7 +453,9 @@ def render_board_md(rows: list[dict], extras: list[dict], league: dict, rankings
     out.append(f"{len(rows)} ranked players. Source: {meta.get('title', 'rankings')} "
                f"(generated {meta.get('generated', 'unknown')}). Scoring: {meta.get('scoring', 'unknown')}.")
     out.append("")
-    out.append("Regenerate with `uv run sleeper-board`. Machine-readable twin: `draft/board.json`.")
+    out.append("Regenerate with `uv run sleeper-board`. **This file is the one to read** — "
+               "`draft/board.json` holds the same board plus join fields, and exists as the input "
+               "`sleeper-live` and other tooling parse. It is ~4.6x this file.")
     out.append("")
     out.append("**Columns** — `#` overall rank · `Pos` positional rank · `Bye` bye week · "
                "`id` Sleeper player_id (the join key to live picks) · `FFC`/`UD`/`RW` source ranks "

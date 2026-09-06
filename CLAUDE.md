@@ -146,6 +146,11 @@ boolean-quoting test).
 This is the only directory the in-draft assistant should need. The join key is `player_id`
 everywhere: live pick → `draft/board.md` row → `research/players/*-<player_id>.md`.
 
+**Read the `.md` files, not the `.json` ones.** The JSON holds the same information 4–7x larger
+(`board.json` is 4.6x `board.md`) because JSON repeats every field name on every row. The JSON
+exists as a machine input: `board.json` and `pick_order.json` are what `live.py` parses, and
+`state/state.json` is there for a future renderer or status line.
+
 - **`PLAYBOOK.md`** — hand-maintained doctrine: hard constraints (no K, no DST — those slots
   do not exist), the 3RR pick table, the per-pick algorithm, the real positional cliffs,
   round-by-round plan, numeric thresholds, adaptation triggers, risk flags, and the data

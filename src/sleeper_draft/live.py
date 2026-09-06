@@ -163,6 +163,28 @@ def market_adp(row: dict) -> float | None:
     return None
 
 
+# What a live view of a player actually shows. Everything else on a board row --
+# sleeper_name, tier_pos, composite_score, research_note and friends -- exists for
+# the board or for the join, and would only widen the contract a renderer binds to.
+DISPLAY_FIELDS = ("player_id", "rank", "pos_rank", "pos", "name", "team", "bye", "tier",
+                  "value_vs_market", "risk_flag", "sleeper_injury_status", "flags",
+                  "handcuff_for_name", "scouting", "note")
+
+
+def display_row(row: dict) -> dict:
+    """A board row narrowed to what a live view shows, with ADP flattened.
+
+    NOW.md and state.json both render from this, so the two outputs cannot drift:
+    anything the markdown shows has to survive the projection.
+    """
+    out = {field: row[field] for field in DISPLAY_FIELDS
+           if row.get(field) not in (None, [], "")}
+    adp = market_adp(row)
+    if adp is not None:
+        out["adp"] = adp
+    return out
+
+
 def roster_needs(roster: list[dict], roster_positions: list[str]) -> dict:
     """Which starting slots are still empty, filling FLEX last.
 
@@ -318,8 +340,8 @@ def summarize(board: dict, order: dict, draft: dict, picks: list[dict],
         "roster": needs,
         "bye_counts": bye_counts,
         "available_count": len(available),
-        "best_available": available[:available_limit],
-        "at_risk": at_risk[:available_limit],
+        "best_available": [display_row(row) for row in available[:available_limit]],
+        "at_risk": [display_row(row) for row in at_risk[:available_limit]],
         "tier_status": tier_status,
         "recent_picks": recent,
         "position_run": run,
@@ -347,7 +369,7 @@ def _player_table(rows: list[dict]) -> list[str]:
     out = ["| # | Pos | Player | Tm | Bye | id | ADP | Notes |",
            "|---:|---|---|---|---:|---|---:|---|"]
     for row in rows:
-        adp = market_adp(row)
+        adp = row.get("adp")
         out.append(
             f"| {row['rank']} | {row['pos_rank']} | {row['name']} | {row['team']} | "
             f"{row['bye']} | {row['player_id']} | {'-' if adp is None else adp} | {_flags(row)} |"

@@ -74,11 +74,11 @@ def test_at_risk_is_bounded_by_the_horizon_plus_cushion(draft_artifacts):
     threshold = state["survive_until_pick"] + 4
     assert state["at_risk"], "expected some players inside the horizon"
     for row in state["at_risk"]:
-        assert live.market_adp(row) <= threshold
+        assert row["adp"] <= threshold
     # And nobody safely beyond it crept in.
     risky = {row["player_id"] for row in state["at_risk"]}
     for row in state["best_available"]:
-        adp = live.market_adp(row)
+        adp = row.get("adp")
         if adp is not None and adp > threshold:
             assert row["player_id"] not in risky
 
@@ -247,3 +247,72 @@ def test_end_to_end_writes_state_without_touching_the_network(
     assert state["picks_made"] == 12
     assert state["is_my_turn"] is True
     assert (out / "NOW.md").read_text().count("| ") > 10
+
+
+def test_display_row_keeps_the_display_fields_and_flattens_adp():
+    row = {
+        "player_id": "1", "rank": 5, "pos_rank": "RB3", "pos": "RB", "name": "A Back",
+        "team": "KC", "bye": 6, "tier": 1, "value_vs_market": 2, "scouting": "workhorse",
+        "flags": ["value"], "risk_flag": None, "note": None, "handcuff_for_name": None,
+        "sleeper_injury_status": None,
+        "source_ranks": {"ffc_halfppr_12team_adp": 4.5, "ffc_rank": 4},
+        # None of these belong in a live view.
+        "sleeper_name": "A Back", "sleeper_team": "KC", "team_disagreement": False,
+        "tier_pos": 3, "composite_score": 5.0, "sleeper_status": "Active",
+        "tier_label": "tier 1", "handcuff_for": None,
+        "research_note": "research/players/back-a-RB-1.md",
+    }
+    out = live.display_row(row)
+    assert out == {
+        "player_id": "1", "rank": 5, "pos_rank": "RB3", "pos": "RB", "name": "A Back",
+        "team": "KC", "bye": 6, "tier": 1, "value_vs_market": 2, "flags": ["value"],
+        "scouting": "workhorse", "adp": 4.5,
+    }
+    # Empty values are dropped rather than carried as nulls.
+    assert "risk_flag" not in out
+    assert "note" not in out
+
+
+def test_display_row_survives_a_player_with_no_adp():
+    row = {"player_id": "2", "rank": 200, "pos_rank": "WR90", "pos": "WR", "name": "Deep Cut",
+           "team": "NYJ", "bye": 9, "tier": 12, "source_ranks": {}}
+    out = live.display_row(row)
+    assert "adp" not in out
+    assert out["name"] == "Deep Cut"
+    # And the table still renders that row, with a dash for the missing ADP.
+    assert "| - |" in "\n".join(live._player_table([out]))
+
+
+def test_state_json_rows_carry_adp_and_drop_the_join_fields(tmp_path, draft_artifacts):
+    state = state_after(draft_artifacts, 5, my_slot=12)
+    _, json_path = live.write_state(state, tmp_path / "state")
+    rows = json.loads(json_path.read_text())["best_available"]
+
+    assert rows, "expected players on the board"
+    for row in rows:
+        assert set(row) <= set(live.DISPLAY_FIELDS) | {"adp"}
+        for absent in ("source_ranks", "research_note", "sleeper_name", "composite_score",
+                       "tier_pos", "team_disagreement", "sleeper_status"):
+            assert absent not in row
+    assert any("adp" in row for row in rows)
+
+
+def test_projection_does_not_touch_roster_or_recent_picks(draft_artifacts):
+    """Those entries are built in the pick loop, not projected from board rows."""
+    state = state_after(draft_artifacts, 26, my_slot=12)
+    for entry in state["my_roster"] + state["recent_picks"]:
+        assert {"pick_no", "round", "draft_slot", "roster_id", "on_board"} <= set(entry)
+
+
+def test_state_json_is_much_smaller_than_the_full_rows(tmp_path, draft_artifacts):
+    """The point of the projection: a renderer polls this file, so keep it small."""
+    board, _ = artifacts(draft_artifacts)
+    state = state_after(draft_artifacts, 5, my_slot=12)
+    _, json_path = live.write_state(state, tmp_path / "state")
+
+    projected = len(json_path.read_text())
+    untrimmed = dict(state)
+    by_id = {row["player_id"]: row for row in board["players"]}
+    for key in ("best_available", "at_risk"):
+        untrimmed[key] = [by_id[row["player_id"]] for row in state[key]]
+    assert projected < len(json.dumps(untrimmed, indent=1)) / 2
