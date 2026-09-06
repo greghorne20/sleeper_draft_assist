@@ -25,15 +25,17 @@ draft/ directory" below.
 ```
 src/sleeper_draft/   client.py discover.py batches.py past_draft.py board.py live.py
                      serve.py live_view.html keepers.py yamlio.py __init__.py
+src/sleeper_draft/warroom/  brief.py tools.py agent.py runner.py INSTRUCTIONS.md
 tests/               test_client.py test_batches.py test_discover_and_past_draft.py
-                     test_board.py test_live.py test_keepers.py test_serve.py conftest.py
+                     test_board.py test_live.py test_keepers.py test_serve.py
+                     test_warroom.py conftest.py
 research/rankings_2026.json    aggregate rankings keyed by NAME -- the board's input
 research/scouting_notes.json  one-line scouting + flags + handcuff pairs, keyed by player_id
 research/players/    one markdown note per player; filename ends in the Sleeper player_id
 research/batches/    the input lists those notes were written from
 draft/               PLAYBOOK.md + STRATEGY.md (hand-maintained) + board.md/board.json/
                      pick_order.json (generated) -- what the in-draft assistant reads
-draft/state/         NOW.md + state.json, rewritten every poll (gitignored)
+draft/state/         NOW.md + state.json + teams/, rewritten every poll (gitignored)
 .claude/skills/      draft-day/SKILL.md -- the in-draft conversational framing
 AGENTS.md            points non-Claude-Code agents at that skill
 ```
@@ -64,6 +66,7 @@ uv run sleeper-past-draft --league-id <id> --back 1
 uv run sleeper-board
 uv run sleeper-live --slot <n> --watch
 uv run sleeper-keepers --league-id <id>
+uv run sleeper-warroom --watch          # optional: needs `uv sync --extra warroom`
 ```
 
 A `Makefile` wraps all of the above (`make help`). It is convenience only -- every
@@ -127,12 +130,27 @@ is why `SleeperError` is the one exception type worth catching at the boundary.
   rewrites `draft/state/`. It reads `draft/board.json` and `draft/pick_order.json` rather than
   the rankings, so a poll is one small request and every board field (tier, ADP, flags,
   scouting, research note path) is already attached to the `player_id` the pick feed returns.
-  `summarize()` is pure — draft + picks + board in, whole state out — which is why the tests
-  cover the pick-timing maths without any HTTP. Two deliberate asymmetries with the rest of the
+  The state is computed in two halves and this is the load-bearing split: `summarize_league()`
+  is everything true of the draft whatever seat you read it from, `slot_view()` is the part
+  that depends on the seat and nothing else does. So **all twelve war rooms cost the same two
+  HTTP requests as one** — the expensive half runs once per poll, and `summarize_all()` adds
+  a small block per slot. `flatten()` merges one seat onto the shared state; `summarize()` and
+  `team_state()` both end there, so the one-seat and twelve-seat paths cannot drift (a test
+  pins every slot's projection against computing that slot alone). Urgency is per-seat, so the
+  shared board carries no `leaving` flag — each war room carries `leaving_ids` and the flag is
+  merged back on at render time, which is what keeps "urgency is a property of a player, not a
+  second board" true without storing thirty rows twelve times.
+  Both are pure — draft + picks + board in, whole state out — which is why the tests cover the
+  pick-timing maths without any HTTP. **Keepers need no special case**: Sleeper feeds them as
+  ordinary picks carrying `is_keeper`, at the pick number their round cost implies, so they
+  leave the board through the same path as everything else and are only *labelled* differently.
+  Two deliberate asymmetries with the rest of the
   repo: an **off-board pick is not an error** (208 ranked, 156 picks, rivals draft whoever they
   like — those are recorded from Sleeper's pick metadata and listed separately), and a
   **missing slot is not an error either** — without `--slot`/`--username` the timing maths is
-  skipped rather than guessed, since a wrong "picks until my next" is worse than none.
+  skipped rather than guessed, since a wrong "picks until my next" is worse than none. Team
+  names are resolved once at startup, not per poll, and a league whose draft order is not drawn
+  yet gets numbered rooms rather than an error.
 
 - **`serve.py`** + **`live_view.html`** — the optional `sleeper-live --serve` page. A stdlib
   `ThreadingHTTPServer` on a daemon thread with exactly two literal routes (`/` → the packaged
@@ -140,12 +158,21 @@ is why `SleeperError` is the one exception type worth catching at the boundary.
   **not** `SimpleHTTPRequestHandler` — never joining a request path to a directory makes
   traversal impossible by construction rather than by sanitising. `log_message` is a no-op so
   request logs do not bury the poll output. The poll loop and the server share nothing but the
-  filesystem. The page is vanilla JS with no build step and no libraries, re-renders in place to
+  filesystem, and the only coordination between them is `os.replace` — every state file is
+  written through a temp file and renamed, so a page refresh landing mid-write gets the previous
+  poll rather than a truncated one. No fsync: the state is derived and rewritten every poll, so
+  the next one rebuilds anything a power cut would cost. The page is vanilla JS with no build step and no libraries, re-renders in place to
   keep scroll position, and shows a banner when polls stop arriving — a silently frozen page
   during a draft is the dangerous failure. It is a dashboard, so state is encoded in form as
   well as number: position colour chips, a pick rail showing the 3RR cluster, tier bars that
   turn red at the two-left tier-break trigger, and a severity stripe on players leaving before
-  your next pick. **There is one board, not two** — filtering it by ADP yields a strict subset
+  your next pick. It shows **one seat at a time out of twelve**: `seatState()` in the page is
+  the same projection `team_state()` does in Python, the war-room strip switches seats through
+  the URL hash so a room can bookmark its own view, and the "Around the league" panel shows
+  what every other team still has to fill. That cross-team view is **broadcast colour only and
+  deliberately not an input to urgency** — `leaving` stays anchored to market ADP, because
+  twelve rooms reading each other's needs and all reaching a round early is a feedback loop
+  an external market number does not have. **There is one board, not two** — filtering it by ADP yields a strict subset
   in the same order, so a separate "at risk" table just printed the same players twice; urgency
   is a `leaving` flag on the row, with a filter to narrow to them. Google Fonts is the one external request, with a
   full fallback stack; the data path is localhost only. Theme tokens are defined in the bare
@@ -164,6 +191,44 @@ is why `SleeperError` is the one exception type worth catching at the boundary.
   **`keepers.md` is circulated to the league, so it carries only public data**: the optional
   board enrichment takes the market ADP and nothing else — never our rank, tier, scouting or
   flags. A test asserts none of those strings can reach the report.
+
+- **`warroom/`** — the optional agent layer, and the only part of the repo that calls a model.
+  `sleeper-warroom` watches the state `sleeper-live` writes and produces one agent-written brief
+  per team — strategy, a proposed pick with reasoning, an alternative with what would flip it —
+  into `draft/state/briefs.json`. **It is strictly additive and must stay that way:** it makes no
+  Sleeper requests, holds no lock, shares nothing with the poller or the server but the
+  filesystem, and is an optional extra (`agent-framework-core` + the Anthropic provider, 21
+  packages; the umbrella `agent-framework` pulls 180). Kill it mid-draft and the page loses one
+  panel — nothing else changes. The split inside mirrors the rest of the repo: `brief.py` is pure
+  and holds every decision that does not need a model, `tools.py` is plain annotated callables
+  with no framework import, and `agent.py` is the only file that imports Agent Framework.
+  - **`validate_brief` is the correctness gate.** The worst failure here is recommending a player
+    who is already gone, because it reads exactly like a good brief. Model output is checked
+    against the board the way `board.py` checks a rankings row — available-set membership, id and
+    name agreeing, no K or DST — then retried once with the problems fed back, then refused. An
+    unvalidated brief never reaches the page.
+  - **`refresh_targets` decides who regenerates.** Not all twelve on every pick: a room refreshes
+    when it is near its turn, just picked, had its proposal drafted, errored, or aged out.
+    `--refresh all` forces every seat, at roughly four times the cost.
+  - **Cross-team needs are colour, not an urgency input.** The prompt says so outright. Twelve
+    rooms reading each other's needs and all reaching a round early is a feedback loop market ADP
+    does not have, so `leaving` stays anchored to ADP.
+  - **The hard rules are shared with the live advisor.** `INSTRUCTIONS.md` carries
+    `.claude/skills/draft-day/SKILL.md`'s correctness rules verbatim and a test asserts both files
+    still say them, so editing one alone fails the suite.
+  - **The system prompt is prompt-cached, and that halves the bill.** `AnthropicChatOptions`
+    takes `instructions` as either a string or Anthropic system blocks, and blocks are the
+    documented way to attach `cache_control` — no wrapping of the raw client needed. Measured on
+    one room, same state, back to back: `--no-cache` 29,210 input / 4,065 output ≈ $0.149;
+    cached 11,445 input / 17,946 cache-read / 2,432 output ≈ $0.076. Total input volume is
+    unchanged; 61% of it just moves from $3/MTok to $0.30. The TTL is 1h rather than Anthropic's
+    default 5m because this league's pick timer is 300s, so a slow pick would expire the prefix
+    exactly when the next brief needs it. `--no-cache` exists to re-measure.
+  - **Most of the input is the agentic loop, not the prompt.** Every tool result re-sends the
+    conversation, so a brief that reads three notes pays for the system prompt four times —
+    which is exactly why caching a byte-identical prefix across twelve rooms pays off. What is
+    left is per-room input and output; reducing that means fewer tool round trips, which is
+    prompt work rather than plumbing.
 
 `yamlio.py` — one shared `dump_yaml` so `discover` and `batches` emit identical style
 (`sort_keys=False` to preserve field order; PyYAML's resolver quotes traps like the team
@@ -220,16 +285,60 @@ exists as a machine input: `board.json` and `pick_order.json` are what `live.py`
   the path to each player's research note. Plus a positional index, the researched-but-unranked
   bin (late-round material), and a provenance section carrying the ranking sources and weights.
 - **`pick_order.json`** — `picks_by_slot` and `slot_by_pick` for all 12 slots × 13 rounds.
+- **`state/briefs.json`**, **`state/briefs.md`** and **`state/teams/BRIEF-slot-<n>.md`** — written
+  by `sleeper-warroom` when it is running, gitignored with the rest of `state/`. Deliberately not
+  merged into `NOW.md`: the draft-day skill reads facts derived from Sleeper and reasons from the
+  board, rather than reading another model's opinion and agreeing with it. Two independent
+  advisors, not one echoing the other.
 - **`keepers.md`** / **`keepers.json`** — per-team keeper eligibility with the round each
   would cost, plus who is blocked and why. Regenerate with `uv run sleeper-keepers`. Unlike
   everything else in `draft/`, this one leaves the machine — keep it to public data only.
-- **`state/NOW.md`** and **`state/state.json`** — written by `sleeper-live` every poll, and
-  gitignored because they turn over every few seconds during a draft. `NOW.md` is in reading
-  order: whose pick, picks until mine comes back, my roster and open starting slots, who is at
-  risk before my next pick, best available, tiers remaining, recent picks and runs.
+- **`state/NOW.md`**, **`state/state.json`** and **`state/teams/`** — written by
+  `sleeper-live` every poll, and gitignored because they turn over every few seconds during a
+  draft. `NOW.md` is **my seat**, in reading order: whose pick, picks until mine comes back, my
+  roster and open starting slots, who is at risk before my next pick, best available, tiers
+  remaining, recent picks and runs. `state/teams/NOW-slot-<n>.md` is the same document for each
+  of the other eleven seats. `state.json` is the whole league in one file: the shared board
+  once, plus a `war_rooms` block per slot and `rosters_by_slot` for every team's picks —
+  which is what the page's team switcher and "Around the league" panel read.
+  **`NOW.md` keeping its old path and its old meaning is deliberate** — it is what lets the
+  draft-day skill go on reading one file while the league view develops alongside it.
 
 Regenerate the three generated files with `uv run sleeper-board` after editing anything in
 `research/`. `PLAYBOOK.md` and `STRATEGY.md` do not regenerate — update them by hand.
+
+## Deploying it
+
+`Dockerfile` + `docker-entrypoint.sh` + `railway.toml` put the board and the war rooms on a
+public URL for the couple of days around a draft. `uv run sleeper-board` is a **build step, not a
+runtime one** — the entrypoint refuses to start if `draft/board.json` is missing rather than
+serving an empty board.
+
+- **One container, two processes.** They talk only through `draft/state/`, so splitting them
+  would mean a shared volume for no benefit. The entrypoint supervises both and restarts either
+  on exit, never faster than `RESTART_DELAY`.
+- **No volume, no database.** Every file under `draft/state/` is derived and rewritten each poll,
+  so a restart mid-draft rebuilds it in one cycle and briefs regenerate on their own. The image is
+  stateless.
+- **`numReplicas = 1` is a correctness constraint, not a cost setting.** Two replicas means two
+  pollers against Sleeper's shared public API and two war rooms billing the same twelve briefs
+  twice. Nothing coordinates between instances because nothing was meant to.
+- **The war room is optional at runtime too.** No `ANTHROPIC_API_KEY`, and the entrypoint says so
+  once and starts only the poller; the page renders without the brief panel.
+- **No players dump ships or is fetched.** Nothing at runtime calls `/players/nfl` — the board
+  already resolved every name to a `player_id` — so runtime inputs are ~1.2MB and there is no
+  cold start.
+- Env: `PORT` and `HOST` (both plumbed into `sleeper-live`), `SLEEPER_SLOT`, `SLEEPER_DRAFT_ID`,
+  `ANTHROPIC_API_KEY`, `ANTHROPIC_CHAT_MODEL`, `WARROOM_REFRESH`. `.dockerignore` keeps `.env` out
+  of the image — the key is a runtime secret, and an image layer is not somewhere anything can be
+  deleted from.
+
+**`serve.py` is a stdlib `ThreadingHTTPServer` and this puts it on the public internet.** That is
+a deliberate, bounded call: three literal routes, no request path ever joined to a directory, no
+body parsing, read-only, nothing to steal, up for days rather than months. What is genuinely
+missing is any protection against resource exhaustion — a thread per connection, no timeouts, no
+request size limits — so the platform edge is doing the real work. Do not leave it up after the
+draft, and do not reach for this pattern for anything long-lived.
 
 ## Sleeper data facts worth knowing
 

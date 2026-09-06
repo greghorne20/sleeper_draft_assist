@@ -194,7 +194,7 @@ def test_now_md_carries_the_decision_surface(draft_artifacts):
     state = state_after(draft_artifacts, 5, my_slot=12)
     md = live.render_now_md(state)
     assert "## Pick 6 of 156" in md
-    assert "On the clock: slot 6" in md
+    assert "On the clock: Slot 6" in md   # no names known: the seat is its own name
     assert "## My roster" in md
     assert "## Best available" in md
     assert "## Tiers remaining" in md
@@ -279,6 +279,10 @@ def test_end_to_end_writes_state_without_touching_the_network(
         def get_draft_picks(self, draft_id):
             return picks
 
+        def get_league_users(self, league_id):
+            return [{"user_id": "U1", "display_name": "manager_one",
+                     "metadata": {"team_name": "Comeback Kids"}}]
+
     monkeypatch.setattr(live, "SleeperClient", Client)
     out = tmp_path / "state"
     sys.argv = ["sleeper-live", "--board", str(draft_artifacts / "board.json"),
@@ -288,8 +292,15 @@ def test_end_to_end_writes_state_without_touching_the_network(
 
     state = json.loads((out / "state.json").read_text())
     assert state["picks_made"] == 12
-    assert state["is_my_turn"] is True
+    assert state["war_rooms"]["12"]["is_my_turn"] is True
     assert (out / "NOW.md").read_text().count("| ") > 10
+    # My seat keeps NOW.md; the other eleven get their own file under teams/.
+    written = sorted(f.name for f in (out / "teams").iterdir())
+    assert len(written) == 11
+    assert "NOW-slot-12.md" not in written
+    # DRAFT puts U1 in slot 7, so that room is named and the rest are numbered.
+    assert state["war_rooms"]["7"]["name"] == "Comeback Kids"
+    assert state["war_rooms"]["1"]["name"] == "Slot 1"
 
 
 def test_display_row_keeps_the_display_fields_and_flattens_adp():
@@ -358,3 +369,226 @@ def test_state_json_is_much_smaller_than_the_full_rows(tmp_path, draft_artifacts
     by_id = {row["player_id"]: row for row in board["players"]}
     untrimmed["best_available"] = [by_id[row["player_id"]] for row in state["best_available"]]
     assert projected < len(json.dumps(untrimmed, indent=1)) / 2
+
+
+# --- twelve war rooms off one poll -----------------------------------------
+
+
+def all_state(draft_artifacts, count, cushion=4, limit=30, names=None, picks=None):
+    board, order = artifacts(draft_artifacts)
+    return live.summarize_all(board, order, DRAFT,
+                              picks if picks is not None else make_picks(order, board, count),
+                              cushion, limit, names)
+
+
+def test_every_war_room_matches_the_single_seat_state(draft_artifacts):
+    """The guard against drift: twelve seats projected out must equal twelve
+    seats computed one at a time. If this ever fails, NOW.md and state.json
+    are telling one of the teams something different."""
+    board, order = artifacts(draft_artifacts)
+    picks = make_picks(order, board, 26)
+    everything = live.summarize_all(board, order, DRAFT, picks, 4, 30)
+    for slot in range(1, 13):
+        alone = live.summarize(board, order, DRAFT, picks, slot, 4, 30)
+        projected = live.team_state(everything, slot)
+        # generated_at is a wall clock read twice; everything else must agree.
+        alone.pop("generated_at"), projected.pop("generated_at")
+        projected.pop("my_team_name", None)
+        assert projected == alone, f"slot {slot} disagrees"
+
+
+def test_no_slot_projects_the_same_empty_state(draft_artifacts):
+    board, order = artifacts(draft_artifacts)
+    picks = make_picks(order, board, 26)
+    alone = live.summarize(board, order, DRAFT, picks, None, 4, 30)
+    projected = live.team_state(live.summarize_all(board, order, DRAFT, picks, 4, 30), None)
+    alone.pop("generated_at"), projected.pop("generated_at")
+    assert projected == alone
+    assert all("leaving" not in row for row in projected["best_available"])
+
+
+def test_the_shared_board_is_stored_once_without_urgency(draft_artifacts):
+    """`leaving` is per-seat, so it cannot live on the shared rows."""
+    state = all_state(draft_artifacts, 26)
+    for row in state["best_available"]:
+        assert "leaving" not in row
+    room = state["war_rooms"]["12"]
+    assert room["leaving_ids"], "expected someone leaving before slot 12 picks again"
+    assert set(room["leaving_ids"]) <= {row["player_id"] for row in state["best_available"]}
+
+
+def test_one_poll_yields_a_room_per_slot(draft_artifacts):
+    state = all_state(draft_artifacts, 26)
+    assert sorted(state["war_rooms"], key=int) == [str(n) for n in range(1, 13)]
+    assert state["teams"] == 12  # the count, not the rooms -- distinct keys
+
+
+def test_every_slots_roster_is_kept_not_just_mine(draft_artifacts):
+    state = all_state(draft_artifacts, 26)
+    rosters = state["rosters_by_slot"]
+    assert sorted(rosters, key=int) == [str(n) for n in range(1, 13)]
+    # 26 picks over 12 teams: two rounds plus two, so nobody is empty.
+    assert all(rosters[str(n)] for n in range(1, 13))
+    assert sum(len(v) for v in rosters.values()) == 26
+
+
+def test_war_rooms_carry_team_names_and_fall_back_to_the_slot(draft_artifacts):
+    state = all_state(draft_artifacts, 12, names={3: "Comeback Kids"})
+    assert state["war_rooms"]["3"]["name"] == "Comeback Kids"
+    assert state["war_rooms"]["7"]["name"] == "Slot 7"
+    assert "Comeback Kids" in live.render_now_md(live.team_state(state, 3))
+
+
+def test_seats_are_named_not_numbered_wherever_they_are_shown(draft_artifacts):
+    """A slot number identifies a seat to the pick maths; a name identifies it
+    to a person. Everywhere a team is *shown*, it is shown by name."""
+    names = {n: f"Team {chr(64 + n)}" for n in range(1, 13)}
+    state = all_state(draft_artifacts, 14, names=names)
+    md = live.render_now_md(live.team_state(state, 12))
+
+    assert f"On the clock: {names[state['on_the_clock_slot']]}" in md
+    assert "On the clock: slot" not in md
+    # My own line keeps the number too -- the 3RR pick table is indexed by it.
+    assert "- Me: **Team L** (slot 12)" in md
+    # Recent picks name the drafting team rather than numbering it -- except
+    # mine, which says "you" rather than repeating my own name back at me.
+    for entry in state["recent_picks"]:
+        expected = "**you**" if entry["draft_slot"] == 12 else names[entry["draft_slot"]]
+        assert f"` {expected}:" in md
+    assert "` slot " not in md
+    assert "Team L:" not in md
+
+
+def test_team_label_falls_back_to_the_slot_it_cannot_name(draft_artifacts):
+    state = live.team_state(all_state(draft_artifacts, 5, names={2: "Sunday Scaries"}), 2)
+    assert live.team_label(state, 2) == "Sunday Scaries"
+    assert live.team_label(state, 9) == "Slot 9"
+    assert live.team_label(state, 99) == "slot 99"   # not a seat in this draft
+    assert live.team_label(state, None) == "an unknown seat"
+
+
+def test_keepers_leave_the_board_and_are_labelled(draft_artifacts):
+    """Sleeper feeds keepers as ordinary picks, so no keeper-specific path
+    exists -- but a keeper shown as a plain round-1 pick reads as a reach."""
+    board, order = artifacts(draft_artifacts)
+    picks = make_picks(order, board, 3)
+    picks[0]["is_keeper"] = True
+    kept = picks[0]["player_id"]
+    state = all_state(draft_artifacts, 3, picks=picks)
+    assert kept not in {row["player_id"] for row in state["best_available"]}
+    assert state["recent_picks"][0]["is_keeper"] is True
+    assert state["recent_picks"][1]["is_keeper"] is False
+    assert "_(keeper)_" in live.render_now_md(live.team_state(state, 1))
+
+
+def test_write_all_state_writes_one_readable_file_per_seat(tmp_path, draft_artifacts):
+    state = all_state(draft_artifacts, 26, names={4: "Sunday Scaries"})
+    out = tmp_path / "state"
+    md_path, json_path = live.write_all_state(state, out, 12)
+    assert json.loads(json_path.read_text())["war_rooms"]["4"]["name"] == "Sunday Scaries"
+    assert md_path.read_text().startswith("# Draft state")
+    other = (out / "teams" / "NOW-slot-4.md").read_text()
+    assert "Sunday Scaries" in other
+    assert other.startswith("# Draft state")
+
+
+USERS = [
+    {"user_id": "U1", "display_name": "manager_one", "metadata": {"team_name": "Comeback Kids"}},
+    {"user_id": "U2", "display_name": "nameless", "metadata": {}},
+    # Sleeper keeps whatever was typed in, trailing spaces and all.
+    {"user_id": "U3", "display_name": "x", "metadata": {"team_name": "Bench Warmers "}},
+    {"user_id": "STRANGER", "display_name": "not in this draft"},
+]
+
+
+class NameClient:
+    def __init__(self, rosters=None):
+        self._rosters = rosters or []
+
+    def get_league_users(self, league_id):
+        return USERS
+
+    def get_rosters(self, league_id):
+        return self._rosters
+
+
+def test_names_come_from_the_draft_order_once_it_is_drawn():
+    draft = {"draft_id": "D", "draft_order": {"U1": 7, "U2": 2}}
+    draft["draft_order"]["U3"] = 5
+    names, why = live.resolve_team_names(NameClient(), "L1", draft)
+    assert names == {7: "Comeback Kids", 2: "nameless", 5: "Bench Warmers"}
+    assert "drawn draft order" in why
+    assert "PROVISIONAL" not in why
+
+
+def test_before_the_draw_names_come_through_roster_ids_and_say_so():
+    """Sleeper leaves draft_order null until the order is drawn but publishes
+    slot_to_roster_id from the start, so twelve names are reachable -- with the
+    seating unsettled, which the caller has to be told."""
+    draft = {"draft_id": "D", "draft_order": None,
+             "slot_to_roster_id": {"1": 1, "2": 2, "3": 3}}
+    rosters = [{"roster_id": 1, "owner_id": "U1"}, {"roster_id": 2, "owner_id": "U2"},
+               {"roster_id": 3, "owner_id": "NOBODY"}]
+    names, why = live.resolve_team_names(NameClient(rosters), "L1", draft)
+    assert names == {1: "Comeback Kids", 2: "nameless"}
+    assert "PROVISIONAL" in why
+
+
+def test_naming_degrades_to_numbered_seats_rather_than_failing():
+    draft = {"draft_id": "D", "draft_order": {"U1": 7}}
+    assert live.resolve_team_names(NameClient(), None, draft)[0] == {}
+    # No order drawn and no roster map either: nothing to go on.
+    names, why = live.resolve_team_names(NameClient(), "L1", {"draft_order": {}})
+    assert names == {}
+    assert "numbered" in why
+
+    class Broken(NameClient):
+        def get_league_users(self, league_id):
+            raise SleeperError("boom")
+
+    assert live.resolve_team_names(Broken(), "L1", draft)[0] == {}
+
+
+def test_provisional_seating_is_stated_in_the_document(draft_artifacts):
+    board, order = artifacts(draft_artifacts)
+    picks = make_picks(order, board, 5)
+    state = live.summarize_all(board, order, DRAFT, picks, 4, 30, {1: "Comeback Kids"}, 1,
+                               True)
+    assert state["seating_provisional"] is True
+    assert "Seating is provisional" in live.render_now_md(live.team_state(state, 1))
+    settled = live.summarize_all(board, order, DRAFT, picks, 4, 30, {1: "Comeback Kids"}, 1)
+    assert "Seating is provisional" not in live.render_now_md(live.team_state(settled, 1))
+
+
+# --- the writer, which serve.py reads with no coordination -------------------
+
+
+def test_a_reader_never_sees_a_half_written_file(tmp_path):
+    """write_text truncates before it writes; os.replace does not. A failure
+    mid-write must leave the previous poll's file intact rather than a stub."""
+    path = tmp_path / "state.json"
+    live.write_atomic(path, '{"picks_made": 1}')
+
+    import os as _os
+    real = _os.replace
+    try:
+        _os.replace = lambda *a, **k: (_ for _ in ()).throw(OSError("disk full"))
+        with pytest.raises(OSError):
+            live.write_atomic(path, '{"picks_made": 2}')
+    finally:
+        _os.replace = real
+
+    # The old poll survives whole, and nothing is left lying around.
+    assert json.loads(path.read_text()) == {"picks_made": 1}
+    assert [f.name for f in tmp_path.iterdir()] == ["state.json"]
+
+
+def test_writing_the_league_leaves_no_temp_files(tmp_path, draft_artifacts):
+    state = all_state(draft_artifacts, 26)
+    out = tmp_path / "state"
+    live.write_all_state(state, out, 12)
+    live.write_all_state(state, out, 12)   # a second poll overwrites cleanly
+    strays = [f.name for f in out.rglob("*") if f.name.endswith(".tmp")]
+    assert not strays, strays
+    assert json.loads((out / "state.json").read_text())["picks_made"] == 26
+    assert len(list((out / "teams").iterdir())) == 11

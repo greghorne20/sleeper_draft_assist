@@ -256,6 +256,48 @@ tbody tr.leaving .rk { color: var(--danger); }
 .seg button + button { border-left: 1px solid var(--line-firm); }
 .seg button.on { background: var(--ink); color: var(--panel); }
 
+/* the war room: an agent's read on this seat, above the evidence for it */
+.panel.wr { border-left: 3px solid var(--live); }
+.panel.wr.stale { border-left-color: var(--line-firm); }
+.wr-strategy { margin: 0 0 12px; font-size: 14.5px; line-height: 1.5; color: var(--ink); }
+.wr-lab {
+  font-family: "Barlow Condensed", ui-sans-serif, sans-serif;
+  font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--muted); margin: 10px 0 4px;
+}
+.wr-cand { display: flex; gap: 8px; align-items: baseline; flex-wrap: wrap; }
+.wr-cand .nm { font-weight: 600; }
+.wr-cand .why { flex: 1 1 100%; color: var(--ink-2); font-size: 13.5px; line-height: 1.45; }
+.wr-cand.alt .nm, .wr-cand.alt .why { color: var(--muted); }
+.wr-risks { margin: 0; padding-left: 18px; color: var(--ink-2); font-size: 13.5px; }
+.wr-err {
+  background: var(--danger-bg); color: var(--danger); border-radius: 5px;
+  padding: 6px 9px; margin-bottom: 10px; font-size: 13px;
+}
+
+/* the twelve war rooms: one strip, the seat you are reading lit */
+.rooms {
+  display: flex; gap: 5px; overflow-x: auto; padding: 8px 20px;
+  background: var(--panel); border-bottom: 1px solid var(--line); align-items: center;
+}
+.rooms .lab {
+  font-family: "Barlow Condensed", ui-sans-serif, sans-serif;
+  font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--muted); margin-right: 6px; white-space: nowrap;
+}
+.room {
+  font-family: "Barlow Condensed", ui-sans-serif, sans-serif;
+  display: flex; flex-direction: column; align-items: flex-start; gap: 1px;
+  padding: 3px 9px; border-radius: 5px; cursor: pointer; white-space: nowrap;
+  background: var(--panel-2); border: 1px solid var(--line); color: var(--ink-2);
+}
+.room .rname { font-size: 14px; font-weight: 600; letter-spacing: .02em; }
+.room .rneed { font-size: 10.5px; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); }
+.room.on { background: var(--inverse-bg); border-color: var(--inverse-bg); color: var(--inverse-ink); }
+.room.on .rneed { color: var(--inverse-ink); opacity: .72; }
+.room.clock { border-color: var(--live); box-shadow: 0 0 0 2px color-mix(in srgb, var(--live) 22%, transparent); }
+tr.me td { background: var(--panel-2); }
+
 .empty { color: var(--muted); padding: 14px; text-align: center; }
 footer { padding: 0 20px 30px; color: var(--muted); font-size: 12.5px; }
 </style>
@@ -275,10 +317,20 @@ footer { padding: 0 20px 30px; color: var(--muted); font-size: 12.5px; }
   <button class="tog" id="theme" type="button">Theme</button>
 </header>
 
+<div class="rooms" id="rooms" hidden></div>
+
 <div class="rail" id="rail"></div>
 
 <main>
   <div class="col">
+    <section class="panel wr" id="warroom" hidden>
+      <div class="phead">
+        <span class="ptitle">War room</span>
+        <span class="pnote" id="wr-note"></span>
+      </div>
+      <div class="pbody" id="wr-body"></div>
+    </section>
+
     <section class="panel">
       <div class="phead">
         <span class="ptitle">Best available</span>
@@ -296,7 +348,7 @@ footer { padding: 0 20px 30px; color: var(--muted); font-size: 12.5px; }
 
   <div class="col">
     <section class="panel">
-      <div class="phead"><span class="ptitle">My team</span><span class="pnote" id="roster-note"></span></div>
+      <div class="phead"><span class="ptitle" id="roster-title">My team</span><span class="pnote" id="roster-note"></span></div>
       <div id="roster"></div>
     </section>
 
@@ -309,6 +361,11 @@ footer { padding: 0 20px 30px; color: var(--muted); font-size: 12.5px; }
       <div class="phead"><span class="ptitle">Last picks</span><span class="pnote" id="run-note"></span></div>
       <div id="recent"></div>
     </section>
+
+    <section class="panel">
+      <div class="phead"><span class="ptitle">Around the league</span><span class="pnote" id="league-note"></span></div>
+      <div id="league"></div>
+    </section>
   </div>
 </main>
 
@@ -318,7 +375,7 @@ footer { padding: 0 20px 30px; color: var(--muted); font-size: 12.5px; }
 "use strict";
 const REFRESH_MS = 4000, STALE_AFTER_S = 120;
 const $ = (id) => document.getElementById(id);
-let lastStamp = null, lastChange = Date.now();
+let lastStamp = null, lastChange = Date.now(), latestAll = null, latestBriefs = null;
 
 const esc = (v) => String(v == null ? "" : v).replace(/[&<>"]/g,
   (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
@@ -382,7 +439,7 @@ $("filter").addEventListener("click", (ev) => {
   const btn = ev.target.closest("button[data-mode]");
   if (!btn) return;
   mode = btn.dataset.mode;
-  for (const b of $("filter").children) b.classList.toggle("on", b === btn);
+  for (const el of $("filter").children) el.classList.toggle("on", el === btn);
   if (latest) drawBoard(latest);
 });
 
@@ -415,7 +472,7 @@ function renderBoard(s) {
   $("pick-of").textContent = `of ${s.total_picks} · Round ${s.current_round}`;
 
   if (s.is_my_turn) { turn.textContent = "You're on the clock"; turn.classList.add("mine"); }
-  else if (s.on_the_clock_slot != null) { turn.textContent = `Slot ${s.on_the_clock_slot} picking`; }
+  else if (s.on_the_clock_slot != null) { turn.textContent = `${teamLabel(s, s.on_the_clock_slot)} picking`; }
   else { turn.textContent = "Waiting"; }
 
   if (s.my_slot == null) {
@@ -438,12 +495,13 @@ function renderRail(s) {
     const next = n === s.my_next_pick;
     return `<span class="cell${spent ? " spent" : ""}${next ? " next" : ""}">${n}</span>`;
   }).join("");
-  rail.innerHTML = `<span class="lab">Slot ${s.my_slot} picks</span>${cells}`;
+  rail.innerHTML = `<span class="lab">${esc(teamLabel(s, s.my_slot))} picks</span>${cells}`;
 }
 
 function renderRoster(s) {
   if (s.my_slot == null) { $("roster").innerHTML = `<div class="empty">No slot set.</div>`; return; }
   const r = s.my_roster || [], need = s.roster || {}, counts = need.counts || {};
+  $("roster-title").textContent = s.my_team_name || "My team";
   $("roster-note").textContent = `${r.length} picked`;
 
   const rows = r.length
@@ -505,29 +563,169 @@ function renderRecent(s) {
       <td class="n"><span class="rk">${dash(p.pick_no)}</span></td>
       <td>${posChip(p.pos, p.pos)}</td>
       <td><span class="nm">${esc(p.name)}</span>
-          <span class="meta"> ${p.draft_slot === s.my_slot ? "you" : "slot " + dash(p.draft_slot)}${p.rank ? " · #" + p.rank : ""}</span></td>
+          <span class="meta"> ${p.draft_slot === s.my_slot ? "you" : esc(teamLabel(s, p.draft_slot))}${p.rank ? " · #" + p.rank : ""}</span></td>
     </tr>`).join("")}</tbody></table>`;
 }
 
-function render(s) {
+/* state.json holds one shared board plus a small block per seat. This is the
+   same projection `team_state` does in live.py, so a war room on this page and
+   the NOW.md written for that seat cannot disagree. Urgency is per-seat, which
+   is why it is merged onto the shared rows here instead of stored twelve times. */
+function seatState(lg, slot) {
+  const out = Object.assign({}, lg);
+  delete out.war_rooms; delete out.rosters_by_slot; delete out.default_slot;
+  const rm = (lg.war_rooms || {})[String(slot)];
+  if (!rm) {
+    return Object.assign(out, {
+      my_slot: null, is_my_turn: false, my_picks: [], my_next_pick: null,
+      my_pick_after_next: null, survive_until_pick: null, picks_before_horizon: null,
+      my_roster: [], roster: {}, bye_counts: {}, leaving_count: 0,
+    });
+  }
+  Object.assign(out, rm);
+  delete out.leaving_ids; delete out.name;
+  out.my_team_name = rm.name;
+  if (rm.survive_until_pick != null) {
+    const ids = new Set(rm.leaving_ids || []);
+    out.best_available = (lg.best_available || []).map(
+      (p) => Object.assign({}, p, { leaving: ids.has(p.player_id) }));
+  }
+  return out;
+}
+
+/* What to call a seat -- the same fallback `team_label` applies in live.py, so
+   the page and NOW.md never call the same team two different things. */
+function teamLabel(s, slot) {
+  if (slot == null) return "an unknown seat";
+  return (s.team_names || {})[String(slot)] || `slot ${slot}`;
+}
+
+/* Which seat is being read. The hash so a war room can bookmark its own view;
+   the poller's --slot as the default when nothing is pinned. */
+function activeSlot(lg) {
+  const m = /(?:^|[#&])slot=(\d+)/.exec(location.hash);
+  if (m && (lg.war_rooms || {})[m[1]]) return Number(m[1]);
+  return lg.default_slot == null ? null : Number(lg.default_slot);
+}
+
+function needsOf(rm) {
+  const need = rm.roster || {};
+  return (need.open_starters || []).concat(need.flex_open ? ["FLEX"] : []);
+}
+
+function renderRooms(lg, slot) {
+  const rooms = lg.war_rooms || {};
+  const keys = Object.keys(rooms).sort((a, b) => a - b);
+  $("rooms").hidden = !keys.length;
+  if (!keys.length) return;
+  const lab = lg.seating_provisional ? "War rooms · seating provisional" : "War rooms";
+  $("rooms").innerHTML = `<span class="lab">${lab}</span>` + keys.map((k) => {
+    const rm = rooms[k], open = needsOf(rm);
+    const on = Number(k) === slot ? " on" : "";
+    const clock = Number(k) === lg.on_the_clock_slot ? " clock" : "";
+    return `<button type="button" class="room${on}${clock}" data-slot="${esc(k)}">
+        <span class="rname">${esc(rm.name)}</span>
+        <span class="rneed">${(rm.my_roster || []).length} picked${open.length ? " · " + esc(open.join(" ")) : " · set"}</span>
+      </button>`;
+  }).join("");
+}
+
+/* What every other team still has to fill. Broadcast colour, deliberately not
+   an input to urgency -- `leaving` stays anchored to market ADP, because twelve
+   agents reading each other's needs and all reaching one round early is a
+   feedback loop the market number does not have. */
+function renderLeague(lg, slot) {
+  const rooms = lg.war_rooms || {};
+  const keys = Object.keys(rooms).sort((a, b) => a - b);
+  if (!keys.length) { $("league").innerHTML = `<div class="empty">No war rooms.</div>`; return; }
+  $("league-note").textContent = `${keys.length} teams · open starting slots`;
+  $("league").innerHTML = `<table><tbody>${keys.map((k) => {
+    const rm = rooms[k], open = needsOf(rm), counts = (rm.roster || {}).counts || {};
+    const held = Object.entries(counts).map(([pos, n]) => `${pos} ${n}`).join(" · ");
+    return `<tr${Number(k) === slot ? ` class="me"` : ""}>
+      <td class="n"><span class="rk">${esc(k)}</span></td>
+      <td><span class="nm">${esc(rm.name)}</span>
+          <span class="meta"> ${esc(held || "empty")}</span></td>
+      <td>${open.length
+        ? open.map((pos) => `<span class="slot">${esc(pos)}</span>`).join("")
+        : `<span class="meta">starters set</span>`}</td>
+    </tr>`;
+  }).join("")}</tbody></table>`;
+}
+
+/* The agent's brief for the seat being read. Optional by construction: no
+   briefs.json, no room, or a room with no strategy all hide the panel, because
+   sleeper-warroom may never have been started and the board must not care. */
+function renderWarRoom(briefs, s, slot) {
+  const panel = $("warroom");
+  const b = briefs && briefs.rooms ? briefs.rooms[String(slot)] : null;
+  if (!b || !b.strategy) { panel.hidden = true; return; }
+  panel.hidden = false;
+
+  const stale = b.picks_made !== s.picks_made;
+  panel.classList.toggle("stale", stale);
+  $("wr-note").innerHTML = `as of pick ${esc(b.picks_made)}`
+    + (stale ? ` · <b>stale, ${s.picks_made - b.picks_made} pick(s) ago</b>` : "");
+
+  const cand = (c, cls) => (c ? `<div class="wr-cand ${cls}">
+      ${posChip(c.pos, c.pos)}<span class="nm">${esc(c.name)}</span>
+      <span class="why">${esc(c.why)}</span></div>` : "");
+  const watch = (b.watch_names || []).map((n) => `<span class="slot">${esc(n)}</span>`).join("");
+  const risks = (b.risks || []).map((r) => `<li>${esc(r)}</li>`).join("");
+
+  $("wr-body").innerHTML =
+    (b.status === "error"
+      ? `<div class="wr-err">Could not regenerate — this is the previous brief.</div>` : "")
+    + `<p class="wr-strategy">${esc(b.strategy)}</p>`
+    + `<div class="wr-lab">Take</div>${cand(b.pick, "take")}`
+    + `<div class="wr-lab">Instead</div>${cand(b.alternative, "alt")}`
+    + (watch ? `<div class="wr-lab">Watch</div><div class="slots">${watch}</div>` : "")
+    + (risks ? `<div class="wr-lab">Risks</div><ul class="wr-risks">${risks}</ul>` : "");
+}
+
+function render(lg) {
+  latestAll = lg;
+  const slot = activeSlot(lg);
+  const s = seatState(lg, slot);
   latest = s;
+  renderRooms(lg, slot);
+  renderWarRoom(latestBriefs, s, slot);
   renderBoard(s);
   renderRail(s);
   drawBoard(s);
   renderRoster(s);
   renderTiers(s);
   renderRecent(s);
+  renderLeague(lg, slot);
   $("foot").textContent =
     `${s.league_name || "Draft"} · ${s.picks_made} of ${s.total_picks} picks made · updated ${s.generated_at}`;
 }
+
+$("rooms").addEventListener("click", (e) => {
+  const btn = e.target.closest(".room");
+  if (btn) location.hash = `slot=${btn.dataset.slot}`;
+});
+window.addEventListener("hashchange", () => { if (latestAll) render(latestAll); });
 
 function stale(msg) {
   const el = $("stale");
   if (msg) { el.textContent = msg; el.classList.add("on"); } else { el.classList.remove("on"); }
 }
 
+/* Never throws and never reports. A 404 is the normal case when the agent layer
+   is not running, and a parse error must not take the board down with it. */
+async function fetchBriefs() {
+  try {
+    const res = await fetch("/briefs.json", { cache: "no-store" });
+    return res.ok ? await res.json() : null;
+  } catch (err) {
+    return null;
+  }
+}
+
 async function tick() {
   try {
+    latestBriefs = await fetchBriefs();
     const res = await fetch("/state.json", { cache: "no-store" });
     if (res.status === 404) { stale("Waiting for the first poll…"); return; }
     if (!res.ok) { stale(`Server returned ${res.status}.`); return; }

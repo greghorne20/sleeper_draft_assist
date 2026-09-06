@@ -10,6 +10,7 @@ from conftest import make_picks
 
 from sleeper_draft import live, serve
 from sleeper_draft.client import SleeperError
+from sleeper_draft.warroom import brief as B
 
 DRAFT = {"draft_id": "D2026", "status": "drafting", "draft_order": {}}
 
@@ -34,11 +35,16 @@ def get(srv, path):
         return exc.code, dict(exc.headers), exc.read()
 
 
+MY_SLOT = 12
+
+
 def write_state(out, draft_artifacts, count=12):
+    """What the poller actually writes now: the whole league in one file."""
     board = json.loads((draft_artifacts / "board.json").read_text())
     order = json.loads((draft_artifacts / "pick_order.json").read_text())
-    state = live.summarize(board, order, DRAFT, make_picks(order, board, count), 12, 4, 30)
-    live.write_state(state, out)
+    state = live.summarize_all(board, order, DRAFT, make_picks(order, board, count),
+                               4, 30, {3: "Comeback Kids"}, MY_SLOT)
+    live.write_all_state(state, out, MY_SLOT)
     return state
 
 
@@ -69,12 +75,34 @@ def test_state_json_is_served_and_must_not_be_cached(server, draft_artifacts):
     assert json.loads(body)["picks_made"] == state["picks_made"]
 
 
-def test_state_before_the_first_poll_is_a_json_404_not_a_crash(server):
+@pytest.mark.parametrize("route,name", [("/state.json", "state.json"),
+                                        ("/briefs.json", "briefs.json")])
+def test_a_file_that_has_not_been_written_is_a_json_404_not_a_crash(server, route, name):
+    """The poller may not have finished, and sleeper-warroom may never run at all."""
     srv, _ = server
-    status, headers, body = get(srv, "/state.json")
+    status, headers, body = get(srv, route)
     assert status == 404
     assert headers["Content-Type"] == "application/json"
-    assert json.loads(body)["error"] == "no state yet"
+    assert json.loads(body)["error"] == f"no {name} yet"
+
+
+def test_briefs_are_served_and_must_not_be_cached(server, draft_artifacts):
+    srv, out = server
+    write_state(out, draft_artifacts)
+    out.joinpath("briefs.json").write_text(json.dumps({"rooms": {"12": {"slot": 12}}}))
+    status, headers, body = get(srv, "/briefs.json")
+    assert status == 200
+    assert headers["Content-Type"] == "application/json"
+    assert headers["Cache-Control"] == "no-store"
+    assert json.loads(body)["rooms"]["12"]["slot"] == 12
+
+
+def test_the_board_does_not_depend_on_briefs_existing(server, draft_artifacts):
+    """The agent layer is optional; the state route must not care whether it ran."""
+    srv, out = server
+    write_state(out, draft_artifacts)
+    assert get(srv, "/briefs.json")[0] == 404
+    assert get(srv, "/state.json")[0] == 200
 
 
 def test_query_string_still_resolves_the_route(server, draft_artifacts):
@@ -116,27 +144,82 @@ def test_a_port_already_in_use_is_a_clear_error(server, tmp_path):
 
 
 def test_page_only_reads_fields_the_state_actually_has(draft_artifacts, tmp_path):
-    """Schema-drift guard: fails the moment the page binds to a dropped field."""
+    """Schema-drift guard: fails the moment the page binds to a dropped field.
+
+    The page reads three shapes and names each one, so each gets its own guard:
+    `lg` is the league state as written, `rm` one war-room block, and `s` the
+    seat projection the renderers take.
+    """
     state = write_state(tmp_path, draft_artifacts)
     html = serve.ASSET.read_text()
+
+    seat = live.team_state(state, MY_SLOT)
     referenced = set(re.findall(r"\bs\.([a-z_]+)", html))
     assert referenced, "expected the page to read state fields"
+    missing = sorted(referenced - set(seat))
+    assert not missing, f"page reads seat fields absent from the projection: {missing}"
+
+    referenced = set(re.findall(r"\blg\.([a-z_]+)", html))
+    assert referenced, "expected the page to read league fields"
     missing = sorted(referenced - set(state))
     assert not missing, f"page reads fields absent from state.json: {missing}"
+
+    referenced = set(re.findall(r"\brm\.([a-z_]+)", html))
+    assert referenced, "expected the page to read war-room fields"
+    missing = sorted(referenced - set(state["war_rooms"][str(MY_SLOT)]))
+    assert not missing, f"page reads war-room fields nothing emits: {missing}"
+
+
+def test_page_only_reads_brief_fields_the_war_room_emits(draft_artifacts, tmp_path):
+    """Fourth shape: `b.` is one room's brief, as sleeper-warroom writes it."""
+    board = json.loads((draft_artifacts / "board.json").read_text())
+    order = json.loads((draft_artifacts / "pick_order.json").read_text())
+    state = live.summarize_all(board, order, DRAFT, make_picks(order, board, 12), 4, 30,
+                               None, MY_SLOT)
+    available = B.available_index(board, state)
+    rows = list(available.values())
+    written = B.Brief(strategy="Plan.",
+                      pick=B.Candidate(player_id=rows[0]["player_id"], name=rows[0]["name"],
+                                       pos=rows[0]["pos"], why="Because."),
+                      alternative=B.Candidate(player_id=rows[1]["player_id"],
+                                              name=rows[1]["name"], pos=rows[1]["pos"],
+                                              why="Or this."),
+                      watch=[rows[2]["player_id"]], risks=["A risk."])
+    room = B.new_room(live.team_state(state, MY_SLOT), state, written,
+                      model="m", available=available)
+
+    html = serve.ASSET.read_text()
+    referenced = set(re.findall(r"\bb\.([a-z_]+)", html))
+    assert referenced, "expected the page to read brief fields"
+    missing = sorted(referenced - set(room))
+    assert not missing, f"page reads brief fields the war room never writes: {missing}"
 
 
 def test_page_reads_only_projected_player_fields(draft_artifacts, tmp_path):
     """Same guard for the per-player rows the display projection narrowed."""
     state = write_state(tmp_path, draft_artifacts)
+    seat = live.team_state(state, MY_SLOT)
     html = serve.ASSET.read_text()
     referenced = set(re.findall(r"\bp\.([a-z_]+)", html))
-    allowed = set(live.DISPLAY_FIELDS) | {"adp", "leaving"} | set(state["my_roster"][0]) \
-        | set(state["recent_picks"][0])
+    allowed = set(live.DISPLAY_FIELDS) | {"adp", "leaving"} | set(seat["my_roster"][0]) \
+        | set(seat["recent_picks"][0])
     missing = sorted(referenced - allowed)
     assert not missing, f"page reads player fields nothing emits: {missing}"
 
 
+def test_page_has_a_room_for_every_seat(draft_artifacts, tmp_path):
+    """The strip is the only way to reach the other eleven, so it must list them."""
+    state = write_state(tmp_path, draft_artifacts)
+    assert len(state["war_rooms"]) == 12
+    html = serve.ASSET.read_text()
+    assert 'id="rooms"' in html and 'id="league"' in html
+    # Seats are switched by hash so a war room can bookmark its own view.
+    assert "slot=${btn.dataset.slot}" in html
+    assert "hashchange" in html
+
+
 def test_page_has_an_anchor_for_every_section():
     html = serve.ASSET.read_text()
-    for anchor in ("at-risk", "best-available", "tiers", "roster", "recent", "stale"):
+    for anchor in ("at-risk", "best-available", "tiers", "roster", "recent", "stale",
+                   "rooms", "league"):
         assert f'id="{anchor}"' in html, anchor

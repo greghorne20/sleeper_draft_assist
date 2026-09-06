@@ -1,0 +1,27 @@
+# Railway deployment for the live draft board.
+#
+# The one setting that matters is numReplicas. Everything else here is a
+# convenience; that one is a correctness constraint.
+
+[build]
+builder = "dockerfile"
+dockerfilePath = "Dockerfile"
+
+[deploy]
+# EXACTLY ONE. Two replicas means two pollers against Sleeper's shared public
+# API and two war rooms generating the same twelve briefs against the same
+# Anthropic key -- double the rate, double the bill, and two sets of state that
+# disagree. Nothing in this design coordinates between instances, because
+# nothing was ever meant to.
+numReplicas = 1
+
+# The container supervises its own two processes, so Railway restarting the
+# whole thing is the outer backstop rather than the usual mechanism.
+restartPolicyType = "on_failure"
+restartPolicyMaxRetries = 10
+
+# "/" and not "/state.json": the state file legitimately 404s until the first
+# poll completes, so health-checking it would fail the deploy during the twenty
+# seconds when everything is working correctly.
+healthcheckPath = "/"
+healthcheckTimeout = 30
