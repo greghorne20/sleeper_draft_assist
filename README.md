@@ -25,6 +25,26 @@ draft/                    what the in-draft assistant reads (see "The draft/ dir
 tests/                    offline tests; no test touches the network
 ```
 
+## Make targets
+
+`make help` lists everything. The targets are thin wrappers over the `uv run`
+commands documented below -- nothing in the Makefile does work the console
+scripts do not.
+
+```bash
+make setup            # uv sync
+make check            # lint + types + test; run this before committing
+make board            # rebuild draft/board.*
+make keepers          # rebuild draft/keepers.*
+make watch SLOT=12    # poll the draft and serve the live page
+```
+
+`LEAGUE` defaults to the `league_id` in `config.yaml`; override any of
+`SLOT`, `LEAGUE`, `PORT`, `BYES` on the command line.
+
+**GNU make is not installed on a bare WSL/Debian box** -- `sudo apt install make`
+once. Everything works without it; the Makefile is convenience, not a dependency.
+
 ## Setup
 
 ```bash

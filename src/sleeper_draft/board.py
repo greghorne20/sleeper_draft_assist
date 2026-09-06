@@ -442,8 +442,12 @@ def load_league(path: Path) -> dict:
                   "reversal_round", "draft_type", "roster_positions", "scoring_settings"):
         league[field] = raw.get(field)
     for field in ("teams", "rounds"):
-        if not isinstance(league[field], int) or league[field] < 1:
-            raise SleeperError(f"League config {path}: {field} is {league[field]!r}, expected a positive int")
+        value = league[field]
+        # bool is a subclass of int, so `teams: true` would otherwise pass as 1.
+        if not isinstance(value, int) or isinstance(value, bool) or value < 1:
+            raise SleeperError(
+                f"League config {path}: {field} is {value!r}, expected a positive int"
+            )
     return league
 
 

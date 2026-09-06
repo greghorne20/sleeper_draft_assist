@@ -47,7 +47,7 @@ class StateHandler(BaseHTTPRequestHandler):
         self.out_dir = out_dir
         super().__init__(*args, **kwargs)
 
-    def log_message(self, fmt: str, *args) -> None:  # noqa: ARG002
+    def log_message(self, format: str, *args) -> None:  # noqa: A002, ARG002
         """Silence per-request logging -- it would bury the poll output."""
 
     def _send(self, status: int, body: bytes, content_type: str, no_store: bool = False) -> None:

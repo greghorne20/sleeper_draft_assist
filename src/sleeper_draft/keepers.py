@@ -184,6 +184,11 @@ def eligible_keepers(picks: list[dict], rosters: list[dict], users: list[dict],
 
     for roster in sorted(rosters, key=lambda r: r.get("roster_id") or 0):
         roster_id = roster.get("roster_id")
+        if not isinstance(roster_id, int):
+            raise SleeperError(
+                f"Roster owned by {roster.get('owner_id') or '?'} has roster_id "
+                f"{roster_id!r}; without it its picks and drops cannot be matched to it."
+            )
         final = {str(p) for p in (roster.get("players") or [])}
         left = dropped.get(roster_id, set())
         mine = picks_by_roster.get(roster_id, [])

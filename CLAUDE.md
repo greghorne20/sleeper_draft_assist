@@ -39,8 +39,10 @@ at `sleeper_draft.discover:cli`, etc.; the layout above is what makes all six re
 ## Commands
 
 ```bash
-uv sync                              # create .venv, install PyYAML + dev group (pytest, ruff), install package
+make check                           # lint + types + test -- the pre-commit gate
+uv sync                              # create .venv, install PyYAML + dev group, install package
 uv run pytest                        # run the offline suite (no test touches the network)
+uv run mypy                          # type-check src/ (default strictness, clean)
 uv run pytest tests/test_batches.py::<name>   # run a single test
 uv run ruff check .                  # lint (E, F, I, UP, B; line-length 110, target py39)
 ```
@@ -56,6 +58,14 @@ uv run sleeper-board
 uv run sleeper-live --slot <n> --watch
 uv run sleeper-keepers --league-id <id>
 ```
+
+A `Makefile` wraps all of the above (`make help`). It is convenience only -- every
+target is a thin `uv run` wrapper -- and GNU make is not installed on a bare WSL box.
+Two deliberate choices worth not re-litigating: **`ruff format` is not adopted** (it
+would rewrite 16 of 18 files by exploding the compact argparse calls; `ruff check`
+already handles import order), and **mypy runs at default strictness, not `--strict`**
+(which reports 80 mostly-cosmetic findings on this dict-heavy code). `make fmt-check`
+shows the formatter diff if that ever gets reconsidered.
 
 No league ID, draft ID, username, or season is hardcoded — everything comes from CLI args or the
 env vars `SLEEPER_USERNAME` / `SLEEPER_SEASON` / `SLEEPER_LEAGUE_ID` / `SLEEPER_CACHE_DIR`.
