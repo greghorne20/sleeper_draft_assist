@@ -56,6 +56,19 @@ DEFAULT_CUSHION = 4
 TERMINAL_STATUSES = ("complete", "completed")
 
 
+def _env_int(name: str) -> int | None:
+    """An int from the environment, or None. A hosting platform injects PORT as a
+    string and an unparseable one should say so rather than silently falling back
+    to a port nobody is routing to."""
+    raw = os.environ.get(name)
+    if raw is None or raw.strip() == "":
+        return None
+    try:
+        return int(raw)
+    except ValueError:
+        raise SleeperError(f"{name}={raw!r} is not an integer") from None
+
+
 def parse_args() -> argparse.Namespace:
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument("--draft-id", default=None,
@@ -63,8 +76,10 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--board", type=Path, default=Path("draft/board.json"))
     p.add_argument("--pick-order", type=Path, default=Path("draft/pick_order.json"))
     p.add_argument("--out-dir", type=Path, default=Path("draft/state"))
-    p.add_argument("--slot", type=int, default=None,
-                   help="My draft slot (1-based). Overrides --username.")
+    p.add_argument("--slot", type=int, default=_env_int("SLEEPER_SLOT"),
+                   help="My draft slot (1-based, or SLEEPER_SLOT). Overrides --username. "
+                        "Only sets which seat NOW.md and the page open on -- all twelve are "
+                        "written either way.")
     p.add_argument("--username", default=os.environ.get("SLEEPER_USERNAME"),
                    help="Resolve my slot through the draft order (or set SLEEPER_USERNAME)")
     p.add_argument("--cushion", type=int, default=DEFAULT_CUSHION,
@@ -76,11 +91,14 @@ def parse_args() -> argparse.Namespace:
                    help="Seconds between polls when --watch (default 10)")
     p.add_argument("--serve", action="store_true",
                    help="Also serve a live HTML view of the state")
-    p.add_argument("--port", type=int, default=8765, help="Port for --serve (default 8765)")
-    p.add_argument("--host", default="127.0.0.1",
-                   help="Bind address for --serve (default 127.0.0.1). 0.0.0.0 puts your "
-                        "at-risk list and roster plan on the local network -- exactly what "
-                        "you would not hand a rival at the table.")
+    p.add_argument("--port", type=int, default=_env_int("PORT") or 8765,
+                   help="Port for --serve (default 8765, or $PORT -- which is what a host "
+                        "like Railway injects)")
+    p.add_argument("--host", default=os.environ.get("HOST", "127.0.0.1"),
+                   help="Bind address for --serve (default 127.0.0.1, or $HOST). 0.0.0.0 puts "
+                        "your at-risk list and roster plan on the network -- not something to "
+                        "hand a rival at the table, and the deliberate setting inside a "
+                        "container where the platform edge is the front door.")
     p.add_argument("--cache-dir", default=None, help="Override the players cache directory")
     args = p.parse_args()
     if args.interval < 1:

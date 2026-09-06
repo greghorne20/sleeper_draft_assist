@@ -297,6 +297,39 @@ exists as a machine input: `board.json` and `pick_order.json` are what `live.py`
 Regenerate the three generated files with `uv run sleeper-board` after editing anything in
 `research/`. `PLAYBOOK.md` and `STRATEGY.md` do not regenerate — update them by hand.
 
+## Deploying it
+
+`Dockerfile` + `docker-entrypoint.sh` + `railway.toml` put the board and the war rooms on a
+public URL for the couple of days around a draft. `uv run sleeper-board` is a **build step, not a
+runtime one** — the entrypoint refuses to start if `draft/board.json` is missing rather than
+serving an empty board.
+
+- **One container, two processes.** They talk only through `draft/state/`, so splitting them
+  would mean a shared volume for no benefit. The entrypoint supervises both and restarts either
+  on exit, never faster than `RESTART_DELAY`.
+- **No volume, no database.** Every file under `draft/state/` is derived and rewritten each poll,
+  so a restart mid-draft rebuilds it in one cycle and briefs regenerate on their own. The image is
+  stateless.
+- **`numReplicas = 1` is a correctness constraint, not a cost setting.** Two replicas means two
+  pollers against Sleeper's shared public API and two war rooms billing the same twelve briefs
+  twice. Nothing coordinates between instances because nothing was meant to.
+- **The war room is optional at runtime too.** No `ANTHROPIC_API_KEY`, and the entrypoint says so
+  once and starts only the poller; the page renders without the brief panel.
+- **No players dump ships or is fetched.** Nothing at runtime calls `/players/nfl` — the board
+  already resolved every name to a `player_id` — so runtime inputs are ~1.2MB and there is no
+  cold start.
+- Env: `PORT` and `HOST` (both plumbed into `sleeper-live`), `SLEEPER_SLOT`, `SLEEPER_DRAFT_ID`,
+  `ANTHROPIC_API_KEY`, `ANTHROPIC_CHAT_MODEL`, `WARROOM_REFRESH`. `.dockerignore` keeps `.env` out
+  of the image — the key is a runtime secret, and an image layer is not somewhere anything can be
+  deleted from.
+
+**`serve.py` is a stdlib `ThreadingHTTPServer` and this puts it on the public internet.** That is
+a deliberate, bounded call: three literal routes, no request path ever joined to a directory, no
+body parsing, read-only, nothing to steal, up for days rather than months. What is genuinely
+missing is any protection against resource exhaustion — a thread per connection, no timeouts, no
+request size limits — so the platform edge is doing the real work. Do not leave it up after the
+draft, and do not reach for this pattern for anything long-lived.
+
 ## Sleeper data facts worth knowing
 
 - `/players/nfl` has **no ADP, no projections, no bye week**. `search_rank` is the only ordering

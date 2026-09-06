@@ -1,0 +1,43 @@
+# Secrets. The Anthropic key is a runtime secret set by the platform and must
+# never be baked into a layer -- an image layer is not a place anything can be
+# deleted from.
+.env
+.envrc
+*.pem
+*.key
+
+# The local virtualenv is built for this machine's Python; the image builds its
+# own from uv.lock.
+.venv/
+__pycache__/
+*.py[codz]
+
+# Derived every poll inside the container, so shipping a stale copy would only
+# mean the page renders yesterday's draft for the first ten seconds.
+draft/state/
+
+# The players dump. Nothing at runtime reads it -- the board already resolved
+# every name to a player_id -- and it is ~5MB.
+.cache/
+
+# Not needed to run.
+.git/
+.github/
+.gitignore
+tests/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.claude/
+AGENTS.md
+CLAUDE.md
+Makefile
+byes.template.json
+
+# Research inputs, as opposed to research output. research/players/ ships
+# because the war room reads those notes; the batches and the raw rankings were
+# inputs to sleeper-board, which is a build step, not a runtime one.
+research/batches/
+research/research-instructions.md
+research/rankings_2026.json
+research/scouting_notes.json
