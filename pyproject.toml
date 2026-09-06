@@ -14,6 +14,7 @@ sleeper-batches = "sleeper_draft.batches:cli"
 sleeper-past-draft = "sleeper_draft.past_draft:cli"
 sleeper-board = "sleeper_draft.board:cli"
 sleeper-live = "sleeper_draft.live:cli"
+sleeper-keepers = "sleeper_draft.keepers:cli"
 
 [dependency-groups]
 dev = [

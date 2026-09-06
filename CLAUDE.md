@@ -5,9 +5,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## What this is
 
 Read-only helpers for a personal, single-user fantasy football draft assistant built on the
-Sleeper public API. Nothing is ever written back to Sleeper; nothing is scraped. Five console
+Sleeper public API. Nothing is ever written back to Sleeper; nothing is scraped. Six console
 commands turn a Sleeper league into offline artifacts: a config YAML, chunked player research
-batches, a past-draft JSON fixture, the in-draft board, and the live draft state.
+batches, a past-draft JSON fixture, the in-draft board, the live draft state, and the keeper
+eligibility ruling.
 
 **The end use is live: during the draft, a TUI assistant reads `draft/` while `sleeper-live`
 polls Sleeper.** `draft/PLAYBOOK.md` is the standing doctrine and is loaded first every session;
@@ -18,9 +19,9 @@ draft/ directory" below.
 
 ```
 src/sleeper_draft/   client.py discover.py batches.py past_draft.py board.py live.py
-                     yamlio.py __init__.py
+                     keepers.py yamlio.py __init__.py
 tests/               test_client.py test_batches.py test_discover_and_past_draft.py
-                     test_board.py test_live.py conftest.py
+                     test_board.py test_live.py test_keepers.py conftest.py
 research/rankings_2026.json    aggregate rankings keyed by NAME -- the board's input
 research/scouting_notes.json  one-line scouting + flags + handcuff pairs, keyed by player_id
 research/players/    one markdown note per player; filename ends in the Sleeper player_id
@@ -33,7 +34,7 @@ draft/state/         NOW.md + state.json, rewritten every poll (gitignored)
 The modules use **relative imports** (`from .client import ...`), so run them via the console
 scripts or as the `sleeper_draft` package — not `python discover.py` directly. `pyproject.toml`
 declares `packages = ["src/sleeper_draft"]`, `testpaths = ["tests"]`, and console scripts pointing
-at `sleeper_draft.discover:cli`, etc.; the layout above is what makes all five resolve.
+at `sleeper_draft.discover:cli`, etc.; the layout above is what makes all six resolve.
 
 ## Commands
 
@@ -45,7 +46,7 @@ uv run ruff check .                  # lint (E, F, I, UP, B; line-length 110, ta
 ```
 
 Runtime deps are deliberately minimal: only PyYAML. Everything except YAML emitting is standard
-library (`urllib`, `json`). The five console scripts:
+library (`urllib`, `json`). The six console scripts:
 
 ```bash
 uv run sleeper-discover --league-id <id> --out config.yaml
@@ -53,6 +54,7 @@ uv run sleeper-batches --byes byes.2026.json
 uv run sleeper-past-draft --league-id <id> --back 1
 uv run sleeper-board
 uv run sleeper-live --slot <n> --watch
+uv run sleeper-keepers --league-id <id>
 ```
 
 No league ID, draft ID, username, or season is hardcoded — everything comes from CLI args or the
@@ -115,6 +117,16 @@ is why `SleeperError` is the one exception type worth catching at the boundary.
   **missing slot is not an error either** — without `--slot`/`--username` the timing maths is
   skipped rather than guessed, since a wrong "picks until my next" is worse than none.
 
+- **`keepers.py`** — rules who may keep whom. Reuses `past_draft.walk_back` to reach last
+  season, then reads that season's draft, final rosters and the full transaction log. Eligible
+  = that team drafted him **and** he is on their final roster **and** no completed transaction
+  dropped him from it **and** he was not last season's keeper; the cost is his draft round.
+  The transaction check is the point: "on the final roster" and "never left" are different
+  questions, and a player dropped in week 3 and re-added in week 9 passes the first while
+  failing the second. They happened to agree for every 2025 roster, so any disagreement is
+  reported rather than silently resolved. Trades need no special case — Sleeper puts the losing
+  side in `drops`. `eligible_keepers()` is pure, so every rule has a test with no HTTP.
+
 `yamlio.py` — one shared `dump_yaml` so `discover` and `batches` emit identical style
 (`sort_keys=False` to preserve field order; PyYAML's resolver quotes traps like the team
 abbreviation `NO`, which bare YAML 1.1 would read as boolean `false`).
@@ -132,6 +144,11 @@ Tests are fully offline. `conftest.py` provides:
   notes covering the three real entry shapes (text-only, flags-only, handcuff pair), and a
   league config, for the board join. `tests/test_board.py` pins the generated 3RR pick table
   against the real 12x13 numbers.
+- `KEEPER_PICKS` / `KEEPER_ROSTERS` / `KEEPER_USERS` / `KEEPER_TRANSACTIONS` — a prior season
+  carrying every keeper edge case on one roster: held all year, last season's keeper, dropped
+  and re-added, dropped for good, a waiver pickup held to the end, a traded player, a failed
+  claim, and a player absent from the players dump. `tests/test_keepers.py` pins one rule per
+  test against them.
 - `draft_artifacts` / `make_picks()` — builds a real `board.json` + `pick_order.json` by running
   the actual generator, then synthesises picks in draft order. `tests/test_live.py` uses them so
   the two modules stay honest about the file shape they share; `make_picks` runs past the end of
@@ -165,6 +182,8 @@ exists as a machine input: `board.json` and `pick_order.json` are what `live.py`
   the path to each player's research note. Plus a positional index, the researched-but-unranked
   bin (late-round material), and a provenance section carrying the ranking sources and weights.
 - **`pick_order.json`** — `picks_by_slot` and `slot_by_pick` for all 12 slots × 13 rounds.
+- **`keepers.md`** / **`keepers.json`** — per-team keeper eligibility with the round each
+  would cost, plus who is blocked and why. Regenerate with `uv run sleeper-keepers`.
 - **`state/NOW.md`** and **`state/state.json`** — written by `sleeper-live` every poll, and
   gitignored because they turn over every few seconds during a draft. `NOW.md` is in reading
   order: whose pick, picks until mine comes back, my roster and open starting slots, who is at

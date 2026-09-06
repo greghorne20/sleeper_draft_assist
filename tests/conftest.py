@@ -140,6 +140,62 @@ PICKS = {
 }
 
 
+# --- prior-season keeper data, shaped like the real 2025 league -------------
+# Roster 1 is the interesting one: it carries every edge case the rules turn on.
+KEEPER_ROSTERS = [
+    # drafted+held (1001), the 2025 keeper (1002), dropped-and-re-added (1003),
+    # a waiver pickup held to the end (1900), and a drafted player who was
+    # dropped for good (1004, absent from `players`).
+    {"roster_id": 1, "owner_id": "U1", "players": ["1001", "1002", "1003", "1900"]},
+    {"roster_id": 2, "owner_id": "U2", "players": ["1005", "MISSING"]},
+    {"roster_id": 3, "owner_id": "U3", "players": []},
+]
+
+KEEPER_USERS = [
+    {"user_id": "U1", "display_name": "Alpha"},
+    {"user_id": "U2", "display_name": "Beta"},
+    # U3 deliberately absent, so the report has to fall back to the roster id.
+]
+
+KEEPER_PICKS = [
+    {"pick_no": 1, "round": 1, "roster_id": 1, "player_id": "1002", "is_keeper": True,
+     "metadata": {"first_name": "Kept", "last_name": "Last Year", "position": "RB", "team": "KC"}},
+    {"pick_no": 2, "round": 2, "roster_id": 1, "player_id": "1001", "is_keeper": None,
+     "metadata": {"first_name": "Held", "last_name": "Allyear", "position": "WR", "team": "BUF"}},
+    {"pick_no": 3, "round": 3, "roster_id": 1, "player_id": "1003", "is_keeper": None,
+     "metadata": {"first_name": "Dropped", "last_name": "Readded", "position": "RB", "team": "SF"}},
+    {"pick_no": 4, "round": 4, "roster_id": 1, "player_id": "1004", "is_keeper": None,
+     "metadata": {"first_name": "Gone", "last_name": "Forgood", "position": "TE", "team": "NYJ"}},
+    # Roster 2 traded for 1005: roster 3 drafted him, so he is nobody's keeper.
+    {"pick_no": 5, "round": 5, "roster_id": 3, "player_id": "1005", "is_keeper": None,
+     "metadata": {"first_name": "Traded", "last_name": "Away", "position": "WR", "team": "MIA"}},
+    # A player the /players/nfl dump does not know; name must come from metadata.
+    {"pick_no": 6, "round": 6, "roster_id": 2, "player_id": "MISSING", "is_keeper": None,
+     "metadata": {"first_name": "Off", "last_name": "Dump", "position": "QB", "team": "LAR"}},
+]
+
+KEEPER_TRANSACTIONS = [
+    # 1003 dropped in week 3 and re-added in week 9 -- on the final roster, but
+    # did not stay all year. This is the case the transaction check exists for.
+    {"status": "complete", "leg": 3, "type": "free_agent",
+     "adds": None, "drops": {"1003": 1}, "roster_ids": [1]},
+    {"status": "complete", "leg": 9, "type": "waiver",
+     "adds": {"1003": 1}, "drops": None, "roster_ids": [1]},
+    # 1004 dropped for good.
+    {"status": "complete", "leg": 5, "type": "free_agent",
+     "adds": None, "drops": {"1004": 1}, "roster_ids": [1]},
+    # 1900 picked up off waivers and held to the end.
+    {"status": "complete", "leg": 2, "type": "waiver",
+     "adds": {"1900": 1}, "drops": None, "roster_ids": [1]},
+    # A trade: roster 3 sends 1005 to roster 2.
+    {"status": "complete", "leg": 6, "type": "trade",
+     "adds": {"1005": 2}, "drops": {"1005": 3}, "roster_ids": [2, 3]},
+    # Failed claim that would have dropped the one clean keeper -- must be ignored.
+    {"status": "failed", "leg": 4, "type": "waiver",
+     "adds": None, "drops": {"1001": 1}, "roster_ids": [1]},
+]
+
+
 class StubClient(SleeperClient):
     """SleeperClient with the HTTP methods replaced by canned league data."""
 
@@ -164,6 +220,15 @@ class StubClient(SleeperClient):
 
     def get_draft_picks(self, draft_id):
         return PICKS.get(draft_id, [])
+
+    def get_rosters(self, league_id):
+        return KEEPER_ROSTERS
+
+    def get_league_users(self, league_id):
+        return KEEPER_USERS
+
+    def get_transactions(self, league_id, week):
+        return [t for t in KEEPER_TRANSACTIONS if t["leg"] == week]
 
 
 @pytest.fixture

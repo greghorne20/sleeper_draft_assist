@@ -14,6 +14,7 @@ src/sleeper_draft/
     past_draft.py         walk previous_league_id back, save a draft fixture
     board.py              rankings + research notes -> the in-draft board
     live.py               poll the live draft -> the current-state files
+    keepers.py            last season's draft + rosters + trades -> keeper eligibility
     yamlio.py             shared YAML output settings
 research/rankings_2026.json    aggregate rankings, keyed by name -- the board's input
 research/scouting_notes.json  one-line scouting + flags + handcuff pairs, keyed by player_id
@@ -181,6 +182,37 @@ pick metadata and listed under "Off-board picks".
 
 ---
 
+### 6. `sleeper-keepers`
+
+```bash
+uv run sleeper-keepers --league-id LEAGUE_ID
+uv run sleeper-keepers --league-id <id> --season 2025
+```
+
+Rules who each team may keep, and what the pick costs. Walks `previous_league_id`
+back to last season (reusing `walk_back` from `past_draft.py`), then reads that
+season's draft, final rosters and the whole transaction log.
+
+A player is eligible for a team iff **all four** hold: that team drafted him, he
+is on their final roster, no completed transaction ever dropped him from that
+roster, and he was not last season's keeper. The cost is the round he was
+drafted in.
+
+It reads the transaction log rather than trusting the final roster because they
+answer different questions -- a player dropped in week 3 and re-added in week 9
+is on the final roster but did not stay all year. Any player where the two
+answers differ is listed at the foot of the report instead of being silently
+admitted or dropped. Trades need no special case: Sleeper records the losing
+side in `drops`, so a player traded away fails "never left" and a player traded
+for fails "you drafted him".
+
+When `draft/board.json` exists it also shows this year's rank and tier next to
+each eligible player, which is what turns eligibility into a decision -- keeping
+Jaxon Smith-Njigba at his round-3 cost reads differently once you see he is
+ranked 4th this year. The board is optional; without it the ruling is unchanged.
+
+---
+
 ## The `draft/` directory
 
 Everything the in-draft assistant reads, and nothing else:
@@ -194,6 +226,8 @@ Everything the in-draft assistant reads, and nothing else:
 | `pick_order.json` | `picks_by_slot` and `slot_by_pick` for all 12 slots x 13 rounds. | `sleeper-board` |
 | `state/NOW.md` | Live draft state: whose pick, your roster and gaps, at-risk players, best available, tiers left, recent picks and runs. | `sleeper-live` |
 | `state/state.json` | The same, machine-readable. | `sleeper-live` |
+| `keepers.md` | Per-team keeper eligibility and the round each would cost. The report to circulate. | `sleeper-keepers` |
+| `keepers.json` | The same ruling, machine-readable. | `sleeper-keepers` |
 
 The join key is `player_id` throughout: live pick -> board row -> `research/players/*-<player_id>.md`.
 
