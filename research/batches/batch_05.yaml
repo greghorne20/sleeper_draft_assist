@@ -1,222 +1,102 @@
 batch: 5
-of: 8
+of: 17
 positions:
 - QB
 - RB
 - WR
 - TE
-count: 35
+count: 15
 ordering: sleeper search_rank ascending
 source: sleeper /players/nfl
-generated_at: 2026-09-05T14:00:17-0400
+generated_at: 2026-09-05T14:50:33-0400
 players:
-- player_id: '13298'
-  name: KC Concepcion
-  pos: WR
+- player_id: '5892'
+  name: David Montgomery
+  pos: RB
+  team: HOU
+  bye: 8
+  search_rank: 44
+- player_id: '12512'
+  name: Quinshon Judkins
+  pos: RB
   team: CLE
   bye: 11
-  search_rank: 111
-- player_id: '13337'
-  name: Emmett Johnson
-  pos: RB
-  team: KC
-  bye: 5
-  search_rank: 113
-- player_id: '11589'
-  name: Trey Benson
-  pos: RB
-  team: ARI
-  bye: 14
-  search_rank: 114
-- player_id: '13417'
-  name: De'Zhaun Stribling
+  search_rank: 45
+- player_id: '2133'
+  name: Davante Adams
   pos: WR
-  team: SF
-  bye: 8
-  search_rank: 115
-- player_id: '8121'
-  name: Romeo Doubs
-  pos: WR
-  team: NE
+  team: LAR
   bye: 11
-  search_rank: 117
-- player_id: '8161'
-  name: Malik Willis
-  pos: QB
-  team: MIA
-  bye: 6
-  search_rank: 118
-- player_id: '13345'
-  name: Jonah Coleman
+  search_rank: 46
+- player_id: '6790'
+  name: D'Andre Swift
   pos: RB
-  team: DEN
+  team: CHI
   bye: 10
-  search_rank: 118
-- player_id: '4035'
-  name: Alvin Kamara
+  search_rank: 47
+- player_id: '12518'
+  name: Tyler Warren
+  pos: TE
+  team: IND
+  bye: 13
+  search_rank: 47
+- player_id: '8228'
+  name: Jaylen Warren
   pos: RB
-  team: 'NO'
-  bye: 8
-  search_rank: 119
-- player_id: '12501'
-  name: Matthew Golden
-  pos: WR
-  team: GB
-  bye: 11
-  search_rank: 119
-- player_id: '8134'
-  name: Khalil Shakir
+  team: PIT
+  bye: 9
+  search_rank: 52
+- player_id: '4983'
+  name: DJ Moore
   pos: WR
   team: BUF
   bye: 7
-  search_rank: 120
-- player_id: '9508'
-  name: Tyjae Spears
-  pos: RB
-  team: TEN
-  bye: 9
-  search_rank: 122
-- player_id: '11624'
-  name: Xavier Worthy
+  search_rank: 52
+- player_id: '8148'
+  name: Jameson Williams
   pos: WR
-  team: KC
-  bye: 5
-  search_rank: 122
-- player_id: '7049'
-  name: Jauan Jennings
-  pos: WR
-  team: MIN
+  team: DET
   bye: 6
-  search_rank: 123
-- player_id: '8136'
-  name: Rachaad White
-  pos: RB
+  search_rank: 53
+- player_id: '8183'
+  name: Brock Purdy
+  pos: QB
+  team: SF
+  bye: 8
+  search_rank: 54
+- player_id: '5927'
+  name: Terry McLaurin
+  pos: WR
   team: WAS
   bye: 7
-  search_rank: 124
-- player_id: '10219'
-  name: Chris Rodriguez
+  search_rank: 54
+- player_id: '13286'
+  name: Jadarian Price
   pos: RB
-  team: JAX
-  bye: 7
-  search_rank: 126
-- player_id: '11603'
-  name: AJ Barner
-  pos: TE
   team: SEA
   bye: 11
-  search_rank: 126
-- player_id: '12484'
-  name: Jayden Higgins
-  pos: WR
-  team: HOU
-  bye: 8
-  search_rank: 126
-- player_id: '5844'
-  name: T.J. Hockenson
-  pos: TE
-  team: MIN
-  bye: 6
-  search_rank: 128
-- player_id: '12469'
-  name: Dylan Sampson
+  search_rank: 56
+- player_id: '12489'
+  name: RJ Harvey
   pos: RB
-  team: CLE
+  team: DEN
+  bye: 10
+  search_rank: 56
+- player_id: '7611'
+  name: Rhamondre Stevenson
+  pos: RB
+  team: NE
   bye: 11
-  search_rank: 129
-- player_id: '9228'
-  name: Bryce Young
-  pos: QB
-  team: CAR
-  bye: 5
-  search_rank: 130
-- player_id: '5872'
-  name: Deebo Samuel
+  search_rank: 58
+- player_id: '10859'
+  name: Sam LaPorta
+  pos: TE
+  team: DET
+  bye: 6
+  search_rank: 59
+- player_id: '2216'
+  name: Mike Evans
   pos: WR
   team: SF
   bye: 8
-  search_rank: 130
-- player_id: '5870'
-  name: Daniel Jones
-  pos: QB
-  team: IND
-  bye: 13
-  search_rank: 131
-- player_id: '4033'
-  name: David Njoku
-  pos: TE
-  team: LAC
-  bye: 7
-  search_rank: 131
-- player_id: '11646'
-  name: Jalen Coker
-  pos: WR
-  team: CAR
-  bye: 5
-  search_rank: 132
-- player_id: '11576'
-  name: Braelon Allen
-  pos: RB
-  team: NYJ
-  bye: 13
-  search_rank: 135
-- player_id: '11581'
-  name: MarShawn Lloyd
-  pos: RB
-  team: GB
-  bye: 11
-  search_rank: 136
-- player_id: '6865'
-  name: Colby Parkinson
-  pos: TE
-  team: LAR
-  bye: 11
-  search_rank: 136
-- player_id: '8210'
-  name: Chig Okonkwo
-  pos: TE
-  team: WAS
-  bye: 7
-  search_rank: 137
-- player_id: '13305'
-  name: Mike Washington
-  pos: RB
-  team: LV
-  bye: 13
-  search_rank: 138
-- player_id: '12498'
-  name: Mason Taylor
-  pos: TE
-  team: NYJ
-  bye: 13
-  search_rank: 138
-- player_id: '13349'
-  name: Eli Stowers
-  pos: TE
-  team: PHI
-  bye: 10
-  search_rank: 140
-- player_id: '11647'
-  name: Kimani Vidal
-  pos: RB
-  team: LAC
-  bye: 7
-  search_rank: 141
-- player_id: '12487'
-  name: Terrance Ferguson
-  pos: TE
-  team: LAR
-  bye: 11
-  search_rank: 141
-- player_id: '13293'
-  name: Ja'Kobi Lane
-  pos: WR
-  team: BAL
-  bye: 13
-  search_rank: 142
-- player_id: '11597'
-  name: Theo Johnson
-  pos: TE
-  team: NYG
-  bye: 8
-  search_rank: 144
+  search_rank: 60

@@ -1,0 +1,13 @@
+## David Njoku — TE, LAC, bye 7  (player_id: 4033)
+- **Role:** committee — the middle man in a three-tight-end room, not a clear TE1
+- **Situation:** After nine seasons in Cleveland, Njoku signed a one-year deal worth up to $8M with the Chargers in mid-May. Mike McDaniel is the new head coach and playcaller. The room ahead of and around him: Oronde Gadsden II, the 2025 fifth-rounder who broke out as a rookie and is the best pure pass-catcher, and Charlie Kolar, signed to three years and $24.3M as the blocker. ESPN's read on the preseason snap distribution with Justin Herbert on the field — Kolar six snaps, Njoku five, Gadsden one — suggests Kolar opens as the nominal starter with Njoku second. His 2025 was a lost year: 33 catches on 48 targets for 293 yards and four TDs, having been displaced by rookie Harold Fannin Jr.
+- **Health:** No current injury reported. He missed five games in 2025 with a knee injury and has not played a full season since 2018.
+- **Risk:** A genuine three-way split. Even in a creative McDaniel offense, three tight ends sharing snaps behind Ladd McConkey and the Chargers' receivers leaves no weekly target floor, and his clearest path to relevance is a Gadsden injury.
+- **Draft note:** Not draftable in a 12-team, one-TE, 13-round league — he's around a TE32 ranking. Watchlist name, not a pick.
+- **Confidence:** medium
+- **Sources:**
+  - https://www.espn.com/nfl/player/_/id/3123076/david-njoku
+  - https://establishtherun.com/fantasy-fallout-chargers-sign-david-njoku/
+  - https://www.draftsharks.com/fantasy-football-news/81909/david-njoku-ruins-fantasy-outlook-for-chargers-tes
+  - https://fantasydata.com/nfl/david-njoku-fantasy/18876
+  - https://www.cbssports.com/fantasy/football/news/2026-outlook-david-njoku/

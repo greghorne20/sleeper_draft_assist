@@ -1,0 +1,13 @@
+## De'Zhaun Stribling — WR, SF, bye 8  (player_id: 13417)
+- **Role:** starter (slot "F," pending health)
+- **Situation:** Rookie, No. 33 overall and San Francisco's first pick of the 2026 draft. Injuries rewrote the room in his favor: Ricky Pearsall is out for the season with a PCL injury, Brandon Aiyuk is on Reserve/Left Squad, and Christian Kirk went to IR-R. The 49ers signed Deebo Samuel back, and the working three-WR grouping in camp has been Demarcus Robinson (X), Samuel (Z) and Stribling in the slot. Reporting says Samuel won't be close to an every-down player. Stribling was excellent in limited preseason work — 11 catches on 13 targets for 109 yards across two games, including seven catches for 63 yards against Tennessee's first-team defense — and Brock Purdy and Mike Evans have both praised him publicly.
+- **Health:** Two separate camp issues. Hamstring tightness in early August (he missed a few days and returned) and a shoulder injury on Aug 22 that had him listed day-to-day. Beat reporting as of early September says he isn't in danger of missing Week 1, though some depth charts still carry a questionable tag. Worth checking the first official injury report.
+- **Risk:** He's a rookie in a Kyle Shanahan offense where the target hierarchy runs through Christian McCaffrey, George Kittle and Mike Evans first. Soft-tissue issues stacking up in his first camp is the other real concern — hamstring plus shoulder in one month is a pattern, not a fluke.
+- **Draft note:** Worth a bench pick in the WR50–60 range in half-PPR. The role is real and the opportunity is unusually open for a Day 2 rookie; the caveat is that this offense spreads the ball and he needs to stay on the field.
+- **Confidence:** medium
+- **Sources:**
+  - https://www.si.com/nfl/49ers/onsi/49ers-wide-receiver-depth-chart-completely-changed-last-week
+  - https://www.49ers.com/news/breaking-down-wr-de-zhaun-stribling-s-impressive-preseason-debut
+  - https://www.draftsharks.com/fantasy/points-outlook/dezhaun-stribling/36057
+  - https://www.ninersnation.com/san-francisco-49ers-injuries/161567/49ers-injury-updates-dezhaun-stribling-and-deommodore-lenoir-are-day-to-day-jordan-james-returns
+  - https://www.si.com/nfl/49ers/onsi/49ers-rookie-dezhaun-stribling-has-raised-expecations-himself

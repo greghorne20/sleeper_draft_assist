@@ -1,0 +1,12 @@
+## Malik Willis — QB, MIA, bye 6  (player_id: 8161)
+- **Role:** starter
+- **Situation:** Miami released Tua Tagovailoa and signed Willis to a three-year, $67.5M deal with $45M guaranteed, making him a franchise starting QB for the first time in his career. He's atop the Dolphins' depth chart ahead of Brady Cook and Kyle McCord. The supporting cast is the story: the WR room is Malik Washington in the slot, Jalen Tolbert, and rookies Caleb Douglas and Chris Bell, with Greg Dulcich at TE. De'Von Achane is the one legitimate weapon. Willis' career sample is small but efficient — 105-of-155, 6 TD to 3 INT, 98.9 rating, plus 405 rushing yards and 4 rushing TDs across four seasons as a backup, including an 85.7% completion rate over four appearances in 2025.
+- **Health:** No current injury reported. (He dealt with hamstring and shoulder issues late in the 2025 season with Green Bay; nothing indicates either is active.)
+- **Risk:** He has never carried a starting job, and he's doing it with arguably the league's thinnest set of receivers. The scouting knock on him — bailing the pocket rather than taking the checkdown — is exactly what gets exposed over 17 starts. If the passing game stalls, Miami could go to McCord.
+- **Draft note:** Streaming-tier QB2 only, and late. This is a 1-QB league with 4-point passing TDs and 25 yards per passing point, which flattens the position — the rushing floor is the only thing that makes him interesting, and it isn't enough to draft him as your starter.
+- **Confidence:** medium
+- **Sources:**
+  - https://www.rotowire.com/football/nfl-depth-charts/miami-dolphins-depth-chart-mia
+  - https://www.flashscore.com/news/dolphins-sign-qb-malik-willis-to-three-year-67-5-million-deal/2qoI4qvI
+  - https://thetwodeep.com/nfl/mia/depth-chart
+  - https://en.wikipedia.org/wiki/Malik_Willis

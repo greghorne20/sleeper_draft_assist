@@ -1,0 +1,13 @@
+## T.J. Hockenson — TE, MIN, bye 6  (player_id: 5844)
+- **Role:** starter (unquestioned TE1, with Josh Oliver as TE2)
+- **Situation:** Coming off his worst season since his rookie year — 51 catches on 66 targets for 438 yards and three TDs in 15 games, TE26, 7.5 points per game, with his target share falling from 24.1% in 2023 to 15.6% in 2025 and an aDOT of 5.0. The offseason change that matters is at quarterback: Kyler Murray replaces the J.J. McCarthy / Carson Wentz / Max Brosmer group, and Murray fed Trey McBride heavily in Arizona (111-1,146 in 2024). Minnesota also restructured Hockenson's deal, cutting his 2026 cap number by $5M, and added Jauan Jennings to a WR room already headed by Justin Jefferson and Jordan Addison.
+- **Health:** He's practicing and taking first-team reps. He missed the final two games of 2025 with a shoulder injury and reporting as recently as this week still tags him with a shoulder note; he played five snaps in the preseason opener and was rested for the last two exhibitions. Also two years removed from the torn ACL/MCL in his right knee. No Week 1 designation confirmed.
+- **Risk:** Murray has essentially never supported two fantasy-relevant pass catchers at once, and Jefferson is the one who gets fed. If the target share stays near 15%, better quarterback play won't save the profile — his 1.15 yards per route run ranked 36th at the position.
+- **Draft note:** Around a TE22 ADP; a last-round back-end TE1/streamer in a 12-team one-TE league, taken as a name-brand lottery ticket on the QB upgrade rather than a starter you're confident in.
+- **Confidence:** medium
+- **Sources:**
+  - https://www.cbssports.com/nfl/players/2251097/tj-hockenson/fantasy/
+  - https://sports.yahoo.com/articles/t-j-hockenson-fantasy-outlook-160947577.html
+  - https://www.fantasypros.com/nfl/players/tj-hockenson.php
+  - https://www.profootballnetwork.com/fantasy-football/tj-hockenson-fantasy-prediction-2026/
+  - https://www.fanduel.com/research/t-j-hockenson-nfl-fantasy-outlook-2026

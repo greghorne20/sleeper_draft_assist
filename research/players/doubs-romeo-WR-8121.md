@@ -1,0 +1,12 @@
+## Romeo Doubs — WR, NE, bye 11  (player_id: 8121)
+- **Role:** starter
+- **Situation:** Signed a four-year deal (reported between $68M and $80M) with New England in March as the projected No. 1 target for Drake Maye — then the Patriots traded a 2028 first and a 2027 fifth to Philadelphia for A.J. Brown in June, which pushed Doubs to WR2. He's confirmed as the starter opposite Brown on the first unofficial depth chart, with DeMario Douglas at WR3 ahead of Mack Hollins and Kyle Williams. Kayshon Boutte is gone. Doubs is coming off a career-best 55-724-6 line in Green Bay in 2025 and has never finished a season in the top 30 among WRs in targets, catches, yards or fantasy points.
+- **Health:** No injury reported. He didn't play at all in the preseason, but that was as a projected starter being held out, and he drew praise for his camp practice work.
+- **Risk:** Target share. A.J. Brown is a true alpha who will command volume, Douglas/Hollins/Williams eat into the rest, and Doubs' four-year track record says he's a 55-catch, 700-yard player even when he's the clear WR1 on his team. Paying up for the contract rather than the usage is the trap.
+- **Draft note:** A bench WR4 in half-PPR. Real starting role on an ascending Maye offense, but the ceiling is capped and the reception volume that would carry him in full PPR is worth less here.
+- **Confidence:** high
+- **Sources:**
+  - https://www.espn.com/nfl/player/_/id/4361432/romeo-doubs
+  - https://www.rotowire.com/football/player/romeo-doubs-16027
+  - https://musketfire.com/patriots-first-unofficial-depth-chart-reveals-how-they-feel-about-demario-douglas-01m1mdjehpnp
+  - https://www.patspulpit.com/new-england-patriots-depth-chart/122534/updated-roster-practice-squad-2026-nfl-season

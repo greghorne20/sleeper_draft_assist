@@ -1,0 +1,13 @@
+## Rashid Shaheed — WR, SEA, bye 11  (player_id: 8676)
+- **Role:** starter (WR2 behind Jaxon Smith-Njigba) plus full-time return man
+- **Situation:** Signed a three-year, $51 million deal to stay in Seattle after arriving in a midseason 2025 trade from New Orleans that cost the Seahawks fourth- and fifth-round picks. He was thrown into the offense on the fly and produced little as a receiver — 18 catches for 266 yards across 12 combined regular-season and postseason games — but returned three touchdowns and helped Seattle win Super Bowl LX. Now he has a full offseason. ESPN's Jeremy Fowler reported in June that the Seahawks plan to give him more, with new OC Brian Fleury adding motion and shifts, and that Sam Darnold is comfortable with it. He and Darnold worked out privately through the offseason and connected on multiple long plays in camp. He has done this before: a 719-yard season in New Orleans in 2023, first-team All-Pro that year, Pro Bowls in 2023 and 2025. Seattle also has Cooper Kupp and second-year Tory Horton in the room.
+- **Health:** No injury reported. He was healthy through camp and described as a standout in practices.
+- **Risk:** Seattle is a low-pass-volume offense and Jaxon Smith-Njigba is the reigning Offensive Player of the Year — he is going to command an enormous share. Shaheed is 28, has never finished as a top-35 fantasy receiver, and is splitting attention with return duties. If Kupp holds the slot and JSN eats outside, Shaheed's role is deep-shot specialist: boom weeks, lots of 2-catch duds.
+- **Draft note:** Reasonable last-round or bench pick in half-PPR — the target-share increase is real and reported, but the weekly floor is bad enough that he's a FLEX dart, not a starter you plan around. Note your league gives no return-yardage credit, so the special-teams value that makes him a real NFL asset is worth nothing to you.
+- **Confidence:** high
+- **Sources:**
+  - https://www.espn.com/nfl/player/_/id/4032473/rashid-shaheed
+  - https://www.si.com/nfl/seahawks/onsi/seattle-seahawks-blueprint-unlock-rashid-shaheed-2026
+  - https://roundtable.io/sports/nfl/seahawks/players/seahawks-wr-rashid-shaheed-primed-for-larger-offensive-role-in-2026
+  - https://www.si.com/nfl/seahawks/onsi/top-25-seattle-seahawks-going-into-2026-nfl-season-9-rashid-shaheed
+  - https://www.seahawks.com/news/top-2026-training-camp-storylines-does-rashid-shaheed-still-handle-both-return-jobs

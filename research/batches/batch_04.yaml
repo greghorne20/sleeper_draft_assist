@@ -1,222 +1,102 @@
 batch: 4
-of: 8
+of: 17
 positions:
 - QB
 - RB
 - WR
 - TE
-count: 35
+count: 15
 ordering: sleeper search_rank ascending
 source: sleeper /players/nfl
-generated_at: 2026-09-05T14:00:17-0400
+generated_at: 2026-09-05T14:50:33-0400
 players:
-- player_id: '7567'
-  name: Kenny Gainwell
+- player_id: '6801'
+  name: Tee Higgins
+  pos: WR
+  team: CIN
+  bye: 6
+  search_rank: 35
+- player_id: '12508'
+  name: Jaxson Dart
+  pos: QB
+  team: NYG
+  bye: 8
+  search_rank: 37
+- player_id: '12481'
+  name: Cam Skattebo
   pos: RB
-  team: TB
-  bye: 10
-  search_rank: 86
-- player_id: '11583'
-  name: Jonathon Brooks
-  pos: RB
+  team: NYG
+  bye: 8
+  search_rank: 37
+- player_id: '12526'
+  name: Tetairoa McMillan
+  pos: WR
   team: CAR
   bye: 5
-  search_rank: 88
-- player_id: '4037'
-  name: Chris Godwin
+  search_rank: 37
+- player_id: '4046'
+  name: Patrick Mahomes
+  pos: QB
+  team: KC
+  bye: 5
+  search_rank: 38
+- player_id: '12514'
+  name: Emeka Egbuka
   pos: WR
   team: TB
   bye: 10
-  search_rank: 88
-- player_id: '5849'
-  name: Kyler Murray
-  pos: QB
-  team: MIN
-  bye: 6
-  search_rank: 89
-- player_id: '8132'
-  name: Tyler Allgeier
-  pos: RB
-  team: ARI
-  bye: 14
-  search_rank: 89
-- player_id: '1466'
-  name: Travis Kelce
-  pos: TE
-  team: KC
-  bye: 5
-  search_rank: 89
-- player_id: '13294'
-  name: Makai Lemon
+  search_rank: 38
+- player_id: '8146'
+  name: Garrett Wilson
   pos: WR
-  team: PHI
-  bye: 10
-  search_rank: 89
-- player_id: '4943'
-  name: Sam Darnold
-  pos: QB
-  team: SEA
-  bye: 11
-  search_rank: 91
-- player_id: '4137'
-  name: James Conner
-  pos: RB
-  team: ARI
-  bye: 14
-  search_rank: 92
-- player_id: '3214'
-  name: Hunter Henry
-  pos: TE
-  team: NE
-  bye: 11
-  search_rank: 92
-- player_id: '8408'
-  name: Jordan Mason
-  pos: RB
-  team: MIN
-  bye: 6
-  search_rank: 94
-- player_id: '5022'
-  name: Dallas Goedert
-  pos: TE
-  team: PHI
-  bye: 10
-  search_rank: 94
-- player_id: '8142'
-  name: Alec Pierce
-  pos: WR
-  team: IND
-  bye: 13
-  search_rank: 94
-- player_id: '12533'
-  name: Jacory Croskey-Merritt
-  pos: RB
-  team: WAS
-  bye: 7
-  search_rank: 95
-- player_id: '5012'
-  name: Mark Andrews
-  pos: TE
-  team: BAL
-  bye: 13
-  search_rank: 96
-- player_id: '8110'
-  name: Jake Ferguson
-  pos: TE
-  team: DAL
-  bye: 14
-  search_rank: 97
-- player_id: '13269'
-  name: Fernando Mendoza
-  pos: QB
-  team: LV
-  bye: 13
-  search_rank: 98
-- player_id: '5001'
-  name: Dalton Schultz
-  pos: TE
-  team: HOU
-  bye: 8
-  search_rank: 98
-- player_id: '9756'
-  name: Jordan Addison
-  pos: WR
-  team: MIN
-  bye: 6
-  search_rank: 99
-- player_id: '9758'
-  name: C.J. Stroud
-  pos: QB
-  team: HOU
-  bye: 8
-  search_rank: 101
-- player_id: '9753'
-  name: Zach Charbonnet
-  pos: RB
-  team: SEA
-  bye: 11
-  search_rank: 101
-- player_id: '10222'
-  name: Jayden Reed
-  pos: WR
-  team: GB
-  bye: 11
-  search_rank: 102
-- player_id: '9754'
-  name: Quentin Johnston
-  pos: WR
-  team: LAC
-  bye: 7
-  search_rank: 102
-- player_id: '7002'
-  name: Juwan Johnson
-  pos: TE
-  team: 'NO'
-  bye: 8
-  search_rank: 103
-- player_id: '12522'
-  name: Cam Ward
-  pos: QB
-  team: TEN
-  bye: 9
-  search_rank: 104
-- player_id: '9480'
-  name: Brenton Strange
-  pos: TE
-  team: JAX
-  bye: 7
-  search_rank: 104
-- player_id: '6819'
-  name: Michael Pittman
-  pos: WR
-  team: PIT
-  bye: 9
-  search_rank: 104
-- player_id: '12474'
-  name: Woody Marks
-  pos: RB
-  team: HOU
-  bye: 8
-  search_rank: 105
-- player_id: '8126'
-  name: Wan'Dale Robinson
-  pos: WR
-  team: TEN
-  bye: 9
-  search_rank: 105
-- player_id: '12530'
-  name: Travis Hunter
-  pos: WR
-  team: JAX
-  bye: 7
-  search_rank: 108
-- player_id: '8131'
-  name: Isaiah Likely
-  pos: TE
-  team: NYG
-  bye: 8
-  search_rank: 108
-- player_id: '13330'
-  name: Kenyon Sadiq
-  pos: TE
   team: NYJ
   bye: 13
-  search_rank: 109
-- player_id: '2449'
-  name: Stefon Diggs
-  pos: WR
-  team: WAS
-  bye: 7
-  search_rank: 109
-- player_id: '11655'
-  name: Tyrone Tracy
+  search_rank: 38
+- player_id: '12529'
+  name: TreVeyon Henderson
   pos: RB
-  team: NYG
-  bye: 8
-  search_rank: 110
-- player_id: '9500'
-  name: Josh Downs
+  team: NE
+  bye: 11
+  search_rank: 39
+- player_id: '3294'
+  name: Dak Prescott
+  pos: QB
+  team: DAL
+  bye: 14
+  search_rank: 40
+- player_id: '7523'
+  name: Trevor Lawrence
+  pos: QB
+  team: JAX
+  bye: 7
+  search_rank: 40
+- player_id: '12519'
+  name: Luther Burden
   pos: WR
-  team: IND
+  team: CHI
+  bye: 10
+  search_rank: 40
+- player_id: '9997'
+  name: Zay Flowers
+  pos: WR
+  team: BAL
   bye: 13
-  search_rank: 111
+  search_rank: 41
+- player_id: '7526'
+  name: Jaylen Waddle
+  pos: WR
+  team: DEN
+  bye: 10
+  search_rank: 42
+- player_id: '11563'
+  name: Bo Nix
+  pos: QB
+  team: DEN
+  bye: 10
+  search_rank: 44
+- player_id: '12490'
+  name: Bhayshul Tuten
+  pos: RB
+  team: JAX
+  bye: 7
+  search_rank: 44

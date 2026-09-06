@@ -1,0 +1,13 @@
+## Adonai Mitchell — WR, NYJ, bye 13  (player_id: 11625)
+- **Role:** starter (WR2 opposite Garrett Wilson)
+- **Situation:** Acquired from Indianapolis in the November 2025 Sauce Gardner trade and signed through 2027. Mitchell was the story of Jets camp: he is entrenched as the No. 2 receiver ahead of first-round rookie Omar Cooper, repeatedly won matchups with CB Azareye'h Thomas, and built a visible deep-ball connection with Geno Smith through OTAs and camp. He has the traits (4.34 speed, 6'2" 213) but has never produced — 56-765-2 across two NFL seasons, averaging just 1.7 receptions per game through his first two years.
+- **Health:** No injury reported. Full participant through camp and preseason.
+- **Risk:** Camp hype is the cheapest currency in fantasy football, and Mitchell has generated it before without converting. The Jets offense is unexciting, Garrett Wilson is a heavy target collector, and New York drafted a first-round TE (Kenyon Sadiq) plus a first-round WR — if the offense skews to two-TE sets, the WR2 role is a 65-target job.
+- **Draft note:** A late-round upside swing, best around the last three rounds — the vertical role and 6 TD-per-year path plays fine in half PPR, but the receptions floor is thin enough that he is a bench stash, not a starter.
+- **Confidence:** high
+- **Sources:**
+  - https://www.espn.com/nfl/story/_/id/49649540/new-york-jets-adonai-mitchell-wr2-answer-garrett-wilson
+  - https://www.nysportsday.com/2026/08/20/adonai-mitchell-jets-breakout/
+  - https://heavy.com/sports/nfl/new-york-jets/adonai-mitchell-x-factor-2026-season/
+  - https://www.draftsharks.com/fantasy/points-outlook/omar-cooper-jr/35970
+  - https://en.wikipedia.org/wiki/Adonai_Mitchell

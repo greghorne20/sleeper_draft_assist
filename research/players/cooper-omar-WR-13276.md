@@ -1,0 +1,13 @@
+## Omar Cooper — WR, NYJ, bye 13  (player_id: 13276)
+- **Role:** backup (WR4, competing for WR3 reps)
+- **Situation:** Jets traded up to take Cooper 30th overall in the 2026 draft out of Indiana, but he never took the No. 3 job in camp — he was leapfrogged by slot receiver Isaiah Williams, played zero snaps with the starters in the preseason opener, and did not enter that game until the sixth offensive drive. He opened the preseason listed as a second-teamer, behind Garrett Wilson and Adonai Mitchell, who are entrenched as the top two. The Athletic's Zack Rosenblatt noted he came on strong at the end of camp, so the WR3 job is reachable, but it is not his today.
+- **Health:** No injury reported. Practiced and played through camp and preseason.
+- **Risk:** He is the fourth option in a Geno Smith offense that also added first-round TE Kenyon Sadiq, and the Jets may lean on more two-TE sets. If Williams holds the slot and Mitchell holds the perimeter, Cooper can post a 30-catch rookie year that never returns a startable week.
+- **Draft note:** In half-PPR, a WR4 on a low-volume passing offense is not a roster spot worth spending. Leave him on the wire in a 12-team, 13-round league and watch the Week 1–3 snap counts; he is a waiver add, not a draft pick.
+- **Confidence:** high
+- **Sources:**
+  - https://www.espn.com/nfl/player/_/id/4723820/omar-cooper-jr
+  - https://www.cbssports.com/nfl/players/28900921/omar-cooper-jr/
+  - https://www.draftsharks.com/fantasy-football-news/82235/if-youve-been-drafting-omar-cooper-jr-stop
+  - https://www.draftsharks.com/fantasy-football-news/82440/omar-cooper-carrying-some-momentum
+  - https://sports.yahoo.com/articles/omar-cooper-jr-preseason-debut-161715966.html

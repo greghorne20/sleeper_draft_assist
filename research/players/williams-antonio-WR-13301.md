@@ -1,0 +1,14 @@
+## Antonio Williams — WR, WAS, bye 7  (player_id: 13301)
+- **Role:** committee (rotational WR3, inside/outside)
+- **Situation:** Third-round rookie (No. 71, Clemson) whose outlook took a direct hit when Washington signed Stefon Diggs in early August. He was listed as a third-stringer on the first unofficial depth chart, behind Terry McLaurin, Diggs, Luke McCaffrey, Jaylin Lane and Treylon Burks. More recent reporting has him establishing himself as the next man in line rather than a fixed WR3 — Washington expects to use more 12 and 13 personnel, and free-agent TE Chig Okonkwo has been getting heavy slot work, which takes a receiver off the field. Adam Peters has praised his outside play, so he is not purely a slot body. He led Clemson in receptions in each of his last two seasons but graded out as an underneath option (8.0 aDOT, 69th in YPRR).
+- **Health:** No injury reported. Played through the preseason (3 catches, 41 yards).
+- **Risk:** Diggs and Okonkwo both eat the exact snaps Williams needs. If Washington runs heavy personnel and McLaurin plus Diggs absorb the target concentration, Williams is a 25-catch rookie behind four other bodies.
+- **Draft note:** Not worth a pick in a 12-team, 13-round half-PPR league. He is a Diggs-injury contingency to keep on a watchlist.
+- **Confidence:** medium
+- **Sources:**
+  - https://www.rotoballer.com/player-news/antonio-williams-at-the-bottom-of-commanders-depth-chart/1906223
+  - https://www.espn.com/nfl/player/_/id/5081432/antonio-williams
+  - https://www.fantasypros.com/nfl/players/antonio-williams-wr.php
+  - https://sports.yahoo.com/articles/commanders-unofficial-depth-chart-reveals-123302013.html
+  - https://www.si.com/nfl/commanders/onsi/washington-commanders-projected-depth-chart-week-1-starters-rotations-2026
+  - https://sports.yahoo.com/articles/washington-commanders-92-man-2026-090000828.html

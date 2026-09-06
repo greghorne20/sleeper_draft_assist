@@ -1,0 +1,13 @@
+## Nicholas Singleton — RB, TEN, bye 9  (player_id: 13288)
+- **Role:** backup (RB3)
+- **Situation:** Fifth-round rookie (No. 165) who made Tennessee's initial 53-man roster. Tony Pollard and Tyjae Spears — both in contract years — are set to split the bulk of the carries, and Singleton opens third, with Julius Chestnut as the fourth back and special-teams piece. ESPN's Turron Davenport wrote that he ran well between the tackles in camp and that his roster spot was secure; multiple projections framed his 2026 role as limited but positioned him as the possible future given the contract situations ahead of him. He was a genuinely productive college receiver and returner (102-987-9 receiving, class-high 1,138 kick return yards) but split carries with Kaytron Allen all four years at Penn State.
+- **Health:** He missed a week of camp with an unspecified injury and returned; no current designation reported. Note he broke a bone in his foot at Senior Bowl practices during the pre-draft process, costing him the Combine and his Pro Day.
+- **Risk:** Two established backs ahead of him on a run-heavy team, and his measured profile is unimpressive in the areas that create standalone value — his 8.0 forced missed tackle rate was worst in this rookie RB class. If Pollard and Spears stay healthy he is a special-teams player.
+- **Draft note:** Not a draft pick in 12-team, 13-round half PPR. He is the best waiver claim in this batch if Pollard goes down, because he can catch passes and would inherit the early-down work.
+- **Confidence:** medium
+- **Sources:**
+  - https://www.tennesseetitans.com/news/a-position-by-position-look-at-the-titans-initial-53-man-roster-x5666
+  - https://www.espn.com/nfl/player/_/id/4685555/nicholas-singleton
+  - https://sports.yahoo.com/articles/penn-state-star-rb-nicholas-210027391.html
+  - https://www.tennesseetitans.com/news/titans-rb-nick-singleton-showing-the-ability-to-find-green-grass
+  - https://www.espn.com/nfl/story/_/id/49659254/2026-nfl-season-tennessee-titans-final-roster-projection-depth-chart

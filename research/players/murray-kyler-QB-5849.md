@@ -1,0 +1,14 @@
+## Kyler Murray — QB, MIN, bye 6  (player_id: 5849)
+- **Role:** starter — named Vikings QB1 for 2026
+- **Situation:** Signed a one-year deal with Minnesota in March after being released by Arizona. Kevin O'Connell officially named him the starter over J.J. McCarthy in mid-August, ending the camp competition before the first preseason game; McCarthy is the backup. He gets O'Connell as playcaller, Justin Jefferson, Jordan Addison and Jauan Jennings at receiver, and T.J. Hockenson at tight end. Minnesota returns four of five offensive line starters. The rushing profile is the fantasy hook: he has averaged at least 30 rushing yards per game in all seven of his NFL seasons (career ~36.7/game) and ran for 572 yards and five scores as recently as 2024. His per-game QB finishes: QB11, QB4, QB4, QB7, QB9, QB12, QB20.
+- **Health:** No current injury designation found. He was limited to five games in 2025 by a mid-foot sprain that landed him on IR, and has practiced through camp without reported issue since.
+- **Risk:** Durability and the offense's pass rate. He's missed significant time in multiple seasons, and O'Connell's Vikings have not been a high-volume passing team recently (20th in pass rate with Darnold, 13th last year); if Minnesota leans run and Murray's rushing volume replaces dropbacks rather than adding to them, you get a QB12-18 line. There were also reports of a rough weekend at camp shortly before the announcement, and if he plays poorly, McCarthy is sitting right there — though the job appears his to lose.
+- **Draft note:** In a 1-QB league with 4-point pass TDs and only 0.04/pass yard, the rushing floor is what makes him worth a pick. ADP around 139 (QB18) is genuinely cheap for a starter with top-5 finishes on his résumé and this supporting cast. He's a late-round QB1 target — take him as your starter and pair him with a streamer, or as the QB2 with upside if you already have one.
+- **Confidence:** high
+- **Sources:**
+  - https://www.vikings.com/news/kyler-murray-quarterback-starting-2026-nfl-season
+  - https://www.nfl.com/news/vikings-name-kyler-murray-starting-week-1-quarterback-for-2026-season
+  - https://www.espn.com/nfl/story/_/id/49583297/vikings-name-kyler-murray-starting-qb-sources-say
+  - https://www.fantasypros.com/nfl/notes/419107/kyler-murray-2026-outlook.php
+  - https://www.profootballnetwork.com/fantasy-football/kyler-murray-fantasy-prediction-2026/
+  - https://www.draftsharks.com/fantasy/points-outlook/kyler-murray/10217

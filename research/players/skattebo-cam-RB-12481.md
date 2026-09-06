@@ -1,0 +1,13 @@
+## Cam Skattebo — RB, NYG, bye 8  (player_id: 12481)
+- **Role:** starter, but in a crowded room (lead back with real committee risk)
+- **Situation:** Skattebo sits alone atop the Giants' unofficial depth chart entering Week 1. He had previously been listed as a co-starter with Tyrone Tracy Jr. earlier in camp before pulling clear; Tracy, Najee Harris and Devin Singletary are all on the line below him. He was the overall RB7 from Weeks 2-8 of his rookie year before the injury, finishing with 410 rushing yards and five TDs on 101 carries plus 24 catches for 207 yards and two more scores in eight games. What changed this offseason: John Harbaugh replaced Brian Daboll, Matt Nagy is calling plays, and the Giants added Najee Harris on Aug. 18 to an already-deep backfield. He started the preseason opener (four carries, 19 yards).
+- **Health:** Returning from a dislocated right ankle and fractured fibula suffered Week 8 at Philadelphia in late October 2025, which required surgery. He rehabbed through the offseason, was back for camp, and has played preseason snaps. He said publicly on Sept. 3 that he considered retiring about a month into the rehab. No current practice restriction reported.
+- **Risk:** Two things, and they compound. First, the ankle — this was an open fracture/dislocation, and workhorse volume on a surgically repaired ankle in year one back is not a given. Second, the room is stacked specifically so the Giants don't have to lean on him: if he's less than 100% or the Harbaugh staff wants to manage him, Tracy/Harris/Singletary absorb the touches immediately and he becomes a 12-touch back rather than a 20-touch back.
+- **Draft note:** Half-PPR softens the loss of his receiving work relative to full PPR, but he's still a back whose value depends on goal-line and volume that the depth chart could take away. Feels worth taking in the round 4-5 range as an RB2 — a price where the committee risk is baked in and the RB7-pace upside is free.
+- **Confidence:** medium — the depth chart is confirmed and current, but no source I found gives a projected snap or touch split, and the ankle's effect on his workload is genuinely unknown until games are played.
+- **Sources:**
+  - https://www.espn.com/nfl/story/_/id/49816937/giants-cam-skattebo-says-mulled-retiring-2025-injury
+  - https://www.cbssports.com/fantasy/football/news/giants-cam-skattebo-listed-atop-unofficial-depth-chart/
+  - https://fantasydata.com/nfl/cam-skattebo-fantasy/25887
+  - https://sports.yahoo.com/articles/giants-news-yorks-rb-depth-171052469.html
+  - https://www.si.com/nfl/giants/onsi/cam-skattebo-giants-retirement-injury-comeback-01m1m3hf021m

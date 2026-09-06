@@ -1,0 +1,14 @@
+## Ja'Kobi Lane — WR, BAL, bye 13  (player_id: 13293)
+- **Role:** starter in three-wide sets (WR3 on paper, camp riser)
+- **Situation:** Third-round rookie, 80th overall, out of USC — 6-4, 4.47, with 18 college touchdowns on 99 catches. He was the Ravens' most-hyped camp performer: a CBS Sports source said he was already a starter in 11 personnel within the first week of camp, working as the No. 3 behind Zay Flowers and Rashod Bateman, and he scored in the preseason opener against Philadelphia. Lamar Jackson has publicly praised him and new HC Jesse Minter said the team expects to take advantage of his abilities in the red zone. Notably, the new staff has held Lane out of special teams work alongside Flowers and Bateman — a signal about his intended role. New OC is Declan Doyle. The wrinkle in front of him: Bateman was arrested in June in Georgia on family-violence battery, reckless conduct and first-degree criminal damage charges and could face league discipline, and Bateman's 2025 was poor (19-224-2 in 13 games).
+- **Health:** Healthy. Appeared in preseason games including a cameo at Minnesota. No injury reported.
+- **Risk:** Two things. Baltimore is a low-volume passing offense that also feeds Flowers, a deep tight end group and the run game — a rookie WR3 there might see four targets a week even playing well. And camp hype is the single most unreliable signal in fantasy; the Ravens' own source volunteered the caveat that it's still just camp. His college profile was weak in the intermediate game and after the catch (3.7 career RAC, second-worst in his class).
+- **Draft note:** The most interesting late-round upside swing in this batch — a last-round pick in half-PPR, justified less by the current role than by the plausible path if Bateman is suspended.
+- **Confidence:** high
+- **Sources:**
+  - https://www.cbssports.com/nfl/news/jakobi-lane-ravens-rookie-lamar-jackson-wr2/
+  - https://www.espn.com/nfl/player/_/id/4870847/jakobi-lane
+  - https://sports.yahoo.com/articles/ja-kobi-lane-headlines-ravens-163427074.html
+  - https://www.fantasypros.com/nfl/players/jakobi-lane.php
+  - https://www.baltimorebeatdown.com/baltimore-ravens-news/84440/ravens-news-best-worst-case-for-jakobi-lanes-rookie-year
+  - https://www.foxsports.com/nfl/rashod-bateman-player

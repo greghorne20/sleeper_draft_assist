@@ -1,0 +1,12 @@
+## Emanuel Wilson — RB, SEA, bye 11  (player_id: 11435)
+- **Role:** backup (third or fourth in a crowded committee)
+- **Situation:** Signed a one-year, $2.1 million deal with Seattle in March after three years in Green Bay (2025: 125-496-3 rushing, 15 catches, plus kick return work). The Seahawks backfield turned over completely — Kenneth Walker is gone, Zach Charbonnet is rehabbing a torn ACL and started the year on PUP, and Seattle used a first-round pick on Jadarian Price. On the first unofficial regular-season depth chart George Holani is listed RB1, with the expectation that carries get shared between Holani, Price and Wilson. Reporting indicates Wilson missed reps during camp and lost ground to Holani in the pecking order.
+- **Health:** Expected to be full-go for Week 1. He missed camp time (unspecified) which cost him depth-chart position; no current designation reported.
+- **Risk:** He is the third or fourth option in a backfield where the rookie first-rounder is the intended lead back and Charbonnet returns around Week 5. There is no realistic path to a workload unless two players ahead of him go down.
+- **Draft note:** Undraftable in a 12-team, 13-round league — his ADP is roughly RB78 (pick 270), which tells you the market agrees. Waiver-wire name only.
+- **Confidence:** medium
+- **Sources:**
+  - https://www.fieldgulls.com/seattle-seahawks-roster/173896/seahawks-unofficial-2026-regular-season-depth-chart-revealed
+  - https://www.fantasyalarm.com/articles/nfl/running-backs/seahawks-running-back-depth-chart-2026-fantasy-football/194667
+  - https://www.seahawks.com/team/players-roster/emanuel-wilson/
+  - https://en.wikipedia.org/wiki/Emanuel_Wilson_(American_football)

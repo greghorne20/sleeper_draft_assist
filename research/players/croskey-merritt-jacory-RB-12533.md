@@ -1,0 +1,13 @@
+## Jacory Croskey-Merritt — RB, WAS, bye 7  (player_id: 12533)
+- **Role:** starter — listed atop the Commanders' depth chart, but in a rotation
+- **Situation:** "Bill" led Washington with 805 rushing yards and eight TDs on 175 carries (4.6 YPC) as a seventh-round rookie in 2025, with seven starts. Beat reporter Ben Standig and the team's first unofficial depth chart both have him as the lead back. Washington reshaped the room around him: Rachaad White arrived from Tampa Bay and is expected to handle passing-down work, with Jeremy McNichols, Jerome Ford and rookie Kaytron Allen as depth. Dan Quinn's staff has described his role as expanding from short-yardage into the No. 1 job, and one beat outlet projected him past 1,000 all-purpose yards. He caught only nine passes on 13 targets as a rookie, so this is not a three-down role. Washington's run game is regarded as one of the league's weaker units.
+- **Health:** Cleared but lightly worked. He missed OTA time with an undisclosed soft-tissue issue, was limited in practice in late August (reported as a groin), did not appear in any preseason game, and returned to practice on Sept. 2-3. Quinn said he liked where Croskey-Merritt was heading into Week 1 vs. Philadelphia but acknowledged the limited reps aren't the same as football conditioning.
+- **Risk:** Ball security and the pass-game split. Fumbling was a documented rookie problem, and this is a room with four backs who can absorb touches — if the fumbles resurface he can lose work quickly to White, Ford or McNichols. White also takes the receiving snaps outright, so JCM's fantasy line is carries and touchdowns in a below-average rushing offense, with no receiving floor to catch him on a bad week.
+- **Draft note:** In 0.5 PPR the missing receiving work hurts less than in full PPR, but he's still touchdown-dependent. ADP has been around the end of the 10th round, which is cheap for a projected lead back — at that cost he's a good bench/FLEX swing. I wouldn't pay a top-100 price given the committee and the offense.
+- **Confidence:** medium-high (depth chart position is well-sourced; his share of the workload is untested this season since he played no preseason snaps)
+- **Sources:**
+  - https://www.rotoballer.com/player-news/jacory-croskey-merritt-at-the-top-of-commanders-running-back-depth-chart/1912125
+  - https://athlonsports.com/nfl/washington-commanders/the-future-breakout-star-leading-the-commanders-rushing-attack-returns-to-practice
+  - https://www.hogshaven.com/washington-commanders-depth-chart/426242/the-washington-commanders-release-their-first-unofficial-depth-chart
+  - https://fantasydata.com/nfl/jacory-croskey-merritt-fantasy/26259
+  - https://fantasyfootballcalculator.com/players/jacory-croskey-merritt/news

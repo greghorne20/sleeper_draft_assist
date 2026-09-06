@@ -1,0 +1,13 @@
+## Khalil Shakir — WR, BUF, bye 7  (player_id: 8134)
+- **Role:** starter (slot)
+- **Situation:** Shakir has led Buffalo in receiving in each of the last two seasons and posted a 72-719-4 line on a team-high 95 targets in 2025, with a target share of at least 18% in back-to-back years. Josh Allen trusts him and he's a fixture in the slot. What changed this offseason is that the Bills added D.J. Moore, who now projects as Allen's top target; Keon Coleman (foot/toe) is also in the room and Tyrell Shavers went to reserve/PUP with a knee. Shakir's role is stable, but he's no longer the No. 1.
+- **Health:** Undisclosed injury and the key open question. He played eight snaps in the Aug 15 preseason opener (2 catches, 41 yards), then hasn't practiced since about Aug 20 and sat out both remaining exhibitions. CBS's Matt Zenitz reported in early September that Buffalo is being cautious but there's "currently optimism" he'll be available for the Week 1 opener at Houston on Sept 13. He was still missing practice as of Sept 1–2. The nature of the injury has not been disclosed.
+- **Risk:** Two-sided. Near-term, a soft-tissue-style injury nobody will name that lingers into the season — three weeks without practice is not nothing. Longer-term, D.J. Moore takes the target share that made Shakir startable, and Shakir settles in as a 60-catch, 650-yard slot player, which is a bench asset in half-PPR.
+- **Draft note:** A WR4/flex whose price should have come down on the injury. Reception-dependent profiles lose some value at 0.5 per catch, so I'd want a discount rather than pay his early-summer cost. Check the Wednesday injury report before drafting him as a starter.
+- **Confidence:** medium — the health picture is real but the injury itself is undisclosed
+- **Sources:**
+  - https://www.cbssports.com/nfl/players/2969119/khalil-shakir/
+  - https://www.totalprosports.com/nfl/josh-allen-top-target-wide-receiver-week-1-injury-status/
+  - https://www.draftsharks.com/fantasy-football-news/82451/khalil-shakirs-undisclosed-injury-adds-early-risk-to-his-steady-bills-role
+  - https://www.fantasypros.com/nfl/players/khalil-shakir.php
+  - https://sports.yahoo.com/articles/bills-news-khalil-shakir-injury-update-before-2026-season

@@ -1,0 +1,13 @@
+## Braelon Allen — RB, NYJ, bye 13  (player_id: 11576)
+- **Role:** backup (handcuff)
+- **Situation:** Breece Hall signed a three-year, $45.75M extension that made him one of the highest-paid backs in the league and remains the workhorse after his first 1,000-yard season in 2025, which closes off Allen's path to volume. Allen's own 2025 was wiped out — four games, 18 carries for 76 yards and a TD, ended by a knee injury. He reported at 250 pounds after playing 238-240 last year, and Aaron Glenn has called the room a "three-headed monster" with Hall, Allen and Isaiah Davis, but reporting has Allen reclaiming a backup role rather than gaining ground; at least one beat analyst expects Davis to leapfrog him because new OC Frank Reich prioritizes receiving backs and Davis is better in that phase (Allen has six career drops on 30 targets). Davis is dealing with a knee issue and was expected to miss a couple of weeks.
+- **Health:** Cleared and practicing. He started a preseason game with Hall out (groin) and took the opening drive with the starters. Hall's groin injury was reported as a 2-3 week absence with an expectation he's ready for Week 1.
+- **Risk:** He never earns standalone touches. He's one of the slowest backs in the league by testing, lost ground to Davis in 2024, and even the short-yardage/goal-line role the Jets drafted him for isn't guaranteed with Hall healthy.
+- **Draft note:** Handcuff only — final pick of a 13-round draft, and really only if you roster Hall. With Davis banged up he has short-term standalone value if Hall's groin lingers into Week 1.
+- **Confidence:** medium
+- **Sources:**
+  - https://fantasyfootballcalculator.com/players/braelon-allen/news
+  - https://fantasydata.com/nfl/braelon-allen-fantasy/24934
+  - https://www.rotowire.com/football/player/braelon-allen-17702
+  - https://heavy.com/sports/nfl/new-york-jets/braelon-allen-leapfrogged-2026-depth-chart/
+  - https://draftpunk.net/teams/new-york-jets/

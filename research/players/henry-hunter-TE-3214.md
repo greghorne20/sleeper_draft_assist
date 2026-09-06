@@ -1,0 +1,13 @@
+## Hunter Henry — TE, NE, bye 11  (player_id: 3214)
+- **Role:** starter — undisputed Patriots TE1, signed a two-year extension this offseason
+- **Situation:** Henry has been Drake Maye's security blanket and led New England in targets (97) and catches (66) in 2025 while finishing TE9 in PPR — the second straight year he'd finished top-12. He played 79.3% of snaps and ran a route on 80.7% of pass plays, but his 18.1% target share and 19.6% targets-per-route-run (27th at the position) show he was getting volume by default rather than by design. That default is gone in 2026: New England released Stefon Diggs, signed Romeo Doubs, and traded for A.J. Brown. Brown should be the alpha, and Doubs may also outrank Henry — analysts now project him as no better than the third option in the passing game. Rookie third-rounder Eli Raridon was drafted to eventually pair with him but isn't expected to threaten the starting job; Julian Hill tore his ACL in the spring, and undrafted Tanner Arkin is the likely blocking tight end.
+- **Health:** No current injury reported. He had what was described as a good summer, and beat coverage explicitly notes there should be no concerns about his availability as the starter. Historical note: he missed all of 2018 with a torn ACL, but nothing lingering has surfaced.
+- **Risk:** Target compression. Henry's fantasy value has always been volume plus red-zone scores; adding A.J. Brown and Romeo Doubs takes away both. He scored seven TDs in 2025 and roughly a quarter of his fantasy points came from touchdowns — that's the first thing to disappear when a real WR1 arrives. He's also 31 and has never been a difference-maker at the position even in his best years.
+- **Draft note:** In 0.5 PPR with no TE premium, a ~60-catch, ~700-yard tight end with shrinking touchdown equity is a streaming-tier asset. He's a fine last-couple-rounds TE if you punt the position, but the projectable decline means I'd take him behind several cheaper tight ends with clearer target paths.
+- **Confidence:** high
+- **Sources:**
+  - https://www.profootballnetwork.com/fantasy-football/hunter-henry-fantasy-outlook-2026/
+  - https://fantasyfootballcalculator.com/players/hunter-henry/news
+  - https://www.patspulpit.com/new-england-patriots-roster/132466/hunter-henry-scouting-report-2026-preview-strengths-weaknesses
+  - https://rg.org/news/football/patriots-hunter-henry-two-year-extension
+  - https://www.si.com/nfl/patriots/onsi/patriots-2026-te-preview-hunter-henry-can-build-off-career-year

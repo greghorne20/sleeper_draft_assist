@@ -1,0 +1,14 @@
+## Dak Prescott — QB, DAL, bye 14  (player_id: 3294)
+- **Role:** starter
+- **Situation:** Prescott finished QB6 in total fantasy points in 2025 (313.8) and QB3 in expected points per game, completing a league-high 404 passes for 4,552 yards with 30 TDs and 10 INTs across 17 starts. He has thrown for 4,000+ yards and 30+ TDs in each of his last four seasons with 12+ games played. The offense returns essentially intact: CeeDee Lamb and George Pickens (on the franchise tag) form one of the league's best receiver duos, Jake Ferguson at TE, Javonte Williams in the backfield, Ryan Flournoy as the WR3, and all five offensive line starters back. Brian Schottenheimer enters year two as head coach and has run fast-paced, downfield offenses. Dallas remains top-10 in pass attempts. The defense was rebuilt this offseason (Quinnen Williams, Kenny Clark, Rashan Gary) after finishing last in the league.
+- **Health:** No current injury reported. History: he has alternated healthy full seasons with injury-shortened ones since 2019, though he started all 17 games in 2025.
+- **Risk:** He's 33 and his rushing production is essentially gone — the fantasy value is entirely passing volume and efficiency. If Dallas's improved defense slows the game script, or Schottenheimer leans run near the goal line, or the pace regresses, he drops from top-7 to a streamer. There's also the plain durability question given his career pattern.
+- **Draft note:** He's undervalued relative to Burrow — projections have them within a fraction of a point per game and Burrow goes two rounds earlier. But in a 1-QB league with 4-point passing TDs and 25 yards per point, a non-rushing QB is a replaceable asset. Take him in the round 10-11 range as a late QB1 and spend the earlier picks on RB/WR; that's the whole argument for him in this format.
+- **Confidence:** high
+- **Sources:**
+  - https://www.fanduel.com/research/dak-prescott-nfl-fantasy-outlook-2026
+  - https://www.draftsharks.com/fantasy/points-outlook/dak-prescott/7453
+  - https://fantasyfootballcalculator.com/players/dak-prescott/news
+  - https://www.fantasylife.com/articles/fantasy/dak-prescott-fantasy-football-outlook-for-2026-an-under-apprecia
+  - https://www.profootballnetwork.com/fantasy-football/dak-prescott-fantasy-outlook-2026/
+  - https://draftpunk.net/teams/dallas-cowboys/

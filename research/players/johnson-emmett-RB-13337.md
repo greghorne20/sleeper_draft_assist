@@ -1,0 +1,12 @@
+## Emmett Johnson — RB, KC, bye 5  (player_id: 13337)
+- **Role:** backup (clear RB2 / primary handcuff)
+- **Situation:** Rookie fifth-rounder (161st overall) out of Nebraska, where he led the Big Ten in rushing with 1,451 yards and put up 1,821 scrimmage yards and 15 TDs in 2025. Kansas City signed Kenneth Walker III to a large free-agent deal to be the workhorse after Isiah Pacheco left for Detroit. Johnson's stock moved sharply at final cuts: the Chiefs waived veteran Emari Demercado, which left only Walker, Johnson and Brashard Smith in the room and effectively installed Johnson as RB2. Andy Reid has publicly waved off concerns about his pass protection. His career 3.4 forced-missed-tackle rate is fourth-best in this rookie RB class.
+- **Health:** No injury reported; on the 53-man roster.
+- **Risk:** Walker was paid over $43M to be the every-down back, so absent an injury Johnson may see single-digit touches. Pass protection is the specific thing that could cost him the third-down work that would make him usable. Brashard Smith is also still there.
+- **Draft note:** The archetype this format rewards on the bench — a cheap handcuff to a high-value starter on the best offense in football. Late-round pick, and one of the better ones if you can get him after pick 130.
+- **Confidence:** high
+- **Sources:**
+  - https://www.espn.com/nfl/player/_/id/4832955/emmett-johnson
+  - https://www.si.com/nfl/chiefs/onsi/updated-chiefs-depth-chart-after-roster-cuts-whos-starting-in-week-1
+  - https://heavy.com/sports/nfl/kansas-city-chiefs/53-man-roster-announcement-2026-season/
+  - https://fantasydata.com/nfl/emmett-johnson-fantasy/26835

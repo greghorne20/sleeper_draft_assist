@@ -1,0 +1,14 @@
+## Tyjae Spears — RB, TEN, bye 9  (player_id: 9508)
+- **Role:** committee (clear No. 2 / receiving specialist behind Tony Pollard)
+- **Situation:** Tennessee's first unofficial 2026 depth chart lists Pollard as the starter with Spears second (co-listed with Michael Carter on one version); Paul Kuharsky's chart also has Pollard first and Spears the No. 2. New staff — Robert Saleh at HC, Brian Daboll calling the offense — plus fifth-round rookie Nicholas Singleton added to the room, so the touch pie is more crowded than it was, but the Pollard/Spears hierarchy itself did not change. Spears' value is receiving: 45 catches on 50 targets for 264 yards in 2025 against just 72 carries for 283 yards, and he's reportedly stood out as a pass-catcher again this camp with Saleh confirming he's near the top of the depth chart.
+- **Health:** No current injury reported. He played in the preseason opener (4 carries, 35 yards, 1 catch). Lingering context: nine games missed over the past two seasons across ankle, hamstring and concussion issues, and he played only 13 games in 2025.
+- **Risk:** His touch ceiling is capped by design — he has never cleared 100 carries or five TDs in a season. If Singleton or Carter takes even a slice of the passing-down work, or the durability issues recur, there's no volume left to fall back on.
+- **Draft note:** Your league is 0.5 PPR, which halves exactly the thing Spears is good at, so he's a late bench RB (last two or three rounds of 13) rather than a target — bye-week/flex insurance, not a weekly starter.
+- **Confidence:** medium
+- **Sources:**
+  - https://www.tennesseetitans.com/news/20-things-that-caught-my-eye-on-the-first-unofficial-depth-chart-for-the-titans-in-2026
+  - https://www.paulkuharsky.com/news/titans-depth-chart
+  - https://fantasyfootballcalculator.com/players/tyjae-spears/news
+  - https://www.espn.com/nfl/player/_/id/4428557/tyjae-spears
+  - https://fantasydata.com/nfl/tyjae-spears-fantasy/24123
+  - https://www.profootballnetwork.com/fantasy-football/tyjae-spears-fantasy-outlook-updated-2026/

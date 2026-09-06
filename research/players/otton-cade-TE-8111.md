@@ -1,0 +1,13 @@
+## Cade Otton — TE, TB, bye 10  (player_id: 8111)
+- **Role:** starter (unquestioned, near-every-snap)
+- **Situation:** Re-signed with Tampa Bay on a three-year deal and is the clear No. 1 on the Bucs' first unofficial depth chart, with Payne Durham as TE2 and rookie Bauer Sharp behind him. He barely leaves the field — 993 snaps in 2025, and since 2022 he ranks first among all tight ends in snaps (3,530) and second in routes (1,838). He finished second on the team in 2025 with 59 catches for 572 yards and one touchdown. The offense returns Baker Mayfield with Emeka Egbuka, Chris Godwin and Bucky Irving; Todd Bowles is still head coach. Otton runs a full route tree, blocks well, and is durable — the profile of a player coaches love and fantasy managers don't.
+- **Health:** No injury reported. Durability is his defining trait.
+- **Risk:** He is a volume-without-value tight end. He has never cleared 86 targets in a season, has 11 touchdowns and 19 end-zone targets in 63 career games, and was the only player in the league with 75+ targets who failed to score more than once in 2025. He has finished 25th or worse in fantasy points per game in three of four seasons. The failure mode isn't losing his job — it's holding the job and scoring six points a week.
+- **Draft note:** Streaming-tier only. In half-PPR with one TE slot he's a bye-week fill or an emergency add off waivers, not a pick — the catch floor is real but the touchdown ceiling isn't there.
+- **Confidence:** high
+- **Sources:**
+  - https://www.espn.com/nfl/player/_/id/4243331/cade-otton
+  - https://thepewterplank.com/position-by-position-takeaways-from-buccaneers-first-unofficial-depth-chart
+  - https://www.buccaneers.com/news/2025-state-of-the-bucs-tight-ends
+  - https://bucsreport.com/2026/06/25/buccaneers-2026-position-preview-tight-end-room-searching-for-more-production-behind-cade-otton/
+  - https://www.bucsnation.com/tampa-bay-buccaneers-depth-chart/67644/post-nfl-draft-projected-buccaneers-depth-chart

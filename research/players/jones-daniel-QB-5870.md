@@ -1,0 +1,12 @@
+## Daniel Jones — QB, IND, bye 13  (player_id: 5870)
+- **Role:** starter (Shane Steichen has publicly named him QB1; Anthony Richardson is the backup)
+- **Situation:** Jones was a top-five fantasy quarterback through the first 10 weeks of 2025 while leading Indianapolis to an 8-2 start — 69.9% completions, 8.3 yards per attempt, 15 passing TDs, seven INTs, five rushing scores, QB5 over that stretch and 17.4 points per game on the year. Then he played through a fractured fibula and tore his Achilles in Week 14. The supporting cast turned over: Michael Pittman Jr. left for Pittsburgh, Keenan Allen was signed in mid-August at age 34, Alec Pierce's health is unreliable, and Josh Downs and Tyler Warren (groin, expected back for Week 1) round out the group.
+- **Health:** Fully cleared entering training camp after the Achilles tear; he progressed through 7-on-7 and then full work, said he "absolutely" expects to be ready for Week 1, and did not play in the preseason opener. The open question is whether the mobility comes back — 17.8% of his 2025 fantasy points came from rushing.
+- **Risk:** The Achilles taking the legs out of the profile. His pre-2025 career was consistently below 7.0 yards per attempt, so if the 8.1 YPA was scheme-and-health-driven and the rushing floor is gone, he's a bottom-tier starter. He's also been turnover-prone throughout his career, and your league docks 2 points per interception.
+- **Draft note:** Roughly QB24-26 ADP. In a 1QB league with 4-point passing TDs he's a late-round second QB or, more likely, a Week 1 waiver-wire streamer you watch for two or three games before committing.
+- **Confidence:** medium
+- **Sources:**
+  - https://www.fantasypros.com/nfl/notes/419560/daniel-jones-2026-outlook.php
+  - https://fantasyfootballcalculator.com/players/daniel-jones
+  - https://www.profootballnetwork.com/fantasy-football/daniel-jones-fantasy-outlook-updated-2026/
+  - https://www.profootballnetwork.com/fantasy-football/daniel-jones-fantasy-outlook-2026/

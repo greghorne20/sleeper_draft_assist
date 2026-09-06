@@ -1,0 +1,14 @@
+## Bhayshul Tuten — RB, JAX, bye 7  (player_id: 12490)
+- **Role:** committee — listed as co-starter with Chris Rodriguez Jr. on Jacksonville's unofficial depth chart, but widely expected to win the lead role
+- **Situation:** Tuten spent his rookie year buried behind Travis Etienne and Tank Bigsby, producing 386 scrimmage yards and seven TDs on 93 touches in 15 games (83 carries, 307 rushing yards, five rushing TDs, 10 catches for 79 yards and two scores). Etienne signed with New Orleans in free agency, which opens the job. Jacksonville signed Chris Rodriguez Jr. away from Washington in March and listed the two as co-starters; LeQuint Allen Jr. remains in the third-down mix. Tuten drew the most attention in camp — Liam Coen told him to "go be special, that's who you are" — and he ran a 4.28 at the combine. He's also the listed kick returner. ESPN's projection has him taking over lead-back duties. Note: sources disagree on his draft round (fourth per the Jaguars' own site and beat writers, fifth per at least one fantasy outlet) — immaterial for fantasy, but a flag that some of the reporting on him is loose.
+- **Health:** Missed practice Wednesday (~Sept. 2) with an illness. ESPN expects him fine for Week 1 vs. Cleveland. No structural injury reported. LeQuint Allen is dealing with an undisclosed issue.
+- **Risk:** He never actually wins the job. The team signed Rodriguez specifically to compete, held an open competition through camp, and never removed the co-starter designation. Coen also ran a pass-first offense down the stretch in 2025, and one analyst framing worth taking seriously is that this backfield will run well *because* the pass game works, not the other way around — meaning the volume may never get to bell-cow levels regardless of who wins. There's also no NFL sample of Tuten handling 15+ touches a week.
+- **Draft note:** Genuine upside pick — a mid-round back who could end up top-24 with a clear job in a good offense. In half-PPR his receiving work matters less than it would in full PPR, so his value is more tied to carries and goal-line work than to third downs (where Allen sits). Worth a round 5-6 swing; I wouldn't reach into round 4 for an unresolved committee.
+- **Confidence:** medium — the depth chart is confirmed but is explicitly a co-starter listing, and no source I found reports a resolved Week 1 split.
+- **Sources:**
+  - https://www.jaguars.com/news/jaguars-2026-training-camp-first-unofficial-depth-chart-released
+  - https://www.espn.com/nfl/player/_/id/4882093/bhayshul-tuten
+  - https://www.foxsports.com/nfl/bhayshul-tuten-player
+  - https://sports.yahoo.com/articles/bhayshul-tuten-fantasy-football-next-123652632.html
+  - https://fantasyfootballcalculator.com/players/bhayshul-tuten/news
+  - https://www.draftsharks.com/fantasy/points-outlook/trevor-lawrence/10748

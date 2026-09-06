@@ -1,0 +1,13 @@
+## Kenyon Sadiq — TE, NYJ, bye 13  (player_id: 13330)
+- **Role:** committee (currently behind Mason Taylor)
+- **Situation:** Rookie, No. 16 overall in the 2026 draft — the only TE taken in round one — into a Jets offense with new OC Frank Reich and QB Geno Smith. He's a genuine athletic outlier (4.39 at 241 lbs, 43.5" vertical) and the Jets expect heavy 12-personnel usage with him and 2025 second-rounder Mason Taylor. The problem is the depth chart and the missed reps: he was listed as Taylor's backup on the Jets' first unofficial depth chart in August, and the target hierarchy ahead of him includes Garrett Wilson, Breece Hall, Adonai Mitchell and fellow first-rounder Omar Cooper Jr.
+- **Health:** Hernia surgery in May, then a setback in early camp that cost him roughly a month. He returned to position drills on Sept 1–2 for the first time in nearly a month. Aaron Glenn has said repeatedly he's confident Sadiq is ready for the Sept 13 opener, but he has missed most of camp and the entire preseason.
+- **Risk:** He opens as the No. 2 TE on a bad offense and never gets past ~50–60% snaps, or the hernia lingers and he's inactive/limited early. Rookie TEs with missed camp reps usually start slow.
+- **Draft note:** Late-round upside stash only in this format — TE is a single starting slot with no premium scoring, so a rookie fighting for snaps behind Taylor isn't worth a real pick. Fine as a bench dart with six bench spots.
+- **Confidence:** medium
+- **Sources:**
+  - https://www.rotowire.com/football/player/kenyon-sadiq-19279
+  - https://www.cbssports.com/fantasy/football/news/jets-kenyon-sadiq-listed-behind-taylor-on-depth-chart/
+  - https://www.newyorkjets.com/news/rookies-kenyon-sadiq--dangelo-ponds-nearing-return-from-injuries-09-02-2026
+  - https://www.espn.com/nfl/story/_/id/49529675/jets-rookie-te-kenyon-sadiq-miss-hernia-setback
+  - https://sports.yahoo.com/articles/kenyon-sadiq-fantasy-outlook-2026-164941833.html

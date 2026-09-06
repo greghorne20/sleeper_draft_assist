@@ -1,0 +1,14 @@
+## Rachaad White — RB, WAS, bye 7  (player_id: 8136)
+- **Role:** committee (passing-down back behind Jacory Croskey-Merritt)
+- **Situation:** White signed a one-year deal with Washington in March, reuniting with his Arizona State quarterback Jayden Daniels, and was listed as the No. 2 running back on the team's unofficial camp depth chart. Croskey-Merritt has the edge for early-down and goal-line work; rookie Kaytron Allen is also in the room. New OC is David Blough, and White reportedly excelled in that scheme through OTAs and camp. The case for him is receiving — he has a 64-catch season on his resume and an 89.1% career catch rate, and Washington has no obvious second target behind Terry McLaurin — with the caveat that JCM has been getting more passing-game reps this summer specifically to close that gap.
+- **Health:** Tweaked a hamstring in an Aug 12 joint practice with Miami and missed roughly two weeks; NFL Network reported it as not serious or long-term. He returned to individual drills in late August but had not resumed 11-on-11 at that point and sat out the final two preseason games. No confirmed Week 1 designation found — treat as a live question.
+- **Risk:** He falls to third on the depth chart behind Croskey-Merritt and Allen and keeps only the receiving snaps. His rushing efficiency is genuinely poor (1.52 yards after contact per attempt, 1.2% explosive run rate in his 2025 lead stretch), so if the catches don't come, nothing does.
+- **Draft note:** Around an RB38 ADP; in 0.5 PPR his reception-based floor is worth half what it'd be in full PPR, so he's a late-round RB3/bench pick, and the hamstring argues for letting someone else take him a round early.
+- **Confidence:** medium
+- **Sources:**
+  - https://www.cbssports.com/fantasy/football/news/commanders-rachaad-white-penciled-in-as-no-2-rb-at-camp/
+  - https://www.cbssports.com/nfl/players/3169147/rachaad-white/
+  - https://www.nbcsports.com/fantasy/football/player-news/2026-08-20/whites-hamstring-injury-not-considered-serious
+  - https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/commanders-running-back-rachaad-white-back-to-individual-work-after-hamstring-injury
+  - https://www.profootballnetwork.com/fantasy-football/rachaad-white-fantasy-projection-2026/
+  - https://www.draftsharks.com/fantasy/points-outlook/rachaad-white/12583

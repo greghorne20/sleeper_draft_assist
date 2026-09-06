@@ -1,0 +1,12 @@
+## KC Concepcion — WR, CLE, bye 11  (player_id: 13298)
+- **Role:** starter
+- **Situation:** Rookie, No. 24 overall out of Texas A&M, and by all accounts a training-camp standout. He sat out preseason Week 3, which usually signals a settled starting role, and projects as Cleveland's No. 2 WR behind Jerry Jeudy — with a real chance to pass him, since Jeudy managed only 50-602-2 last season. Todd Monken has moved him around from day one (X, Z and F), and his versatility showed in his one preseason game: three catches for 27 yards, a 14-yard rushing TD and a 31-yard punt return. He'll compete for targets with Jeudy, fellow rookie Denzel Boston, TE Harold Fannin Jr. and RB Quinshon Judkins. His college career 27.2% target share led this rookie class; he's a career 72% slot player.
+- **Health:** No injury reported.
+- **Risk:** The offense. Deshaun Watson is expected to open at QB on a unit widely projected near the bottom of the league in scoring, which caps any receiver's realistic output. Rookie inconsistency plus a bad passing game is how these picks go to zero.
+- **Draft note:** A late-round dart with genuine WR3 upside — first-round capital at a WR48–50 cost. Negative game script means volume, which is the one thing working in his favor. Bench pick, not a starter you plan around.
+- **Confidence:** high
+- **Sources:**
+  - https://www.espn.com/nfl/player/_/id/4870653/kc-concepcion
+  - https://fantasydata.com/nfl/kc-concepcion-fantasy/26762
+  - https://www.profootballnetwork.com/fantasy-football/kc-concepcion-fantasy-outlook-updated-2026/
+  - https://www.clevelandbrowns.com/team/players-roster/kc-concepcion/

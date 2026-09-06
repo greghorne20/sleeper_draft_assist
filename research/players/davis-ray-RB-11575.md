@@ -1,0 +1,12 @@
+## Ray Davis — RB, BUF, bye 7  (player_id: 11575)
+- **Role:** backup (RB2 and the Cook handcuff; also the primary kick returner)
+- **Situation:** Davis is listed second behind James Cook on Buffalo's depth chart, with Ty Johnson third. Cook is coming off a monster year — 1,621 rushing yards, the Bills' first NFL rushing title since 1976 — which is exactly why Davis' 2025 offensive line was so thin: 58 carries for 275 yards and zero touchdowns, and 151 of those yards came in a meaningless Week 18 game after Cook sat down. His real 2025 value was on special teams, where he earned first-team All-Pro honors as a returner with a franchise-record 30.4 yards per return. Analysts consistently note that while Johnson may be listed as the technical change-of-pace, Davis is the one who would start if Cook missed time, because Johnson is a pass-catching specialist and Davis is a workhorse build.
+- **Health:** No injury reported for Davis. Ty Johnson is carrying a questionable tag on published depth charts.
+- **Risk:** Cook staying healthy. Buffalo showed last year they will run Cook into the ground and give Davis nothing — a 58-carry season with no touchdowns is a wasted roster spot in a 12-team league. Kick-return All-Pro honors score zero points in your scoring settings.
+- **Draft note:** Draft him only as a handcuff, in the final round or two, and he is meaningfully more valuable if you roster Cook. In a Josh Allen offense the backup would inherit a good but touchdown-capped role, since Allen takes the goal line himself.
+- **Confidence:** high
+- **Sources:**
+  - https://www.rotowire.com/football/player/ray-davis-17792
+  - https://www.rotowire.com/football/nfl-depth-charts/buffalo-bills-depth-chart-buf
+  - https://www.footballguys.com/depth-charts
+  - https://www.si.com/nfl/bills/onsi/history-ray-davis-rushing-champion-james-cook-backup-finishes-nfl-leader-too

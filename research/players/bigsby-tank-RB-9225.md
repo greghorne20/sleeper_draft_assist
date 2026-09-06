@@ -1,0 +1,13 @@
+## Tank Bigsby — RB, PHI, bye 10  (player_id: 9225)
+- **Role:** backup (clear RB2 behind Saquon Barkley)
+- **Situation:** Made Philadelphia's 53 as one of three backs with Barkley and Will Shipley. Acquired from Jacksonville after Week 1 of 2025 for fifth- and sixth-round picks; he took over the primary backup job by midseason and went 58-344-2 at 5.9 yards per carry, including a 9-104 game against the Giants in Week 8. This is his first full offseason in the building, and RB coach Jemal Singleton has publicly framed his development as the payoff of that time — the staff now describes him as an insurance policy rather than just a change-of-pace. New OC is Sean Mannion, running a Shanahan/McVay-style scheme, which is a fresh install for everyone. Barkley turns 30 in February, is entering year nine, and has 625 carries over the last two seasons.
+- **Health:** Healthy. He has been durable across four NFL seasons with minimal missed time.
+- **Risk:** Barkley is the highest-paid back in league history and the Eagles have every incentive to feed him — Bigsby got 58 carries in 16 games last year. Shipley is also on the roster and has been listed ahead of him at points this offseason. Bigsby also lost the kick-return job in 2025 after ball-handling problems, so there's no special-teams floor. Absent a Barkley injury this is 4-6 touches a week.
+- **Draft note:** The best pure handcuff in this batch and the one most worth a real late-round pick — but its value is concentrated almost entirely in the hands of whoever drafts Barkley.
+- **Confidence:** high
+- **Sources:**
+  - https://www.bleedinggreennation.com/news/181341/eagles-depth-chart-first-look-at-the-initial-2026-roster
+  - https://www.si.com/nfl/eagles/onsi/eagles-very-high-on-tank-bigsby-this-year-after-massive-offseason-growth-01m1grvc7f4f
+  - https://sports.yahoo.com/articles/why-tank-bigsby-eagles-rb2-113600616.html
+  - https://www.rotowire.com/football/player/tank-bigsby-16705
+  - https://www.si.com/nfl/eagles/onsi/eagles-rb-tank-bigsby-crucial-role-behind-saquon-barkley-for-no-25-player-in-2026-01kw9j0zzg3f

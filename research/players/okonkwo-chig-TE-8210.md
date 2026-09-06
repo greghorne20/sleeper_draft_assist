@@ -1,0 +1,13 @@
+## Chig Okonkwo — TE, WAS, bye 7  (player_id: 8210)
+- **Role:** starter
+- **Situation:** Signed a three-year, $27 million deal with Washington in free agency after four years in Tennessee, and is listed as a starting tight end on the Commanders' unofficial depth chart. He is effectively replacing Zach Ertz, who tore an ACL in Week 14 of 2025 — Ertz drew 91 targets in 2024 and 72 in 2025 despite missing four games, so the role has real volume history with Jayden Daniels. Competition behind him is thin: John Bates (hamstring), Ben Sinnott (oblique) and Colson Yankoff. Washington's receiver room past Terry McLaurin has real question marks, which pushes targets his way. New OC David Blough is installing more under-center play-action, a fit for a converted-receiver tight end who is among the league's best after the catch. He has cleared 450 receiving yards in each of his four seasons and has 50+ catches in each of the last three.
+- **Health:** No injury reported. Played limited snaps in the preseason (one catch for 10 yards vs. Detroit; sat the opener with the other starters). He is one of only four tight ends to appear in all 68 games since entering the league in 2022.
+- **Risk:** Touchdowns. He averaged two scores a season in Tennessee and has eight total in four years; he is a poor blocker, which can cost him goal-line and short-yardage snaps. If Washington keeps him to a chain-mover role, he's a 55-catch, 550-yard, 3-TD tight end and that's a fantasy afterthought in half-PPR.
+- **Draft note:** Legitimate mid-to-late-round TE1 target in this format — starting tight end on a good offense with a clear target vacuum in front of him, and by far the most interesting name in this batch.
+- **Confidence:** high
+- **Sources:**
+  - https://www.espn.com/nfl/player/_/id/4360635/chig-okonkwo
+  - https://www.hogshaven.com/washington-commanders-analysis/419345/commanders-roster-rankings-chig-okonkwo-tennessee-titans-nfl-free-agency
+  - https://athlonsports.com/nfl/washington-commanders/chig-okonkwo-commanders-jayden-daniels-tight-end-2026
+  - https://www.commanders.com/news/chig-okonkwo-looking-to-become-player-that-i-know-i-can-be-with-commanders
+  - https://www.foxsports.com/nfl/chigoziem-okonkwo-player

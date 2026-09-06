@@ -1,0 +1,13 @@
+## Jalen McMillan — WR, TB, bye 10  (player_id: 11618)
+- **Role:** starter
+- **Situation:** Mike Evans signed with San Francisco, and Tampa Bay's first 2026 depth chart lists McMillan, Chris Godwin and Emeka Egbuka as the starting three. That is a path to a near-every-down role: only Egbuka and a 30-year-old Godwin are ahead of him in the pecking order, and Evans' goal-line targets are unassigned. McMillan's rookie tape is the reason to care — over the last five games of 2024 he caught a league-high seven touchdowns, one in every game, averaging 19.8 fantasy PPG. New OC is Zac Robinson.
+- **Health:** Currently the concern. He missed more than a week of camp and the preseason opener with a left knee injury and was called day-to-day by Todd Bowles in late August; he has since returned to practice. Longer history: a severely strained neck in the 2025 preseason cost him the first 13 games of last season, and he missed four games as a rookie. Note that Egbuka (toe) was also described as day-to-day/week-to-week.
+- **Risk:** Availability, plainly. He has missed 17 of a possible 34 games. Secondarily, if Godwin looks like his old self and Egbuka is the No. 1, McMillan is the third option on a team that has been leaning harder on the run.
+- **Draft note:** The most interesting name in this batch for my scoring. Worth taking earlier than the rest here — a mid-to-late bench pick with real WR3/flex upside if the knee is a non-issue, because the touchdown profile is exactly what half PPR pays for. Confirm his Week 1 practice participation before drafting him ahead of a safer body.
+- **Confidence:** medium
+- **Sources:**
+  - https://www.espn.com/nfl/player/_/id/4430834/jalen-mcmillan
+  - https://www.buccaneers.com/news/looming-preseason-opener-means-first-bucs-depth-chart-2026
+  - https://www.si.com/onsi/fantasy/injuries/fantasy-football-impact-emeka-egbuka-and-jalen-mcmillan-latest-injury-news
+  - https://www.cbssports.com/nfl/players/3162347/jalen-mcmillan/
+  - https://sports.yahoo.com/articles/buccaneers-good-news-injury-prone-155426577.html

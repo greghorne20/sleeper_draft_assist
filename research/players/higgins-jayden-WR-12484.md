@@ -1,0 +1,11 @@
+## Jayden Higgins — WR, HOU, bye 8  (player_id: 12484)
+- **Role:** OUT FOR SEASON — not a draftable role
+- **Situation:** Higgins tore his ACL on Aug 18 during a joint practice with the Raiders and was placed on season-ending injured reserve. Before the injury he was set to open 2026 as Houston's full-time WR2 across from Nico Collins, coming off a rookie year of 41 catches on 68 targets for 525 yards and six TDs in 17 games (10 starts), and he was a popular Year-2 breakout pick. Houston has since worked out Sterling Shepard, Josh Reynolds and Zay Jones, with Jaylin Noel, Tank Dell and Xavier Hutchinson expected to absorb the snaps.
+- **Health:** Torn ACL, on IR, out for the 2026 season.
+- **Risk:** None to manage — the pick simply fails. Do not draft him in redraft.
+- **Draft note:** Undraftable in your 13-round redraft. He's a dynasty-only asset now.
+- **Confidence:** high
+- **Sources:**
+  - https://fantasyfootballcalculator.com/players/jayden-higgins
+  - https://fantasydata.com/nfl/jayden-higgins-fantasy/26094
+  - https://www.draftsharks.com/fantasy/points-outlook/jayden-higgins/35345

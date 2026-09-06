@@ -1,0 +1,14 @@
+## Mark Andrews — TE, BAL, bye 13  (player_id: 5012)
+- **Role:** starter — clear Ravens TE1
+- **Situation:** Baltimore lost both Isaiah Likely (to the Giants) and Charlie Kolar in free agency, leaving Andrews as the only established pass-catching tight end on the roster; the tight ends coach has said the room is "built around Mark." Likely had been running a route on 53.3% of pass plays with a 10.4% target share. Andrews is on the three-year extension he signed during the 2025 season. The offense has a new play-caller in Declan Doyle, and Lamar Jackson averaged only ~23 pass attempts per game last year against a career norm closer to 27-28, so there's room for passing volume to rise. Andrews should be the No. 2 option behind Zay Flowers. Baltimore did draft two Day 3 tight ends (Matthew Hibner, Josh Cuevas), neither expected to matter in 2026.
+- **Health:** No current injury designation found. He played all 17 games in 2025. He turns 31 on Sept. 6. Nothing lingering surfaced in searches.
+- **Risk:** He may simply be done as a producer. 2025 was the worst season of his career — 48 catches on 70 targets for 422 yards and five TDs, TE23, with career lows in yards per game (24.8), per catch (8.8) and per target (6.0). His route share was only 62.9% (22nd), and his yards per route run ranked 41st. Worse, at least one analyst reports that camp coverage has been poor — that he isn't getting open and is dropping passes. His recent value has leaned on a 15.5% touchdown rate on receptions, which isn't sustainable.
+- **Draft note:** In 0.5 PPR without TE premium, a three-catch-per-game tight end living on red-zone scores is a thin bet. ADP around 123 makes him a late-round TE2 flier on the theory that Likely's vacated routes plus more Jackson attempts restore his volume. That's a real path, but I'd only take it as a second tight end or a punt, not as my starter.
+- **Confidence:** medium-high (situation is very clear; the camp-performance reporting is one analyst's characterization and I couldn't corroborate it independently)
+- **Sources:**
+  - https://www.fantasypros.com/nfl/notes/419304/mark-andrews-2026-outlook.php
+  - https://www.draftsharks.com/fantasy/points-outlook/mark-andrews/10009
+  - https://fantasydata.com/nfl/mark-andrews-fantasy/19803
+  - https://sports.yahoo.com/articles/mark-andrews-fantasy-prediction-2026-113400393.html
+  - https://www.profootballnetwork.com/fantasy-football/mark-andrews-fantasy-outlook-2026/
+  - https://www.fantasypros.com/nfl/players/mark-andrews.php

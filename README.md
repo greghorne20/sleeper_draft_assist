@@ -73,7 +73,7 @@ cp byes.template.json byes.2026.json   # then fill in the weeks
 uv run sleeper-batches --byes byes.2026.json
 ```
 
-Writes `research/batches/batch_01.yaml` … with 220 QB/RB/WR/TE at 35 per file, plus a
+Writes `research/batches/batch_01.yaml` … with 220 QB/RB/WR/TE at 15 per file, plus a
 final `batch_NN_k_def.yaml` with 12 kickers and 12 defenses. Each entry:
 
 ```yaml
@@ -86,7 +86,7 @@ players:
   search_rank: 5
 ```
 
-Flags: `--limit 220`, `--chunk-size 35`, `--kickers 12`, `--defenses 12`,
+Flags: `--limit 220`, `--chunk-size 15`, `--kickers 12`, `--defenses 12`,
 `--out-dir research/batches`, `--refresh-players`.
 
 The first run fetches the 5MB dump and caches it under `.cache/sleeper/`. Later runs

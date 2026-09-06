@@ -1,0 +1,72 @@
+batch: 15
+of: 17
+positions:
+- QB
+- RB
+- WR
+- TE
+count: 10
+ordering: sleeper search_rank ascending
+source: sleeper /players/nfl
+generated_at: 2026-09-05T14:50:33-0400
+players:
+- player_id: '4981'
+  name: Calvin Ridley
+  pos: WR
+  team: TEN
+  bye: 9
+  search_rank: 180
+- player_id: '10213'
+  name: Tre Tucker
+  pos: WR
+  team: LV
+  bye: 13
+  search_rank: 181
+- player_id: '12455'
+  name: Brashard Smith
+  pos: RB
+  team: KC
+  bye: 5
+  search_rank: 182
+- player_id: '3257'
+  name: Jacoby Brissett
+  pos: QB
+  team: ARI
+  bye: 14
+  search_rank: 184
+- player_id: '12535'
+  name: Isaac TeSlaa
+  pos: WR
+  team: DET
+  bye: 6
+  search_rank: 184
+- player_id: '12499'
+  name: Elic Ayomanor
+  pos: WR
+  team: TEN
+  bye: 9
+  search_rank: 185
+- player_id: '13320'
+  name: Zachariah Branch
+  pos: WR
+  team: ATL
+  bye: 11
+  search_rank: 185
+- player_id: '9502'
+  name: Tank Dell
+  pos: WR
+  team: HOU
+  bye: 8
+  search_rank: 187
+- player_id: '12457'
+  name: Jaydon Blue
+  pos: RB
+  team: PHI
+  bye: 10
+  search_rank: 189
+- player_id: '11579'
+  name: Audric Estime
+  pos: RB
+  team: 'NO'
+  bye: 8
+  search_rank: 190

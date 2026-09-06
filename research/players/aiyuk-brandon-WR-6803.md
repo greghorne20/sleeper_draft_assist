@@ -1,0 +1,8 @@
+## Brandon Aiyuk — WR, SF, bye 8  (player_id: 6803)
+- **Role:** none — ineligible to play. Do not draft.
+- **Situation:** Aiyuk has not played since tearing his ACL, MCL and meniscus in Week 7 of 2024. San Francisco placed him on the reserve/left squad list in December 2025 after he stopped reporting; he remains there as of Sep 1, 2026. GM John Lynch confirmed on Aug 31, 2026 that "nothing has changed" and that Aiyuk "is just not on our roster." He is ineligible to play for the 49ers or any other team unless he petitions Commissioner Goodell for reinstatement, and he said publicly in July 2026 that he will not do so because he refuses to do business with the 49ers again. The 49ers voided his 2026 guarantees and retain his contractual rights; his hoped-for landing spot, Washington, signed Stefon Diggs instead.
+- **Health:** Two years removed from a multi-ligament knee injury with no documented football activity since. Current condition: UNKNOWN.
+- **Risk:** There is no upside scenario short of a reinstatement he has said he won't file for, plus a trade, plus a ramp-up from a two-year layoff. Any pick spent here is a dead roster spot.
+- **Draft note:** Do not draft at any price. This is a Sleeper roster artifact.
+- **Confidence:** high
+- **Sources:** https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/brandon-aiyuk-contract-john-lynch-4/1959836/ · https://www.49erswebzone.com/articles/202860-49ers-message-brandon-aiyuks-status/ · https://sports.yahoo.com/articles/brandon-aiyuk-nfl-future-remains-062733474.html · https://bleacherreport.com/articles/25470170-new-49ers-rumors-brandon-aiyuks-status-being-nonfactor-team-amid-nfl-training-camp · https://ninernoise.com/brandon-aiyuk-timeline-every-incident-things-went-sour-49ers

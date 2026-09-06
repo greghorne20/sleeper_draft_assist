@@ -1,0 +1,12 @@
+## Jerry Jeudy — WR, CLE, bye 11  (player_id: 6783)
+- **Role:** starter (but no longer the clear No. 1)
+- **Situation:** Jeudy is still listed among Cleveland's starting receivers, now alongside rookies KC Concepcion (first round) and Denzel Boston (second round), and the Browns cut Cedric Tillman at the end of camp. The offseason change is target competition: The Athletic's Zac Jackson reported his run as de facto No. 1 could be ending, with Concepcion expected to become the go-to target and Boston working as the big-bodied X. Jeudy led the team with roughly 105 targets in 2025 but turned them into 50-602-2 — a 47-48% catch rate, fifth worst among 197 qualified pass catchers — after a 90-1,229-4 Pro Bowl 2024. The QB job was a Deshaun Watson / Shedeur Sanders competition through camp.
+- **Health:** No injury reported.
+- **Risk:** The 2025 collapse repeating. He has held a 19-23% target share every year of his career, so volume is not really the question — efficiency and quarterback play are. If Watson or Sanders is as bad as camp suggested and the rookies siphon the good routes, Jeudy is a 55-700-3 receiver you cannot start.
+- **Draft note:** Bench flier in the last third of the draft. In half PPR the 2024 season is only 24 months old and the target floor is real, so the price is more interesting than the projection — but he should not be anyone's WR3.
+- **Confidence:** high
+- **Sources:**
+  - https://www.espn.com/nfl/player/_/id/4241463/jerry-jeudy
+  - https://fantasydata.com/nfl/jerry-jeudy-fantasy/21692
+  - https://www.dawgsbynature.com/cleveland-browns-roster-players/131930/browns-depth-chart-official-53-man-roster-practice-squad
+  - https://www.si.com/nfl/browns/onsi/browns-release-first-unofficial-depth-chart-analyzing-the-clues-01kzy98mgkd8

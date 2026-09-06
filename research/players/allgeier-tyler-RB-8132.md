@@ -1,0 +1,14 @@
+## Tyler Allgeier — RB, ARI, bye 14  (player_id: 8132)
+- **Role:** committee — currently listed atop the depth chart, but as the veteran complement to rookie Jeremiyah Love
+- **Situation:** Signed with Arizona in free agency (two years, $12.25M) after four seasons backing up Bijan Robinson in Atlanta. The Cardinals then drafted Jeremiyah Love No. 3 overall, and Love is expected to be the lead back once healthy — Arizona's published depth chart lists Allgeier first and Love second, which reporters read as the standard practice of not naming a rookie a starter until he earns it. Arizona kept only three backs on the initial 53 (Love, Allgeier, Bam Knight); James Conner is on IR-designated-to-return and Trey Benson is also on IR. Love suffered a high-ankle sprain in his preseason debut and was described as "about 50/50" for Week 1 vs. the Chargers, with ESPN reporting he's trending toward playing but likely to be eased in. Either way Allgeier opens the year splitting carries, with a much bigger role if Love sits. New HC/OC setup under Mike LaFleur.
+- **Health:** No injury reported; he practiced through camp. Nothing lingering surfaced.
+- **Risk:** He is a rental on someone else's injury. Love is the No. 3 overall pick and the organization wants him on the field; the moment Love is at full strength, Allgeier is a two-down complement on a rebuilding team. He also offers almost nothing in the passing game (61 catches across four NFL seasons) and averaged 4.0 YPC behind Robinson, so there's no receiving floor to fall back on when the carries dry up.
+- **Draft note:** In 0.5 PPR he's a touchdown-and-carries back with no receiving cushion, which makes him matchup-dependent. Worth a late-round pick specifically as a Week 1-3 starter if you think Love misses time, and as the direct handcuff to a first-round rookie RB. Don't pay for him as season-long FLEX.
+- **Confidence:** high
+- **Sources:**
+  - https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/cardinals-depth-chart-lists-tyler-allgeier-as-no-1-rb-jeremiyah-love-as-no-2
+  - https://www.espn.com/nfl/player/_/id/4373626/tyler-allgeier
+  - https://www.profootballrumors.com/2026/09/cardinals-rb-jeremiyah-love-50-50-for-week-1
+  - https://www.revengeofthebirds.com/arizona-cardinals-depth-chart/94093/cardinals-53-man-roster-before-waiver-wire-claims
+  - https://www.draftsharks.com/fantasy/points-outlook/jeremiyah-love/35925
+  - https://raisingzona.com/jeremiyah-love-week-1-status-less-certain-looks

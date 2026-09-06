@@ -1,0 +1,14 @@
+## Xavier Worthy — WR, KC, bye 5  (player_id: 11624)
+- **Role:** starter (WR2 opposite Rashee Rice)
+- **Situation:** Worthy is locked into the WR2 job in Kansas City. His 2025 was a step back — 42 catches on 73 targets for 532 yards and one TD in 14 games, a 16.0% target share and 1.36 yards per route run — but the context is that he dislocated the shoulder and tore the labrum in a Week 1 collision with Travis Kelce, and Andy Reid publicly acknowledged the staff limited his route tree the rest of the way to protect it. He had surgery in January and was in a no-contact jersey through spring. Rice returns as the nominal WR1 after missing nine games in 2025 and offseason knee surgery.
+- **Health:** Sprained the same shoulder on Aug 1 at camp, left practice early and was carted (reportedly not distressed); Reid called it day-to-day and a "few days" issue. He returned to practice around Aug 11 and was not expected to miss regular-season time. No Week 1 injury designation confirmed in what I found.
+- **Risk:** The shoulder. Two straight seasons compromised by the same joint on a 5-11, 165-pound frame is the specific failure mode. Secondary risk: the efficiency simply hasn't improved — his YAC per reception fell from 7.1 to 4.9 and his YAC over expected ranked last among qualifiers in 2025, so a healthy Worthy may still just be a low-aDOT deep decoy.
+- **Draft note:** ADP has been outside the top 100 / around WR52, which is a fair price for the WR2 in a Mahomes offense — a bench WR in the 9th-11th round of a 13-round draft that you flex when the matchup is right.
+- **Confidence:** medium
+- **Sources:**
+  - https://www.draftsharks.com/fantasy/points-outlook/xavier-worthy/35021
+  - https://www.profootballnetwork.com/fantasy-football/xavier-worthy-fantasy-outlook-updated-2026/
+  - https://fantasydata.com/nfl/xavier-worthy-fantasy/24924
+  - https://www.kctv5.com/2026/08/03/two-chiefs-wide-receivers-miss-first-day-full-pads/
+  - https://sports.yahoo.com/articles/chiefs-wr-xavier-worthy-returns-110905217.html
+  - https://www.cbssports.com/fantasy/football/news/chiefs-xavier-worthy-exits-practice-with-shoulder-injury/

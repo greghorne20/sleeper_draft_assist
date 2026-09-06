@@ -1,0 +1,13 @@
+## Josh Downs — WR, IND, bye 13  (player_id: 9500)
+- **Role:** starter (slot)
+- **Situation:** Indianapolis traded Michael Pittman Jr. to Pittsburgh this offseason, vacating roughly 108 targets and about 20% of the team's target share, and Downs spent the summer as a consensus breakout candidate on the theory he'd finally play in two-WR sets. Then the Colts signed Keenan Allen in late August, which directly cuts into the extra snaps the breakout case depended on. Downs has led all Colts WRs/TEs in target rate at 24% in each of the last two seasons and ranked 20th in average separation, but he ran a route on only 67% of dropbacks in 2025 and has 33 career routes from 12 personnel. Alec Pierce and Tyler Warren are both on track for Week 1, and Daniel Jones is back from the Achilles tear.
+- **Health:** No current injury reported. He had a hamstring issue to open 2025 that suppressed his early-season snaps; nothing indicates it's active now.
+- **Risk:** He gets squeezed back into a slot-only role. The Colts played 35.6% of snaps in 2+ TE sets last year, and Allen absorbing the Pittman role would leave Downs in exactly the part-time job that's capped him for three years.
+- **Draft note:** The half-PPR scoring hurts him — he's a short-area, high-catch-count profile whose value shrinks when receptions are worth 0.5. A WR4/flex-range pick with real upside if the routes come; don't reach past a WR45-ish cost.
+- **Confidence:** high
+- **Sources:**
+  - https://www.fantasypros.com/nfl/players/josh-downs.php
+  - https://www.profootballnetwork.com/fantasy-football/josh-downs-fantasy-outlook-updated-2026/
+  - https://www.colts.com/news/josh-downs-wide-receiver-fantasy-football-usage-snap-counts-targets-2026-season
+  - https://www.thebiglead.com/fantasy-football-wide-receiver-sleepers-josh-downs-rashid-shaheed/
+  - https://horseshoeheroes.com/josh-downs-wont-lose-sleep-colts-best-problem

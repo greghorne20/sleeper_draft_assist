@@ -1,0 +1,14 @@
+## Keaton Mitchell — RB, LAC, bye 7  (player_id: 9511)
+- **Role:** committee (intended co-backup — currently injured and in doubt)
+- **Situation:** Signed a two-year, $9.25M deal with the Chargers in March after three injury-marred seasons in Baltimore, where the Ravens declined to tender him. He was listed as a co-backup with Kimani Vidal behind Omarion Hampton, and OC Mike McDaniel has said all three backs will play every game on a hot-hand basis. Mitchell is the explosive one — 6.3 yards per carry for his career, 767 rushing yards on 121 attempts, plus 747 return yards — and McDaniel has indicated the staff sees more in his game than just speed. He was also listed as a backup kick returner.
+- **Health:** This is the story. McDaniel disclosed a "mild setback" in late August; Mitchell then sat out the preseason finale and has missed at least six straight practices as of Sept 3-4, working off to the side with a trainer. The injury is undisclosed. His Week 1 status against Arizona on Sept 13 is in question. Career context: he opened 2023 on IR, suffered a serious knee injury in 2024 that landed him on PUP until Week 10, and has played 26 games with two starts in three seasons.
+- **Risk:** The obvious one is that he isn't healthy for Week 1 and the undisclosed injury turns out to be more than mild — which, given his history, is the base case a lot of people are pricing in. Even fully healthy he's the third man in a declared committee behind a first-round starter, with a ceiling that only opens if Hampton misses time.
+- **Draft note:** Do not spend a pick on him right now. If he practices fully before Week 1 he's a last-round speculative add; if the practice absences continue, he's a waiver name.
+- **Confidence:** high on the situation, low on the injury specifics — the nature and severity have not been disclosed by the team.
+- **Sources:**
+  - https://fantasyfootballcalculator.com/players/keaton-mitchell/news
+  - https://sports.yahoo.com/articles/chargers-rb-keaton-mitchell-misses-180040411.html
+  - https://www.foxsports.com/nfl/keaton-mitchell-player
+  - https://www.si.com/nfl/chargers/onsi/keaton-mitchell-injury-chargers-final-roster-drama
+  - https://www.chargers.com/news/depth-chart-2026-season
+  - https://www.nbcsports.com/fantasy/football/player-news/2026-08-31/keaton-mitchell-misses-fourth-straight-practice

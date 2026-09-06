@@ -1,0 +1,13 @@
+## Deebo Samuel — WR, SF, bye 8  (player_id: 5872)
+- **Role:** starter (Z receiver), used as a multi-position gadget piece
+- **Situation:** Samuel is back in San Francisco on a one-year, $7M deal after a single season in Washington. The 49ers signed him once Ricky Pearsall's PCL problem resurfaced and Pearsall landed on IR for the year, which vacated the Z role; GM John Lynch said publicly they'll use him "in the return game, some at receiver, some at running back." The rest of the room is unsettled: Mike Evans is 33 and coming off declining metrics and hamstring issues, George Kittle is working back from a January Achilles tear, Christian Kirk has been dealing with a calf, and rookie De'Zhaun Stribling is unproven. With Washington in 2025 he posted an 18th-ranked 22.4% target share and was ninth in YAC per reception, but 38th in yards per route run with a 5.3 aDOT, finishing WR33 in points per game.
+- **Health:** No confirmed current injury. He missed at least one camp practice in August but returned to team drills and played in the preseason game against the Chargers. Age 30, and each of the last four seasons has included a stretch of strong play cut short by injury.
+- **Risk:** Age-30 decline in the exact skill he's paid for — his YAC per reception in Washington was 25.3% below his career norm, and his red-zone target rate has cratered. Secondary risk: with Kittle back and Evans signed, the touches get sliced thin.
+- **Draft note:** WR4/flex in the middle-late rounds; the rushing usage is a real plus in 0.5 PPR since carries are scored the same as receiving yards without needing a catch to matter.
+- **Confidence:** medium
+- **Sources:**
+  - https://www.pff.com/news/fantasy-football-deebo-samuel-2026
+  - https://fantasydata.com/nfl/deebo-samuel-sr-fantasy/20932
+  - https://www.fantasypros.com/nfl/notes/422014/deebo-samuel-2026-outlook.php
+  - https://www.profootballnetwork.com/fantasy-football/deebo-samuel-fantasy-outlook-2026/
+  - https://www.cbssports.com/fantasy/football/news/2026-outlook-deebo-samuel/

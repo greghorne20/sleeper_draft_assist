@@ -1,0 +1,13 @@
+## MarShawn Lloyd — RB, GB, bye 11  (player_id: 11581)
+- **Role:** starter (situational — Week 1 lead back by circumstance, not by track record)
+- **Situation:** Josh Jacobs was placed on the NFL's Commissioner's Exempt List on Aug 30, 2026 while two misdemeanor charges are pending; he cannot practice or attend games and the league review is ongoing with a suspension still possible. That leaves Lloyd, Chris Brooks and newly traded-for Kaleb Johnson (acquired from Pittsburgh Aug 30) as the only backs on Green Bay's 53. The Packers cut Pierre Strong Jr., Damien Martinez and Jaden Nixon at the deadline. Lloyd took the No. 1 spot in the RB rotation at practice the week of Sept 2 and is expected to open Week 1 at Minnesota as the main back. Emanuel Wilson (2025 RB2) left for Seattle in free agency and Green Bay drafted no back in 2026.
+- **Health:** Healthy. Got through 2026 camp and preseason without a setback. History is ugly: severe ankle injury Week 2 of 2024 plus appendicitis (IR, season over), then a camp groin and a preseason hamstring in 2025 that ended that season too. He has one career NFL game and six career carries.
+- **Risk:** Two separate failure modes stacked. First, Jacobs returns — the exempt list is explicitly "not a final determination," and time on it credits against any eventual suspension, so Jacobs could be back in weeks. Second, Lloyd has never held up; a 2024 third-rounder with six career carries and one 20-carry college game is being asked to absorb a real workload for the first time, with Kaleb Johnson sitting right there to take it if he can't.
+- **Draft note:** In half-PPR with 13 roster spots, a Week 1 starting RB is worth a late-round shot even on a bad résumé — this is the kind of name you take with a bench pick rather than let walk, understanding you may be cutting him in three weeks.
+- **Confidence:** high
+- **Sources:**
+  - https://sports.yahoo.com/articles/packers-running-back-depth-chart-213437091.html
+  - https://www.si.com/nfl/packers/onsi/today-s-packers-practice-update-it-s-his-time-and-he-s-fired-up-about-it
+  - https://www.espn.com/nfl/story/_/id/49774523/packers-rb-josh-jacobs-placed-commission-exempt-list
+  - https://spectrumnews1.com/wi/milwaukee/news/2026/08/31/packers-josh-jacobs-commissioner-s-exempt-list-misdemeanor
+  - https://www.packers.com/news/countdown-to-camp-marshawn-lloyd-s-return-adds-intrigue-to-packers-offense-2026

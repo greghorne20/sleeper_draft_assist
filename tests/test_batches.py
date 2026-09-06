@@ -22,7 +22,8 @@ def test_writes_expected_batches(tmp_path, players_cache, byes_file):
     run(["--byes", str(byes_file), "--out-dir", str(out)], players_cache)
 
     files = sorted(out.glob("*.yaml"))
-    assert len(files) == 8  # 220 / 35 = 7 skill files, plus one K/DEF file
+    # 220 skill / 15 = 15 files (14 full + 10 left over), plus 24 K/DEF / 15 = 2 files.
+    assert len(files) == 17
     assert files[-1].name.endswith("_k_def.yaml")
 
     total = 0

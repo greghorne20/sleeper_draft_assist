@@ -1,0 +1,12 @@
+## Tyrone Tracy — RB, NYG, bye 8  (player_id: 11655)
+- **Role:** committee (RB2/RB3 in a crowded room)
+- **Situation:** Cam Skattebo is the clear RB1 under new HC John Harbaugh and OC Matt Nagy. Tracy opened camp sharing first-team work and getting passing-down reps, but two bad preseason games — a whiffed pass-pro assignment that got Jaxson Dart hit and put him in a concussion check, then an unforced fumble against Miami — dropped him to a second-team RB2 grouping shared with newly signed Najee Harris and Devin Singletary. He was floated as a trade/cut candidate before final cuts but made the 53. For context on the upside: over Weeks 10–18 of 2025 he was the RB14 in points per game at 18.7 touches, and he's cleared 1,000 scrimmage yards in both NFL seasons.
+- **Health:** Neck stinger in the preseason finale; he avoided a major injury and was at practice in a non-contact jersey in early September. He also missed time for a personal matter and returned. Nothing else lingering found.
+- **Risk:** He's the third or fourth option for touches on his own team and the coaching staff has visibly lost trust in him. If Skattebo stays healthy, Tracy could be a 6–8 touch player, and Harris/Singletary make him a bad handcuff bet too.
+- **Draft note:** Not worth a pick as anything but a very late bench flier, and even the handcuff logic is broken by Harris. If you want Giants backfield exposure in this format, it's Skattebo.
+- **Confidence:** high
+- **Sources:**
+  - https://www.espn.com/nfl/player/_/id/4360516/tyrone-tracy-jr
+  - https://www.cbssports.com/fantasy/football/news/2026-outlook-tyrone-tracy-jr/
+  - https://www.si.com/nfl/giants/onsi/tyrone-tracy-jr-depth-chart-shakeup-01m0x225akr7
+  - https://www.fantasypros.com/nfl/players/tyrone-tracy-jr.php

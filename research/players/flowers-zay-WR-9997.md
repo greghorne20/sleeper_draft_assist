@@ -1,0 +1,15 @@
+## Zay Flowers — WR, BAL, bye 13  (player_id: 9997)
+- **Role:** starter — Baltimore's clear WR1 and top target earner every year he's been in the league
+- **Situation:** Flowers posted career highs across the board in 2025: 86 catches, 1,211 yards and five TDs, finishing WR12 in fantasy points per game (14.7 PPR PPG) and WR7-8 in total points. The usage was elite — a 27.7-29.1% target share (top-10 among all WRs), 33.3% first-read share, 2.61-2.87 yards per route run (behind only Smith-Njigba and Nacua by one measure), 35% air-yards share, and 4+ catches in 13 of 17 games. His yardage has climbed every year (858 → 1,059 → 1,211). What changed: Jesse Minter is the new head coach and Declan Doyle the new offensive coordinator, and Isaiah Likely left in free agency (to the Giants), with Mark Andrews and rookie third-rounder Ja'Kobi Lane in the pass-catching room. Baltimore ran the ball 54.6% of the time last year — a low-volume passing offense is what caps him.
+- **Health:** Undisclosed lower-body issue — at one point described by Minter as a quad contusion and "day to day," then "nothing major." He missed roughly two weeks of practice through late August into Sept. 1. He returned to practice around Sept. 3, ten days before the Sept. 13 opener vs. Indianapolis. Sources reported he was expected back at full capacity and good to go for Week 1. Otherwise durable: he has never missed a regular-season game due to injury in three seasons (he did miss the 2024 playoffs with a right LCL sprain).
+- **Risk:** Touchdowns. He has never had more than five receiving TDs in a season and drew only 11 red-zone targets in 2025 — with Derrick Henry and Lamar Jackson vacuuming up goal-line work, there's no obvious mechanism for that to change, and a new OC is a hope, not a plan. The second risk is Ravens pass volume: a 29.1% target share netted only 118 targets. And his production craters when Lamar Jackson is out.
+- **Draft note:** ADP around 36 overall / WR17-19, which is below where he finished last season. In half-PPR his high-catch, low-TD profile loses a little relative to full PPR, but the target share is about as safe a floor as exists at the position. Good WR2 value in round 3-4 — arguably the safest of the WRs in this batch.
+- **Confidence:** high on role and usage; medium on the injury, since the Ravens never disclosed what it actually is.
+- **Sources:**
+  - https://www.fantasypros.com/nfl/notes/419893/zay-flowers-2026-outlook.php
+  - https://www.fantasypros.com/nfl/notes/415539/zay-flowers-2026-outlook.php
+  - https://www.draftsharks.com/fantasy-football-news/82459/zay-flowers-returns-to-practice-reaffirming-his-opener-availability
+  - https://www.draftsharks.com/fantasy/points-outlook/zay-flowers/13550
+  - https://www.si.com/onsi/fantasy/injuries/should-fantasy-managers-be-worried-about-zay-flowers-latest-injury-news
+  - https://www.profootballnetwork.com/fantasy-football/zay-flowers-fantasy-projection-2026/
+  - https://www.fanduel.com/research/zay-flowers-nfl-fantasy-outlook-2026

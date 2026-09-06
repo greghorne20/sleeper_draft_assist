@@ -1,0 +1,12 @@
+## Alvin Kamara — RB, NO, bye 8  (player_id: 4035)
+- **Role:** committee (reduced), currently injured
+- **Situation:** New Orleans signed Travis Etienne Jr. to a four-year, $48M deal in March to take over the top of the depth chart, and Kamara's contract was reworked down (from $11.5M to $6M plus up to $2.5M in incentives) to reflect a smaller role. He was listed as a co-starter with Etienne on the first preseason depth chart and was expected to be the second option and passing-down back under HC Kellen Moore, but 2025 was ugly: a career-low 471 rushing yards on 131 carries at 3.6 YPC, one rushing TD, 11 games, and a career-low 4.0 yards per touch. He turned 31 this offseason and there were retirement rumors in the spring.
+- **Health:** Sprained MCL. ESPN's Adam Schefter reported on Aug 19 he'd miss at least a month, which puts Week 1 at Detroit (Sept 13) in real doubt and makes Week 3 the first comfortable target. He was still off the practice field as of Sept 3. This is the same knee area that ended his 2025 season after Week 12. No grade or treatment plan has been made public.
+- **Risk:** He misses the opening weeks, comes back at 31 into a role that was already reduced to committee work behind Etienne, and never gets the touches back. Kendre Miller and Audric Estime are also there (both were absent from Sept 3 practice as well).
+- **Draft note:** At most a very late bench stash on the pass-game role, and only if you can absorb an empty roster spot for several weeks. In half-PPR his receiving usage is worth less than it would be in full PPR, which further weakens the case. I'd let someone else take him.
+- **Confidence:** high
+- **Sources:**
+  - https://www.foxsports.com/stories/nfl/new-orleans-saints-alvin-kamara-knee-injury
+  - https://www.cbssports.com/nfl/news/alvin-kamara-injury-saints-mcl-sprain-running-back-options/
+  - https://heavy.com/sports/nfl/new-orleans-saints/saints-alvin-kamara-injury-news-poses-rb-depth-chart-questions/
+  - https://fantasyfootballcalculator.com/players/alvin-kamara/news

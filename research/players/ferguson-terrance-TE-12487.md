@@ -1,0 +1,13 @@
+## Terrance Ferguson — TE, LAR, bye 11  (player_id: 12487)
+- **Role:** committee (passing-down / 11-personnel role behind Colby Parkinson)
+- **Situation:** Second-round pick in 2025 who finished his rookie year strong on limited usage: 11 catches, 231 yards, three touchdowns. He led all tight ends in deep targets (13) and ranked third in deep-target yardage (180) — a genuinely unusual profile for a rookie tight end. The Rams are shifting to more 12 and 13 personnel in 2026, and beat reporting expects Ferguson's role to expand, particularly as a de facto big slot in 11 personnel where Parkinson comes off for pass-catchers. The obstacle is blocking: he needs to prove it to earn base-down snaps, and Los Angeles has Parkinson, a re-signed Tyler Higbee, Davis Allen and second-round rookie Max Klare in the same room. Matthew Stafford, Puka Nacua and Davante Adams are ahead of everyone in the target order.
+- **Health:** UNKNOWN — I found no 2026 injury report or camp/preseason health update on him either way. Treat his status as unverified until you check a Week 1 inactive list.
+- **Risk:** Five tight ends, one football. If the 13-personnel plan means Parkinson and Higbee take the in-line snaps and Klare develops, Ferguson's ceiling is 35 catches with touchdown variance carrying his weeks. His 2025 production was three touchdowns on 11 catches — that is not a repeatable rate.
+- **Draft note:** Not a pick in a one-TE, 13-round league. The upside case is real enough to keep him on a watch list, but you're paying for a Week 6 breakout that may never come.
+- **Confidence:** medium — the situational reporting is solid but skews May–July, and I could not confirm his current health or preseason snap trend.
+- **Sources:**
+  - https://www.si.com/nfl/rams/onsi/rams-90-man-roster-preview-terrance-ferguson-breakout-role
+  - https://www.si.com/nfl/rams/onsi/colby-parkinson-x-factor-rams-13-personnel
+  - https://sports.yahoo.com/articles/rams-26-most-important-players-150331463.html
+  - https://www.therams.com/team/players-roster/terrance-ferguson/
+  - https://sports.yahoo.com/articles/rams-training-camp-preview-strength-185850925.html

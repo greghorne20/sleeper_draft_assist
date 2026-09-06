@@ -1,0 +1,13 @@
+## Dylan Sampson — RB, CLE, bye 11  (player_id: 12469)
+- **Role:** backup / passing-down specialist behind Quinshon Judkins
+- **Situation:** Sampson is firmly the No. 2 on Cleveland's depth chart (Judkins, then Sampson, then Raheim Sanders) but he owns the receiving role outright — Jerome Ford left for Washington in free agency and the Browns did not draft a replacement. As a rookie he caught 33 of 40 targets for 271 yards and two TDs while rushing for just 175 yards at 2.7 per carry; he led all backs with 30+ targets in yards per route run and ranked first in target rate per route run at 28%. Judkins ran a route on only 28% of pass plays last season and drew zero third- or fourth-down targets. Sampson had double-digit carries in each of the three games Judkins missed. Deshaun Watson is the listed starting quarterback.
+- **Health:** No current injury found. He played in the preseason (four carries, two catches for 43 yards vs. Chicago). Relevant nearby context: Judkins is coming off a fractured fibula, which is the injury that would open the job.
+- **Risk:** His entire standalone case is receptions, and 0.5 PPR pays half of what full PPR does for them — meanwhile the rushing efficiency (2.7 YPC) gives him no path to volume if Judkins stays healthy, in an offense with a shaky quarterback situation.
+- **Draft note:** Best value as the Judkins handcuff; a final-round pick in your format, and a genuine priority only if you roster Judkins.
+- **Confidence:** medium
+- **Sources:**
+  - https://www.foxsports.com/nfl/dylan-sampson-player
+  - https://www.rotowire.com/football/nfl-depth-charts/cleveland-browns-depth-chart-cle
+  - https://www.draftsharks.com/depth-chart/cleveland-browns
+  - https://www.thebiglead.com/dylan-sampson-jonah-coleman-best-late-round-rb-sleepers-2026-jacory-croskey-merritt-chris-brooks/
+  - https://fantasyfootballcalculator.com/players/dylan-sampson/news

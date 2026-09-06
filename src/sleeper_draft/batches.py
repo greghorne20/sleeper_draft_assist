@@ -47,7 +47,7 @@ def parse_args() -> argparse.Namespace:
                    help="How many QB/RB/WR/TE players to include (default 220)")
     p.add_argument("--kickers", type=int, default=12, help="Kickers in the final batch (default 12)")
     p.add_argument("--defenses", type=int, default=12, help="Defenses in the final batch (default 12)")
-    p.add_argument("--chunk-size", type=int, default=35, help="Players per YAML file (default 35)")
+    p.add_argument("--chunk-size", type=int, default=15, help="Players per YAML file (default 15)")
     p.add_argument("--out-dir", type=Path, default=Path("research/batches"))
     p.add_argument("--refresh-players", action="store_true",
                    help="Force a re-fetch of /players/nfl even if the cache is fresh")

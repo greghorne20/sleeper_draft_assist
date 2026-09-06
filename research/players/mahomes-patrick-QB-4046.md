@@ -1,0 +1,14 @@
+## Patrick Mahomes — QB, KC, bye 5  (player_id: 4046)
+- **Role:** starter (assuming final medical clearance — see Health)
+- **Situation:** Mahomes tore his ACL and LCL in his left knee on Dec. 14, 2025 vs. the Chargers, a loss that eliminated the Chiefs from the playoffs and ended a decade-long streak. He had surgery the next day. Kansas City opens at home vs. Denver on Monday Night Football, Sept. 14 — almost exactly nine months post-op. Around him: Eric Bieniemy is back as offensive coordinator, Rashee Rice is the WR1 and healthy after playing only four and eight games the last two seasons, Travis Kelce is still there, Xavier Worthy and rookie Cyrus Allen fill out the room, and the Chiefs added Kenneth Walker to the backfield. Justin Fields is the backup.
+- **Health:** Cleared to practice in late July, full participant every day of training camp with no rest days, and reportedly "cleared every hurdle." He sat out all three preseason games as a precaution — the first time in his career he hasn't played a preseason snap. As of early September, CBS reported the medical staff had not yet given final clearance for game action, though Schefter, Rapoport and the Chiefs themselves have all indicated he's on track to start.
+- **Risk:** Two distinct ones. Clinically: this is a nine-month return from a multi-ligament knee injury, and any setback ends the season's value. Fantasy-specifically: over 25% of his 2025 fantasy points came on the ground, and a 31-year-old on a repaired ACL playing for a team that only cares about January is unlikely to have his legs fully unleashed before the postseason. Strip the rushing and the passing profile underneath is soft — he hasn't cleared 7.1 YPA since 2022 and has three straight seasons under 30 passing TDs.
+- **Draft note:** With 4-point passing TDs and 25 yards per point, a pocket-bound Mahomes is a QB8-14 outcome, not a difference-maker. ADP is around pick 119 / QB15, which is roughly fair — take him as a late-round QB1 in the 10th-12th round if you want the name at a discount, but he shouldn't be a target over rushing QBs in this format.
+- **Confidence:** medium-high on the role, medium on the production profile. Sources conflict on his pre-injury 2025 rate (CBS says 23.6 PPG, PFN says 20.4 PPG); I did not resolve that.
+- **Sources:**
+  - https://sports.yahoo.com/articles/patrick-mahomes-injury-latest-chiefs-155051631.html
+  - https://www.cbssports.com/nfl/news/patrick-mahomes-status-week-1-chiefs-qb/
+  - https://www.nbcsports.com/fantasy/football/player-news/2026-08-20/schefter-mahomes-knee-on-track-to-play-week-1
+  - https://www.profootballnetwork.com/fantasy-football/patrick-mahomes-fantasy-outlook-updated-2026/
+  - https://www.cbssports.com/fantasy/football/news/2026-outlook-patrick-mahomes/
+  - https://www.prizepicks.com/playbook-article/patrick-mahomes-injury-update-will-chiefs-qb-play-week-1

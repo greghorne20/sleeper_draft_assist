@@ -1,0 +1,14 @@
+## Emeka Egbuka — WR, TB, bye 10  (player_id: 12514)
+- **Role:** starter — projects as Tampa Bay's WR1, with Chris Godwin alongside
+- **Situation:** Egbuka led the Buccaneers with 63 catches for 938 yards and six TDs as a rookie, despite a hamstring injury interrupting a strong start. The room changed significantly: Mike Evans left for San Francisco in free agency, which pushes Egbuka and Godwin into the primary roles in Baker Mayfield's offense. Jalen McMillan, Tez Johnson and Cade Otton fill out the rest. Tampa Bay opens at Cincinnati on Sept. 13.
+- **Health:** This is the whole story right now. Egbuka sprained his big toe on Aug. 12 when a Jets defender rolled up his foot during joint practice. A specialist confirmed a sprain and called it stable, and the team has been publicly optimistic about Week 1 throughout — but he did not practice with the team from Aug. 12 through at least early September, sat out the preseason finale, and was still missing team drills as of Sept. 1-2. He returned to the practice field on Sept. 1-2 for physical testing (single-leg hops, pushing off the injured foot) roughly 21 days post-injury. Sara Walsh reported Sept. 1 that Egbuka and McMillan both have "lingering issues" and aren't locks for Week 1. Todd Bowles has used both "day-to-day" and "week-to-week." Note: multiple outlets and an injury physician have described this as turf toe; at least one Bucs beat outlet disputes that characterization. The team has not specified.
+- **Risk:** Turf toe is the specific mechanism that ruins wide receivers. It's a push-off injury and it recurs — the physician commentary explicitly compared it to Brock Purdy's, which he reinjured and then missed roughly another month. The realistic bad outcome isn't "misses Week 1," it's "plays at 80% for six weeks, can't separate, then aggravates it." That's a season-killing profile for a player you're drafting as a WR2.
+- **Draft note:** He's being discounted into the fourth round because of the toe. In half-PPR, a 63-938-6 baseline with a bump in target share post-Evans is WR2 production if healthy. I'd treat this as a round 5-6 pick rather than round 4 — the injury is the kind you fade, not the kind you buy the dip on, and with only a 6-man bench you can't stash a hobbled starter for a month.
+- **Confidence:** high on role, low on health outcome. Week 1 status was genuinely unresolved as of Sept. 3.
+- **Sources:**
+  - https://sports.yahoo.com/articles/emeka-egbuka-injury-latest-buccaneers-151528709.html
+  - https://sports.yahoo.com/articles/happened-emeka-egbuka-latest-buccaneers-140828504.html
+  - https://www.pewterreport.com/emeka-egbuka-bucs-toe-injury-experts-discuss/
+  - https://www.rotowire.com/football/headlines/emeka-egbuka-injury-remains-sidelined-by-toe-issue-634768
+  - https://www.joebucsfan.com/2026/09/lingering-issues-for-emeka-egbuka-jalen-mcmillan/
+  - https://sports.yahoo.com/articles/happened-emeka-egbuka-latest-buccaneers-210018682.html

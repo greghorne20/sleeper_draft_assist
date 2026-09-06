@@ -1,0 +1,13 @@
+## Jalen Coker — WR, CAR, bye 5  (player_id: 11646)
+- **Role:** starter (clear WR2 behind Tetairoa McMillan)
+- **Situation:** Coker is listed as a starting receiver on Carolina's unofficial depth chart and has passed Xavier Legette outright; the Panthers cut David Moore and Ja'Seem Reed at the roster deadline, thinning the competition further. He missed the first six games of 2025 with a quad injury from the end of camp, then took over — from Week 8 on he played 73% of snaps on a 17.8% target share, and from Week 11 through Week 18 he averaged 3.7 catches and 46.9 yards per game, WR26 in PPR over that span. He closed with 9 catches for 134 yards and a TD on 12 targets in the wild-card loss to the Rams. Full-season line: 33-394-3 in 11 games.
+- **Health:** No current injury found; he's had a quiet preseason. The pattern to note is that he's played only 11 games in each of his first two seasons.
+- **Risk:** Bryce Young's volume. Carolina throws little, Young's aDOT is among the league's lowest, and McMillan commands a quarter or more of the targets — so Coker's ceiling is capped by the offense regardless of his own play. His red-zone target rate also fell from 17.1% to 7.9%.
+- **Draft note:** A genuine late-round value in 0.5 PPR (roughly WR51 / 173rd overall in some rankings) — a bench WR you take in the last three or four rounds who can flex when he's rolling.
+- **Confidence:** medium
+- **Sources:**
+  - https://www.espn.com/nfl/player/_/id/4695883/jalen-coker
+  - https://fantasydata.com/nfl/jalen-coker-fantasy/25122
+  - https://www.profootballnetwork.com/fantasy-football/jalen-coker-fantasy-outlook-updated-2026/
+  - https://www.profootballnetwork.com/fantasy-football/jalen-coker-fantasy-projection-2026/
+  - https://fantasyfootballcalculator.com/players/jalen-coker/news

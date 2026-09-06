@@ -1,0 +1,13 @@
+## Kimani Vidal — RB, LAC, bye 7  (player_id: 11647)
+- **Role:** committee (co-backup, currently the healthy one)
+- **Situation:** Re-signed with the Chargers on a one-year deal after a 2025 in which he turned 155 carries into 643 yards and three scores over 13 games, holding the offense together when the backfield thinned out. He was listed as a co-backup with Keaton Mitchell behind starter Omarion Hampton on the first unofficial depth chart. New offensive coordinator Mike McDaniel has said flatly he intends to use Hampton, Vidal and Mitchell every game and ride the hot hand — and framed that as bad news for fantasy managers specifically. Mitchell has now missed six straight practices with an undisclosed injury heading into a Week 1 date with Arizona on Sept 13, which nudges Vidal up in the short term.
+- **Health:** Healthy. Started the preseason opener (5 carries, 8 yards) and played six snaps in the finale (3 carries, 9 yards).
+- **Risk:** McDaniel said the quiet part out loud — a declared hot-hand committee is the worst possible structure for a fantasy back. Hampton is the clear lead, Vidal has been mediocre on volume (4.0 career ypc), and when Mitchell gets healthy Vidal is splitting the leftovers three ways. He's also on a one-year deal with no organizational commitment.
+- **Draft note:** Last-round dart at most, and mostly as Hampton insurance. If Mitchell's injury lingers into the season, Vidal becomes a reasonable bench stash rather than a pick you spend on now.
+- **Confidence:** high
+- **Sources:**
+  - https://www.chargers.com/news/depth-chart-2026-season
+  - https://www.rotowire.com/football/headlines/kimani-vidal-news-set-to-be-utilized-in-committee-633141
+  - https://www.foxsports.com/nfl/kimani-vidal-player
+  - https://www.boltsfromtheblue.com/los-angeles-chargers-roster/64800/los-angeles-chargers-roster-kimani-vidal-rb-scheme-fit-2026-outlook
+  - https://fantasyfootballcalculator.com/players/keaton-mitchell/news

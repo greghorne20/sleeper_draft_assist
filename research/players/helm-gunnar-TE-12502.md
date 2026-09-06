@@ -1,0 +1,13 @@
+## Gunnar Helm — TE, TEN, bye 9  (player_id: 12502)
+- **Role:** starter
+- **Situation:** Helm is the Titans' TE1 in year two. Chig Okonkwo left for Washington in free agency, and Helm was listed as the lone starting tight end on Tennessee's first unofficial depth chart and opened preseason games with the first-team offense. The offseason complication is Daniel Bellinger, signed to a reported three-year, $24 million deal, who is listed TE2 and is expected to take a real share of snaps in a two-TE offense. Helm caught 44 passes for 357 yards and 2 TDs as a rookie on 55 targets (80% catch rate, 1.45 YPRR) — a franchise rookie record for a tight end — in a bad offense. The passing game around him changed a lot: Carnell Tate, Wan'Dale Robinson, Calvin Ridley and Elic Ayomanor are the WR room, with Cam Ward in year two under new HC Robert Saleh.
+- **Health:** Reported back to full health. He was ruled out of the 2025 finale with a toe injury (seen in a walking boot in early January) but practiced and played through the 2026 preseason with no reported issue.
+- **Risk:** The Bellinger money is the tell — if Tennessee splits the tight end work close to evenly, Helm's ceiling is a 50-catch, low-TD season that never cracks weekly TE1 range. Cam Ward regressing or the offense skewing run-first with Pollard and Spears is the second failure mode.
+- **Draft note:** A late-round TE1 dart in half PPR, worth taking after the top tier clears out — around the last three or four rounds — because the yardage-and-TD path is real but the target volume is not yet proven.
+- **Confidence:** medium
+- **Sources:**
+  - https://www.tennesseetitans.com/news/20-things-that-caught-my-eye-on-the-first-unofficial-depth-chart-for-the-titans-in-2026
+  - https://sports.yahoo.com/articles/biggest-surprise-titans-first-depth-100501074.html
+  - https://www.fantasypros.com/nfl/notes/419550/gunnar-helm-2026-outlook.php
+  - https://www.foxsports.com/nfl/gunnar-helm-player
+  - https://www.espn.com/nfl/story/_/id/49659254/2026-nfl-season-tennessee-titans-final-roster-projection-depth-chart

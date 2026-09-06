@@ -1,0 +1,13 @@
+## Eli Stowers — TE, PHI, bye 10  (player_id: 13349)
+- **Role:** backup (TE3-ish; possible healthy scratch early)
+- **Situation:** Second-round rookie, 54th overall, out of Vanderbilt — a converted quarterback who won the 2025 Mackey Award and was a unanimous All-American after a 62-769-4 season. Elite athletic testing: best vertical (45.5") and broad jump (11'3", an all-time TE combine record) in the class, and the top career yards-per-route-run in the group at 2.38. He lined up in the slot on 72% of his college routes and is not yet an NFL blocker. He made Philadelphia's initial 53 as one of four tight ends behind Dallas Goedert, Johnny Mundt and E.J. Jenkins. Sirianni has talked about slot mismatch usage, but Goedert is the unquestioned TE1 and Mundt owns the TE2 blocking role.
+- **Health:** Hamstring injury as of final cuts — not serious enough to warrant IR, but beat writers flagged that he could be a healthy scratch early in the season and that an IR move wasn't fully off the table. He also missed spring work with a leg injury. Worth a Week 1 inactive check.
+- **Risk:** He is behind a healthy Goedert on a run-first offense with Saquon Barkley and A.J. Brown gone but DeVonta Smith, Hollywood Brown and Makai Lemon in the room. The blocking gap means he doesn't get on the field in base, and rookie tight ends with hamstring issues who missed development reps rarely emerge in-season.
+- **Draft note:** Not a redraft pick in this format. Dynasty stash only; in a 13-round redraft he shouldn't be on your board.
+- **Confidence:** high
+- **Sources:**
+  - https://www.bleedinggreennation.com/news/181341/eagles-depth-chart-first-look-at-the-initial-2026-roster
+  - https://www.espn.com/nfl/player/_/id/4431574/eli-stowers
+  - https://www.playerprofiler.com/news/eli-stowers-buried-on-the-eagles-depth-chart/
+  - https://www.inquirer.com/eagles/newcomers-2026-eli-stowers-maximus-pulley-depth-chart-20260706.html
+  - https://www.footballguys.com/article/2026-eli-stowers-philadelphia-eagles-instant-reactions

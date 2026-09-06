@@ -1,0 +1,12 @@
+## Trey Benson — RB, ARI, bye 14  (player_id: 11589)
+- **Role:** UNKNOWN — not on an active roster; on Arizona's injured reserve
+- **Situation:** Do not draft. Arizona waived Benson with an injury designation in late August (to make room for Josh Sweat coming off PUP), all 31 other teams passed on him, and he reverted to the Cardinals' injured reserve list. Because he was placed on IR before final roster cuts, he is ineligible to return in 2026 with Arizona; injury trackers list him as out for the season. A settlement is reportedly expected, which would let him hit the open market, but that's speculative and there's no reported timeline or destination. Even healthy he was fourth on the depth chart behind Tyler Allgeier, No. 3 overall pick Jeremiyah Love and James Conner.
+- **Health:** Left knee. Meniscus surgery in October 2025 ended his season after four games; he was activated but couldn't get right. Flared up again in 2026 training camp and he hadn't practiced since before the first preseason game.
+- **Risk:** The pick fails immediately — he is not on an active roster and has no path to 2026 snaps in Arizona. Any value requires both a settlement and a new team, and then a role on that team.
+- **Draft note:** Undraftable in a 12-team redraft. Not worth a bench spot.
+- **Confidence:** high
+- **Sources:**
+  - https://www.si.com/nfl/cardinals/onsi/trey-benson-returns-arizona-cardinals-his-2026-season-over
+  - https://sports.yahoo.com/articles/arizona-cardinals-trey-benson-cut-013339179.html
+  - https://www.sharpfootballanalysis.com/analysis/nfl-injury-report-ir-tracker/
+  - https://www.foxsports.com/nfl/trey-benson-player

@@ -1,0 +1,13 @@
+## Jonah Coleman — RB, DEN, bye 10  (player_id: 13345)
+- **Role:** committee (RB2/RB3, trending up)
+- **Situation:** Rookie fourth-rounder (108th overall) out of Washington, 5'8" and 220 lbs, and one of the loudest camp risers in the league. Sean Payton named him unprompted when asked about pleasant camp surprises and said he "doesn't feel like a rookie." As of early September, The Athletic's Nick Kosmider reports he's in line to be the between-the-tackles complement to starter J.K. Dobbins, with RJ Harvey also a reserve — Coleman is the more physical back and is described as a direct replacement for Dobbins rather than a change-of-pace. He's a genuine three-down profile: best forced-missed-tackle rate in this rookie RB class, second-best YAC, plus 87 college receptions and credible pass protection. Note Denver's official depth chart lists rookies last by policy, so his listed spot understates his role.
+- **Health:** No injury reported; played in the preseason.
+- **Risk:** Payton runs a committee, and Coleman is behind two backs. If Dobbins stays healthy and Harvey keeps the passing-down work, Coleman is a 6–8 touch complement with no weekly starting value. Payton's backfields are also notoriously hard to predict week to week.
+- **Draft note:** One of the better late-round RB bets in this format — Dobbins has never finished a healthy full season, and Coleman is the named beneficiary. Bench pick around the RB45–55 range.
+- **Confidence:** high
+- **Sources:**
+  - https://www.espn.com/nfl/player/_/id/4702555/jonah-coleman
+  - https://www.cbssports.com/nfl/players/28877250/jonah-coleman/
+  - https://www.fantasypros.com/nfl/players/jonah-coleman.php
+  - https://www.si.com/nfl/broncos/onsi/jonah-coleman-earning-all-rookie-buzz-ahead-nfl-debut
+  - https://heavy.com/sports/nfl/denver-broncos/jonah-coleman-roty-buzz/

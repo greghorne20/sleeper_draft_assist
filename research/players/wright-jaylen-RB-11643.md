@@ -1,0 +1,8 @@
+## Jaylen Wright — RB, MIA, bye 6  (player_id: 11643)
+- **Role:** backup (RB2 behind De'Von Achane)
+- **Situation:** Listed as Miami's No. 2 back on the team's initial Week 1 depth chart (Sep 4, 2026), ahead of Ollie Gordon II and Carlos Washington Jr. Entirely new regime — Jeff Hafley is the head coach, Bobby Slowik the OC, Malik Willis the starting QB, with Tyreek Hill gone and Waddle traded to Denver. Coaches praised his offseason; he's also the No. 2 kick returner. 2025 line was 288 rushing yards on 70 carries (4.1) with two TDs in 10 games, including a 24-107-1 fill-in game vs. the Jets in Week 14.
+- **Health:** No current injury designation. He missed the first six games of 2025 with a knee issue that required a minor procedure in August 2025. Reported healthy and full-go through 2026 camp.
+- **Risk:** Achane is a bell-cow who saw 200+ carries and 87 targets in his big year, and Wright has basically never been used as a receiver (8 catches in 25 career games) — so in a half-PPR format his standalone floor is close to zero. Gordon is right behind him and Wright has had ball-security issues.
+- **Draft note:** Pure Achane handcuff. Worth a final-round pick only if you draft Achane; otherwise waiver-wire. Half-PPR hurts him because his role is carries-only.
+- **Confidence:** high
+- **Sources:** https://www.cbssports.com/fantasy/football/news/dolphins-jaylen-wright-listed-as-rb2-behind-achane/ · https://www.rotowire.com/football/nfl-depth-charts/miami-dolphins-depth-chart-mia · https://www.cbssports.com/nfl/players/26698774/jaylen-wright/fantasy/ · https://sports.yahoo.com/articles/miami-dolphins-depth-chart-revealed-162933894.html · https://www.foxsports.com/nfl/jaylen-wright-player

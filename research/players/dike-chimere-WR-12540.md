@@ -1,0 +1,8 @@
+## Chimere Dike — WR, TEN, bye 9  (player_id: 12540)
+- **Role:** backup on offense / starter as a returner
+- **Situation:** First-team All-Pro and Pro Bowl returner as a rookie in 2025 (two return TDs, an NFL rookie record for all-purpose yards) plus a 48-423-4 receiving line on 74 targets. The offense around him was rebuilt: Tennessee drafted Carnell Tate fourth overall, signed Wan'Dale Robinson to a four-year, $70M deal to play the slot Dike occupied, and kept Calvin Ridley. New staff (Robert Saleh HC, Brian Daboll OC) with Cam Ward at QB. Reporting through camp and preseason had Dike rotating behind the starters as a reserve slot/deep-shot receiver, with the return jobs locked up.
+- **Health:** No injury reported; he played all 17 games as a rookie and all three preseason games.
+- **Risk:** He's fourth in a four-deep room and had only a 14% target share even before Tate and Robinson arrived. If the return TDs don't come, there's nothing there.
+- **Draft note:** Not a draftable receiver here — but note your league gives 6 points for `st_td`, so his return scores do pay, and there are no points for return yardage. That's a lottery ticket, not a weekly starter. Waiver-wire in a 13-round league.
+- **Confidence:** high
+- **Sources:** https://www.rotowire.com/football/player/chimere-dike-18641 · https://www.cbssports.com/fantasy/football/news/2026-outlook-chimere-dike/ · https://www.espn.com/nfl/player/_/id/4431268/chimere-dike · https://fantasydata.com/nfl/chimere-dike-fantasy/25987 · https://titansized.com/titans-all-pro-suddenly-faces-a-complicated-question-heading-into-2026

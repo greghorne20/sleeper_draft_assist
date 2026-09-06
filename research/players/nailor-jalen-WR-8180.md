@@ -1,0 +1,13 @@
+## Jalen Nailor — WR, LV, bye 13  (player_id: 8180)
+- **Role:** starter
+- **Situation:** Signed a three-year, $35 million deal with $23 million guaranteed in Las Vegas in March — starter money, and one of the Raiders' bigger free-agent additions. He is listed as a starting receiver and reunites with Kirk Cousins, his quarterback in Minnesota, under HC Klint Kubiak. The room around him is weak: Tre Tucker led the Raiders in targets (92) and yards (696) last year but ranked 63rd of 76 qualifying WRs in yards per route run, Jack Bech has produced 20 catches in 16 games, and Dont'e Thornton and Malik Benson are speed depth. Several analysts think Nailor finishes second on the team in targets behind Brock Bowers. His own production has always been on limited routes: 28-414-6 in 2024, 29-444-4 in 2025, 15.1 yards per catch across the two years, with strong separation metrics (sixth-best among perimeter receivers) on only 141 routes.
+- **Health:** No injury reported. Scouting notes flag a career history of missed time with injuries, but nothing current.
+- **Risk:** He has never earned volume as a pro — a 10.3% target share and 1.19 YPRR last year — and Vegas is expected to be run-leaning behind Ashton Jeanty, with Brock Bowers commanding the passing game. Round 6 draft capital and thin college production suggest the contract may be overpaying for a role player.
+- **Draft note:** A last-round dart with the clearest "guaranteed money implies snaps" case in this batch. In half PPR he needs the deep touchdowns to matter, so treat him as a bench upside pick, not a flex you plan around.
+- **Confidence:** medium
+- **Sources:**
+  - https://www.draftsharks.com/fantasy/points-outlook/jalen-nailor/12720
+  - https://www.fantasypros.com/nfl/notes/419987/jalen-nailor-2026-outlook.php
+  - https://www.raiders.com/news/2026-position-breakdown-wide-receivers-jalen-nailor-jack-bech-tre-tucker-raiders
+  - https://www.rotowire.com/football/nfl-depth-charts/las-vegas-raiders-depth-chart-lv
+  - https://en.wikipedia.org/wiki/Jalen_Nailor

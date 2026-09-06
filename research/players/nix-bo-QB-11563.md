@@ -1,0 +1,14 @@
+## Bo Nix — QB, DEN, bye 10  (player_id: 11563)
+- **Role:** starter
+- **Situation:** Nix has finished as the fantasy QB7 in each of his first two seasons. In 2025 he led the NFL in pass attempts (612) and added 356 rushing yards and five rushing TDs, while taking only 22 sacks — improved from 24 sacks on 567 attempts as a rookie. Denver was the No. 1 seed in the AFC and reached the conference championship (losing 10-7 to New England with Jarrett Stidham starting). Changes for 2026: Sean Payton handed playcalling to new offensive coordinator Davis Webb, and the Broncos traded a first, third and fourth to Miami for Jaylen Waddle. Supporting cast is the best of his career — Waddle, Courtland Sutton, Troy Franklin, Marvin Mims, Pat Bryant, TE Evan Engram, with Jonah Coleman added to the backfield. Denver was 24th in explosive play rate last year, which is the specific hole Waddle is meant to fill. The Broncos open at Kansas City on Monday Night Football, Sept. 14.
+- **Health:** Cleared. He fractured his right ankle on the second-to-last play of January's playoff win over Buffalo, had surgery the next day, then a second cleanup procedure in April to remove bone spurs. He missed OTAs and was limited in minicamp, but has been a full participant since day one of training camp and started preseason games. No limitations expected for Week 1.
+- **Risk:** The opening schedule is the concrete thing — Chiefs, Jaguars, Rams, 49ers, Chargers, Seahawks in the first six weeks, which is a rough stretch to be starting a QB1 through. Beyond that: the ankle he broke is the same ankle he pushes off, and his fantasy value leans partly on rushing; if Denver's improved receiver room means less scrambling, or if the pass volume comes down from a league-leading 612 attempts, the QB7 finishes don't repeat.
+- **Draft note:** ADP around QB15-16 despite back-to-back QB7 finishes — that's the pitch. In a 1-QB league with 4-point passing TDs, taking a QB in round 12-13 who has twice finished top-10 is exactly the right shape of pick. He's the best late-round QB in this batch and lets you spend rounds 1-9 entirely on RB/WR.
+- **Confidence:** high
+- **Sources:**
+  - https://www.draftsharks.com/fantasy/points-outlook/bo-nix/34984
+  - https://fantasydata.com/nfl/bo-nix-fantasy/25069
+  - https://www.cbssports.com/fantasy/football/news/2026-outlook-bo-nix/
+  - https://www.durangoherald.com/articles/associated-press/bo-nix-returns-from-broken-ankle-and-has-a-better-offense-around-him-for-2026/
+  - https://sports.yahoo.com/articles/updated-bo-nix-fantasy-outlook-161533365.html
+  - https://www.espn.com/nfl/story/_/id/48231367/2026-nfl-free-agency-jaylen-waddle-broncos-dolphins-barnwell-all-rebuild-receiver

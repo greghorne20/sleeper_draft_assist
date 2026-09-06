@@ -1,0 +1,14 @@
+## Trevor Lawrence — QB, JAX, bye 7  (player_id: 7523)
+- **Role:** starter
+- **Situation:** Lawrence finally broke out in Liam Coen's first year, finishing QB4 overall (338.1 fantasy points) on 4,007 passing yards, 29 TDs and a career-best 359 rushing yards with nine rushing TDs. The split is the story: over his first 10 games he averaged 215 yards, 1.1 TD and 16.6 FPPG at 6.4 YPA; over his last seven regular-season games he averaged 265 yards, 2.6 TD and 26.6 FPPG at 8.4 YPA with a 108.6 rating, and drew MVP mentions. This is his first time entering a second year in the same system. Weapons largely return: Brian Thomas Jr. (bouncing back from a rough sophomore year), Jakobi Meyers, Parker Washington (who broke out from the slot — 5.0 catches, 86.3 yards, 0.57 TD per game over his final seven including playoffs), TE Brenton Strange (newly extended), and Travis Hunter back from a season-ending LCL tear. The change: Travis Etienne left for New Orleans, leaving an unproven Bhayshul Tuten / Chris Rodriguez Jr. backfield, which likely means more passing volume.
+- **Health:** No current injury reported.
+- **Risk:** The nine rushing touchdowns. Only 10 players at any position ran for more TDs from inside the five, and Josh Allen was the only other QB in that range — that is not a repeatable rate. If the goal-line rushing scores regress and the passing efficiency reverts toward his career norm rather than his seven-game hot streak, he's a QB12-15, not a QB4. Accuracy has been the persistent knock across five seasons.
+- **Draft note:** ADP is around QB9-10, going as early as round 9. His rushing floor is what makes him worth it in a 4-point-passing-TD league — the legs are worth more here than the arm. Reasonable QB1 target around rounds 8-10; I'd take him over Prescott or Mahomes in this format for exactly that reason.
+- **Confidence:** high
+- **Sources:**
+  - https://www.cbssports.com/fantasy/football/news/2026-outlook-trevor-lawrence/
+  - https://www.fantasypros.com/nfl/notes/419075/trevor-lawrence-2026-outlook.php
+  - https://www.draftsharks.com/fantasy/points-outlook/trevor-lawrence/10748
+  - https://www.fanduel.com/research/trevor-lawrence-nfl-fantasy-outlook-2026
+  - https://www.profootballnetwork.com/fantasy-football/trevor-lawrence-fantasy-outlook-updated-2026/
+  - https://www.profootballnetwork.com/fantasy-football/trevor-lawrence-fantasy-prediction-2026/

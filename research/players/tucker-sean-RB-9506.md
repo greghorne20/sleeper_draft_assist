@@ -1,0 +1,12 @@
+## Sean Tucker — RB, TB, bye 10  (player_id: 9506)
+- **Role:** backup (RB3)
+- **Situation:** Tucker made Tampa Bay's initial 53 as the third back and reportedly took a pay cut to hold the spot over UDFA Josh Williams; the Bucs kept only three running backs. Bucky Irving is the lead back and free-agent addition Kenny Gainwell — who topped 1,000 scrimmage yards and 70 catches for Pittsburgh last year — is the primary complement, expected to work close to a 1A/1B split with Irving on passing downs. That squeezes Tucker into a genuine third role even though he led the Buccaneers with eight total touchdowns in 2025 and set a career high with 177 offensive snaps. New offensive coordinator is Zac Robinson.
+- **Health:** No injury reported. He carried 14 times for 50 yards and a score this preseason.
+- **Risk:** Two healthy backs ahead of him and no fourth back behind him means he is one of the last guys touching the ball on a normal Sunday. His 2025 fantasy value was almost entirely touchdown luck; strip that and there is nothing.
+- **Draft note:** Undraftable in 12-team half PPR. He becomes a priority waiver claim only if Irving misses time, and even then Gainwell likely eats the passing work, which is where half-PPR points live.
+- **Confidence:** high
+- **Sources:**
+  - https://www.buccaneers.com/news/bucs-go-heavy-in-trenches-on-first-53-man-roster-of-2026
+  - https://thepewterplank.com/tampa-bay-buccaneers-initial-53-man-roster-includes-several-surprising-decisions
+  - https://www.pewterreport.com/bucs-mvdps-5-most-valuable-depth-players-2026/
+  - https://www.buccaneers.com/news/positional-depth-decisions-complicate-bucs-roster-cutdown-2026

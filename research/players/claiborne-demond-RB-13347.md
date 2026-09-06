@@ -1,0 +1,8 @@
+## Demond Claiborne — RB, MIN, bye 6  (player_id: 13347)
+- **Role:** backup (RB3)
+- **Situation:** Sixth-round rookie (No. 198, Wake Forest) who made Minnesota's initial 53 as the third back behind Aaron Jones Sr. and Jordan Mason, beating out Zavier Scott. 4.37 speed, 2,599 college rushing yards, and kick-return experience that helped him win the spot. The Vikings' stated plan is Jones and Mason shouldering the load while Claiborne develops. Kevin O'Connell overhauled the run scheme this offseason with new position coaches; Kyler Murray is the starting QB.
+- **Health:** He "struggled with injury in recent days" during early-August camp per SKOR North reporting, and was quiet in preseason games. No current designation; he made the 53 and is listed active. Nature of the camp issue: UNKNOWN.
+- **Risk:** Late-round rookie behind two established veterans, with credible reporting that he had multiple drops in camp and was at one point projected to be cut. His path to touches requires two injuries, and he's undersized (188 lbs) for a between-the-tackles role.
+- **Draft note:** Not draftable in a 13-round, 12-team league. Watchlist only; the interesting scenario is an Aaron Jones injury with Mason already handling early downs.
+- **Confidence:** medium
+- **Sources:** https://www.vikings.com/news/53-man-roster-2026-nfl-initial · https://www.inforum.com/sports/pro/who-did-the-vikings-keep-on-the-53-man-roster · https://jingletree.com/11-rookies-make-vikings-53-man-roster-who-s-in-and-out-after-preseason-261037.html · https://heavy.com/sports/nfl/minnesota-vikings/demond-claibrone-roster-cut-drops-zavier-scott/ · https://www.vikings.com/news/demond-claiborne-2026-nfl-draft-5-things-to-know · https://www.espn.com/nfl/player/_/id/4832846/demond-claiborne

@@ -1,0 +1,14 @@
+## Chris Rodriguez — RB, JAX, bye 7  (player_id: 10219)
+- **Role:** committee (listed co-starter with Bhayshul Tuten)
+- **Situation:** Non-tendered by Washington, Rodriguez signed a two-year, $10M deal with Jacksonville in March and reunites with Liam Coen, his college head coach at Kentucky. Jacksonville's unofficial depth chart lists "Tuten or Rodriguez" as co-starters, and beat coverage after final cuts said camp produced no real separation between them — the team said from the start it expected a split. Rodriguez is the bruiser and the likely short-yardage/goal-line back; he took 33 carries inside the 20 for the Commanders last season and set career highs with 112 carries, 500 rushing yards and six TDs. He's also been called the team's best pass-protecting back behind LeQuint Allen, and Allen (undisclosed soft-tissue) missed the rest of camp with his Week 1 status in question, which could push passing-down snaps Rodriguez's way early.
+- **Health:** Full-go. He had offseason foot surgery, was cleared for camp with a cautious ramp-up, and is described as fully recovered. He sat out Jacksonville's first two preseason games (as did Tuten), so the actual snap split is untested.
+- **Risk:** He is not a receiver — seven career targets, six career catches. In 0.5 PPR that makes him purely a yards-and-TD play, so if Tuten's explosiveness wins the job or the goal-line work goes elsewhere, there's no receiving floor underneath him.
+- **Draft note:** Final-round dart or waiver-wire add; the specific bet is goal-line TDs, which is a volatile way to score in any format.
+- **Confidence:** medium
+- **Sources:**
+  - https://www.jaguars.com/news/jaguars-2026-training-camp-first-unofficial-depth-chart-released
+  - https://www.si.com/nfl/jaguars/onsi/jacksonville-updated-depth-chart-after-roster-cuts-liam-coen-squad-finds-clarity
+  - https://www.espn.com/nfl/player/_/id/4362619/chris-rodriguez-jr
+  - https://www.rotowire.com/football/player/chris-rodriguez-16933
+  - https://fantasyfootballcalculator.com/players/chris-rodriguez-jr./news
+  - https://fantasydata.com/nfl/chris-rodriguez-jr-fantasy/23237

@@ -1,0 +1,14 @@
+## Tetairoa McMillan — WR, CAR, bye 5  (player_id: 12526)
+- **Role:** starter — unambiguous WR1 in Carolina
+- **Situation:** McMillan won 2025 Offensive Rookie of the Year on a 70-122-1,014-7 line, finishing WR15 in half-PPR and WR16 in PPR. His peripherals were strong: roughly a 23-25% target share (sources vary — 23.1% per Fantasy Points Data, 25.4% per Sumer Sports), 28.5% first-read share, 1.87-1.94 yards per route run, and 5+ targets in every one of his first 12 weeks. The Panthers made no meaningful additions to the receiver room this offseason, leaving Jalen Coker and Xavier Legette as the only other target earners. Dave Canales has said he expects to move McMillan into the slot more in 2026; he scored 74% of his fantasy points from out wide last year.
+- **Health:** No injury reported. Healthy through camp as far as I could confirm.
+- **Risk:** Bryce Young and the offensive environment. Young threw for 3,000 yards and 23 TDs in 2025 — improvement, but the Panthers were 27th in neutral-game pass rate and a run-leaning, low-volume passing offense. McMillan's 12.4 half-PPR PPG in 2025 would have been low-end WR3 production in a normal scoring year. The pick fails if the target share stays flat and the team's pass volume doesn't rise, or if Coker eats into the target and TD share.
+- **Draft note:** ADP is around 38-40 overall (WR16-WR21 depending on source), which is roughly where he finished last year — you're paying for the year-two leap, not getting it at a discount. Half-PPR helps him marginally (lower catch total, decent yardage). Reasonable as a WR2 in the round 4 range; I'd want him closer to pick 45 than pick 35.
+- **Confidence:** high
+- **Sources:**
+  - https://www.rotoballer.com/player-news/tetairoa-mcmillan-2026-fantasy-football-outlook-poised-for-second-year-leap-with-improving-qb-play-and-massive-projected-target-share/1873777
+  - https://www.fantasypros.com/nfl/players/tetairoa-mcmillan.php
+  - https://www.profootballnetwork.com/fantasy-football/tetairoa-mcmillan-fantasy-outlook-2026/
+  - https://www.profootballnetwork.com/fantasy-football/tetairoa-mcmillan-fantasy-prediction-2026/
+  - https://fantasydata.com/nfl/tetairoa-mcmillan-fantasy/26054
+  - https://www.si.com/nfl/panthers/onsi/major-risk-panthers-tetairoa-mcmillan-fantasy-football

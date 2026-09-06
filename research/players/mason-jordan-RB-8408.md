@@ -1,0 +1,14 @@
+## Jordan Mason — RB, MIN, bye 6  (player_id: 8408)
+- **Role:** committee — listed as a co-starter with Aaron Jones Sr. on Minnesota's first unofficial depth chart
+- **Situation:** Mason led the Vikings in rushing in 2025 (159 carries, 758 yards, 6 TDs, 4.8 YPC) despite starting only five of 16 games; Jones started 12 and was less efficient (132 carries, 548 yards, 2 TDs, 4.2 YPC). Among 49 qualifying backs Mason ranked 10th in explosive run rate, 7th in rushing success rate, 9th in missed tackle rate and 15th in yards after contact per attempt. Camp reporting was consistently positive — several outlets described him as pushing to overtake Jones, and new hire Frank Smith (ex-Dolphins OC) is bringing wide-zone concepts that suit his patience and vision. Jones is 32 and on a one-year deal. Sixth-round rookie Demond Claiborne is a name to watch but not an immediate threat. Kyler Murray's designed-run usage may also eat into goal-line work.
+- **Health:** No current injury reported; he practiced throughout camp. He has an injury history from his 49ers days (2024 setbacks), but played 16 games in 2025 and nothing lingering surfaced in searches.
+- **Risk:** Jones keeps the passing-down and third-down role, which caps Mason's touch ceiling and makes him touchdown-dependent. This backfield has been explicitly described as hard to predict week to week when both are healthy, and Minnesota has shown no urgency to name a true lead back. A committee back with no receiving role in a run-split offense can post RB35 weeks all season.
+- **Draft note:** In 0.5 PPR his lack of receiving work costs him less than it would in full PPR, but he still needs volume or scores. Best viewed as a high-end handcuff with standalone FLEX value — worth a mid-to-late pick, and his value spikes materially if Jones (32) misses time. FantasyPros ADP had him around 111 (RB39), which is a reasonable price for that profile.
+- **Confidence:** medium-high (usage split is genuinely unresolved as of Week 1)
+- **Sources:**
+  - https://www.vikings.com/news/2026-training-camp-observations-jordan-mason-aaron-jones-gains
+  - https://www.fantasypros.com/nfl/players/jordan-mason.php
+  - https://heavy.com/sports/nfl/minnesota-vikings/jordan-mason-overtake-aaron-jones/
+  - https://www.si.com/onsi/fantasy/rankings/depth-chart-debate-running-back-vikings-jordan-mason-aaron-jones
+  - https://dknetwork.draftkings.com/2026/09/01/is-jordan-mason-or-aaron-jones-the-vikings-no-1-rb-heading-into-week-1/
+  - https://www.vikings.com/news/jordan-mason-running-back-nfl-2026-fantasy-football

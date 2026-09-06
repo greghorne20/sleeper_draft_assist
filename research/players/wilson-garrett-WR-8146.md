@@ -1,0 +1,14 @@
+## Garrett Wilson — WR, NYJ, bye 13  (player_id: 8146)
+- **Role:** starter — unquestioned WR1, described by his own OC as a "bell cow"
+- **Situation:** Wilson played only seven games in 2025 before a knee injury ended his season, finishing 36-395-4 on 59 targets. Before the injury he was the WR10 in fantasy points per game on a 31.2% target share, 65.8 receiving yards per game, 1.92 YPRR and a 45.9% first-read share — that last number is the interesting one, and it's absurd. He has three 1,000-yard seasons in his three healthy campaigns. What changed: Geno Smith is the new quarterback (a clear upgrade on what he's had), Frank Reich is the new offensive coordinator under second-year HC Aaron Glenn, and the Jets spent 2026 first-round picks on WR Omar Cooper Jr. and TE Kenyon Sadiq. Adonai Mitchell and Isaiah Williams are also in the room. Breece Hall is back.
+- **Health:** Healthy. He was a full participant from the start of OTAs after the knee injury. He missed one practice with an illness in late August and returned the next day. No current designation.
+- **Risk:** The offense. Wilson has never posted a 15+ PPG season in four years despite elite usage — the only Round 1 receiver of his cohort who hasn't. If the Jets are competitive in low-scoring games against bad teams, Smith might not throw 30 times, and Wilson's target volume is the only thing propping up his fantasy value since his TD rate (11.1% on the 2025 sample) is unsustainable. The two rookie first-rounders also carve into the first-read share that made him elite.
+- **Draft note:** ADP around 37 overall / WR17-18. In half-PPR his high-volume, low-TD profile is slightly less valuable than in full PPR. He's a fine WR2 in the round 3-4 range, and the honest framing is that you're buying a floor with a ceiling that has never once arrived. If he starts hot, he's a sell candidate.
+- **Confidence:** high
+- **Sources:**
+  - https://www.fantasypros.com/nfl/players/garrett-wilson.php
+  - https://www.draftsharks.com/fantasy/points-outlook/garrett-wilson/12592
+  - https://fantasydata.com/nfl/garrett-wilson-fantasy/23122
+  - https://www.profootballnetwork.com/fantasy-football/garrett-wilson-fantasy-prediction-2026/
+  - https://www.profootballnetwork.com/fantasy-football/garrett-wilson-fantasy-outlook-updated-2026/
+  - https://dknetwork.draftkings.com/2026/08/31/can-garrett-wilson-finally-deliver-a-first-round-fantasy-season-in-2026-fantasy-football/

@@ -1,0 +1,13 @@
+## Jonathon Brooks — RB, CAR, bye 5  (player_id: 11583)
+- **Role:** committee — expected RB2 opposite Chuba Hubbard, with the passing-down role
+- **Situation:** Brooks has not played a regular-season snap since his rookie 2024 ACL tear (his second on the same right knee); he spent all of 2025 on PUP. He was cleared without restrictions for the 2026 offseason program, took his first full training camp, and appeared in two preseason games (8 carries, 23 yards, 1 TD; 1 catch, 9 yards on 20 snaps). Rico Dowdle left for Pittsburgh, vacating 275 touches and 1,373 scrimmage yards. Dave Canales has publicly emphasized Brooks' receiving ability and said they're building packages to get him involved. Beat reporting and ESPN frame it as Hubbard being the primary back with Brooks as the pass-catching complement — essentially the Hubbard/Dowdle structure from 2025 — though a healthy Brooks has a real path to overtaking Hubbard, who averaged 3.8 YPC last year and was slowed by a hamstring this preseason.
+- **Health:** Currently a question. He was held out of the first two practices after the cut-down deadline with what Canales called "soreness" (location unspecified), and was seen working off to the side with trainers. Canales said Wednesday he's "very optimistic" Brooks is available for Week 1 vs. Chicago on Sept. 13. Underlying history: back-to-back right-ACL surgeries.
+- **Risk:** Two ACL tears on the same knee is the specific thing. Any recurrence, or a body that simply can't hold up to a full workload, ends this. Secondary risk: even if healthy, he's the 1B in a bad offense — Carolina hasn't finished better than 27th in total yards in any of Bryce Young's seasons, and the unspecified soreness this week is exactly the kind of thing that becomes a Week 1 inactive.
+- **Draft note:** A late-round upside swing, not a roster-building block. In 0.5 PPR the pass-game role is worth something, but I'd want him at a price where a Week 3 IR stint doesn't hurt — think back half of your bench, and only if you can stomach the volatility.
+- **Confidence:** medium (role is well-reported; current health is genuinely unsettled as of Sept. 5)
+- **Sources:**
+  - https://www.espn.com/nfl/story/_/id/49805489/panthers-rb-jonathon-brooks-coach-optimistic
+  - https://sports.yahoo.com/articles/jonathon-brooks-injury-latest-panthers-175539876.html
+  - https://www.draftsharks.com/fantasy/points-outlook/jonathon-brooks/34987
+  - https://fantasyfootballcalculator.com/players/jonathon-brooks/news
+  - https://www.profootballnetwork.com/jonathon-brooks-injury-update-panthers-rb/

@@ -1,0 +1,13 @@
+## Sam Darnold — QB, SEA, bye 11  (player_id: 4943)
+- **Role:** starter — Seattle's QB1
+- **Situation:** Coming off a Super Bowl win with Seattle. He threw for 4,048 yards, 25 TDs and 14 INTs in 2025 on only 28.1 attempts per game, because the Seahawks ran the ball at the third-highest rate in the league. That's the whole fantasy story: he attempted 4.0 fewer passes per game in Seattle than in Minnesota and his scoring fell from 18.1 PPG (2024) to 13.8 PPG (2025). Klint Kubiak left to become the Raiders' head coach; Brian Fleury is the new offensive coordinator, which introduces some chance of a higher pass rate. The weapons are deep if not explosive — Jaxon Smith-Njigba as a legitimate WR1, plus Cooper Kupp, Tory Horton, Rashid Shaheed, A.J. Barner and Elijah Arroyo — and all five offensive line starters return. He offers almost nothing on the ground (projected around 114 rushing yards, one score).
+- **Health:** No current injury designation found. He dealt with an oblique injury late last season but was off the injury report by the Super Bowl and has practiced normally.
+- **Risk:** Volume. A low-attempt, run-first offense with a QB who adds no rushing points is the exact profile that dies in 4-point-pass-TD scoring. He has been a worthwhile fantasy starter in exactly one of nine NFL seasons. If Fleury doesn't meaningfully raise the pass rate, there's no path to QB1 numbers regardless of how well he plays.
+- **Draft note:** With 4-point pass TDs and 0.04/pass yard, there's no reason to roster him in a 12-team 1-QB league — his ADP is around 198, which is past the end of a 13-round draft anyway. He's a matchup streamer off waivers, not a draft pick.
+- **Confidence:** high
+- **Sources:**
+  - https://www.profootballnetwork.com/fantasy-football/sam-darnold-fantasy-outlook-updated-2026/
+  - https://www.fantasypros.com/nfl/notes/419555/sam-darnold-2026-outlook.php
+  - https://www.fanduel.com/research/sam-darnold-nfl-fantasy-outlook-2026
+  - https://fulltimefantasy.com/2026/08/13/seattle-seahawks-fantasy-football-outlook-2026/
+  - https://www.profootballnetwork.com/fantasy-football/sam-darnold-fantasy-prediction-2026/

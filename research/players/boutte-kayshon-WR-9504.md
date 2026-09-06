@@ -1,0 +1,13 @@
+## Kayshon Boutte — WR, HOU, bye 8  (player_id: 9504)
+- **Role:** committee (favorite for the outside WR2 job, not locked in for Week 1)
+- **Situation:** Traded from New England to Houston on August 24 for safety Jaylen Reed and a 2028 seventh-rounder, after Jayden Higgins tore his ACL and ended his season before it started. Boutte had been buried in New England once the Patriots added A.J. Brown and Romeo Doubs. In Houston he joins Nico Collins (the clear alpha), slot man Jaylin Noel, Xavier Hutchinson and Tank Dell, who is still rehabbing a serious knee injury. The projected Week 1 depth chart lists Collins at X, Hutchinson at Z and Noel in the slot, with Boutte as a backup — reporting is consistent that he is the favorite for the WR2 role over time but will not be an every-down player immediately, having been in the building only a couple of weeks. He is in a contract year and has said he wanted a bigger role.
+- **Health:** No injury reported.
+- **Risk:** The integration timeline. If Hutchinson and Noel keep their snaps and Boutte is a 55-70% player who only runs the vertical concepts, he is a boom-bust flex, and Houston's offense wants deep-breaking routes from its perimeter guys, which is not exactly his profile. Tank Dell rounding into form takes snaps too.
+- **Draft note:** A last-few-rounds bench pick with genuine in-season upside — the WR2 job on a C.J. Stroud offense is worth speculating on, but in half PPR the low-catch, high-YPR profile means he is a swing, not a plug-in starter.
+- **Confidence:** medium
+- **Sources:**
+  - https://www.si.com/nfl/texans/onsi/texans-updated-depth-chart-after-latest-roster-cuts
+  - https://www.footballnationusa.com/post/kayshon-boutte-trade-fantasy-impact-who-is-texans-wr2
+  - https://dknetwork.draftkings.com/2026/09/01/is-kayshon-boutte-the-texans-new-wr2-for-2026-fantasy-football/
+  - https://heavy.com/sports/nfl/houston-texans/boutte-reality-check-depth-chart-higgins-message/
+  - https://www.bostonglobe.com/2026/09/04/sports/kayshon-boutte-patriots-texans-trade/

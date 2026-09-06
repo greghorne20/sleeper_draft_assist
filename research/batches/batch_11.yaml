@@ -1,0 +1,102 @@
+batch: 11
+of: 17
+positions:
+- QB
+- RB
+- WR
+- TE
+count: 15
+ordering: sleeper search_rank ascending
+source: sleeper /players/nfl
+generated_at: 2026-09-05T14:50:33-0400
+players:
+- player_id: '9508'
+  name: Tyjae Spears
+  pos: RB
+  team: TEN
+  bye: 9
+  search_rank: 122
+- player_id: '11624'
+  name: Xavier Worthy
+  pos: WR
+  team: KC
+  bye: 5
+  search_rank: 122
+- player_id: '7049'
+  name: Jauan Jennings
+  pos: WR
+  team: MIN
+  bye: 6
+  search_rank: 123
+- player_id: '8136'
+  name: Rachaad White
+  pos: RB
+  team: WAS
+  bye: 7
+  search_rank: 124
+- player_id: '10219'
+  name: Chris Rodriguez
+  pos: RB
+  team: JAX
+  bye: 7
+  search_rank: 126
+- player_id: '11603'
+  name: AJ Barner
+  pos: TE
+  team: SEA
+  bye: 11
+  search_rank: 126
+- player_id: '12484'
+  name: Jayden Higgins
+  pos: WR
+  team: HOU
+  bye: 8
+  search_rank: 126
+- player_id: '5844'
+  name: T.J. Hockenson
+  pos: TE
+  team: MIN
+  bye: 6
+  search_rank: 128
+- player_id: '12469'
+  name: Dylan Sampson
+  pos: RB
+  team: CLE
+  bye: 11
+  search_rank: 129
+- player_id: '9228'
+  name: Bryce Young
+  pos: QB
+  team: CAR
+  bye: 5
+  search_rank: 130
+- player_id: '5872'
+  name: Deebo Samuel
+  pos: WR
+  team: SF
+  bye: 8
+  search_rank: 130
+- player_id: '5870'
+  name: Daniel Jones
+  pos: QB
+  team: IND
+  bye: 13
+  search_rank: 131
+- player_id: '4033'
+  name: David Njoku
+  pos: TE
+  team: LAC
+  bye: 7
+  search_rank: 131
+- player_id: '11646'
+  name: Jalen Coker
+  pos: WR
+  team: CAR
+  bye: 5
+  search_rank: 132
+- player_id: '11576'
+  name: Braelon Allen
+  pos: RB
+  team: NYJ
+  bye: 13
+  search_rank: 135

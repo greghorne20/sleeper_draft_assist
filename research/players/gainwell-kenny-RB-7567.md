@@ -1,0 +1,14 @@
+## Kenny Gainwell — RB, TB, bye 10  (player_id: 7567)
+- **Role:** committee — the passing-down / change-of-pace back behind Bucky Irving
+- **Situation:** Signed a two-year, $14M deal with Tampa Bay in March 2026 after a career year in Pittsburgh, where he led the Steelers with 73 catches (4th among all RBs) and topped 1,000 scrimmage yards. Todd Bowles has stated plainly that Irving is the starter and Gainwell is the complement; he has been used heavily as a receiver in camp, including in two-back packages alongside Irving, and OC Zac Robinson has praised his positional versatility. The role reporters keep comparing it to is Rachaad White's old job, which is now vacant (White signed with Washington). Sean Tucker is expected to retain the short-yardage/goal-line work — he led the team with seven rushing TDs in 2025 — which caps Gainwell's scoring upside. Mike Evans is also gone, so target volume in this offense is more spread out than it has been in years.
+- **Health:** No injury reported. He was absent from a Friday practice in early September for personal reasons (per FantasyPros), which is not an injury designation. Nothing lingering surfaced in searches.
+- **Risk:** He's the receiving specialist in a backfield where someone else gets the carries and someone else gets the goal line. If Irving stays healthy and Tucker keeps the red-zone role, Gainwell is a 6-8 touch, 4-catch back — usable but not startable. The 2025 breakout was also partly an Aaron Rodgers-driven checkdown volume artifact, and Baker Mayfield is a different kind of passer.
+- **Draft note:** In 0.5 PPR his receiving floor is worth real points but only half of what full PPR pays; he's a FLEX/bench RB with genuine standalone value, and he's the rare handcuff you'd want even with the starter healthy. Reasonable in the middle rounds, and he gets more valuable the more you believe Irving's injury history.
+- **Confidence:** high
+- **Sources:**
+  - https://www.buccaneers.com/news/rb-kenneth-gainwell-signs-bucs-2026-nfl-free-agency
+  - https://www.espn.com/nfl/player/_/id/4371733/kenny-gainwell
+  - https://www.pewterreport.com/kenny-gainwell-elevate-2026-bucs-all-aspects/
+  - https://sports.yahoo.com/articles/kenneth-gainwell-fantasy-outlook-2026-132016419.html
+  - https://www.fantasypros.com/nfl/players/kenneth-gainwell.php
+  - https://fantasyfootballcalculator.com/players/kenny-gainwell

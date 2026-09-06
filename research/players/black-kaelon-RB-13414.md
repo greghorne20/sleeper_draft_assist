@@ -1,0 +1,13 @@
+## Kaelon Black — RB, SF, bye 8  (player_id: 13414)
+- **Role:** backup (RB2 — the Christian McCaffrey handcuff)
+- **Situation:** Third-round rookie (No. 90, Indiana) who is listed as San Francisco's RB2 on the Week 1 unofficial depth chart. Kyle Shanahan said Black was the 49ers' No. 2 running back on their draft board, and Black won the job while last year's fifth-rounder Jordan James was out with a broken rib. When McCaffrey sat late in camp, Black ran as the clear lead back and drew public praise from Brock Purdy and Shanahan, including a 50-yard run in a joint practice with the Chargers. He closed the preseason with 12 carries for 61 yards (5.1 per rush).
+- **Health:** Currently healthy. He missed roughly two weeks of camp with an adductor/thigh injury before returning in full pads for the Chargers joint practice and finishing the preseason. Worth tracking, but he is practicing.
+- **Risk:** The whole case is McCaffrey missing time. Black had four receptions in each of his two Indiana seasons and never cleared 190 touches in a college year, so if McCaffrey is healthy Black is a low-teens-touch early-down back at best, and even in a McCaffrey absence the third-down work could go to Isaac Guerendo or Jordan James instead of him. That caps the half-PPR upside of the handcuff.
+- **Draft note:** A late-round handcuff with genuine standalone-if-injury value given McCaffrey turns 30 — reasonable in the last two rounds, and more valuable to you if you own McCaffrey.
+- **Confidence:** high
+- **Sources:**
+  - https://www.msn.com/en-us/sports/football/kaelon-black-is-already-emerging-as-a-key-piece-on-the-49ers-depth-chart/ar-AA2bw1vI
+  - https://www.espn.com/nfl/player/_/id/4696044/kaelon-black
+  - https://www.nbcsports.com/fantasy/football/player-news/2026-08-19/kaelon-black-runs-as-lead-back-with-cmc-out
+  - https://www.ninersnation.com/san-francisco-49ers-news/161247/san-francisco-49ers-news-can-kaelon-black-take-over-rb2-role-preseason-tennessee-titans
+  - https://www.49ers.com/news/day-14-of-2026-training-camp-kaelon-black-returns-for-joint-practice-with-chargers

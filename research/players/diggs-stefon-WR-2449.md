@@ -1,0 +1,12 @@
+## Stefon Diggs — WR, WAS, bye 7  (player_id: 2449)
+- **Role:** starter
+- **Situation:** Signed a one-year deal worth up to $12M with Washington in early August after being released by New England. He's locked in as the starter opposite Terry McLaurin and is the clear No. 2 in a room where Antonio Williams is next in line and Dyami Brown, Treylon Burks, Jaylin Lane and Luke McCaffrey fill out seven WRs. Washington signed him specifically to help in the slot, which is where Jayden Daniels needed the most help; Diggs took over 50% of his snaps inside in New England last year. Dan Quinn said they'd work him in gradually since he joined so late in camp.
+- **Health:** No current injury reported; made the initial 53-man roster. Fully past the 2024 ACL tear — he played 17 games' worth of a 1,000-yard season in New England in 2025 (85 catches).
+- **Risk:** Age-32 decline plus a compressed ramp-up. He played only 55% of snaps in New England last year, and there's no guarantee that goes up in a new offense he joined in August. The bigger structural risk is Laremy Tunsil's torn triceps/pec — if Daniels is under pressure all year, the whole passing game shrinks.
+- **Draft note:** A stable WR3/flex in half-PPR — high catch rate and a real target share on a good offense, but the snap ceiling caps the upside. Worth taking around his cost, not above it.
+- **Confidence:** high
+- **Sources:**
+  - https://www.espn.com/nfl/player/_/id/2976212/stefon-diggs
+  - https://www.si.com/nfl/commanders/onsi/washington-commanders-projected-depth-chart-week-1-starters-rotations-2026
+  - https://www.thebanner.com/sports/commanders-nfl/stefon-diggs-washington-commanders-offensive-line-A55YBJDQUZDPBIAEFDSHDT2ALQ/
+  - https://www.hogshaven.com/washington-commanders-analysis/429930/stefon-diggs-fit-washington-commanders-training-camp-david-blough-terry-mclaurin

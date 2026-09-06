@@ -1,0 +1,13 @@
+## Travis Kelce — TE, KC, bye 5  (player_id: 1466)
+- **Role:** starter — undisputed KC TE1
+- **Situation:** Kelce returned for 2026 after offseason reporting suggested he might retire or talk to other teams; NFL Network's Ian Rapoport reported he opted to stay with Mahomes and Andy Reid. He is 37 in October, the oldest tight end in the league. The receiving room around him is thin and largely unchanged: Rashee Rice is the nominal WR1, with Xavier Worthy, Tyquan Thornton and Marquise Brown behind him. He still commanded a 19.7% target share in 2025, but that was partly a function of Kansas City having no one else, and his efficiency has slipped badly — 1.62 yards per route run (17th at the position) and 8.8 yards per catch, which snapped a seven-year run of 1,000-yard seasons. Note: 2025 fantasy finishes reported inconsistently across sources (TE5 in PPR points by one accounting, ~11.4 PPG by another); treat the exact rank as unverified.
+- **Health:** No injury designation found. He missed the Chiefs' annual kickoff luncheon on Sept. 1 as "under the weather" per beat reporter Pete Sweeney — an illness note, not an injury. His last notable in-game issue was a chest hit in Week 9 of 2025 that was not considered serious. He has been a full participant in camp practices.
+- **Risk:** Age-related cliff. He is a volume-and-reliability play whose per-target efficiency has already collapsed; if Kansas City finally gets a real second receiving option or if the body goes, there's no ceiling left to fall back on. He closed 2025 with four dud lines in his final five starts. He is also the kind of pick that locks you in — you draft him and you're stuck starting him.
+- **Draft note:** In 0.5 PPR without TE premium, his reception-heavy, low-YPC profile is worth less than it would be in full PPR. He's a mid-round floor play at TE, not a difference-maker — fine if the position falls to you around the TE8-12 range, but I'd rather take the swing on a younger TE at a similar cost.
+- **Confidence:** high (role); medium on production expectations
+- **Sources:**
+  - https://www.draftsharks.com/fantasy/points-outlook/travis-kelce/6709
+  - https://sports.yahoo.com/articles/updated-travis-kelce-fantasy-outlook-101917167.html
+  - https://www.profootballnetwork.com/fantasy-football/travis-kelce-fantasy-outlook-2026/
+  - https://www.yardbarker.com/nfl/articles/chiefs_te_travis_kelce_sidelined_by_illness_just_days_before_the_regular_season/s1_17730_44249574
+  - https://www.espn.com/nfl/story/_/id/49447878/kansas-city-chiefs-training-camp-2026-intel-updates

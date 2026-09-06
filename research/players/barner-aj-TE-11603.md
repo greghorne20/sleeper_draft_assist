@@ -1,0 +1,12 @@
+## AJ Barner — TE, SEA, bye 11  (player_id: 11603)
+- **Role:** starter (TE1), but in a heavy two-TE rotation
+- **Situation:** Barner is the entrenched starting tight end after emerging as Seattle's clear TE1 in 2025 — 52 catches on 68 targets for 519 yards and six TDs across 17 games, TE20 overall at 8.7 points per game, with eight double-digit weeks. The offseason changes: new offensive coordinator Brian Fleury, and second-year TE Elijah Arroyo expected to take a larger role. Barner himself says Seattle will have two tight ends on the field "very, very often." Target hierarchy runs through Jaxon Smith-Njigba with Rashid Shaheed as the likely second option, so Barner is competing to be third.
+- **Health:** Reported healthy — ESPN's Jeremy Fowler described him as finally healthy after multiple offseason surgeries. No specific current injury found.
+- **Risk:** Arroyo taking over the receiving snaps while Barner keeps the blocking work. His 2025 production was TD-leaning (six scores on 519 yards), and TD rates don't repeat reliably.
+- **Draft note:** In a 12-team, one-TE league he's a punt-the-position last-round pick at best; multiple outlets peg him around TE23-29 and note he'll likely be on the waiver wire anyway. 0.5 PPR doesn't help a low-catch profile.
+- **Confidence:** medium
+- **Sources:**
+  - https://fantasyfootballcalculator.com/players/aj-barner/news
+  - https://fantasydata.com/nfl/aj-barner-fantasy/25106
+  - https://www.profootballnetwork.com/fantasy-football/aj-barner-fantasy-outlook-2026/
+  - https://sports.yahoo.com/articles/updated-aj-barner-fantasy-outlook-100016489.html

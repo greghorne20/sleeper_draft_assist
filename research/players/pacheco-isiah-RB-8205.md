@@ -1,0 +1,14 @@
+## Isiah Pacheco — RB, DET, bye 6  (player_id: 8205)
+- **Role:** backup — currently on injured reserve, out at least four games
+- **Situation:** Signed a one-year, fully guaranteed $1.81M deal with Detroit in March after four years in Kansas City, brought in to replace David Montgomery (traded to Houston) as the complement to Jahmyr Gibbs. Detroit made clear Gibbs is the bell cow, so this was always a reduced role — though the vacated Montgomery workload (908 scrimmage yards in 2025) is meaningful. Then Detroit placed Pacheco on IR on Sept 1-2 with a back injury. GM Brad Holmes said there is no clear timetable and beat reporting suggests the absence could extend past Week 5, when he first becomes eligible. Jacob Saylors is the direct backup to Gibbs in the meantime, and the Lions may work out additional backs. Detroit opens at home against New Orleans on Sept 13.
+- **Health:** On IR with a back injury, no timetable. The back issue developed after he had seemingly recovered from an MCL sprain that cost him the second half of training camp. Longer history: broken right fibula in Week 2 of 2024 (nine games missed) and an MCL sprain the same year; 14 games missed since the start of 2024.
+- **Risk:** Everything. He's out at minimum four games with an undefined back injury, at 27, on a minimum-money one-year deal, behind an elite every-down back, for a team that may sign someone else while he's gone. Even a clean return gets him a 6-8 touch role. His efficiency has also collapsed — 3.8 yards per carry over the last two seasons after 4.6+ in his first two.
+- **Draft note:** Don't draft him. With 13 roster spots and only six bench slots, a back who can't play until October and may not have a job when he returns isn't worth a stash — revisit on waivers if he's activated and Gibbs' workload looks heavy.
+- **Confidence:** high
+- **Sources:**
+  - https://www.espn.com/nfl/player/_/id/4361529/isiah-pacheco
+  - https://www.rotowire.com/football/player/isiah-pacheco-16104
+  - https://www.detroitlionspodcast.com/dlp-beat-bot/2026/09/02/lions-lose-isiah-pacheco-to-ir-bring-back-tyler-conklin-in-final-roster-moves/
+  - https://bolavip.com/en/nfl/whats-the-lions-rb-depth-chart-without-isiah-pacheco-to-start-2026-nfl-season
+  - https://sports.yahoo.com/nfl/article/lions-backup-rb-isiah-pacheco-dealing-with-sprained-mcl-expected-back-for-week-1-142735185.html
+  - https://fantasydata.com/nfl/isiah-pacheco-fantasy/23371

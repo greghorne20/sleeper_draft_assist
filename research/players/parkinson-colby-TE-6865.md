@@ -1,0 +1,13 @@
+## Colby Parkinson — TE, LAR, bye 11  (player_id: 6865)
+- **Role:** starter (in a genuine committee)
+- **Situation:** Parkinson is the Rams' No. 1 tight end going into 2026 and their primary in-line option, which matters because Los Angeles is leaning hard into 12 and 13 personnel this year. He set career highs across the board in 2025 and was a top-35 fantasy TE (17th); from Week 10 on, including playoffs, he averaged 5.0 targets and scored nine touchdowns over that stretch. The room is crowded — Tyler Higbee was re-signed and extended, second-year Terrance Ferguson is rising, and the Rams spent a second-rounder on Max Klare — so five tight ends were expected to make the 53. Reporting suggests Parkinson keeps the base and 13-personnel snaps while Ferguson takes obvious passing-down work in 11 personnel. Contract year. Offense also features Puka Nacua and Davante Adams.
+- **Health:** No injury reported this offseason or preseason. UNKNOWN beyond that — I found no 2026 injury designation for him either way.
+- **Risk:** The 2025 line was touchdown-driven (nine scores in a 12-game stretch), and that regresses. If Ferguson's blocking comes along and the Rams shift passing-down snaps to him, Parkinson's floor becomes red-zone-or-bust in an offense where Nacua and Adams eat first.
+- **Draft note:** With half-PPR and one TE slot, he's a streaming-tier fallback, not a target — the kind of name to take in the last round or two if you punt TE, mostly on the touchdown history.
+- **Confidence:** medium
+- **Sources:**
+  - https://www.espn.com/nfl/player/_/id/4242557/colby-parkinson
+  - https://sports.yahoo.com/articles/rams-26-most-important-players-150331463.html
+  - https://www.si.com/nfl/rams/onsi/colby-parkinson-x-factor-rams-13-personnel
+  - https://sports.yahoo.com/articles/rams-training-camp-preview-strength-185850925.html
+  - https://sports.yahoo.com/articles/rams-te-colby-parkinson-ranked-133517353.html

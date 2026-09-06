@@ -1,0 +1,12 @@
+## Bryce Young — QB, CAR, bye 5  (player_id: 9228)
+- **Role:** starter
+- **Situation:** Young is the unquestioned starter in a contract year — Carolina picked up his fifth-year option but hasn't extended him. He set career highs in 2025 (3,011 yards, 23 TDs, 63.6% completions, 5.4% sack rate) and led the Panthers to the NFC South title, but the volume is the problem: 188.2 passing yards per game, 6.3 yards per attempt, a 4.8-yard average depth of target on completions, 25 or fewer attempts in half his 16 starts, and only three games above 225 passing yards. Dave Canales' offense remains run-leaning and the team has the sixth-lowest dropback rate when trailing by 3+. Tetairoa McMillan is the clear WR1 with Jalen Coker second. His fantasy finishes in points per game across three years: QB29, QB23, QB24.
+- **Health:** No injury reported. He sat the preseason opener by design with most other starters while Kenny Pickett started.
+- **Risk:** Your scoring makes this worse, not better. Passing yards are 0.04/yd (25 yards per point) and passing TDs are only 4, so a 190-yard, 1.5-TD passer with no rushing floor scores in the low teens on a good week. The rushing equity people kept waiting for never showed up.
+- **Draft note:** Not draftable in a 12-team 1QB league. If you punt QB, you're streaming someone else; Young is a matchup-only waiver option (his best splits came in the back half of the season, when his rushing ticked up to 18.8 yards per game).
+- **Confidence:** medium
+- **Sources:**
+  - https://www.fantasypros.com/nfl/notes/419558/bryce-young-2026-outlook.php
+  - https://www.profootballnetwork.com/fantasy-football/bryce-young-fantasy-outlook-updated-2026/
+  - https://www.profootballnetwork.com/fantasy-football/bryce-young-fantasy-prediction-2026/
+  - https://fantasydata.com/nfl/bryce-young-fantasy/23132

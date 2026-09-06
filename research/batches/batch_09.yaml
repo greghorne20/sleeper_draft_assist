@@ -1,0 +1,102 @@
+batch: 9
+of: 17
+positions:
+- QB
+- RB
+- WR
+- TE
+count: 15
+ordering: sleeper search_rank ascending
+source: sleeper /players/nfl
+generated_at: 2026-09-05T14:50:33-0400
+players:
+- player_id: '8110'
+  name: Jake Ferguson
+  pos: TE
+  team: DAL
+  bye: 14
+  search_rank: 97
+- player_id: '13269'
+  name: Fernando Mendoza
+  pos: QB
+  team: LV
+  bye: 13
+  search_rank: 98
+- player_id: '5001'
+  name: Dalton Schultz
+  pos: TE
+  team: HOU
+  bye: 8
+  search_rank: 98
+- player_id: '9756'
+  name: Jordan Addison
+  pos: WR
+  team: MIN
+  bye: 6
+  search_rank: 99
+- player_id: '9758'
+  name: C.J. Stroud
+  pos: QB
+  team: HOU
+  bye: 8
+  search_rank: 101
+- player_id: '9753'
+  name: Zach Charbonnet
+  pos: RB
+  team: SEA
+  bye: 11
+  search_rank: 101
+- player_id: '10222'
+  name: Jayden Reed
+  pos: WR
+  team: GB
+  bye: 11
+  search_rank: 102
+- player_id: '9754'
+  name: Quentin Johnston
+  pos: WR
+  team: LAC
+  bye: 7
+  search_rank: 102
+- player_id: '7002'
+  name: Juwan Johnson
+  pos: TE
+  team: 'NO'
+  bye: 8
+  search_rank: 103
+- player_id: '12522'
+  name: Cam Ward
+  pos: QB
+  team: TEN
+  bye: 9
+  search_rank: 104
+- player_id: '9480'
+  name: Brenton Strange
+  pos: TE
+  team: JAX
+  bye: 7
+  search_rank: 104
+- player_id: '6819'
+  name: Michael Pittman
+  pos: WR
+  team: PIT
+  bye: 9
+  search_rank: 104
+- player_id: '12474'
+  name: Woody Marks
+  pos: RB
+  team: HOU
+  bye: 8
+  search_rank: 105
+- player_id: '8126'
+  name: Wan'Dale Robinson
+  pos: WR
+  team: TEN
+  bye: 9
+  search_rank: 105
+- player_id: '12530'
+  name: Travis Hunter
+  pos: WR
+  team: JAX
+  bye: 7
+  search_rank: 108

@@ -1,0 +1,13 @@
+## Denzel Boston — WR, CLE, bye 11  (player_id: 13346)
+- **Role:** starter
+- **Situation:** Second-round rookie (No. 39 overall, Washington) who was on the first team by early August and is listed as a starter on Cleveland's depth chart alongside Jerry Jeudy and fellow rookie KC Concepcion. HC Todd Monken moved him up during camp; at 6'4" 215 he profiles as the outside X with Concepcion in the slot. The Browns cut Cedric Tillman at the end of camp, which further cleared the room. He was a full-time college starter for two years (63-834-9, then 62-881-11 with a 2.44 YPRR).
+- **Health:** No injury reported. Played through both the preseason opener and the Bills game.
+- **Risk:** The quarterback. Cleveland went into the season with a Deshaun Watson / Shedeur Sanders competition that impressed nobody in camp, and Boston sat out targets entirely in his second preseason game while others rested — one report read that as him being no higher than third in the pecking order. A rookie X receiver on a bottom-five passing offense can finish with 45 catches and 550 yards.
+- **Draft note:** Worth a bench dart in the last two or three rounds of a 13-round draft — the size and red-zone role give him a TD path that half-PPR rewards, but do not draft him expecting weekly starts.
+- **Confidence:** medium
+- **Sources:**
+  - https://www.nbcsports.com/fantasy/football/player-news/2026-08-11/boston-listed-as-no-1-wr-on-early-depth-chart
+  - https://www.draftsharks.com/fantasy-football-news/82178/denzel-boston-working-his-way-up-the-depth-chart
+  - https://www.rotowire.com/football/player/denzel-boston-19298
+  - https://www.dawgsbynature.com/cleveland-browns-roster-players/131930/browns-depth-chart-official-53-man-roster-practice-squad
+  - https://www.espn.com/nfl/player/_/id/4241463/jerry-jeudy

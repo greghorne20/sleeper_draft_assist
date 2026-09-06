@@ -1,72 +1,102 @@
 batch: 7
-of: 8
+of: 17
 positions:
 - QB
 - RB
 - WR
 - TE
-count: 10
+count: 15
 ordering: sleeper search_rank ascending
 source: sleeper /players/nfl
-generated_at: 2026-09-05T14:00:17-0400
+generated_at: 2026-09-05T14:50:33-0400
 players:
-- player_id: '4981'
-  name: Calvin Ridley
-  pos: WR
-  team: TEN
-  bye: 9
-  search_rank: 180
-- player_id: '10213'
-  name: Tre Tucker
-  pos: WR
-  team: LV
-  bye: 13
-  search_rank: 181
-- player_id: '12455'
-  name: Brashard Smith
-  pos: RB
-  team: KC
-  bye: 5
-  search_rank: 182
-- player_id: '3257'
-  name: Jacoby Brissett
-  pos: QB
-  team: ARI
-  bye: 14
-  search_rank: 184
-- player_id: '12535'
-  name: Isaac TeSlaa
-  pos: WR
-  team: DET
-  bye: 6
-  search_rank: 184
-- player_id: '12499'
-  name: Elic Ayomanor
-  pos: WR
-  team: TEN
-  bye: 9
-  search_rank: 185
-- player_id: '13320'
-  name: Zachariah Branch
-  pos: WR
+- player_id: '7553'
+  name: Kyle Pitts
+  pos: TE
   team: ATL
   bye: 11
-  search_rank: 185
-- player_id: '9502'
-  name: Tank Dell
+  search_rank: 68
+- player_id: '9487'
+  name: Parker Washington
   pos: WR
-  team: HOU
-  bye: 8
-  search_rank: 187
-- player_id: '12457'
-  name: Jaydon Blue
-  pos: RB
-  team: PHI
+  team: JAX
+  bye: 7
+  search_rank: 70
+- player_id: '4892'
+  name: Baker Mayfield
+  pos: QB
+  team: TB
   bye: 10
-  search_rank: 189
-- player_id: '11579'
-  name: Audric Estime
+  search_rank: 72
+- player_id: '5045'
+  name: Courtland Sutton
+  pos: WR
+  team: DEN
+  bye: 10
+  search_rank: 72
+- player_id: '5846'
+  name: DK Metcalf
+  pos: WR
+  team: PIT
+  bye: 9
+  search_rank: 73
+- player_id: '11631'
+  name: Brian Thomas
+  pos: WR
+  team: JAX
+  bye: 7
+  search_rank: 74
+- player_id: '11628'
+  name: Marvin Harrison
+  pos: WR
+  team: ARI
+  bye: 14
+  search_rank: 74
+- player_id: '10232'
+  name: Michael Wilson
+  pos: WR
+  team: ARI
+  bye: 14
+  search_rank: 75
+- player_id: '5947'
+  name: Jakobi Meyers
+  pos: WR
+  team: JAX
+  bye: 7
+  search_rank: 77
+- player_id: '8154'
+  name: Brian Robinson
   pos: RB
+  team: ATL
+  bye: 11
+  search_rank: 80
+- player_id: '10236'
+  name: Dalton Kincaid
+  pos: TE
+  team: BUF
+  bye: 7
+  search_rank: 81
+- player_id: '12493'
+  name: Oronde Gadsden
+  pos: TE
+  team: LAC
+  bye: 7
+  search_rank: 83
+- player_id: '4217'
+  name: George Kittle
+  pos: TE
+  team: SF
+  bye: 8
+  search_rank: 84
+- player_id: '4199'
+  name: Aaron Jones
+  pos: RB
+  team: MIN
+  bye: 6
+  search_rank: 85
+- player_id: '12545'
+  name: Tyler Shough
+  pos: QB
   team: 'NO'
   bye: 8
-  search_rank: 190
+  search_rank: 86

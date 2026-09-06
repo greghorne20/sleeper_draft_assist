@@ -1,0 +1,102 @@
+batch: 8
+of: 17
+positions:
+- QB
+- RB
+- WR
+- TE
+count: 15
+ordering: sleeper search_rank ascending
+source: sleeper /players/nfl
+generated_at: 2026-09-05T14:50:33-0400
+players:
+- player_id: '7567'
+  name: Kenny Gainwell
+  pos: RB
+  team: TB
+  bye: 10
+  search_rank: 86
+- player_id: '11583'
+  name: Jonathon Brooks
+  pos: RB
+  team: CAR
+  bye: 5
+  search_rank: 88
+- player_id: '4037'
+  name: Chris Godwin
+  pos: WR
+  team: TB
+  bye: 10
+  search_rank: 88
+- player_id: '5849'
+  name: Kyler Murray
+  pos: QB
+  team: MIN
+  bye: 6
+  search_rank: 89
+- player_id: '8132'
+  name: Tyler Allgeier
+  pos: RB
+  team: ARI
+  bye: 14
+  search_rank: 89
+- player_id: '1466'
+  name: Travis Kelce
+  pos: TE
+  team: KC
+  bye: 5
+  search_rank: 89
+- player_id: '13294'
+  name: Makai Lemon
+  pos: WR
+  team: PHI
+  bye: 10
+  search_rank: 89
+- player_id: '4943'
+  name: Sam Darnold
+  pos: QB
+  team: SEA
+  bye: 11
+  search_rank: 91
+- player_id: '4137'
+  name: James Conner
+  pos: RB
+  team: ARI
+  bye: 14
+  search_rank: 92
+- player_id: '3214'
+  name: Hunter Henry
+  pos: TE
+  team: NE
+  bye: 11
+  search_rank: 92
+- player_id: '8408'
+  name: Jordan Mason
+  pos: RB
+  team: MIN
+  bye: 6
+  search_rank: 94
+- player_id: '5022'
+  name: Dallas Goedert
+  pos: TE
+  team: PHI
+  bye: 10
+  search_rank: 94
+- player_id: '8142'
+  name: Alec Pierce
+  pos: WR
+  team: IND
+  bye: 13
+  search_rank: 94
+- player_id: '12533'
+  name: Jacory Croskey-Merritt
+  pos: RB
+  team: WAS
+  bye: 7
+  search_rank: 95
+- player_id: '5012'
+  name: Mark Andrews
+  pos: TE
+  team: BAL
+  bye: 13
+  search_rank: 96

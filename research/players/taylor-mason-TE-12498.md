@@ -1,0 +1,13 @@
+## Mason Taylor — TE, NYJ, bye 13  (player_id: 12498)
+- **Role:** starter (co-starter in a three-way room)
+- **Situation:** Listed as a starting tight end on the Jets' initial Week 1 depth chart alongside Jeremy Ruckert, with first-round rookie Kenyon Sadiq (16th overall) notably omitted after missing most of the summer following core-muscle/hernia surgery. Taylor is the traditional in-line Y; Sadiq profiles as an F/big-slot type, so the roles are somewhat complementary, but Sadiq is on track to play Week 1 and the Jets used a first-rounder on him. As a rookie Taylor led the Jets in catches (44-47 depending on source, 369-390 yards, 1 TD on 65 targets) before a neck injury ended his year — he averaged 6.8 PPR points on five targets per game. New York also has Garrett Wilson healthy and took two pass-catchers in the first round, so the target pie is more crowded than it was in 2025. His ADP slid from the 150s past 250 after the Sadiq pick.
+- **Health:** Healthy now. Missed the final four games of 2025 with a neck injury and finished on IR; head coach Aaron Glenn named him this spring as a player he expects to take a step forward. Caught his only preseason target.
+- **Risk:** Sadiq. If the first-rounder is healthy by mid-September and the Jets get him on the field, Taylor's snaps compress toward blocking and short-area check-downs — which is what he already was, at 8.4 yards per catch as a rookie. He can be an every-week starter and still be fantasy-irrelevant.
+- **Draft note:** Not a draft pick in a 12-team, one-TE league — waiver-wire name to watch if Sadiq's core-muscle recovery drags.
+- **Confidence:** high
+- **Sources:**
+  - https://www.thefantasyfootballers.com/news/636258/mason-taylor-starter-on-initial-depth-chart/
+  - https://www.cbssports.com/fantasy/football/news/2026-outlook-mason-taylor/
+  - https://www.si.com/onsi/fantasy/nfl/can-mason-taylor-overcome-competition-to-become-a-fantasy-factor-in-2026
+  - https://www.rotowire.com/football/player/mason-taylor-18535
+  - https://www.4for4.com/player/mason-taylor

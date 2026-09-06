@@ -1,0 +1,13 @@
+## Makai Lemon — WR, PHI, bye 10  (player_id: 13294)
+- **Role:** starter (projected) — expected slot receiver alongside DeVonta Smith and Dontayvion Wicks
+- **Situation:** First-round rookie (No. 20 overall, USC), 2025 Biletnikoff winner. Philadelphia traded A.J. Brown to New England this offseason, and Lemon was drafted as part of the plan to replace that production. He is expected to open as the starting slot receiver and may also return punts. New OC Sean Mannion is installing a new offense, and beat reporting on the limited practice tape describes Lemon's projected usage as short, schemed-up throws near the line of scrimmage with heavy pre-snap motion — "layups" for Jalen Hurts rather than a downfield role. His preseason debut against Cincinnati was rough: three catches for three yards on five targets, plus a muffed punt.
+- **Health:** Hamstring. He missed half of spring practices with a hamstring issue, then missed nine to ten training camp practices and the first two preseason games with a hamstring injury on the same leg. He returned as a full participant in late August and said the hamstring feels good. No current game designation found, but this is a recurring soft-tissue issue on the same leg.
+- **Risk:** He's a rookie slot receiver who has barely practiced with his starting quarterback, in a brand-new offense, with a hamstring that has already flared twice on the same leg. Even if healthy, the projected role — short, schemed targets — is a low-yardage, low-TD profile. DeVonta Smith is the clear No. 1 and Dallas Goedert is the established red-zone target, so Lemon is competing for third-option volume at best early on.
+- **Draft note:** In 0.5 PPR a high-catch, low-yardage slot role is only half-rewarded, so the profile needs volume to matter. He's a bench stash / late-round dart, not a Week 1 starter. Worth it if he's cheap and you can wait a month; not worth reaching for on name and draft capital.
+- **Confidence:** medium (role is well-reported but entirely projection — he has essentially no NFL sample and a lot of missed practice)
+- **Sources:**
+  - https://northeasttimes.com/2026/08/30/eagles-rookie-makai-lemon-shakes-off-rough-preseason-debut/
+  - https://www.phillyvoice.com/eagles-rookie-progress-reports-end-training-camp-2026-makai-lemon-eli-stowers-markel-bell/
+  - https://www.inquirer.com/eagles/first-round-wide-receiver-makai-lemon-preseason-debut-20260829.html
+  - https://www.nbcsportsphiladelphia.com/nfl/philadelphia-eagles/eagles-makai-lemon-preseason-debut-bengals-tanner-mckee-nick-sirianni/748667/
+  - https://en.wikipedia.org/wiki/Makai_Lemon

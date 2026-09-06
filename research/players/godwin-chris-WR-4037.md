@@ -1,0 +1,13 @@
+## Chris Godwin — WR, TB, bye 10  (player_id: 4037)
+- **Role:** starter — projected to lead or co-lead Tampa Bay in targets
+- **Situation:** For the first time in his career Godwin is out of Mike Evans' shadow; Evans signed with San Francisco in March. Tampa Bay also has a new offensive coordinator (Zac Robinson). His only real target competition is Emeka Egbuka, and both Egbuka (toe) and Jalen McMillan (knee) carried injury questions into Week 1, which could push Godwin into an even larger early-season role. GM Jason Licht publicly praised how he looks. The 2025 season was the worst full year of his career — 360 yards in nine games, 1.42 yards per route run, 18.3% target share — but the back-half sample was much better: from Week 13 on he posted a 16.8% target share, 49.8 receiving yards per game, 1.88 YPRR and a 21.2% first-read share, finishing as the WR32 in points per game over that stretch.
+- **Health:** Reported fully healthy entering 2026 and more than a full year removed from the 2024 dislocated ankle. The lingering concern is history, not a current designation: dislocated ankle Week 7 of 2024, a camp setback and then a fibula injury that cost him time through 2025. Nothing active found on the injury report.
+- **Risk:** The body. He turns 30 this season, has two straight leg injuries behind him, and played 16 games total across the last two years. If the burst is gone, an expanded target share just means more inefficient volume — his 2025 efficiency collapse is the bear case in a nutshell. Baker Mayfield's health is a secondary dependency.
+- **Draft note:** In 0.5 PPR a high-volume slot role is worth paying for, and he's been going around WR42 / pick 90 on Underdog. That's a WR3/FLEX price for a player with a WR2 target share — fine value in the middle rounds. He shouldn't be anyone's WR2 on draft day, but the cost already prices in the injury history.
+- **Confidence:** high
+- **Sources:**
+  - https://www.espn.com/nfl/player/_/id/3116165/chris-godwin-jr
+  - https://www.fantasypros.com/nfl/players/chris-godwin.php
+  - https://www.profootballnetwork.com/fantasy-football/chris-godwin-fantasy-outlook-updated-2026/
+  - https://www.fantasylife.com/articles/fantasy/chris-godwin-fantasy-football-outlook-for-2026-the-most-underpri
+  - https://www.pewterreport.com/chris-godwin-jr-looking-his-old-self-again/

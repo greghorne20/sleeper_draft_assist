@@ -1,0 +1,13 @@
+## Mike Washington — RB, LV, bye 13  (player_id: 13305)
+- **Role:** backup (clear No. 2 / change-of-pace behind Ashton Jeanty)
+- **Situation:** Rookie fourth-rounder, 122nd overall, out of Arkansas — the Raiders traded up to get him. He is 6-1/6-2, 223-228 pounds and ran a 4.33 forty, the fastest by a back at the 2026 combine. He was the standout of Las Vegas's preseason: 23 carries for 168 yards (7.3 ypc, best in the league among backs with 10+ carries), including a 53-yard run vs. Arizona and a 33-yarder vs. Houston. Ashton Jeanty is the entrenched starter. The offense is Klint Kubiak's, with No. 1 overall pick Fernando Mendoza at quarterback — a rookie QB and a WR room Kubiak has publicly worried about, which argues for a run-heavy script. In his lone Arkansas season he went 167-1,070-8 with 28 catches, second in the SEC at 6.4 ypc.
+- **Health:** No injury reported. Played all three preseason games.
+- **Risk:** Jeanty is a healthy 2025 first-round franchise back who does not need to come off the field. Preseason yards-per-carry against backups is the least predictive stat in football, and Washington's college efficiency was poor before a single good year at Arkansas. Absent a Jeanty injury, this is a 6-8 touch role with no receiving guarantee.
+- **Draft note:** Pure handcuff/lottery ticket — worth a final-round pick only, and specifically worth more to whoever drafts Jeanty.
+- **Confidence:** high
+- **Sources:**
+  - https://www.espn.com/nfl/player/_/id/4686658/mike-washington-jr
+  - https://sports.yahoo.com/articles/raiders-rookie-rb-mike-washington-210716798.html
+  - https://www.raiders.com/team/players-roster/mike-washington-jr/
+  - https://www.silverandblackpride.com/las-vegas-raiders-preseason/137962/raiders-2026-49ers-preseason-game-review
+  - https://sportsnaut.com/nfl/las-vegas-raiders/mike-washington-jr-raiders-rookie-running-back-training-camp

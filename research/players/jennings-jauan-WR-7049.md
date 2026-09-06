@@ -1,0 +1,12 @@
+## Jauan Jennings — WR, MIN, bye 6  (player_id: 7049)
+- **Role:** starter in three-WR sets, but third in the pecking order
+- **Situation:** Big offseason change — after six seasons in San Francisco, Jennings signed a one-year deal worth up to $13M with Minnesota. He slots behind Justin Jefferson and Jordan Addison and projects to work mostly from the slot, since Jefferson occupies the X and Addison the Z; Addison can also bump inside in two-wide sets, which would push Jennings off the field. His 2025 line with the 49ers was 55-643-9 on 90 targets in 15 games, and he was WR21 in points per game from Week 7 on with a 19.5% target share. The other change that matters: Kyler Murray is the Vikings' quarterback, and Murray has rarely supported more than one fantasy-viable pass catcher in a season.
+- **Health:** No current injury found. Background caveat only: he's entering his age-29 season, plays a physical style, and reporting describes his final 49ers year as injury-marred with nagging issues played through. UNKNOWN on anything active.
+- **Risk:** Target-share collapse. Going from a 19.5% share as a No. 1/2 option in San Francisco to third in line behind Jefferson and Addison in a Murray-led offense is the whole bear case, and there's no volume cushion under it.
+- **Draft note:** Last-two-rounds bench flier who only matters if Jefferson or Addison misses time; his TD-heavy 2025 (nine scores) is unlikely to repeat, and 0.5 PPR doesn't rescue a low-target profile.
+- **Confidence:** medium
+- **Sources:**
+  - https://www.espn.com/nfl/player/_/id/3886598/jauan-jennings
+  - https://www.fantasypros.com/nfl/players/jauan-jennings.php
+  - https://fantasydata.com/nfl/jauan-jennings-fantasy/21717
+  - https://sports.yahoo.com/articles/jauan-jennings-fantasy-outlook-2026-101705544.html

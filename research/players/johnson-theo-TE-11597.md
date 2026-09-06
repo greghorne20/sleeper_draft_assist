@@ -1,0 +1,13 @@
+## Theo Johnson — TE, NYG, bye 8  (player_id: 11597)
+- **Role:** committee (TE2 in a two-tight-end offense, leaning blocker)
+- **Situation:** Coming off a real sophomore season — 45 catches, 528 yards, five touchdowns on 74 targets in 15 games, with an 86.2% snap share as the clear TE1 and one of Jaxson Dart's favorite targets. Then the Giants hired John Harbaugh and immediately signed Isaiah Likely away from Baltimore on a three-year deal worth roughly $40-47.5M. That is a starter's contract, and Johnson opens 2026 as the TE2. New York also added Darnell Mooney and Calvin Austin III at receiver. The counterweight: the Giants' WR room is one of the league's weaker units, Malik Nabers' knee is a question mark, and Harbaugh has spoken about featuring both tight ends — Johnson was reportedly one of Dart's most-targeted options through OTAs and minicamp. Backfield of Cam Skattebo and Tyrone Tracy Jr. also takes volume.
+- **Health:** No current injury reported; described as fully recovered from the 2024 foot injury that ended his rookie year on IR. Reporting from camp called his summer quiet, not injured. UNKNOWN whether he carries any Week 1 designation.
+- **Risk:** In two-tight-end sets, someone blocks — and with Likely paid to be the receiving tight end, that someone is Johnson. He could hold a large snap share and still lose 25 targets year over year. His 2025 catch rate also fell from 67.4% to 60.8%.
+- **Draft note:** Off the board in a 12-team, one-TE league. Handcuff value only if something happens to Likely; RotoBaller has him around TE41 and he's going undrafted outside deep two-TE formats.
+- **Confidence:** medium — role and depth chart are well sourced, but I found no camp-or-later injury confirmation and most of the reporting predates the preseason.
+- **Sources:**
+  - https://www.cbssports.com/fantasy/football/news/2026-outlook-theo-johnson/
+  - https://fantasyfootballcalculator.com/players/theo-johnson/news
+  - https://www.si.com/nfl/giants/onsi/giants-theo-johnson-2026-role-isaiah-likely-01kwymee8206
+  - https://www.profootballnetwork.com/fantasy-football/theo-johnson-fantasy-outlook-2026/
+  - https://empiresportsmedia.com/new-york-giants/could-theo-johnson-become-a-focal-point-of-the-giants-offense-in-2026/

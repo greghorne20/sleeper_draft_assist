@@ -1,0 +1,13 @@
+## Jaxson Dart — QB, NYG, bye 8  (player_id: 12508)
+- **Role:** starter (unchallenged QB1)
+- **Situation:** Dart took over in Week 4 of his rookie year and started the rest of 2025, throwing for 2,272 yards and leading all rookies with 24 total TDs on a 4-13 team. He averaged 20.13 fantasy PPG across 12 starts — reportedly the fifth-highest ever for a rookie QB — and did it with Malik Nabers lost to a torn ACL early and a midseason playcaller change. Big offseason changes: John Harbaugh is the new head coach, Matt Nagy the offensive coordinator, and the Giants rebuilt the supporting cast around him — Nabers back from the ACL, plus Isaiah Likely, Darnell Mooney, Malachi Fields, Calvin Austin III and Odell Beckham Jr. added to the receiver/TE room, behind an offensive line the team also invested in. His fantasy value is rushing-driven: he finished top five among QBs in rush attempts, rush yards, rush TDs and carries inside the 5.
+- **Health:** No current injury reported. History worth flagging: he was checked for concussions multiple times in 2025 and missed two games with a head injury. Harbaugh has publicly said he isn't worried about Dart protecting himself in year two, which is coach-speak for "this is the known problem."
+- **Risk:** The pick fails if the rushing production that carries his fantasy floor either regresses (Nagy and Harbaugh deliberately reining in the scrambles/designed runs to keep him upright) or gets him hurt again. He is a below-average pocket passer so far — 32% completion rate on 20+ yard throws — so if the legs come off the table there isn't much underneath it.
+- **Draft note:** In a 1-QB league with 4-point passing TDs and only 13 roster spots, rushing QBs are the whole game at the position. He's a fine target as your QB1 in the QB7-12 range, roughly rounds 8-10, and he's the kind of pick where you don't want to also be carrying a backup QB on a 6-man bench.
+- **Confidence:** high
+- **Sources:**
+  - https://www.espn.com/nfl/player/_/id/4689114/jaxson-dart
+  - https://sports.yahoo.com/articles/giants-qb-jaxson-dart-league-185537497.html
+  - https://www.si.com/nfl/giants/onsi/giants-jaxson-dart-2026-breakout-01kvt9c539k3
+  - https://www.si.com/nfl/giants/onsi/giants-jaxson-dart-qb-ranking-year-two-01ky89chs55e
+  - https://www.nfl.com/players/jaxson-dart/

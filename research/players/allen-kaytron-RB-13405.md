@@ -1,0 +1,12 @@
+## Kaytron Allen — RB, WAS, bye 7  (player_id: 13405)
+- **Role:** backup (RB3, short-yardage)
+- **Situation:** Sixth-round rookie (No. 187, Penn State's all-time leading rusher) who made the 53 and is expected to open the year third behind Jacory "Bill" Croskey-Merritt and Rachaad White. The Commanders' own roster breakdown says all three backs are expected to play a real role each week, with Allen most valuable in short yardage because of his size and his knack for avoiding negative runs. He ranked seventh in this rookie class in YAC (3.35) but was never much of a receiver at Penn State (career 70-490-4, 5.1 yards per target).
+- **Health:** No injury of his own reported. Note the two backs ahead of him are banged up — Croskey-Merritt (lower body) and White (hamstring) — and ESPN flagged that lingering injuries could hand Allen a bigger Week 1 workload than expected.
+- **Risk:** He fumbled on his first touch in the preseason finale, and a sixth-rounder with no receiving profile is the first guy benched after a mistake. Even if he gets goal-line work, in half PPR a two-catch-per-month back needs touchdowns to matter, and Washington's goal-line back is Jayden Daniels as often as not.
+- **Draft note:** Last-round flier at most, and only if you want a cheap piece of a backfield where both guys ahead of him are currently hurt. Otherwise a waiver-watch name.
+- **Confidence:** medium
+- **Sources:**
+  - https://www.espn.com/nfl/player/_/id/4685246/kaytron-allen
+  - https://www.commanders.com/news/washington-commanders-roster-2026-breakdown
+  - https://www.si.com/nfl/commanders/onsi/commanders-running-back-battle-kaytron-allen-robert-henry-jr-53-man-roster
+  - https://www.hogshaven.com/washington-commanders-depth-chart/426242/the-washington-commanders-release-their-first-unofficial-depth-chart

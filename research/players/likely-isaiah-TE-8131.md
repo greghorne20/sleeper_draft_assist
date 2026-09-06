@@ -1,0 +1,13 @@
+## Isaiah Likely — TE, NYG, bye 8  (player_id: 8131)
+- **Role:** starter
+- **Situation:** Signed a three-year, $40M deal with the Giants in March, following John Harbaugh from Baltimore, and is the clear No. 1 TE for the first time after four years behind Mark Andrews. Giants beat writers and ESPN's Dan Graziano describe him as Jaxson Dart's top target and a "utility weapon" moved across the formation by OC Matt Nagy; the Giants kept only five WRs partly because of his role, and Calvin Austin III's torn ACL thinned the room further. One real caution: in the preseason opener he played just 6 of 16 first-team snaps, with Theo Johnson (7) and blocker Chris Manhertz (5) rotating in heavy personnel — all six of Likely's came in 11 personnel.
+- **Health:** No injury reported; played in preseason and is on the active roster. Nothing lingering found.
+- **Risk:** The snap-share trap. If Nagy keeps running 12/21 personnel with Johnson and Manhertz and Likely stays a sub-package pass-catcher, he's a low-snap TE on an offense with a second-year QB behind a shaky line. Malik Nabers returning from ACL also caps the target ceiling.
+- **Draft note:** In half-PPR with a 1-TE requirement, he's a mid-round swing at a starting TE — reasonable once the clear top tier is gone, but I wouldn't pay ahead of his ADP (~110 overall, TE12) given the snap-count red flag.
+- **Confidence:** high
+- **Sources:**
+  - https://fantasydata.com/nfl/isaiah-likely-fantasy/23256
+  - https://sports.yahoo.com/articles/giants-tight-end-named-breakout-140533711.html
+  - https://heavy.com/sports/nfl/new-york-giants/breakout-star-tight-end-isaiah-likely/
+  - https://www.si.com/onsi/fantasy/news/isaiah-likely-fantasy-stock-rises-after-stellar-training-camp
+  - https://dknetwork.draftkings.com/2026/09/03/can-isaiah-likely-become-an-elite-fantasy-tight-end-with-the-giants-in-2026/

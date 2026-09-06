@@ -1,0 +1,12 @@
+## Matthew Golden — WR, GB, bye 11  (player_id: 12501)
+- **Role:** starter
+- **Situation:** Second-year player, No. 23 overall in 2025, and the role is finally defined: Romeo Doubs left for New England and Dontayvion Wicks was traded to Philadelphia, consolidating Green Bay's rotation to Christian Watson, Golden and Jayden Reed. Jordan Love said publicly that Golden is "locked in over there now at X" and praised his camp. The rookie year was genuinely bad, though — 29 catches on 44 targets for 361 yards and zero TDs in 14 games on a 53% snap share, with a 11.8% target share, 1.45 yards per route run and targets on just 17.7% of his routes. The one bright spot was a 4-84-1 line in the playoff loss to Chicago. Tucker Kraft is another primary target, and Watson was just paid.
+- **Health:** No current injury reported. (He was listed with an Achilles issue on injury reports in January 2026 but practiced in full and was removed from the report.)
+- **Risk:** Matt LaFleur's offense has not supported a high-volume WR — no Green Bay receiver has cleared a 21% target share since Davante Adams left before 2022. Golden could get the snaps and still finish with a 15% share. The 4.29-speed WR archetype also has a poor historical hit rate.
+- **Draft note:** Cheap enough to be worth it — ADP around 125 overall. A bench WR with a defined starting role on a good offense is a fine late-round shot in half-PPR; just don't draft him as a Week 1 starter.
+- **Confidence:** high
+- **Sources:**
+  - https://www.espn.com/nfl/player/_/id/4701936/matthew-golden
+  - https://fantasydata.com/nfl/matthew-golden-fantasy/25922
+  - https://www.profootballnetwork.com/fantasy-football/matthew-goldens-fantasy-outlook-updated-2026/
+  - https://www.profootballnetwork.com/fantasy-football/matthew-golden-fantasy-prediction-2026/

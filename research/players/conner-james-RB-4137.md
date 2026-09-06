@@ -1,0 +1,13 @@
+## James Conner — RB, ARI, bye 14  (player_id: 4137)
+- **Role:** backup — currently on injured reserve, will miss at least the first four games
+- **Situation:** Arizona placed Conner on IR with a designation to return to open the season, per beat reporter John Gambadoro. He is out until at least Week 5. He reworked his contract to stay with the Cardinals this offseason. The backfield moved on without him: Arizona signed Tyler Allgeier in free agency and drafted Jeremiyah Love No. 3 overall, and kept only three backs (Love, Allgeier, Bam Knight) on the initial 53. Trey Benson is also on IR. Conner played just three games in 2025 (32 carries, 95 yards) before a season-ending right ankle injury that required surgery; he was not on PUP for camp but was limited to individual work and never participated in team drills. Whenever he does return, he'll be a 31-year-old veteran slotting behind a top-3 rookie pick on a rebuilding team.
+- **Health:** On IR (right ankle) as of the 53-man cutdown. ESPN listed him as questionable. Mike LaFleur said in late August it was "too early to tell" about Week 1 and that Conner was "progressing well," before the IR move settled it. No return date has been reported beyond the four-game minimum.
+- **Risk:** He may simply never get the job back. Four missed games in a rebuilding offense with a first-round rookie establishing himself is the worst possible setup for a returning 31-year-old — even a clean recovery likely lands him in a rotational role, and the ankle has already cost him most of a season.
+- **Draft note:** Not draftable in a 13-round, 12-team league. There's no bench room to hold a player who can't help until Week 5 and may not have a role when he returns. Watch the waiver wire in October if Love or Allgeier gets hurt.
+- **Confidence:** high
+- **Sources:**
+  - https://raisingzona.com/cardinals-no-brainer-james-conner-move-roster-shakeup
+  - https://www.revengeofthebirds.com/arizona-cardinals-depth-chart/94093/cardinals-53-man-roster-before-waiver-wire-claims
+  - https://www.draftsharks.com/fantasy/points-outlook/tyler-allgeier/12582
+  - https://africa.espn.com/nfl/player/_/id/3045147/james-conner
+  - https://www.azcardinals.com/news/cardinals-roster-reset-2026-running-back

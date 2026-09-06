@@ -1,0 +1,13 @@
+## Dallas Goedert — TE, PHI, bye 10  (player_id: 5022)
+- **Role:** starter — clear Eagles TE1
+- **Situation:** Re-signed on a one-year, $7M deal. He finished 2025 as a top-6/top-7 fantasy tight end on 60 catches, 591 yards and a career-high 11 TDs in 15 games — 10 of those scores came in the red zone, eight from inside the six. Underlying metrics were volume-and-position dependent rather than dominant: 18.4% target share (8th among TEs), 21% first-read share (8th), 15 red-zone targets (7th), but only 1.43 yards per route run (33rd). The big change is that Philadelphia traded A.J. Brown to New England, which vacates a large target and red-zone share. Competition for those looks comes from DeVonta Smith, rookie first-rounder Makai Lemon (who missed most of camp with a hamstring), Dontayvion Wicks and Hollywood Brown. Rookie second-rounder Eli Stowers is on the roster but is not expected to challenge for the starting job — his blocking is the limiting factor, and reporters list both Goedert and Johnny Mundt ahead of him. New OC Sean Mannion.
+- **Health:** No current injury designation found. He rested in the preseason opener along with other starters. He had a knee issue at the end of 2025 (Week 18 injury report) and has a long history of missing time — 15 games played in 2025 was on the higher end for him.
+- **Risk:** Touchdown regression. Eleven receiving TDs against 24 total across his prior seven seasons combined is not a repeatable rate, and if that normalizes with only ~39 receiving yards per game underneath it, the whole line collapses. He's also 31, with every TE aging curve pointing down from here, and his availability has been an annual problem. If Lemon or Wicks steps up, the Brown vacancy gets absorbed elsewhere.
+- **Draft note:** In 0.5 PPR his value is TD- and red-zone-driven rather than reception-driven, which suits this scoring reasonably well. He's a low-end TE1 with a real path to top-6 again given the vacated targets — worth taking in the TE8-12 range, and he's been going outside the top 12 in shallow leagues, which is a mild bargain.
+- **Confidence:** high
+- **Sources:**
+  - https://www.fantasypros.com/nfl/players/dallas-goedert.php
+  - https://www.cbssports.com/nfl/players/2132551/dallas-goedert/fantasy/
+  - https://fantasydata.com/nfl/dallas-goedert-fantasy/19863
+  - https://www.draftsharks.com/fantasy/points-outlook/dallas-goedert/9997
+  - https://fantasyfootballcalculator.com/players/dallas-goedert
