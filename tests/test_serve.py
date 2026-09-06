@@ -26,10 +26,11 @@ def server(tmp_path):
     srv.server_close()
 
 
-def get(srv, path):
+def get(srv, path, headers=None):
     url = f"http://127.0.0.1:{srv.server_address[1]}{path}"
+    req = urllib.request.Request(url, headers=headers or {})
     try:
-        with urllib.request.urlopen(url, timeout=5) as res:
+        with urllib.request.urlopen(req, timeout=5) as res:
             return res.status, dict(res.headers), res.read()
     except urllib.error.HTTPError as exc:
         return exc.code, dict(exc.headers), exc.read()
@@ -69,9 +70,11 @@ def test_state_json_is_served_and_must_not_be_cached(server, draft_artifacts):
 
     assert status == 200
     assert headers["Content-Type"] == "application/json"
-    # Without no-store the browser serves a stale copy and the page silently
-    # freezes mid-draft while looking healthy.
-    assert headers["Cache-Control"] == "no-store"
+    # A browser that serves a stale copy without asking freezes the page
+    # mid-draft while it looks healthy. no-cache forbids that just as no-store
+    # does -- it only also permits the answer to be "unchanged".
+    assert headers["Cache-Control"] == "no-cache"
+    assert headers["ETag"]
     assert json.loads(body)["picks_made"] == state["picks_made"]
 
 
@@ -93,8 +96,36 @@ def test_briefs_are_served_and_must_not_be_cached(server, draft_artifacts):
     status, headers, body = get(srv, "/briefs.json")
     assert status == 200
     assert headers["Content-Type"] == "application/json"
-    assert headers["Cache-Control"] == "no-store"
+    assert headers["Cache-Control"] == "no-cache"
+    assert headers["ETag"]
     assert json.loads(body)["rooms"]["12"]["slot"] == 12
+
+
+def test_an_unchanged_state_answers_304_with_no_body(server, draft_artifacts):
+    """The page polls once a second; this is what makes that cost nothing."""
+    srv, out = server
+    write_state(out, draft_artifacts)
+    _, headers, first = get(srv, "/state.json")
+    etag = headers["ETag"]
+
+    status, headers, body = get(srv, "/state.json", {"If-None-Match": etag})
+    assert status == 304
+    assert body == b""
+    assert headers["ETag"] == etag
+    assert headers["Cache-Control"] == "no-cache"
+
+
+def test_a_changed_state_is_never_answered_304(server, draft_artifacts):
+    """The failure that matters is the opposite one: a stale board looking live."""
+    srv, out = server
+    write_state(out, draft_artifacts, count=12)
+    etag = get(srv, "/state.json")[1]["ETag"]
+
+    write_state(out, draft_artifacts, count=13)
+    status, headers, body = get(srv, "/state.json", {"If-None-Match": etag})
+    assert status == 200
+    assert headers["ETag"] != etag
+    assert json.loads(body)["picks_made"] == 13
 
 
 def test_the_board_does_not_depend_on_briefs_existing(server, draft_artifacts):

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import argparse
 import json
 import sys
 
@@ -148,6 +149,44 @@ def test_now_md_strikes_through_a_spent_pick_number(draft_artifacts):
     line = [row for row in live.render_now_md(state).splitlines() if "my picks:" in row][0]
     assert "~~96~~" in line
     assert ", 97," in line
+
+
+class CountingClient:
+    """Records which endpoints a poll actually hits."""
+
+    def __init__(self, draft, picks):
+        self.draft, self.picks, self.calls = draft, picks, []
+
+    def get_draft(self, draft_id):
+        self.calls.append("draft")
+        return self.draft
+
+    def get_draft_picks(self, draft_id):
+        self.calls.append("picks")
+        return self.picks
+
+
+def poll_args(tmp_path):
+    return argparse.Namespace(out_dir=tmp_path, cushion=4, available=30)
+
+
+def test_a_poll_fetches_picks_and_reuses_the_draft(draft_artifacts, tmp_path):
+    """Picks change every few seconds; the draft object changes about twice. One
+    request per poll is what pays for polling twice as often."""
+    board, order = artifacts(draft_artifacts)
+    client = CountingClient(DRAFT, make_picks(order, board, 12))
+
+    live.poll_once(client, "D2026", board, order, 12, poll_args(tmp_path), draft=DRAFT)
+    assert client.calls == ["picks"]
+
+
+def test_a_poll_with_no_draft_in_hand_fetches_one(draft_artifacts, tmp_path):
+    board, order = artifacts(draft_artifacts)
+    client = CountingClient(DRAFT, make_picks(order, board, 12))
+
+    state = live.poll_once(client, "D2026", board, order, 12, poll_args(tmp_path))
+    assert client.calls == ["draft", "picks"]
+    assert state["current_pick"] == 13
 
 
 def test_drafted_players_leave_the_available_board(draft_artifacts):

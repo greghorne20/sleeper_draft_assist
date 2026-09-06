@@ -141,7 +141,13 @@ is why `SleeperError` is the one exception type worth catching at the boundary.
   merged back on at render time, which is what keeps "urgency is a property of a player, not a
   second board" true without storing thirty rows twelve times.
   Both are pure — draft + picks + board in, whole state out — which is why the tests cover the
-  pick-timing maths without any HTTP. **Keepers leave the board through the ordinary path**: Sleeper feeds
+  pick-timing maths without any HTTP. **A poll is one request, not two, and `--interval` is 2s.**
+  The clock catching up after a pick is the lag anyone at the table actually feels, and it is
+  the sum of two timers: this one and the page's. Picks are fetched every poll; the draft object
+  is re-read only every `DRAFT_REFRESH_S` (30s), because its status changes about twice in a
+  draft's life and fetching it alongside every picks call doubled the request rate to watch a
+  field that never moves. Net against Sleeper is ~0.53 req/s, still a twentieth of the client's
+  own `min_interval_s` ceiling. **Keepers leave the board through the ordinary path**: Sleeper feeds
   them as picks carrying `is_keeper`, at the pick number their round cost implies, so nothing
   special is needed to cross them off — they are only *labelled* differently. **The pick maths
   is the exception.** They are entered before the draft opens and scatter across the whole
@@ -164,14 +170,22 @@ is why `SleeperError` is the one exception type worth catching at the boundary.
 
 - **`serve.py`** + **`live_view.html`** — the optional `sleeper-live --serve` page. A stdlib
   `ThreadingHTTPServer` on a daemon thread with exactly two literal routes (`/` → the packaged
-  HTML, `/state.json` → the out-dir file, `no-store`); everything else 404s. It is deliberately
+  HTML, `/state.json` → the out-dir file); everything else 404s. It is deliberately
   **not** `SimpleHTTPRequestHandler` — never joining a request path to a directory makes
   traversal impossible by construction rather than by sanitising. `log_message` is a no-op so
   request logs do not bury the poll output. The poll loop and the server share nothing but the
   filesystem, and the only coordination between them is `os.replace` — every state file is
   written through a temp file and renamed, so a page refresh landing mid-write gets the previous
   poll rather than a truncated one. No fsync: the state is derived and rewritten every poll, so
-  the next one rebuilds anything a power cut would cost. The page is vanilla JS with no build step and no libraries, re-renders in place to
+  the next one rebuilds anything a power cut would cost. **The JSON routes are `no-cache` with
+  an ETag, not `no-store`.** Both forbid serving a cached copy without asking, which is the
+  property that matters — a browser quietly handing back a stale `state.json` freezes the page
+  while it looks healthy. `no-store` also forbids *keeping* the copy, so there is nothing to
+  revalidate against and every poll re-downloads the file; `no-cache` revalidates on every
+  request and answers 304 when nothing changed. The ETag is a hash of the body rather than
+  mtime-and-size: this route must never say "unchanged" about a state that changed, and the
+  file is read either way. That is what lets the page poll **once a second** — ~42KB of state
+  plus ~27KB of briefs, twelve rooms, would otherwise be ~840KB/s to shave the clock. The page is vanilla JS with no build step and no libraries, re-renders in place to
   keep scroll position, and shows a banner when polls stop arriving — a silently frozen page
   during a draft is the dangerous failure. It is a dashboard, so state is encoded in form as
   well as number: position colour chips, a pick rail showing the 3RR cluster, tier bars that
@@ -363,7 +377,8 @@ serving an empty board.
 - **No players dump ships or is fetched.** Nothing at runtime calls `/players/nfl` — the board
   already resolved every name to a `player_id` — so runtime inputs are ~1.2MB and there is no
   cold start.
-- Env: `PORT` and `HOST` (both plumbed into `sleeper-live`), `SLEEPER_SLOT`, `SLEEPER_DRAFT_ID`,
+- Env: `PORT` and `HOST` (both plumbed into `sleeper-live`), `POLL_INTERVAL` (2s, matching the
+  CLI default), `SLEEPER_SLOT`, `SLEEPER_DRAFT_ID`,
   `ANTHROPIC_API_KEY`, `ANTHROPIC_CHAT_MODEL`, `WARROOM_REFRESH`. `.dockerignore` keeps `.env` out
   of the image — the key is a runtime secret, and an image layer is not somewhere anything can be
   deleted from.

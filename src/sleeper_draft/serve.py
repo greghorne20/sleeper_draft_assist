@@ -17,14 +17,22 @@ WHY NOT SimpleHTTPRequestHandler
     joins a request path to anything, so traversal is impossible by construction
     rather than by sanitising.
 
-WHY no-store MATTERS
-    Without it a browser will happily serve a cached state.json and the page
-    freezes mid-draft while looking perfectly healthy -- the worst failure this
-    tool could have.
+WHY no-cache RATHER THAN no-store
+    Both forbid serving a cached copy without asking, which is the property that
+    matters: a browser quietly serving a stale state.json freezes the page
+    mid-draft while it looks perfectly healthy, the worst failure this tool could
+    have. `no-store` also forbids *keeping* the copy, which means the browser has
+    nothing to revalidate against and every poll re-downloads the whole file.
+    `no-cache` keeps the copy and revalidates it on every single request, so an
+    unchanged state answers 304 with no body. The page polls once a second and
+    state.json is ~42KB; across twelve war rooms that is the difference between
+    ~840KB/s and nothing at all, and it is what makes polling that fast cheap
+    enough to be the right answer to "why is the clock a second behind".
 """
 
 from __future__ import annotations
 
+import hashlib
 import json
 from functools import partial
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
@@ -55,14 +63,24 @@ class StateHandler(BaseHTTPRequestHandler):
     def log_message(self, format: str, *args) -> None:  # noqa: A002, ARG002
         """Silence per-request logging -- it would bury the poll output."""
 
-    def _send(self, status: int, body: bytes, content_type: str, no_store: bool = False) -> None:
+    def _send(self, status: int, body: bytes, content_type: str,
+              revalidate: bool = False, etag: str | None = None) -> None:
         self.send_response(status)
         self.send_header("Content-Type", content_type)
         self.send_header("Content-Length", str(len(body)))
-        if no_store:
-            self.send_header("Cache-Control", "no-store")
+        if revalidate:
+            self.send_header("Cache-Control", "no-cache")
+        if etag:
+            self.send_header("ETag", etag)
         self.end_headers()
         self.wfile.write(body)
+
+    def _send_304(self, etag: str) -> None:
+        """An unchanged state. No body, by definition of the status."""
+        self.send_response(304)
+        self.send_header("Cache-Control", "no-cache")
+        self.send_header("ETag", etag)
+        self.end_headers()
 
     def do_GET(self) -> None:  # noqa: N802 - BaseHTTPRequestHandler's own naming
         route = self.path.split("?", 1)[0]
@@ -85,9 +103,19 @@ class StateHandler(BaseHTTPRequestHandler):
                 # treating either as an error.
                 self._send(404, json.dumps({"error": f"no {filename} yet",
                                             "detail": "waiting for the first write"}).encode(),
-                           "application/json", no_store=True)
+                           "application/json", revalidate=True)
                 return
-            self._send(200, path.read_bytes(), "application/json", no_store=True)
+            # Hashed rather than derived from mtime and size: the whole point of
+            # this route is that the page must never be told "unchanged" about a
+            # state that changed, and a poll landing inside one filesystem
+            # timestamp is not a risk worth reasoning about. The file is read
+            # either way; only the body on the wire is saved.
+            body = path.read_bytes()
+            etag = f'"{hashlib.blake2b(body, digest_size=12).hexdigest()}"'
+            if self.headers.get("If-None-Match") == etag:
+                self._send_304(etag)
+                return
+            self._send(200, body, "application/json", revalidate=True, etag=etag)
             return
 
         self._send(404, b"not found", "text/plain; charset=utf-8")
