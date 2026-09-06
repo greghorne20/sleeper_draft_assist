@@ -137,7 +137,10 @@ is why `SleeperError` is the one exception type worth catching at the boundary.
   keep scroll position, and shows a banner when polls stop arriving — a silently frozen page
   during a draft is the dangerous failure. It is a dashboard, so state is encoded in form as
   well as number: position colour chips, a pick rail showing the 3RR cluster, tier bars that
-  turn red at the two-left tier-break trigger. Google Fonts is the one external request, with a
+  turn red at the two-left tier-break trigger, and a severity stripe on players leaving before
+  your next pick. **There is one board, not two** — filtering it by ADP yields a strict subset
+  in the same order, so a separate "at risk" table just printed the same players twice; urgency
+  is a `leaving` flag on the row, with a filter to narrow to them. Google Fonts is the one external request, with a
   full fallback stack; the data path is localhost only. Theme tokens are defined in the bare
   `:root` and only *redefined* by the dark blocks — never define a colour solely inside a media
   query, or the un-stamped default renders one theme on the other's ground. Two tests parse the field names the page reads and assert

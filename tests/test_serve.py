@@ -130,7 +130,7 @@ def test_page_reads_only_projected_player_fields(draft_artifacts, tmp_path):
     state = write_state(tmp_path, draft_artifacts)
     html = serve.ASSET.read_text()
     referenced = set(re.findall(r"\bp\.([a-z_]+)", html))
-    allowed = set(live.DISPLAY_FIELDS) | {"adp"} | set(state["my_roster"][0]) \
+    allowed = set(live.DISPLAY_FIELDS) | {"adp", "leaving"} | set(state["my_roster"][0]) \
         | set(state["recent_picks"][0])
     missing = sorted(referenced - allowed)
     assert not missing, f"page reads player fields nothing emits: {missing}"

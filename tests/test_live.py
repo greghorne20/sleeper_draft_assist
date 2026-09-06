@@ -100,24 +100,31 @@ def test_my_roster_collects_only_my_slots_picks(draft_artifacts):
     assert all(p["draft_slot"] == 12 for p in state["my_roster"])
 
 
-def test_at_risk_is_bounded_by_the_horizon_plus_cushion(draft_artifacts):
+def test_leaving_is_marked_on_the_row_not_split_into_a_second_board(draft_artifacts):
+    """Urgency is a column on the one board, so the same player is never listed twice."""
     state = state_after(draft_artifacts, 5, my_slot=12, cushion=4)
     threshold = state["survive_until_pick"] + 4
-    assert state["at_risk"], "expected some players inside the horizon"
-    for row in state["at_risk"]:
-        assert row["adp"] <= threshold
-    # And nobody safely beyond it crept in.
-    risky = {row["player_id"] for row in state["at_risk"]}
+    assert "at_risk" not in state, "the second board should be gone"
+
+    marked = [row for row in state["best_available"] if row["leaving"]]
+    assert marked, "expected some players inside the horizon"
+    assert state["leaving_count"] == len(marked)
     for row in state["best_available"]:
         adp = row.get("adp")
-        if adp is not None and adp > threshold:
-            assert row["player_id"] not in risky
+        expected = adp is not None and adp <= threshold
+        assert row["leaving"] is expected, row["name"]
 
 
-def test_cushion_widens_the_at_risk_list(draft_artifacts):
+def test_every_shown_player_appears_exactly_once(draft_artifacts):
+    state = state_after(draft_artifacts, 5, my_slot=12)
+    ids = [row["player_id"] for row in state["best_available"]]
+    assert len(ids) == len(set(ids))
+
+
+def test_cushion_widens_what_counts_as_leaving(draft_artifacts):
     narrow = state_after(draft_artifacts, 5, cushion=0)
     wide = state_after(draft_artifacts, 5, cushion=20)
-    assert len(wide["at_risk"]) > len(narrow["at_risk"])
+    assert wide["leaving_count"] > narrow["leaving_count"]
 
 
 def test_tier_status_counts_only_undrafted_players(draft_artifacts):
@@ -177,7 +184,8 @@ def test_without_a_slot_the_timing_maths_is_skipped_not_guessed(draft_artifacts)
     assert state["my_slot"] is None
     assert state["my_next_pick"] is None
     assert state["survive_until_pick"] is None
-    assert state["at_risk"] == []
+    assert all("leaving" not in row for row in state["best_available"])
+    assert state["leaving_count"] == 0
     assert state["my_roster"] == []
     assert "My slot is not set" in live.render_now_md(state)
 
@@ -190,7 +198,11 @@ def test_now_md_carries_the_decision_surface(draft_artifacts):
     assert "## My roster" in md
     assert "## Best available" in md
     assert "## Tiers remaining" in md
-    assert f"At risk before pick {state['survive_until_pick']}" in md
+    assert f"gone before pick {state['survive_until_pick']}" in md
+    assert f"Gone by {state['survive_until_pick']}?" in md
+    # One board, so a player marked leaving is not also listed in a second table.
+    for row in state["best_available"]:
+        assert md.count(f"| {row['player_id']} |") == 1
     # Every listed player carries the join key back to the board.
     for row in state["best_available"]:
         assert f"| {row['player_id']} |" in md
@@ -311,7 +323,7 @@ def test_display_row_survives_a_player_with_no_adp():
     assert "adp" not in out
     assert out["name"] == "Deep Cut"
     # And the table still renders that row, with a dash for the missing ADP.
-    assert "| - |" in "\n".join(live._player_table([out]))
+    assert "| - |" in "\n".join(live._player_table([out], horizon=None))
 
 
 def test_state_json_rows_carry_adp_and_drop_the_join_fields(tmp_path, draft_artifacts):
@@ -321,7 +333,7 @@ def test_state_json_rows_carry_adp_and_drop_the_join_fields(tmp_path, draft_arti
 
     assert rows, "expected players on the board"
     for row in rows:
-        assert set(row) <= set(live.DISPLAY_FIELDS) | {"adp"}
+        assert set(row) <= set(live.DISPLAY_FIELDS) | {"adp", "leaving"}
         for absent in ("source_ranks", "research_note", "sleeper_name", "composite_score",
                        "tier_pos", "team_disagreement", "sleeper_status"):
             assert absent not in row
@@ -344,6 +356,5 @@ def test_state_json_is_much_smaller_than_the_full_rows(tmp_path, draft_artifacts
     projected = len(json_path.read_text())
     untrimmed = dict(state)
     by_id = {row["player_id"]: row for row in board["players"]}
-    for key in ("best_available", "at_risk"):
-        untrimmed[key] = [by_id[row["player_id"]] for row in state[key]]
+    untrimmed["best_available"] = [by_id[row["player_id"]] for row in state["best_available"]]
     assert projected < len(json.dumps(untrimmed, indent=1)) / 2

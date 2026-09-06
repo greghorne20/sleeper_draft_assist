@@ -300,15 +300,21 @@ def summarize(board: dict, order: dict, draft: dict, picks: list[dict],
             bye_counts[key] = bye_counts.get(key, 0) + 1
 
     # --- the board, minus everyone taken ---
+    # Urgency is a property of a player, not a second board. Every shown row
+    # carries whether the market expects him gone before I pick again, so the
+    # board can be read once, top down: PLAYBOOK D1 is "the highest-value player
+    # who will NOT survive", which is the first row marked leaving.
     available = [row for row in board["players"] if row["player_id"] not in drafted]
+    threshold = (horizon + cushion) if horizon is not None else None
 
-    at_risk = []
-    if horizon is not None:
-        threshold = horizon + cushion
-        for row in available:
+    shown = []
+    for row in available[:available_limit]:
+        entry = display_row(row)
+        if threshold is not None:
             adp = market_adp(row)
-            if adp is not None and adp <= threshold:
-                at_risk.append(row)
+            entry["leaving"] = adp is not None and adp <= threshold
+        shown.append(entry)
+    leaving_count = sum(1 for entry in shown if entry.get("leaving"))
 
     tier_status: dict[str, dict[str, int]] = {}
     for row in available:
@@ -347,8 +353,8 @@ def summarize(board: dict, order: dict, draft: dict, picks: list[dict],
         "roster": needs,
         "bye_counts": bye_counts,
         "available_count": len(available),
-        "best_available": [display_row(row) for row in available[:available_limit]],
-        "at_risk": [display_row(row) for row in at_risk[:available_limit]],
+        "best_available": shown,
+        "leaving_count": leaving_count,
         "tier_status": tier_status,
         "recent_picks": recent,
         "position_run": run,
@@ -372,14 +378,18 @@ def _flags(row: dict) -> str:
     return " · ".join(bits)
 
 
-def _player_table(rows: list[dict]) -> list[str]:
-    out = ["| # | Pos | Player | Tm | Bye | id | ADP | Notes |",
-           "|---:|---|---|---|---:|---|---:|---|"]
+def _player_table(rows: list[dict], horizon: int | None) -> list[str]:
+    """One board. The `Gone?` column is the urgency layer, not a second table."""
+    gone = f"Gone by {horizon}?" if horizon else "Gone?"
+    out = [f"| # | Pos | Player | Tm | Bye | id | ADP | {gone} | Notes |",
+           "|---:|---|---|---|---:|---|---:|---|---|"]
     for row in rows:
         adp = row.get("adp")
+        leaving = "**YES**" if row.get("leaving") else ""
         out.append(
             f"| {row['rank']} | {row['pos_rank']} | {row['name']} | {row['team']} | "
-            f"{row['bye']} | {row['player_id']} | {'-' if adp is None else adp} | {_flags(row)} |"
+            f"{row['bye']} | {row['player_id']} | {'-' if adp is None else adp} | "
+            f"{leaving} | {_flags(row)} |"
         )
     return out
 
@@ -446,21 +456,19 @@ def render_now_md(state: dict) -> str:
                        "projected starters per bye week.")
         out.append("")
 
-    # --- at risk ---
-    if state["survive_until_pick"] and state["at_risk"]:
-        out.append(f"## At risk before pick {state['survive_until_pick']}")
-        out.append("")
-        out.append(f"Available players whose market ADP is within {state['cushion']} of pick "
-                   f"{state['survive_until_pick']}. PLAYBOOK D1: prefer the highest-value player "
-                   "here over one who will still be there.")
-        out.append("")
-        out.extend(_player_table(state["at_risk"]))
-        out.append("")
-
-    # --- best available ---
+    # --- the board, with urgency marked on the row ---
+    horizon = state["survive_until_pick"]
     out.append(f"## Best available ({state['available_count']} left on the board)")
     out.append("")
-    out.extend(_player_table(state["best_available"]))
+    if horizon:
+        out.append(f"**{state['leaving_count']} of the {len(state['best_available'])} below are "
+                   f"gone before pick {horizon}** — market ADP within {state['cushion']} of it. "
+                   "PLAYBOOK D1: take the highest player marked YES over one who will still be "
+                   "there.")
+    else:
+        out.append("No slot set, so nothing can be marked as leaving.")
+    out.append("")
+    out.extend(_player_table(state["best_available"], horizon))
     out.append("")
 
     # --- tier status ---

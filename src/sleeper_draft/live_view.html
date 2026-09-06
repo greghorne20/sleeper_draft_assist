@@ -236,6 +236,26 @@ dl { margin: 0; }
 .tier-num { font-size: 12px; color: var(--ink-2); text-align: right; font-weight: 600; }
 .tier-row.thin .tier-num { color: var(--danger); }
 
+/* Urgency lives on the row, not in a second table: a severity stripe plus a
+   chip, so a leaving player reads at a glance without splitting the board. */
+tbody tr.leaving td:first-child { box-shadow: inset 3px 0 0 var(--danger); }
+tbody tr.leaving .rk { color: var(--danger); }
+.gone {
+  display: inline-block; font-family: "Barlow Condensed", ui-sans-serif, sans-serif;
+  font-size: 12px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase;
+  color: var(--danger); background: var(--danger-bg); border-radius: 4px; padding: 1px 6px;
+  border: 1px solid color-mix(in srgb, var(--danger) 30%, transparent);
+}
+.stays { font-size: 12px; color: var(--muted); }
+
+.seg { display: inline-flex; border: 1px solid var(--line-firm); border-radius: var(--radius); overflow: hidden; }
+.seg button {
+  font: inherit; font-size: 12px; font-weight: 500; cursor: pointer;
+  background: transparent; color: var(--muted); border: 0; padding: 3px 11px;
+}
+.seg button + button { border-left: 1px solid var(--line-firm); }
+.seg button.on { background: var(--ink); color: var(--panel); }
+
 .empty { color: var(--muted); padding: 14px; text-align: center; }
 footer { padding: 0 20px 30px; color: var(--muted); font-size: 12.5px; }
 </style>
@@ -259,19 +279,17 @@ footer { padding: 0 20px 30px; color: var(--muted); font-size: 12.5px; }
 
 <main>
   <div class="col">
-    <section class="panel urgent" id="risk-panel" hidden>
-      <div class="phead">
-        <span class="ptitle">Going before your pick</span>
-        <span class="pnote" id="risk-note"></span>
-      </div>
-      <div id="at-risk"></div>
-    </section>
-
     <section class="panel">
       <div class="phead">
         <span class="ptitle">Best available</span>
         <span class="pnote" id="avail-note"></span>
+        <span class="spacer"></span>
+        <div class="seg" id="filter" role="group" aria-label="Filter the board">
+          <button type="button" class="on" data-mode="all">All</button>
+          <button type="button" data-mode="leaving">Leaving</button>
+        </div>
       </div>
+      <div id="at-risk" hidden></div>
       <div id="best-available"></div>
     </section>
   </div>
@@ -334,23 +352,51 @@ function tags(p) {
   return out + (note ? `<div class="scout">${esc(note)}</div>` : "");
 }
 
-function playerTable(rows) {
+function playerTable(rows, horizon) {
   if (!rows || !rows.length) return `<div class="empty">Nobody left here.</div>`;
   const body = rows.map((p) => {
     const delta = p.value_vs_market;
     const edge = delta ? `<span class="tag ${delta > 0 ? "good" : ""}">${delta > 0 ? "+" : ""}${esc(delta)} vs market</span>` : "";
-    return `<tr>
+    const fate = p.leaving === undefined ? ""
+      : p.leaving ? `<span class="gone">Leaving</span>`
+                  : `<span class="stays">should last</span>`;
+    return `<tr class="${p.leaving ? "leaving" : ""}">
       <td class="n"><span class="rk">${dash(p.rank)}</span></td>
       <td>${posChip(p.pos, p.pos_rank)}</td>
       <td><span class="nm">${esc(p.name)}</span>
           <span class="meta"> ${dash(p.team)} · bye ${dash(p.bye)} · T${dash(p.tier)}</span>
           ${tags(p)}${edge}</td>
       <td class="n"><span class="adp">${dash(p.adp)}</span></td>
+      <td>${fate}</td>
     </tr>`;
   }).join("");
+  const head = horizon ? `by ${horizon}` : "";
   return `<table><thead><tr>
-      <th class="n">Rk</th><th>Pos</th><th>Player</th><th class="n">ADP</th>
+      <th class="n">Rk</th><th>Pos</th><th>Player</th><th class="n">ADP</th><th>${esc(head)}</th>
     </tr></thead><tbody>${body}</tbody></table>`;
+}
+
+let mode = "all";
+let latest = null;
+$("filter").addEventListener("click", (ev) => {
+  const btn = ev.target.closest("button[data-mode]");
+  if (!btn) return;
+  mode = btn.dataset.mode;
+  for (const b of $("filter").children) b.classList.toggle("on", b === btn);
+  if (latest) drawBoard(latest);
+});
+
+function drawBoard(s) {
+  const all = s.best_available || [];
+  const rows = mode === "leaving" ? all.filter((p) => p.leaving) : all;
+  const leaving = s.leaving_count;
+  $("avail-note").textContent = s.survive_until_pick
+    ? `${leaving} of ${all.length} gone by pick ${s.survive_until_pick} · ${s.available_count} left overall`
+    : `${s.available_count} left on the board`;
+  $("filter").hidden = !s.survive_until_pick;
+  $("best-available").innerHTML = rows.length
+    ? playerTable(rows, s.survive_until_pick)
+    : `<div class="empty">Nobody in the top ${all.length} is expected to go before your pick.</div>`;
 }
 
 function renderBoard(s) {
@@ -464,17 +510,10 @@ function renderRecent(s) {
 }
 
 function render(s) {
+  latest = s;
   renderBoard(s);
   renderRail(s);
-  const risk = s.at_risk || [];
-  $("risk-panel").hidden = !risk.length;
-  if (risk.length) {
-    $("risk-note").textContent =
-      `${risk.length} inside pick ${s.survive_until_pick} + ${s.cushion}`;
-    $("at-risk").innerHTML = playerTable(risk);
-  }
-  $("avail-note").textContent = `${s.available_count} left on the board`;
-  $("best-available").innerHTML = playerTable(s.best_available);
+  drawBoard(s);
   renderRoster(s);
   renderTiers(s);
   renderRecent(s);

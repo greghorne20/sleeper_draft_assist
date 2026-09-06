@@ -190,14 +190,20 @@ scouting for a `player_id`, `pick_order.json` supplies the 3RR pick numbers -- s
 a poll is one small request.
 
 `NOW.md` is written in reading order: whose pick it is and how many picks until
-yours comes back, your roster and which starting slots are still open, who is at
-risk before your next pick (ADP within `--cushion` of the pick you have to
-survive until), the best available board, how many players are left in each
-positional tier, the recent picks and any positional run.
+yours comes back, your roster and which starting slots are still open, then **one**
+board of best available with a `Gone by <pick>?` column marking everyone whose
+market ADP falls within `--cushion` of the pick you have to survive until,
+followed by how many players are left in each positional tier, the recent picks
+and any positional run.
+
+Urgency is a column rather than a second table on purpose. Filtering the board by
+ADP produces a strict subset of it in the same order, so showing both meant
+printing the same players twice and making the reader diff two lists. One ranked
+board read top-down, taking the highest row marked `YES`, *is* PLAYBOOK D1.
 
 Your slot comes from `--slot`, or from `--username` resolved through the draft's
 `draft_order`. Without one the pick-timing maths is skipped rather than guessed --
-the at-risk list and "picks until my next" are simply absent.
+nothing is marked as leaving and "picks until my next" is simply absent.
 
 The board ranks 208 players and 156 picks get made, so a rival drafting someone
 unranked is normal, not an error: those picks are recorded from Sleeper's own
@@ -290,7 +296,7 @@ Everything the in-draft assistant reads, and nothing else:
 | `board.md` | 208 ranked players grouped by tier, with `player_id`, source ranks and risk flags, plus a positional index and the researched-but-unranked bin. | `sleeper-board` |
 | `board.json` | The same board, machine-readable. | `sleeper-board` |
 | `pick_order.json` | `picks_by_slot` and `slot_by_pick` for all 12 slots x 13 rounds. | `sleeper-board` |
-| `state/NOW.md` | Live draft state: whose pick, your roster and gaps, at-risk players, best available, tiers left, recent picks and runs. | `sleeper-live` |
+| `state/NOW.md` | Live draft state: whose pick, your roster and gaps, the board with everyone leaving before your pick marked, tiers left, recent picks and runs. | `sleeper-live` |
 | `state/state.json` | The same, machine-readable. | `sleeper-live` |
 | `keepers.md` | Per-team keeper eligibility and the round each would cost. The report to circulate. | `sleeper-keepers` |
 | `keepers.json` | The same ruling, machine-readable. | `sleeper-keepers` |
