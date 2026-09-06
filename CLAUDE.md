@@ -150,7 +150,10 @@ is why `SleeperError` is the one exception type worth catching at the boundary.
   **missing slot is not an error either** — without `--slot`/`--username` the timing maths is
   skipped rather than guessed, since a wrong "picks until my next" is worse than none. Team
   names are resolved once at startup, not per poll, and a league whose draft order is not drawn
-  yet gets numbered rooms rather than an error.
+  yet gets numbered rooms rather than an error. Before the order is drawn the names come from
+  the roster map, which makes the *seating* provisional; `seating_provisional` carries that and
+  `NOW.md` says so, but the page's war-room strip does not — it is a navigation control, and a
+  caveat repeated on every render is noise rather than a warning.
 
 - **`serve.py`** + **`live_view.html`** — the optional `sleeper-live --serve` page. A stdlib
   `ThreadingHTTPServer` on a daemon thread with exactly two literal routes (`/` → the packaged
