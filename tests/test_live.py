@@ -558,3 +558,37 @@ def test_provisional_seating_is_stated_in_the_document(draft_artifacts):
     assert "Seating is provisional" in live.render_now_md(live.team_state(state, 1))
     settled = live.summarize_all(board, order, DRAFT, picks, 4, 30, {1: "Comeback Kids"}, 1)
     assert "Seating is provisional" not in live.render_now_md(live.team_state(settled, 1))
+
+
+# --- the writer, which serve.py reads with no coordination -------------------
+
+
+def test_a_reader_never_sees_a_half_written_file(tmp_path):
+    """write_text truncates before it writes; os.replace does not. A failure
+    mid-write must leave the previous poll's file intact rather than a stub."""
+    path = tmp_path / "state.json"
+    live.write_atomic(path, '{"picks_made": 1}')
+
+    import os as _os
+    real = _os.replace
+    try:
+        _os.replace = lambda *a, **k: (_ for _ in ()).throw(OSError("disk full"))
+        with pytest.raises(OSError):
+            live.write_atomic(path, '{"picks_made": 2}')
+    finally:
+        _os.replace = real
+
+    # The old poll survives whole, and nothing is left lying around.
+    assert json.loads(path.read_text()) == {"picks_made": 1}
+    assert [f.name for f in tmp_path.iterdir()] == ["state.json"]
+
+
+def test_writing_the_league_leaves_no_temp_files(tmp_path, draft_artifacts):
+    state = all_state(draft_artifacts, 26)
+    out = tmp_path / "state"
+    live.write_all_state(state, out, 12)
+    live.write_all_state(state, out, 12)   # a second poll overwrites cleanly
+    strays = [f.name for f in out.rglob("*") if f.name.endswith(".tmp")]
+    assert not strays, strays
+    assert json.loads((out / "state.json").read_text())["picks_made"] == 26
+    assert len(list((out / "teams").iterdir())) == 11

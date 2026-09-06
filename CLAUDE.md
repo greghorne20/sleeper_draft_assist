@@ -155,7 +155,10 @@ is why `SleeperError` is the one exception type worth catching at the boundary.
   **not** `SimpleHTTPRequestHandler` — never joining a request path to a directory makes
   traversal impossible by construction rather than by sanitising. `log_message` is a no-op so
   request logs do not bury the poll output. The poll loop and the server share nothing but the
-  filesystem. The page is vanilla JS with no build step and no libraries, re-renders in place to
+  filesystem, and the only coordination between them is `os.replace` — every state file is
+  written through a temp file and renamed, so a page refresh landing mid-write gets the previous
+  poll rather than a truncated one. No fsync: the state is derived and rewritten every poll, so
+  the next one rebuilds anything a power cut would cost. The page is vanilla JS with no build step and no libraries, re-renders in place to
   keep scroll position, and shows a banner when polls stop arriving — a silently frozen page
   during a draft is the dangerous failure. It is a dashboard, so state is encoded in form as
   well as number: position colour chips, a pick rail showing the 3RR cluster, tier bars that

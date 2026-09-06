@@ -636,12 +636,34 @@ def render_now_md(state: dict) -> str:
     return "\n".join(out)
 
 
+def write_atomic(path: Path, text: str) -> None:
+    """Write through a temp file and rename, so a reader never sees half a file.
+
+    `write_text` truncates and then writes, and serve.py reads the same path with
+    no coordination between them -- a page refresh landing inside that window
+    gets partial JSON, fails to parse it and reports the poller as unreachable,
+    which during a draft is an alarm on the one thing that has to be trusted.
+    os.replace is atomic on POSIX, so a reader gets the old file or the new one.
+
+    Deliberately no fsync. This state is derived and rewritten every poll, so
+    durability across a power cut buys nothing that the next poll would not
+    rebuild, and thirteen fsyncs every ten seconds is real I/O to spend on it.
+    """
+    tmp = path.with_name(f".{path.name}.{os.getpid()}.tmp")
+    try:
+        tmp.write_text(text)
+        os.replace(tmp, path)
+    except BaseException:
+        tmp.unlink(missing_ok=True)
+        raise
+
+
 def write_state(state: dict, out_dir: Path) -> tuple[Path, Path]:
     out_dir.mkdir(parents=True, exist_ok=True)
     json_path = out_dir / "state.json"
     md_path = out_dir / "NOW.md"
-    json_path.write_text(json.dumps(state, indent=1) + "\n")
-    md_path.write_text(render_now_md(state))
+    write_atomic(json_path, json.dumps(state, indent=1) + "\n")
+    write_atomic(md_path, render_now_md(state))
     return md_path, json_path
 
 
@@ -656,16 +678,16 @@ def write_all_state(all_state: dict, out_dir: Path, my_slot: int | None) -> tupl
     out_dir.mkdir(parents=True, exist_ok=True)
     json_path = out_dir / "state.json"
     md_path = out_dir / "NOW.md"
-    json_path.write_text(json.dumps(all_state, indent=1) + "\n")
-    md_path.write_text(render_now_md(team_state(all_state, my_slot)))
+    write_atomic(json_path, json.dumps(all_state, indent=1) + "\n")
+    write_atomic(md_path, render_now_md(team_state(all_state, my_slot)))
 
     teams_dir = out_dir / "teams"
     teams_dir.mkdir(parents=True, exist_ok=True)
     for key in all_state.get("war_rooms") or {}:
         if my_slot is not None and int(key) == my_slot:
             continue
-        (teams_dir / f"NOW-slot-{key}.md").write_text(
-            render_now_md(team_state(all_state, int(key))))
+        write_atomic(teams_dir / f"NOW-slot-{key}.md",
+                     render_now_md(team_state(all_state, int(key))))
     return md_path, json_path
 
 
