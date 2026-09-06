@@ -490,8 +490,11 @@ function renderRail(s) {
   const rail = $("rail");
   if (s.my_slot == null || !(s.my_picks || []).length) { rail.hidden = true; return; }
   rail.hidden = false;
+  /* A keeper spends a pick number out of order, so "already used" is what my
+     roster says, not just what is behind the clock. */
+  const used = new Set((s.my_roster || []).map((p) => p.pick_no));
   const cells = s.my_picks.map((n) => {
-    const spent = s.current_pick == null || n < s.current_pick;
+    const spent = s.current_pick == null || n < s.current_pick || used.has(n);
     const next = n === s.my_next_pick;
     return `<span class="cell${spent ? " spent" : ""}${next ? " next" : ""}">${n}</span>`;
   }).join("");

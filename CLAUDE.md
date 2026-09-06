@@ -141,9 +141,16 @@ is why `SleeperError` is the one exception type worth catching at the boundary.
   merged back on at render time, which is what keeps "urgency is a property of a player, not a
   second board" true without storing thirty rows twelve times.
   Both are pure — draft + picks + board in, whole state out — which is why the tests cover the
-  pick-timing maths without any HTTP. **Keepers need no special case**: Sleeper feeds them as
-  ordinary picks carrying `is_keeper`, at the pick number their round cost implies, so they
-  leave the board through the same path as everything else and are only *labelled* differently.
+  pick-timing maths without any HTTP. **Keepers leave the board through the ordinary path**: Sleeper feeds
+  them as picks carrying `is_keeper`, at the pick number their round cost implies, so nothing
+  special is needed to cross them off — they are only *labelled* differently. **The pick maths
+  is the exception.** They are entered before the draft opens and scatter across the whole
+  board (rounds 1 through 11 in this league), so a count of picks made says nothing about which
+  pick is next: `current_pick` is the lowest number nobody has used, a seat's upcoming picks
+  exclude the number its keeper spent, and `picks_before_horizon` counts the *open* numbers
+  before the horizon rather than subtracting (PLAYBOOK D3's `next - current - 1` is that count
+  only while every number in between is unspent). `made_picks` carries the used set and is
+  league-only — one seat's flattened state has no use for it.
   Two deliberate asymmetries with the rest of the
   repo: an **off-board pick is not an error** (208 ranked, 156 picks, rivals draft whoever they
   like — those are recorded from Sleeper's pick metadata and listed separately), and a

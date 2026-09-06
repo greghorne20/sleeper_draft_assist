@@ -251,7 +251,7 @@ def roster_needs(roster: list[dict], roster_positions: list[str]) -> dict:
 # else does. That split is the whole reason twelve war rooms cost the same two
 # HTTP requests as one: the expensive half runs once per poll.
 
-LEAGUE_ONLY_FIELDS = ("war_rooms", "rosters_by_slot", "default_slot")
+LEAGUE_ONLY_FIELDS = ("war_rooms", "rosters_by_slot", "default_slot", "made_picks")
 
 
 def team_label(state: dict, slot: object) -> str:
@@ -313,7 +313,14 @@ def summarize_league(board: dict, order: dict, draft: dict, picks: list[dict],
             by_roster.setdefault(str(slot), []).append(entry)
 
     picks_made = len(history)
-    current_pick = picks_made + 1 if picks_made < total_picks else None
+    # Keepers are entered before the draft opens and land at scattered pick
+    # numbers -- their round cost, not the order they were entered in -- so the
+    # next pick is the lowest number nobody has used, never the count plus one.
+    made_picks = sorted(entry["pick_no"] for entry in history
+                        if isinstance(entry["pick_no"], int))
+    taken = set(made_picks)
+    open_picks = [n for n in range(1, total_picks + 1) if n not in taken]
+    current_pick = open_picks[0] if open_picks else None
     current_round = ((current_pick - 1) // teams + 1) if current_pick else None
     on_the_clock = order["slot_by_pick"].get(str(current_pick)) if current_pick else None
 
@@ -360,6 +367,7 @@ def summarize_league(board: dict, order: dict, draft: dict, picks: list[dict],
         "position_run": run,
         "off_board_picks": off_board,
         "drafted_count": len(drafted),
+        "made_picks": made_picks,
         "rosters_by_slot": by_roster,
     }
 
@@ -374,8 +382,12 @@ def slot_view(league: dict, order: dict, slot: int | None, cushion: int) -> dict
     still holds everywhere it is read.
     """
     current_pick = league["current_pick"]
+    taken = set(league.get("made_picks") or ())
     my_picks = [int(n) for n in order["picks_by_slot"].get(str(slot), [])] if slot else []
-    upcoming = [n for n in my_picks if current_pick and n >= current_pick]
+    # A keeper spends one of my pick numbers before the draft opens, so "still
+    # ahead of me" is a different question from "not behind me".
+    upcoming = [n for n in my_picks
+                if current_pick and n >= current_pick and n not in taken]
     my_next = upcoming[0] if upcoming else None
     my_after_next = upcoming[1] if len(upcoming) > 1 else None
     is_my_turn = bool(my_next and current_pick and my_next == current_pick)
@@ -383,12 +395,15 @@ def slot_view(league: dict, order: dict, slot: int | None, cushion: int) -> dict
     # The pick a player must survive until to still be there for me. On the
     # clock that is my following pick; otherwise it is this one.
     horizon = my_after_next if is_my_turn else my_next
-    # How many picks OTHER teams make between now and the horizon. On the clock I
-    # consume current_pick myself, so it is not one of theirs; waiting, it is.
-    # PLAYBOOK D3 states the on-the-clock form (next - current - 1); the waiting
-    # form is one larger because current_pick has not been used up yet.
-    picks_before_horizon = (
-        horizon - current_pick - (1 if is_my_turn else 0)
+    # How many picks OTHER teams still make between now and the horizon. On the
+    # clock I consume current_pick myself, so it is not one of theirs; waiting,
+    # it is. PLAYBOOK D3 states the on-the-clock form (next - current - 1) as
+    # arithmetic, which holds only while every number in between is unspent --
+    # a keeper already off the board is a pick nobody makes, so count the open
+    # numbers rather than subtracting.
+    picks_before_horizon = len(
+        [n for n in range(current_pick + (1 if is_my_turn else 0), horizon)
+         if n not in taken]
     ) if (horizon and current_pick) else None
 
     my_roster = league["rosters_by_slot"].get(str(slot), []) if slot else []
@@ -553,9 +568,13 @@ def render_now_md(state: dict) -> str:
         out.append("")
         out.append(f"- {state['picks_made']} picks made, {state['picks_remaining']} remaining.")
         if state["my_slot"]:
+            # Struck-through numbers are already spent -- which for a keeper
+            # means spent before the draft opened, out of order.
+            used = {player["pick_no"] for player in state["my_roster"]}
             out.append(f"- Me: **{team_label(state, state['my_slot'])}** "
                        f"(slot {state['my_slot']}) · my picks: "
-                       + ", ".join(str(n) for n in state["my_picks"]))
+                       + ", ".join(f"~~{n}~~" if n in used else str(n)
+                                   for n in state["my_picks"]))
             if state["my_next_pick"]:
                 out.append(f"- My next pick: **{state['my_next_pick']}**"
                            + (f", then {state['my_pick_after_next']}"

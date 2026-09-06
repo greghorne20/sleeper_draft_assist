@@ -4,7 +4,7 @@ import json
 import sys
 
 import pytest
-from conftest import make_picks
+from conftest import make_keeper_picks, make_picks
 
 from sleeper_draft import live
 from sleeper_draft.client import SleeperError
@@ -81,6 +81,73 @@ def test_one_pick_away_counts_exactly_one(draft_artifacts):
     assert state["current_pick"] == 11
     assert state["my_next_pick"] == 12
     assert state["picks_before_horizon"] == 1
+
+
+# Every slot keeps one player, at the round it cost them -- the real 2026 shape.
+# The pick numbers land at 1, 18, 23, 29, 34, 45, 46, 50, 66, 96, 104 and 129, so
+# twelve picks are made and none of them is pick 2.
+KEEPER_ROUNDS = {1: 1, 2: 2, 3: 3, 4: 11, 5: 9, 6: 6,
+                 7: 2, 8: 3, 9: 4, 10: 4, 11: 5, 12: 8}
+
+
+def keeper_state(draft_artifacts, my_slot):
+    board, order = artifacts(draft_artifacts)
+    picks = make_keeper_picks(order, board, KEEPER_ROUNDS)
+    draft = {"draft_id": "D2026", "status": "pre_draft"}
+    return live.summarize(board, order, draft, picks, my_slot, 4, 30)
+
+
+def test_keepers_do_not_advance_the_clock(draft_artifacts):
+    """Twelve keepers are twelve picks made, but the draft still opens at pick 2."""
+    state = keeper_state(draft_artifacts, 12)
+    assert state["picks_made"] == 12
+    assert state["current_pick"] == 2
+    assert state["current_round"] == 1
+    assert state["on_the_clock_slot"] == 2
+
+
+def test_a_kept_pick_number_is_not_one_i_still_make(draft_artifacts):
+    """Slot 7 kept in round 2, so pick 18 is spent -- their next after 7 is 30."""
+    state = keeper_state(draft_artifacts, 7)
+    assert 18 in state["my_picks"]
+    assert state["my_next_pick"] == 7
+    assert state["my_pick_after_next"] == 30
+
+
+def test_the_horizon_count_skips_keepers_already_off_the_board(draft_artifacts):
+    """Slot 1 kept at pick 1, so their next is 24 -- and picks 18 and 23 are
+    already made, so only twenty players come off the board before then."""
+    state = keeper_state(draft_artifacts, 1)
+    assert state["is_my_turn"] is False
+    assert state["my_next_pick"] == 24
+    assert state["survive_until_pick"] == 24
+    assert state["picks_before_horizon"] == 20
+
+
+def test_on_the_clock_with_a_keeper_ahead(draft_artifacts):
+    """Slot 2 opens the draft and kept in round 2, so their following pick is 35,
+    and the four keepers in between are picks nobody makes."""
+    state = keeper_state(draft_artifacts, 2)
+    assert state["is_my_turn"] is True
+    assert state["my_next_pick"] == 2
+    assert state["my_pick_after_next"] == 35
+    assert state["picks_before_horizon"] == 28
+
+
+def test_keepers_leave_the_board_and_land_on_the_right_roster(draft_artifacts):
+    state = keeper_state(draft_artifacts, 12)
+    assert state["drafted_count"] == 12
+    assert [player["pick_no"] for player in state["my_roster"]] == [96]
+    assert state["my_roster"][0]["is_keeper"] is True
+    kept = {row["player_id"] for row in state["recent_picks"]}
+    assert not kept & {row["player_id"] for row in state["best_available"]}
+
+
+def test_now_md_strikes_through_a_spent_pick_number(draft_artifacts):
+    state = keeper_state(draft_artifacts, 12)
+    line = [row for row in live.render_now_md(state).splitlines() if "my picks:" in row][0]
+    assert "~~96~~" in line
+    assert ", 97," in line
 
 
 def test_drafted_players_leave_the_available_board(draft_artifacts):
