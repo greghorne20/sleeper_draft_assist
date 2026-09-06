@@ -245,7 +245,8 @@ def team_label(state: dict, slot: object) -> str:
 
 
 def summarize_league(board: dict, order: dict, draft: dict, picks: list[dict],
-                     available_limit: int, team_names: dict[int, str] | None = None) -> dict:
+                     available_limit: int, team_names: dict[int, str] | None = None,
+                     seating_provisional: bool = False) -> dict:
     """The seat-independent half of the state. Pure, so it tests without HTTP.
 
     Keepers arrive here as ordinary picks carrying `is_keeper`, at the pick
@@ -327,6 +328,7 @@ def summarize_league(board: dict, order: dict, draft: dict, picks: list[dict],
         "rounds": rounds,
         "roster_positions": league.get("roster_positions") or [],
         "team_names": named,
+        "seating_provisional": seating_provisional,
         "total_picks": total_picks,
         "picks_made": picks_made,
         "picks_remaining": total_picks - picks_made,
@@ -435,14 +437,16 @@ def empty_view(league: dict) -> dict:
 def summarize_all(board: dict, order: dict, draft: dict, picks: list[dict],
                   cushion: int, available_limit: int,
                   team_names: dict[int, str] | None = None,
-                  default_slot: int | None = None) -> dict:
+                  default_slot: int | None = None,
+                  seating_provisional: bool = False) -> dict:
     """The whole league: shared state once, plus one war room per draft slot.
 
     `default_slot` is only which seat a reader should open on -- the operator's
     own. It is deliberately not part of any seat's state, so a war room reads
     the same whoever is looking at it.
     """
-    league = summarize_league(board, order, draft, picks, available_limit, team_names)
+    league = summarize_league(board, order, draft, picks, available_limit, team_names,
+                              seating_provisional)
     war_rooms = {}
     for key in sorted(order["picks_by_slot"], key=int):
         view = slot_view(league, order, int(key), cushion)
@@ -513,6 +517,11 @@ def render_now_md(state: dict) -> str:
     out.append(f"_{state['generated_at']} · regenerated every poll · "
                f"doctrine: `draft/PLAYBOOK.md` · full board: `draft/board.md`_")
     out.append("")
+    if state.get("seating_provisional"):
+        out.append("> **⚠ Seating is provisional.** The draft order is not drawn yet, so team "
+                   "names are matched by roster id. The names are real; which one sits in "
+                   "which slot is not settled.")
+        out.append("")
 
     if state["current_pick"] is None:
         out.append(f"## Draft complete — all {state['total_picks']} picks are in.")
@@ -661,40 +670,70 @@ def write_all_state(all_state: dict, out_dir: Path, my_slot: int | None) -> tupl
 
 
 def resolve_team_names(client: SleeperClient, league_id: str | None,
-                       draft: dict) -> dict[int, str]:
-    """slot -> team name, resolved once at startup rather than every poll.
+                       draft: dict) -> tuple[dict[int, str], str]:
+    """slot -> team name, and one line on how sure we are of the seating.
 
-    draft_order maps user_id -> slot and the league user list maps user_id -> a
-    name; neither is required. Without them the war rooms are numbered, which is
-    all the single-seat tool ever showed, so a league that has not drawn its
-    order yet still gets a working board.
+    Two chains, and which one answered matters enough to report:
+
+    - `draft_order` (user_id -> slot) is authoritative, and Sleeper populates it
+      when the order is drawn.
+    - Before the draw it is null, but `slot_to_roster_id` is already there. Going
+      slot -> roster_id -> owner_id -> name gets twelve names out of it, except
+      that pre-draft that map is the identity, so the names are right for the
+      rosters and *provisional* for the seats.
+
+    A rival's name on the wrong seat is worse than a numbered seat, so the
+    provisional case says so rather than passing a guess off as the draw.
+    Resolved once at startup; nothing here runs per poll.
     """
-    draft_order = draft.get("draft_order")
-    if not league_id or not isinstance(draft_order, dict) or not draft_order:
-        return {}
+    if not league_id:
+        return {}, "no league id, so seats are numbered"
     try:
         users = client.get_league_users(str(league_id))
     except SleeperError:
-        return {}
-    names: dict[int, str] = {}
+        return {}, "league users unavailable, so seats are numbered"
+
+    by_user: dict[str, str] = {}
     for user in users:
-        slot = draft_order.get(str(user.get("user_id")))
-        if slot is None:
-            continue
         meta = user.get("metadata") or {}
-        name = meta.get("team_name") or user.get("display_name")
+        # Sleeper stores whatever was typed in, trailing spaces included.
+        name = (meta.get("team_name") or user.get("display_name") or "").strip()
         if name:
-            names[int(slot)] = str(name)
-    return names
+            by_user[str(user.get("user_id"))] = name
+
+    draft_order = draft.get("draft_order")
+    if isinstance(draft_order, dict) and draft_order:
+        drawn = {int(slot): by_user[uid]
+                 for uid, slot in draft_order.items() if uid in by_user}
+        return drawn, f"{len(drawn)} named from the drawn draft order"
+
+    slots = draft.get("slot_to_roster_id")
+    if not isinstance(slots, dict) or not slots:
+        return {}, "draft order not drawn and no roster map, so seats are numbered"
+    try:
+        rosters = client.get_rosters(str(league_id))
+    except SleeperError:
+        return {}, "rosters unavailable, so seats are numbered"
+
+    owner_of = {roster.get("roster_id"): str(roster.get("owner_id"))
+                for roster in rosters}
+    provisional: dict[int, str] = {}
+    for slot, roster_id in slots.items():
+        owner = owner_of.get(roster_id)
+        if owner in by_user:
+            provisional[int(slot)] = by_user[owner]
+    return provisional, (f"{len(provisional)} named via roster ids -- PROVISIONAL, "
+                         "the draft order is not drawn yet")
 
 
 def poll_once(client: SleeperClient, draft_id: str, board: dict, order: dict,
               my_slot: int | None, args: argparse.Namespace,
-              team_names: dict[int, str] | None = None) -> dict:
+              team_names: dict[int, str] | None = None,
+              seating_provisional: bool = False) -> dict:
     draft = client.get_draft(draft_id)
     picks = client.get_draft_picks(draft_id)
     all_state = summarize_all(board, order, draft, picks, args.cushion, args.available,
-                              team_names, my_slot)
+                              team_names, my_slot, seating_provisional)
     write_all_state(all_state, args.out_dir, my_slot)
     return team_state(all_state, my_slot)
 
@@ -714,9 +753,9 @@ def main() -> int:
     client = SleeperClient(**({"cache_dir": args.cache_dir} if args.cache_dir else {}))
     draft = client.get_draft(str(draft_id))
     my_slot, provenance = resolve_slot(draft, order, args.slot, args.username, client)
-    team_names = resolve_team_names(client, board["league"].get("league_id"), draft)
-    named = f"{len(team_names)}/{len(order['picks_by_slot'])} war rooms named"
-    print(f"draft {draft_id} ({draft.get('status')}) · my slot: {provenance} · {named}",
+    team_names, naming = resolve_team_names(client, board["league"].get("league_id"), draft)
+    provisional = "PROVISIONAL" in naming
+    print(f"draft {draft_id} ({draft.get('status')}) · my slot: {provenance} · {naming}",
           file=sys.stderr)
 
     if args.serve:
@@ -734,7 +773,7 @@ def main() -> int:
     last_seen = -1
     while True:
         state = poll_once(client, str(draft_id), board, order, my_slot, args,
-                          team_names)
+                          team_names, provisional)
         if state["picks_made"] != last_seen:
             last_seen = state["picks_made"]
             where = (f"pick {state['current_pick']} "

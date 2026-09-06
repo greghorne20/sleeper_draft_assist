@@ -492,17 +492,69 @@ def test_write_all_state_writes_one_readable_file_per_seat(tmp_path, draft_artif
     assert other.startswith("# Draft state")
 
 
-def test_resolve_team_names_degrades_rather_than_failing(draft_artifacts):
-    class Client:
-        def get_league_users(self, league_id):
-            return [{"user_id": "U1", "display_name": "manager_one",
-                     "metadata": {"team_name": "Comeback Kids"}},
-                    {"user_id": "U2", "display_name": "nameless", "metadata": {}},
-                    {"user_id": "STRANGER", "display_name": "not in this draft"}]
+USERS = [
+    {"user_id": "U1", "display_name": "manager_one", "metadata": {"team_name": "Comeback Kids"}},
+    {"user_id": "U2", "display_name": "nameless", "metadata": {}},
+    # Sleeper keeps whatever was typed in, trailing spaces and all.
+    {"user_id": "U3", "display_name": "x", "metadata": {"team_name": "Bench Warmers "}},
+    {"user_id": "STRANGER", "display_name": "not in this draft"},
+]
 
+
+class NameClient:
+    def __init__(self, rosters=None):
+        self._rosters = rosters or []
+
+    def get_league_users(self, league_id):
+        return USERS
+
+    def get_rosters(self, league_id):
+        return self._rosters
+
+
+def test_names_come_from_the_draft_order_once_it_is_drawn():
     draft = {"draft_id": "D", "draft_order": {"U1": 7, "U2": 2}}
-    names = live.resolve_team_names(Client(), "L1", draft)
-    assert names == {7: "Comeback Kids", 2: "nameless"}
-    # No league id, or no order drawn yet: numbered rooms, not an error.
-    assert live.resolve_team_names(Client(), None, draft) == {}
-    assert live.resolve_team_names(Client(), "L1", {"draft_order": {}}) == {}
+    draft["draft_order"]["U3"] = 5
+    names, why = live.resolve_team_names(NameClient(), "L1", draft)
+    assert names == {7: "Comeback Kids", 2: "nameless", 5: "Bench Warmers"}
+    assert "drawn draft order" in why
+    assert "PROVISIONAL" not in why
+
+
+def test_before_the_draw_names_come_through_roster_ids_and_say_so():
+    """Sleeper leaves draft_order null until the order is drawn but publishes
+    slot_to_roster_id from the start, so twelve names are reachable -- with the
+    seating unsettled, which the caller has to be told."""
+    draft = {"draft_id": "D", "draft_order": None,
+             "slot_to_roster_id": {"1": 1, "2": 2, "3": 3}}
+    rosters = [{"roster_id": 1, "owner_id": "U1"}, {"roster_id": 2, "owner_id": "U2"},
+               {"roster_id": 3, "owner_id": "NOBODY"}]
+    names, why = live.resolve_team_names(NameClient(rosters), "L1", draft)
+    assert names == {1: "Comeback Kids", 2: "nameless"}
+    assert "PROVISIONAL" in why
+
+
+def test_naming_degrades_to_numbered_seats_rather_than_failing():
+    draft = {"draft_id": "D", "draft_order": {"U1": 7}}
+    assert live.resolve_team_names(NameClient(), None, draft)[0] == {}
+    # No order drawn and no roster map either: nothing to go on.
+    names, why = live.resolve_team_names(NameClient(), "L1", {"draft_order": {}})
+    assert names == {}
+    assert "numbered" in why
+
+    class Broken(NameClient):
+        def get_league_users(self, league_id):
+            raise SleeperError("boom")
+
+    assert live.resolve_team_names(Broken(), "L1", draft)[0] == {}
+
+
+def test_provisional_seating_is_stated_in_the_document(draft_artifacts):
+    board, order = artifacts(draft_artifacts)
+    picks = make_picks(order, board, 5)
+    state = live.summarize_all(board, order, DRAFT, picks, 4, 30, {1: "Comeback Kids"}, 1,
+                               True)
+    assert state["seating_provisional"] is True
+    assert "Seating is provisional" in live.render_now_md(live.team_state(state, 1))
+    settled = live.summarize_all(board, order, DRAFT, picks, 4, 30, {1: "Comeback Kids"}, 1)
+    assert "Seating is provisional" not in live.render_now_md(live.team_state(settled, 1))
