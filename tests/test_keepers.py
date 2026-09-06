@@ -97,9 +97,27 @@ def test_team_with_no_eligible_players_renders_explicitly():
     assert "_No eligible keepers._" in md
 
 
-def test_display_name_falls_back_to_the_roster_id():
-    assert team(rule(), 3)["display_name"] == "roster 3"
-    assert team(rule(), 1)["display_name"] == "Alpha"
+def test_team_name_is_used_when_the_manager_has_set_one():
+    entry = team(rule(), 1)
+    assert entry["team_name"] == "Alpha Squad"
+    assert entry["display_name"] == "Alpha"   # the manager is still recorded
+    md = keepers.render_keepers_md(rule(), {"for_league_name": "L", "for_season": "2026",
+                                            "target_season": "2025"})
+    assert "## Alpha Squad" in md
+    assert "## Alpha\n" not in md
+
+
+def test_team_name_falls_back_to_the_manager_then_the_roster_id():
+    assert team(rule(), 2)["team_name"] == "Beta"      # metadata has no team_name
+    assert team(rule(), 3)["team_name"] == "roster 3"  # no user record at all
+    assert team(rule(), 3)["display_name"] is None
+
+
+def test_blank_team_name_is_treated_as_unset():
+    users = [{"user_id": "U1", "display_name": "Alpha", "metadata": {"team_name": "   "}}]
+    report = keepers.eligible_keepers(KEEPER_PICKS, KEEPER_ROSTERS, users,
+                                      KEEPER_TRANSACTIONS, PLAYERS)
+    assert team(report, 1)["team_name"] == "Alpha"
 
 
 def test_eligible_players_are_ordered_by_round_cost():
@@ -221,6 +239,7 @@ def test_end_to_end_writes_both_files(tmp_path, monkeypatch, players_cache):
     assert report["source"]["for_season"] == "2026"
     md = (out / "keepers.md").read_text()
     assert "# Keeper eligibility" in md
+    assert "## Alpha Squad" in md
     assert "Held Allyear" in md
     assert "Kept Last Year — kept last season" in md
     assert "## Dropped and re-acquired" in md

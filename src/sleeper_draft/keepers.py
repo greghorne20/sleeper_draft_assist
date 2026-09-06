@@ -98,6 +98,23 @@ def player_label(player_id: str, players: dict[str, dict], pick: dict | None) ->
             "pos": meta.get("position"), "nfl_team": meta.get("team")}
 
 
+def team_label(user: dict | None, roster_id: int) -> dict:
+    """What to call a team, and who manages it.
+
+    Sleeper keeps the custom team name in user metadata and it is optional --
+    four of the twelve managers in this league have never set one. Fall back to
+    the manager's username the way Sleeper's own UI does, then to the roster id,
+    so every section of the report has a heading.
+    """
+    user = user or {}
+    manager = user.get("display_name") or user.get("username")
+    name = ((user.get("metadata") or {}).get("team_name") or "").strip()
+    return {
+        "team_name": name or manager or f"roster {roster_id}",
+        "display_name": manager,
+    }
+
+
 def dropped_by_roster(transactions: list[dict]) -> dict[int, set[str]]:
     """roster_id -> players a completed transaction moved off that roster.
 
@@ -148,10 +165,8 @@ def eligible_keepers(picks: list[dict], rosters: list[dict], users: list[dict],
     if not picks:
         raise SleeperError("The source draft returned no picks, so no keeper can have a round cost.")
 
-    display = {}
-    for user in users:
-        if isinstance(user, dict) and user.get("user_id"):
-            display[str(user["user_id"])] = user.get("display_name") or user.get("username")
+    by_user = {str(u["user_id"]): u for u in users
+               if isinstance(u, dict) and u.get("user_id")}
 
     picks_by_roster: dict[int, list[dict]] = {}
     for pick in picks:
@@ -210,7 +225,7 @@ def eligible_keepers(picks: list[dict], rosters: list[dict], users: list[dict],
         teams.append({
             "roster_id": roster_id,
             "owner_id": roster.get("owner_id"),
-            "display_name": display.get(str(roster.get("owner_id"))) or f"roster {roster_id}",
+            **team_label(by_user.get(str(roster.get("owner_id"))), roster_id),
             "eligible": eligible,
             "blocked": blocked,
             "excluded": {
@@ -261,7 +276,7 @@ def render_keepers_md(report: dict, source: dict) -> str:
     out.append("")
 
     for team in report["teams"]:
-        out.append(f"## {team['display_name']}")
+        out.append(f"## {team['team_name']}")
         out.append("")
         if team["eligible"]:
             has_adp = any("adp" in p for p in team["eligible"])
@@ -358,7 +373,7 @@ def main() -> int:
           f"{totals['blocked']} blocked as last season's keeper · "
           f"{totals['held_but_undrafted']} held but undrafted", file=sys.stderr)
     for team in report["teams"]:
-        print(f"  {team['display_name']:<20} {len(team['eligible']):>2} eligible", file=sys.stderr)
+        print(f"  {team['team_name']:<22} {len(team['eligible']):>2} eligible", file=sys.stderr)
     if report["divergences"]:
         print(f"{len(report['divergences'])} player(s) were dropped and re-acquired -- "
               "listed at the foot of the report", file=sys.stderr)

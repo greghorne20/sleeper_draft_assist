@@ -211,6 +211,9 @@ next to each eligible player, which is what turns eligibility into a decision --
 keeping George Pickens at his round-5 cost reads differently once you see the
 market has him going around pick 19.
 
+Sections are headed by each manager's Sleeper team name, falling back to their
+username when they have never set one (four of twelve, currently).
+
 Only the ADP is taken off the board. This report is circulated to the league, so
 our own rank, tier, scouting notes and flags never reach it; a test asserts that.
 The board is optional, and a player with no ADP renders as a dash.

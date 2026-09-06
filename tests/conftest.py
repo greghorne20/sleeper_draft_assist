@@ -152,8 +152,9 @@ KEEPER_ROSTERS = [
 ]
 
 KEEPER_USERS = [
-    {"user_id": "U1", "display_name": "Alpha"},
-    {"user_id": "U2", "display_name": "Beta"},
+    {"user_id": "U1", "display_name": "Alpha", "metadata": {"team_name": "Alpha Squad"}},
+    # U2 has never set a team name -- Sleeper leaves the key off entirely.
+    {"user_id": "U2", "display_name": "Beta", "metadata": {"allow_pn": "on"}},
     # U3 deliberately absent, so the report has to fall back to the roster id.
 ]
 
