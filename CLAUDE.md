@@ -216,9 +216,19 @@ is why `SleeperError` is the one exception type worth catching at the boundary.
   - **The hard rules are shared with the live advisor.** `INSTRUCTIONS.md` carries
     `.claude/skills/draft-day/SKILL.md`'s correctness rules verbatim and a test asserts both files
     still say them, so editing one alone fails the suite.
-  - **Measured, not estimated:** ~33k input and ~5k output tokens and ~70s per room, and Agent
-    Framework's Anthropic provider sets no `cache_control`, so none of it is cached yet. Most of
-    the input is the agentic loop re-sending the conversation per tool call, not the prompt.
+  - **The system prompt is prompt-cached, and that halves the bill.** `AnthropicChatOptions`
+    takes `instructions` as either a string or Anthropic system blocks, and blocks are the
+    documented way to attach `cache_control` — no wrapping of the raw client needed. Measured on
+    one room, same state, back to back: `--no-cache` 29,210 input / 4,065 output ≈ $0.149;
+    cached 11,445 input / 17,946 cache-read / 2,432 output ≈ $0.076. Total input volume is
+    unchanged; 61% of it just moves from $3/MTok to $0.30. The TTL is 1h rather than Anthropic's
+    default 5m because this league's pick timer is 300s, so a slow pick would expire the prefix
+    exactly when the next brief needs it. `--no-cache` exists to re-measure.
+  - **Most of the input is the agentic loop, not the prompt.** Every tool result re-sends the
+    conversation, so a brief that reads three notes pays for the system prompt four times —
+    which is exactly why caching a byte-identical prefix across twelve rooms pays off. What is
+    left is per-room input and output; reducing that means fewer tool round trips, which is
+    prompt work rather than plumbing.
 
 `yamlio.py` — one shared `dump_yaml` so `discover` and `batches` emit identical style
 (`sort_keys=False` to preserve field order; PyYAML's resolver quotes traps like the team

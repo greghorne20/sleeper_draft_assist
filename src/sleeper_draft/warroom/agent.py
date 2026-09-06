@@ -54,8 +54,37 @@ def load_instructions(playbook: Path) -> str:
     return text
 
 
+# Anthropic caches a prefix only if it is at least 1024 tokens. Instructions plus
+# PLAYBOOK.md is roughly 4.5k, so it qualifies comfortably -- but a stripped-down
+# playbook might not, and a prefix under the floor is silently not cached.
+MIN_CACHEABLE_CHARS = 4500
+
+# The default cache lives 5 minutes. This league's pick timer is 300 seconds, so
+# a slow pick can expire the prefix exactly when the next brief needs it. The
+# extended TTL keeps it warm across a whole draft for a one-off higher write cost.
+CACHE_TTL_BETA = "extended-cache-ttl-2025-04-11"
+
+
+def system_blocks(instructions: str, cache: bool, ttl: str = "1h") -> Any:
+    """The system prompt, as one cached block or as plain text.
+
+    `AnthropicChatOptions.instructions` takes either a string or Anthropic system
+    blocks, and blocks are the documented way to attach `cache_control`. This is
+    where caching earns its keep: the prefix is byte-identical across all twelve
+    rooms and every poll of a draft, and an agentic loop re-sends it on every
+    turn, so one write is read back dozens of times.
+    """
+    if not cache or len(instructions) < MIN_CACHEABLE_CHARS:
+        return instructions
+    control: dict[str, Any] = {"type": "ephemeral"}
+    if ttl:
+        control["ttl"] = ttl
+    return [{"type": "text", "text": instructions, "cache_control": control}]
+
+
 def build_agent(instructions: str, tools: list[Callable[..., str]], model: str,
-                max_tokens: int = DEFAULT_MAX_TOKENS) -> Any:
+                max_tokens: int = DEFAULT_MAX_TOKENS, cache: bool = True,
+                ttl: str = "1h") -> Any:
     """An Agent Framework agent over Anthropic, with this poll's tools bound."""
     try:
         from agent_framework import Agent
@@ -66,12 +95,19 @@ def build_agent(instructions: str, tools: list[Callable[..., str]], model: str,
             "`uv sync --extra warroom`, or run with --dry-run to build prompts only."
         ) from exc
 
+    options: dict[str, Any] = {
+        "max_tokens": max_tokens,
+        "instructions": system_blocks(instructions, cache, ttl),
+    }
+    client_kwargs: dict[str, Any] = {"model": model}
+    if cache and ttl and ttl != "5m":
+        client_kwargs["additional_beta_flags"] = [CACHE_TTL_BETA]
+
     return Agent(
-        client=AnthropicClient(model=model),
+        client=AnthropicClient(**client_kwargs),
         name="WarRoom",
-        instructions=instructions,
         tools=tools,
-        default_options={"max_tokens": max_tokens},
+        default_options=options,
     )
 
 

@@ -391,7 +391,8 @@ def runner_args(tmp_path, **kw):
     base = dict(state_dir=tmp_path, board=Path("draft/board.json"),
                 playbook=Path("draft/PLAYBOOK.md"), model="test-model", refresh="hot",
                 slot=None, hot_within=B.HOT_WITHIN, cold_every=B.COLD_EVERY, timeout=5.0,
-                concurrency=2, watch=False, interval=1.0, once=True, dry_run=True)
+                concurrency=2, watch=False, interval=1.0, once=True, dry_run=True,
+                no_cache=False, cache_ttl="1h")
     base.update(kw)
     return argparse.Namespace(**base)
 
@@ -448,3 +449,37 @@ def test_an_env_file_fills_gaps_but_never_overrides_the_real_environment(tmp_pat
     assert os.environ["ANTHROPIC_CHAT_MODEL"] == "claude-from-file"
     assert os.environ["ALREADY_SET"] == "from-shell"
     assert R.load_env_file(tmp_path / "absent") == []
+
+
+# --- prompt caching ----------------------------------------------------------
+
+
+def test_the_system_prompt_is_offered_as_a_cacheable_block():
+    """The prefix is byte-identical across twelve rooms and every poll, and an
+    agentic loop re-sends it each turn, so it is the one thing worth caching."""
+    blocks = A.system_blocks("x" * 6000, cache=True)
+    assert isinstance(blocks, list) and len(blocks) == 1
+    assert blocks[0]["type"] == "text"
+    assert blocks[0]["cache_control"] == {"type": "ephemeral", "ttl": "1h"}
+
+
+def test_a_prefix_below_anthropics_floor_is_not_offered_for_caching():
+    """Under ~1024 tokens Anthropic silently does not cache, so do not pretend to."""
+    assert A.system_blocks("too short", cache=True) == "too short"
+
+
+def test_caching_can_be_turned_off_to_measure_it():
+    long = "x" * 6000
+    assert A.system_blocks(long, cache=False) == long
+
+
+def test_the_five_minute_ttl_needs_no_beta_flag():
+    blocks = A.system_blocks("x" * 6000, cache=True, ttl="5m")
+    assert blocks[0]["cache_control"] == {"type": "ephemeral", "ttl": "5m"}
+
+
+def test_the_real_system_prompt_clears_the_caching_floor():
+    """If PLAYBOOK.md were ever trimmed below the floor this stops being free."""
+    text = A.load_instructions(Path("draft/PLAYBOOK.md"))
+    assert len(text) >= A.MIN_CACHEABLE_CHARS
+    assert isinstance(A.system_blocks(text, cache=True), list)

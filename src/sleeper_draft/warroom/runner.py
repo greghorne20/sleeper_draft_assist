@@ -23,17 +23,24 @@ WHAT A FAILURE DOES
     blanks its panel, never blocks the other eleven, and never stops the loop.
 
 WHAT IT COSTS, MEASURED
-    One room against the real 208-player board: ~33k input and ~5k output tokens,
-    ~70 seconds. Most of the input is the agentic loop, not the prompt -- every
-    tool result re-sends the conversation, so a brief that reads three research
-    notes pays for the system prompt four times.
+    One room against the real board, same state, back to back on Sonnet:
 
-    Agent Framework's Anthropic provider sets no cache_control breakpoints, so
-    none of that is cached today (`usage` in briefs.json reports
-    cache_read_input_tokens: 0). The 17.6KB of instructions plus PLAYBOOK is
-    identical across all twelve rooms and every poll, so this is the obvious
-    place to optimise if the bill matters -- it needs the raw Anthropic client
-    passed in via AnthropicClient(anthropic_client=...).
+        --no-cache   in 29,210  out 4,065  cache_read      0   ~$0.149
+        cached       in 11,445  out 2,432  cache_read 17,946   ~$0.076
+
+    Total input volume is the same either way; caching moves 61% of it from
+    $3/MTok to $0.30/MTok, which is where the halving comes from. Output is
+    unaffected and varies run to run with how many tool calls the model makes,
+    so treat the latency difference (51s vs 30s here) as indicative, not exact.
+
+    Most of the input is the agentic loop, not the prompt: every tool result
+    re-sends the conversation, so a brief that reads three research notes pays
+    for the system prompt four times. That is precisely why caching pays -- the
+    prefix is byte-identical across all twelve rooms and every poll of a draft,
+    so one write is read back dozens of times.
+
+    The remaining cost is uncached per-room input and output. Reducing it means
+    fewer tool round trips, which is prompt work rather than plumbing.
 """
 
 from __future__ import annotations
@@ -117,6 +124,14 @@ def parse_args() -> argparse.Namespace:
                    help=f"Picks from its turn a room counts as hot (default {B.HOT_WITHIN})")
     p.add_argument("--cold-every", type=int, default=B.COLD_EVERY,
                    help=f"Refresh an idle room this often (default {B.COLD_EVERY})")
+    p.add_argument("--no-cache", action="store_true",
+                   help="Do not attach cache_control to the system prompt. The prefix is "
+                        "identical across all twelve rooms and every poll, so caching is "
+                        "normally a large win; this exists to measure it.")
+    p.add_argument("--cache-ttl", default="1h", choices=("5m", "1h"),
+                   help="Prompt-cache lifetime (default 1h). 5m is Anthropic's default but "
+                        "this league's pick timer is 300s, so a slow pick can expire the "
+                        "prefix exactly when the next brief needs it.")
     p.add_argument("--timeout", type=float, default=TIMEOUT_S)
     p.add_argument("--concurrency", type=int, default=CONCURRENCY)
     p.add_argument("--watch", action="store_true", help="Keep going until the draft completes")
@@ -196,7 +211,8 @@ async def run_cycle(all_state: dict, board: dict, briefs: dict, args: argparse.N
         return {**briefs, "picks_made": picks_made, "rooms": rooms}
 
     agent = build_agent(load_instructions(args.playbook),
-                        build_tools(board, available), args.model)
+                        build_tools(board, available), args.model,
+                        cache=not args.no_cache, ttl=args.cache_ttl)
     gate = asyncio.Semaphore(args.concurrency)
 
     async def one(slot: int) -> tuple[int, dict]:
