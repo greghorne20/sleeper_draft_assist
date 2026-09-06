@@ -1,4 +1,4 @@
-# In-draft playbook — 12-team half-PPR, Season 21 (2026)
+# In-draft playbook — 12-team half-PPR, Season 22 (2026)
 
 **Load this file first, every draft session.** It is the standing doctrine. The board and the
 live state are separate files, listed below.
