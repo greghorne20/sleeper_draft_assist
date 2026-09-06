@@ -150,7 +150,10 @@ is why `SleeperError` is the one exception type worth catching at the boundary.
   **missing slot is not an error either** — without `--slot`/`--username` the timing maths is
   skipped rather than guessed, since a wrong "picks until my next" is worse than none. Team
   names are resolved once at startup, not per poll, and a league whose draft order is not drawn
-  yet gets numbered rooms rather than an error.
+  yet gets numbered rooms rather than an error. Before the order is drawn the names come from
+  the roster map, which makes the *seating* provisional; `seating_provisional` carries that and
+  `NOW.md` says so, but the page's war-room strip does not — it is a navigation control, and a
+  caveat repeated on every render is noise rather than a warning.
 
 - **`serve.py`** + **`live_view.html`** — the optional `sleeper-live --serve` page. A stdlib
   `ThreadingHTTPServer` on a daemon thread with exactly two literal routes (`/` → the packaged
@@ -207,6 +210,12 @@ is why `SleeperError` is the one exception type worth catching at the boundary.
     against the board the way `board.py` checks a rankings row — available-set membership, id and
     name agreeing, no K or DST — then retried once with the problems fed back, then refused. An
     unvalidated brief never reaches the page.
+  - **Briefs are written as each room lands, not once per cycle.** A first cycle regenerates all
+    twelve and takes over a minute; `asyncio.gather` held every result until the slowest
+    finished, so `/briefs.json` 404'd for 78 seconds after startup and a restart inside that
+    window threw away every room that had already completed. `as_completed` plus a `persist`
+    callback drops that to 3s for the endpoint and 18s for the first brief. The markdown is
+    still written once per cycle — nothing polls it.
   - **`refresh_targets` decides who regenerates.** Not all twelve on every pick: a room refreshes
     when it is near its turn, just picked, had its proposal drafted, errored, or aged out.
     `--refresh all` forces every seat, at roughly four times the cost.
@@ -226,9 +235,18 @@ is why `SleeperError` is the one exception type worth catching at the boundary.
     exactly when the next brief needs it. `--no-cache` exists to re-measure.
   - **Most of the input is the agentic loop, not the prompt.** Every tool result re-sends the
     conversation, so a brief that reads three notes pays for the system prompt four times —
-    which is exactly why caching a byte-identical prefix across twelve rooms pays off. What is
-    left is per-room input and output; reducing that means fewer tool round trips, which is
-    prompt work rather than plumbing.
+    which is exactly why caching a byte-identical prefix across twelve rooms pays off.
+  - **Hot rooms get Sonnet, cold rooms get Haiku**, split on the same `hot_slots()` the refresh
+    trigger uses so the two cannot drift. Output is over half a Sonnet brief's cost and caching
+    cannot touch it, so the cheap model is the lever that remains. Warm, measured: Sonnet
+    ~$0.0825, Haiku ~$0.0212. **The brief you act on is always Sonnet's** — a room within
+    `--hot-within` picks of its turn regenerates every single pick, so by the time you are on
+    the clock yours has been rewritten several times by the better model.
+  - **Whole-draft cost, simulated across all 156 picks with the real trigger and pick order:**
+    one model uncached ~$152, one model cached ~$84, cached + split ~$57 (574 hot + 444 cold).
+    Sensitive to what the briefs name: a proposal that gets drafted regenerates that room, so
+    briefs that keep recommending players who go immediately push it towards `--refresh all`
+    (1,884 generations). Tuning `--hot-within 1 --cold-every 12` takes it to ~$34.
 
 `yamlio.py` — one shared `dump_yaml` so `discover` and `batches` emit identical style
 (`sort_keys=False` to preserve field order; PyYAML's resolver quotes traps like the team

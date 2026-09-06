@@ -618,8 +618,7 @@ function renderRooms(lg, slot) {
   const keys = Object.keys(rooms).sort((a, b) => a - b);
   $("rooms").hidden = !keys.length;
   if (!keys.length) return;
-  const lab = lg.seating_provisional ? "War rooms · seating provisional" : "War rooms";
-  $("rooms").innerHTML = `<span class="lab">${lab}</span>` + keys.map((k) => {
+  $("rooms").innerHTML = `<span class="lab">War rooms</span>` + keys.map((k) => {
     const rm = rooms[k], open = needsOf(rm);
     const on = Number(k) === slot ? " on" : "";
     const clock = Number(k) === lg.on_the_clock_slot ? " clock" : "";

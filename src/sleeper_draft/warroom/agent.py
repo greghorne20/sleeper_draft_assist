@@ -54,10 +54,21 @@ def load_instructions(playbook: Path) -> str:
     return text
 
 
-# Anthropic caches a prefix only if it is at least 1024 tokens. Instructions plus
-# PLAYBOOK.md is roughly 4.5k, so it qualifies comfortably -- but a stripped-down
-# playbook might not, and a prefix under the floor is silently not cached.
+# Claude 5 family. The cold model writes the briefs for rooms nowhere near their
+# turn, which is most of them over a draft.
+DEFAULT_COLD_MODEL = "claude-haiku-4-5"
+
+# Anthropic will not cache a prefix below a minimum length, and the minimum is
+# twice as high for Haiku (2048 tokens) as for Sonnet and Opus (1024). Estimated
+# in characters at ~4 per token, generously, because a prefix under the floor is
+# silently not cached rather than refused.
 MIN_CACHEABLE_CHARS = 4500
+MIN_CACHEABLE_CHARS_HAIKU = 9000
+
+
+def cache_floor_chars(model: str) -> int:
+    """The shortest prefix worth offering for caching, for this model."""
+    return MIN_CACHEABLE_CHARS_HAIKU if "haiku" in model.lower() else MIN_CACHEABLE_CHARS
 
 # The default cache lives 5 minutes. This league's pick timer is 300 seconds, so
 # a slow pick can expire the prefix exactly when the next brief needs it. The
@@ -65,7 +76,8 @@ MIN_CACHEABLE_CHARS = 4500
 CACHE_TTL_BETA = "extended-cache-ttl-2025-04-11"
 
 
-def system_blocks(instructions: str, cache: bool, ttl: str = "1h") -> Any:
+def system_blocks(instructions: str, cache: bool, ttl: str = "1h",
+                  model: str = DEFAULT_MODEL) -> Any:
     """The system prompt, as one cached block or as plain text.
 
     `AnthropicChatOptions.instructions` takes either a string or Anthropic system
@@ -74,7 +86,7 @@ def system_blocks(instructions: str, cache: bool, ttl: str = "1h") -> Any:
     rooms and every poll of a draft, and an agentic loop re-sends it on every
     turn, so one write is read back dozens of times.
     """
-    if not cache or len(instructions) < MIN_CACHEABLE_CHARS:
+    if not cache or len(instructions) < cache_floor_chars(model):
         return instructions
     control: dict[str, Any] = {"type": "ephemeral"}
     if ttl:
@@ -97,14 +109,27 @@ def build_agent(instructions: str, tools: list[Callable[..., str]], model: str,
 
     options: dict[str, Any] = {
         "max_tokens": max_tokens,
-        "instructions": system_blocks(instructions, cache, ttl),
+        "instructions": system_blocks(instructions, cache, ttl, model),
     }
     client_kwargs: dict[str, Any] = {"model": model}
     if cache and ttl and ttl != "5m":
         client_kwargs["additional_beta_flags"] = [CACHE_TTL_BETA]
 
+    try:
+        client = AnthropicClient(**client_kwargs)
+    except ValueError as exc:
+        # The provider raises a bare ValueError with a traceback when the key is
+        # missing. This layer is optional and its failure has to read as one
+        # legible line, not a stack trace during a draft.
+        raise SleeperError(
+            f"{exc} The war room needs ANTHROPIC_API_KEY: export it, put it in .env, or -- on a "
+            "host like Railway -- make sure the variable is actually attached to this service "
+            "rather than only defined at the project level. The board runs fine without it; "
+            "the page just renders no brief panel."
+        ) from exc
+
     return Agent(
-        client=AnthropicClient(**client_kwargs),
+        client=client,
         name="WarRoom",
         tools=tools,
         default_options=options,

@@ -145,6 +145,24 @@ def room_for(briefs: dict, slot: int) -> dict | None:
     return (briefs.get("rooms") or {}).get(str(slot))
 
 
+def hot_slots(all_state: dict, hot_within: int = HOT_WITHIN) -> set[int]:
+    """Seats close enough to their turn that someone is reading the brief.
+
+    Two decisions hang off this one definition, and they should not drift apart:
+    which rooms regenerate on every pick, and which get the better model. A room
+    forty picks out is being glanced at; a room on the clock is being acted on.
+    """
+    current = all_state.get("current_pick")
+    if current is None:
+        return set()
+    hot = set()
+    for key, room in (all_state.get("war_rooms") or {}).items():
+        next_pick = (room or {}).get("my_next_pick")
+        if next_pick is not None and next_pick - current <= hot_within:
+            hot.add(int(key))
+    return hot
+
+
 def refresh_targets(all_state: dict, briefs: dict, hot_within: int = HOT_WITHIN,
                     cold_every: int = COLD_EVERY, mode: str = "hot") -> set[int]:
     """Which rooms this pick actually invalidated.
@@ -163,11 +181,12 @@ def refresh_targets(all_state: dict, briefs: dict, hot_within: int = HOT_WITHIN,
     if mode == "all":
         return slots
 
-    current = all_state.get("current_pick")
     picks_made = all_state.get("picks_made") or 0
     taken = drafted_ids(all_state)
     recent = all_state.get("recent_picks") or []
     just_picked = recent[-1].get("draft_slot") if recent else None
+
+    hot = hot_slots(all_state, hot_within)
 
     targets: set[int] = set()
     for slot in slots:
@@ -175,12 +194,7 @@ def refresh_targets(all_state: dict, briefs: dict, hot_within: int = HOT_WITHIN,
         if brief is None or brief.get("status") == "error":
             targets.add(slot)
             continue
-        if slot == just_picked:
-            targets.add(slot)
-            continue
-
-        next_pick = (rooms[str(slot)] or {}).get("my_next_pick")
-        if next_pick is not None and current is not None and next_pick - current <= hot_within:
+        if slot == just_picked or slot in hot:
             targets.add(slot)
             continue
 
