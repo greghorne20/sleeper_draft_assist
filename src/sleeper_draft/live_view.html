@@ -256,6 +256,29 @@ tbody tr.leaving .rk { color: var(--danger); }
 .seg button + button { border-left: 1px solid var(--line-firm); }
 .seg button.on { background: var(--ink); color: var(--panel); }
 
+/* the twelve war rooms: one strip, the seat you are reading lit */
+.rooms {
+  display: flex; gap: 5px; overflow-x: auto; padding: 8px 20px;
+  background: var(--panel); border-bottom: 1px solid var(--line); align-items: center;
+}
+.rooms .lab {
+  font-family: "Barlow Condensed", ui-sans-serif, sans-serif;
+  font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--muted); margin-right: 6px; white-space: nowrap;
+}
+.room {
+  font-family: "Barlow Condensed", ui-sans-serif, sans-serif;
+  display: flex; flex-direction: column; align-items: flex-start; gap: 1px;
+  padding: 3px 9px; border-radius: 5px; cursor: pointer; white-space: nowrap;
+  background: var(--panel-2); border: 1px solid var(--line); color: var(--ink-2);
+}
+.room .rname { font-size: 14px; font-weight: 600; letter-spacing: .02em; }
+.room .rneed { font-size: 10.5px; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); }
+.room.on { background: var(--inverse-bg); border-color: var(--inverse-bg); color: var(--inverse-ink); }
+.room.on .rneed { color: var(--inverse-ink); opacity: .72; }
+.room.clock { border-color: var(--live); box-shadow: 0 0 0 2px color-mix(in srgb, var(--live) 22%, transparent); }
+tr.me td { background: var(--panel-2); }
+
 .empty { color: var(--muted); padding: 14px; text-align: center; }
 footer { padding: 0 20px 30px; color: var(--muted); font-size: 12.5px; }
 </style>
@@ -274,6 +297,8 @@ footer { padding: 0 20px 30px; color: var(--muted); font-size: 12.5px; }
   <div class="spacer"></div>
   <button class="tog" id="theme" type="button">Theme</button>
 </header>
+
+<div class="rooms" id="rooms" hidden></div>
 
 <div class="rail" id="rail"></div>
 
@@ -296,7 +321,7 @@ footer { padding: 0 20px 30px; color: var(--muted); font-size: 12.5px; }
 
   <div class="col">
     <section class="panel">
-      <div class="phead"><span class="ptitle">My team</span><span class="pnote" id="roster-note"></span></div>
+      <div class="phead"><span class="ptitle" id="roster-title">My team</span><span class="pnote" id="roster-note"></span></div>
       <div id="roster"></div>
     </section>
 
@@ -309,6 +334,11 @@ footer { padding: 0 20px 30px; color: var(--muted); font-size: 12.5px; }
       <div class="phead"><span class="ptitle">Last picks</span><span class="pnote" id="run-note"></span></div>
       <div id="recent"></div>
     </section>
+
+    <section class="panel">
+      <div class="phead"><span class="ptitle">Around the league</span><span class="pnote" id="league-note"></span></div>
+      <div id="league"></div>
+    </section>
   </div>
 </main>
 
@@ -318,7 +348,7 @@ footer { padding: 0 20px 30px; color: var(--muted); font-size: 12.5px; }
 "use strict";
 const REFRESH_MS = 4000, STALE_AFTER_S = 120;
 const $ = (id) => document.getElementById(id);
-let lastStamp = null, lastChange = Date.now();
+let lastStamp = null, lastChange = Date.now(), latestAll = null;
 
 const esc = (v) => String(v == null ? "" : v).replace(/[&<>"]/g,
   (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
@@ -444,6 +474,7 @@ function renderRail(s) {
 function renderRoster(s) {
   if (s.my_slot == null) { $("roster").innerHTML = `<div class="empty">No slot set.</div>`; return; }
   const r = s.my_roster || [], need = s.roster || {}, counts = need.counts || {};
+  $("roster-title").textContent = s.my_team_name || "My team";
   $("roster-note").textContent = `${r.length} picked`;
 
   const rows = r.length
@@ -509,17 +540,106 @@ function renderRecent(s) {
     </tr>`).join("")}</tbody></table>`;
 }
 
-function render(s) {
+/* state.json holds one shared board plus a small block per seat. This is the
+   same projection `team_state` does in live.py, so a war room on this page and
+   the NOW.md written for that seat cannot disagree. Urgency is per-seat, which
+   is why it is merged onto the shared rows here instead of stored twelve times. */
+function seatState(lg, slot) {
+  const out = Object.assign({}, lg);
+  delete out.war_rooms; delete out.rosters_by_slot; delete out.default_slot;
+  const rm = (lg.war_rooms || {})[String(slot)];
+  if (!rm) {
+    return Object.assign(out, {
+      my_slot: null, is_my_turn: false, my_picks: [], my_next_pick: null,
+      my_pick_after_next: null, survive_until_pick: null, picks_before_horizon: null,
+      my_roster: [], roster: {}, bye_counts: {}, leaving_count: 0,
+    });
+  }
+  Object.assign(out, rm);
+  delete out.leaving_ids; delete out.name;
+  out.my_team_name = rm.name;
+  if (rm.survive_until_pick != null) {
+    const ids = new Set(rm.leaving_ids || []);
+    out.best_available = (lg.best_available || []).map(
+      (p) => Object.assign({}, p, { leaving: ids.has(p.player_id) }));
+  }
+  return out;
+}
+
+/* Which seat is being read. The hash so a war room can bookmark its own view;
+   the poller's --slot as the default when nothing is pinned. */
+function activeSlot(lg) {
+  const m = /(?:^|[#&])slot=(\d+)/.exec(location.hash);
+  if (m && (lg.war_rooms || {})[m[1]]) return Number(m[1]);
+  return lg.default_slot == null ? null : Number(lg.default_slot);
+}
+
+function needsOf(rm) {
+  const need = rm.roster || {};
+  return (need.open_starters || []).concat(need.flex_open ? ["FLEX"] : []);
+}
+
+function renderRooms(lg, slot) {
+  const rooms = lg.war_rooms || {};
+  const keys = Object.keys(rooms).sort((a, b) => a - b);
+  $("rooms").hidden = !keys.length;
+  if (!keys.length) return;
+  $("rooms").innerHTML = `<span class="lab">War rooms</span>` + keys.map((k) => {
+    const rm = rooms[k], open = needsOf(rm);
+    const on = Number(k) === slot ? " on" : "";
+    const clock = Number(k) === lg.on_the_clock_slot ? " clock" : "";
+    return `<button type="button" class="room${on}${clock}" data-slot="${esc(k)}">
+        <span class="rname">${esc(rm.name)}</span>
+        <span class="rneed">${(rm.my_roster || []).length} picked${open.length ? " · " + esc(open.join(" ")) : " · set"}</span>
+      </button>`;
+  }).join("");
+}
+
+/* What every other team still has to fill. Broadcast colour, deliberately not
+   an input to urgency -- `leaving` stays anchored to market ADP, because twelve
+   agents reading each other's needs and all reaching one round early is a
+   feedback loop the market number does not have. */
+function renderLeague(lg, slot) {
+  const rooms = lg.war_rooms || {};
+  const keys = Object.keys(rooms).sort((a, b) => a - b);
+  if (!keys.length) { $("league").innerHTML = `<div class="empty">No war rooms.</div>`; return; }
+  $("league-note").textContent = `${keys.length} teams · open starting slots`;
+  $("league").innerHTML = `<table><tbody>${keys.map((k) => {
+    const rm = rooms[k], open = needsOf(rm), counts = (rm.roster || {}).counts || {};
+    const held = Object.entries(counts).map(([pos, n]) => `${pos} ${n}`).join(" · ");
+    return `<tr${Number(k) === slot ? ` class="me"` : ""}>
+      <td class="n"><span class="rk">${esc(k)}</span></td>
+      <td><span class="nm">${esc(rm.name)}</span>
+          <span class="meta"> ${esc(held || "empty")}</span></td>
+      <td>${open.length
+        ? open.map((pos) => `<span class="slot">${esc(pos)}</span>`).join("")
+        : `<span class="meta">starters set</span>`}</td>
+    </tr>`;
+  }).join("")}</tbody></table>`;
+}
+
+function render(lg) {
+  latestAll = lg;
+  const slot = activeSlot(lg);
+  const s = seatState(lg, slot);
   latest = s;
+  renderRooms(lg, slot);
   renderBoard(s);
   renderRail(s);
   drawBoard(s);
   renderRoster(s);
   renderTiers(s);
   renderRecent(s);
+  renderLeague(lg, slot);
   $("foot").textContent =
     `${s.league_name || "Draft"} · ${s.picks_made} of ${s.total_picks} picks made · updated ${s.generated_at}`;
 }
+
+$("rooms").addEventListener("click", (e) => {
+  const btn = e.target.closest(".room");
+  if (btn) location.hash = `slot=${btn.dataset.slot}`;
+});
+window.addEventListener("hashchange", () => { if (latestAll) render(latestAll); });
 
 function stale(msg) {
   const el = $("stale");

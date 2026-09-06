@@ -279,6 +279,10 @@ def test_end_to_end_writes_state_without_touching_the_network(
         def get_draft_picks(self, draft_id):
             return picks
 
+        def get_league_users(self, league_id):
+            return [{"user_id": "U1", "display_name": "manager_one",
+                     "metadata": {"team_name": "Comeback Kids"}}]
+
     monkeypatch.setattr(live, "SleeperClient", Client)
     out = tmp_path / "state"
     sys.argv = ["sleeper-live", "--board", str(draft_artifacts / "board.json"),
@@ -288,8 +292,15 @@ def test_end_to_end_writes_state_without_touching_the_network(
 
     state = json.loads((out / "state.json").read_text())
     assert state["picks_made"] == 12
-    assert state["is_my_turn"] is True
+    assert state["war_rooms"]["12"]["is_my_turn"] is True
     assert (out / "NOW.md").read_text().count("| ") > 10
+    # My seat keeps NOW.md; the other eleven get their own file under teams/.
+    written = sorted(f.name for f in (out / "teams").iterdir())
+    assert len(written) == 11
+    assert "NOW-slot-12.md" not in written
+    # DRAFT puts U1 in slot 7, so that room is named and the rest are numbered.
+    assert state["war_rooms"]["7"]["name"] == "Comeback Kids"
+    assert state["war_rooms"]["1"]["name"] == "Slot 1"
 
 
 def test_display_row_keeps_the_display_fields_and_flattens_adp():
@@ -358,3 +369,112 @@ def test_state_json_is_much_smaller_than_the_full_rows(tmp_path, draft_artifacts
     by_id = {row["player_id"]: row for row in board["players"]}
     untrimmed["best_available"] = [by_id[row["player_id"]] for row in state["best_available"]]
     assert projected < len(json.dumps(untrimmed, indent=1)) / 2
+
+
+# --- twelve war rooms off one poll -----------------------------------------
+
+
+def all_state(draft_artifacts, count, cushion=4, limit=30, names=None, picks=None):
+    board, order = artifacts(draft_artifacts)
+    return live.summarize_all(board, order, DRAFT,
+                              picks if picks is not None else make_picks(order, board, count),
+                              cushion, limit, names)
+
+
+def test_every_war_room_matches_the_single_seat_state(draft_artifacts):
+    """The guard against drift: twelve seats projected out must equal twelve
+    seats computed one at a time. If this ever fails, NOW.md and state.json
+    are telling one of the teams something different."""
+    board, order = artifacts(draft_artifacts)
+    picks = make_picks(order, board, 26)
+    everything = live.summarize_all(board, order, DRAFT, picks, 4, 30)
+    for slot in range(1, 13):
+        alone = live.summarize(board, order, DRAFT, picks, slot, 4, 30)
+        projected = live.team_state(everything, slot)
+        # generated_at is a wall clock read twice; everything else must agree.
+        alone.pop("generated_at"), projected.pop("generated_at")
+        projected.pop("my_team_name", None)
+        assert projected == alone, f"slot {slot} disagrees"
+
+
+def test_no_slot_projects_the_same_empty_state(draft_artifacts):
+    board, order = artifacts(draft_artifacts)
+    picks = make_picks(order, board, 26)
+    alone = live.summarize(board, order, DRAFT, picks, None, 4, 30)
+    projected = live.team_state(live.summarize_all(board, order, DRAFT, picks, 4, 30), None)
+    alone.pop("generated_at"), projected.pop("generated_at")
+    assert projected == alone
+    assert all("leaving" not in row for row in projected["best_available"])
+
+
+def test_the_shared_board_is_stored_once_without_urgency(draft_artifacts):
+    """`leaving` is per-seat, so it cannot live on the shared rows."""
+    state = all_state(draft_artifacts, 26)
+    for row in state["best_available"]:
+        assert "leaving" not in row
+    room = state["war_rooms"]["12"]
+    assert room["leaving_ids"], "expected someone leaving before slot 12 picks again"
+    assert set(room["leaving_ids"]) <= {row["player_id"] for row in state["best_available"]}
+
+
+def test_one_poll_yields_a_room_per_slot(draft_artifacts):
+    state = all_state(draft_artifacts, 26)
+    assert sorted(state["war_rooms"], key=int) == [str(n) for n in range(1, 13)]
+    assert state["teams"] == 12  # the count, not the rooms -- distinct keys
+
+
+def test_every_slots_roster_is_kept_not_just_mine(draft_artifacts):
+    state = all_state(draft_artifacts, 26)
+    rosters = state["rosters_by_slot"]
+    assert sorted(rosters, key=int) == [str(n) for n in range(1, 13)]
+    # 26 picks over 12 teams: two rounds plus two, so nobody is empty.
+    assert all(rosters[str(n)] for n in range(1, 13))
+    assert sum(len(v) for v in rosters.values()) == 26
+
+
+def test_war_rooms_carry_team_names_and_fall_back_to_the_slot(draft_artifacts):
+    state = all_state(draft_artifacts, 12, names={3: "Comeback Kids"})
+    assert state["war_rooms"]["3"]["name"] == "Comeback Kids"
+    assert state["war_rooms"]["7"]["name"] == "Slot 7"
+    assert "Comeback Kids" in live.render_now_md(live.team_state(state, 3))
+
+
+def test_keepers_leave_the_board_and_are_labelled(draft_artifacts):
+    """Sleeper feeds keepers as ordinary picks, so no keeper-specific path
+    exists -- but a keeper shown as a plain round-1 pick reads as a reach."""
+    board, order = artifacts(draft_artifacts)
+    picks = make_picks(order, board, 3)
+    picks[0]["is_keeper"] = True
+    kept = picks[0]["player_id"]
+    state = all_state(draft_artifacts, 3, picks=picks)
+    assert kept not in {row["player_id"] for row in state["best_available"]}
+    assert state["recent_picks"][0]["is_keeper"] is True
+    assert state["recent_picks"][1]["is_keeper"] is False
+    assert "_(keeper)_" in live.render_now_md(live.team_state(state, 1))
+
+
+def test_write_all_state_writes_one_readable_file_per_seat(tmp_path, draft_artifacts):
+    state = all_state(draft_artifacts, 26, names={4: "Sunday Scaries"})
+    out = tmp_path / "state"
+    md_path, json_path = live.write_all_state(state, out, 12)
+    assert json.loads(json_path.read_text())["war_rooms"]["4"]["name"] == "Sunday Scaries"
+    assert md_path.read_text().startswith("# Draft state")
+    other = (out / "teams" / "NOW-slot-4.md").read_text()
+    assert "Sunday Scaries" in other
+    assert other.startswith("# Draft state")
+
+
+def test_resolve_team_names_degrades_rather_than_failing(draft_artifacts):
+    class Client:
+        def get_league_users(self, league_id):
+            return [{"user_id": "U1", "display_name": "manager_one",
+                     "metadata": {"team_name": "Comeback Kids"}},
+                    {"user_id": "U2", "display_name": "nameless", "metadata": {}},
+                    {"user_id": "STRANGER", "display_name": "not in this draft"}]
+
+    draft = {"draft_id": "D", "draft_order": {"U1": 7, "U2": 2}}
+    names = live.resolve_team_names(Client(), "L1", draft)
+    assert names == {7: "Comeback Kids", 2: "nameless"}
+    # No league id, or no order drawn yet: numbered rooms, not an error.
+    assert live.resolve_team_names(Client(), None, draft) == {}
+    assert live.resolve_team_names(Client(), "L1", {"draft_order": {}}) == {}

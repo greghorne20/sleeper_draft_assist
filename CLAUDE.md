@@ -33,7 +33,7 @@ research/players/    one markdown note per player; filename ends in the Sleeper 
 research/batches/    the input lists those notes were written from
 draft/               PLAYBOOK.md + STRATEGY.md (hand-maintained) + board.md/board.json/
                      pick_order.json (generated) -- what the in-draft assistant reads
-draft/state/         NOW.md + state.json, rewritten every poll (gitignored)
+draft/state/         NOW.md + state.json + teams/, rewritten every poll (gitignored)
 .claude/skills/      draft-day/SKILL.md -- the in-draft conversational framing
 AGENTS.md            points non-Claude-Code agents at that skill
 ```
@@ -127,12 +127,27 @@ is why `SleeperError` is the one exception type worth catching at the boundary.
   rewrites `draft/state/`. It reads `draft/board.json` and `draft/pick_order.json` rather than
   the rankings, so a poll is one small request and every board field (tier, ADP, flags,
   scouting, research note path) is already attached to the `player_id` the pick feed returns.
-  `summarize()` is pure — draft + picks + board in, whole state out — which is why the tests
-  cover the pick-timing maths without any HTTP. Two deliberate asymmetries with the rest of the
+  The state is computed in two halves and this is the load-bearing split: `summarize_league()`
+  is everything true of the draft whatever seat you read it from, `slot_view()` is the part
+  that depends on the seat and nothing else does. So **all twelve war rooms cost the same two
+  HTTP requests as one** — the expensive half runs once per poll, and `summarize_all()` adds
+  a small block per slot. `flatten()` merges one seat onto the shared state; `summarize()` and
+  `team_state()` both end there, so the one-seat and twelve-seat paths cannot drift (a test
+  pins every slot's projection against computing that slot alone). Urgency is per-seat, so the
+  shared board carries no `leaving` flag — each war room carries `leaving_ids` and the flag is
+  merged back on at render time, which is what keeps "urgency is a property of a player, not a
+  second board" true without storing thirty rows twelve times.
+  Both are pure — draft + picks + board in, whole state out — which is why the tests cover the
+  pick-timing maths without any HTTP. **Keepers need no special case**: Sleeper feeds them as
+  ordinary picks carrying `is_keeper`, at the pick number their round cost implies, so they
+  leave the board through the same path as everything else and are only *labelled* differently.
+  Two deliberate asymmetries with the rest of the
   repo: an **off-board pick is not an error** (208 ranked, 156 picks, rivals draft whoever they
   like — those are recorded from Sleeper's pick metadata and listed separately), and a
   **missing slot is not an error either** — without `--slot`/`--username` the timing maths is
-  skipped rather than guessed, since a wrong "picks until my next" is worse than none.
+  skipped rather than guessed, since a wrong "picks until my next" is worse than none. Team
+  names are resolved once at startup, not per poll, and a league whose draft order is not drawn
+  yet gets numbered rooms rather than an error.
 
 - **`serve.py`** + **`live_view.html`** — the optional `sleeper-live --serve` page. A stdlib
   `ThreadingHTTPServer` on a daemon thread with exactly two literal routes (`/` → the packaged
@@ -145,7 +160,13 @@ is why `SleeperError` is the one exception type worth catching at the boundary.
   during a draft is the dangerous failure. It is a dashboard, so state is encoded in form as
   well as number: position colour chips, a pick rail showing the 3RR cluster, tier bars that
   turn red at the two-left tier-break trigger, and a severity stripe on players leaving before
-  your next pick. **There is one board, not two** — filtering it by ADP yields a strict subset
+  your next pick. It shows **one seat at a time out of twelve**: `seatState()` in the page is
+  the same projection `team_state()` does in Python, the war-room strip switches seats through
+  the URL hash so a room can bookmark its own view, and the "Around the league" panel shows
+  what every other team still has to fill. That cross-team view is **broadcast colour only and
+  deliberately not an input to urgency** — `leaving` stays anchored to market ADP, because
+  twelve rooms reading each other's needs and all reaching a round early is a feedback loop
+  an external market number does not have. **There is one board, not two** — filtering it by ADP yields a strict subset
   in the same order, so a separate "at risk" table just printed the same players twice; urgency
   is a `leaving` flag on the row, with a filter to narrow to them. Google Fonts is the one external request, with a
   full fallback stack; the data path is localhost only. Theme tokens are defined in the bare
@@ -223,10 +244,16 @@ exists as a machine input: `board.json` and `pick_order.json` are what `live.py`
 - **`keepers.md`** / **`keepers.json`** — per-team keeper eligibility with the round each
   would cost, plus who is blocked and why. Regenerate with `uv run sleeper-keepers`. Unlike
   everything else in `draft/`, this one leaves the machine — keep it to public data only.
-- **`state/NOW.md`** and **`state/state.json`** — written by `sleeper-live` every poll, and
-  gitignored because they turn over every few seconds during a draft. `NOW.md` is in reading
-  order: whose pick, picks until mine comes back, my roster and open starting slots, who is at
-  risk before my next pick, best available, tiers remaining, recent picks and runs.
+- **`state/NOW.md`**, **`state/state.json`** and **`state/teams/`** — written by
+  `sleeper-live` every poll, and gitignored because they turn over every few seconds during a
+  draft. `NOW.md` is **my seat**, in reading order: whose pick, picks until mine comes back, my
+  roster and open starting slots, who is at risk before my next pick, best available, tiers
+  remaining, recent picks and runs. `state/teams/NOW-slot-<n>.md` is the same document for each
+  of the other eleven seats. `state.json` is the whole league in one file: the shared board
+  once, plus a `war_rooms` block per slot and `rosters_by_slot` for every team's picks —
+  which is what the page's team switcher and "Around the league" panel read.
+  **`NOW.md` keeping its old path and its old meaning is deliberate** — it is what lets the
+  draft-day skill go on reading one file while the league view develops alongside it.
 
 Regenerate the three generated files with `uv run sleeper-board` after editing anything in
 `research/`. `PLAYBOOK.md` and `STRATEGY.md` do not regenerate — update them by hand.

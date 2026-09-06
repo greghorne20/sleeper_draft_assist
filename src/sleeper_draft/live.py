@@ -226,9 +226,24 @@ def roster_needs(roster: list[dict], roster_positions: list[str]) -> dict:
     }
 
 
-def summarize(board: dict, order: dict, draft: dict, picks: list[dict],
-              my_slot: int | None, cushion: int, available_limit: int) -> dict:
-    """The whole state, computed from data already in hand. No I/O, so testable."""
+# --- the state, in two halves --------------------------------------------
+#
+# Everything below `summarize_league` is true of the draft no matter whose seat
+# you read it from; everything in `slot_view` depends on the seat and nothing
+# else does. That split is the whole reason twelve war rooms cost the same two
+# HTTP requests as one: the expensive half runs once per poll.
+
+LEAGUE_ONLY_FIELDS = ("war_rooms", "rosters_by_slot", "default_slot")
+
+
+def summarize_league(board: dict, order: dict, draft: dict, picks: list[dict],
+                     available_limit: int) -> dict:
+    """The seat-independent half of the state. Pure, so it tests without HTTP.
+
+    Keepers arrive here as ordinary picks carrying `is_keeper`, at the pick
+    number their round cost implies, so they leave the board through the same
+    path as everything else and need no special case.
+    """
     rows = {row["player_id"]: row for row in board["players"]}
     league = board["league"]
     teams = int(order["teams"])
@@ -237,7 +252,7 @@ def summarize(board: dict, order: dict, draft: dict, picks: list[dict],
 
     drafted: dict[str, dict] = {}
     off_board: list[dict] = []
-    by_roster: dict[int, list[dict]] = {}
+    by_roster: dict[str, list[dict]] = {}
     history: list[dict] = []
 
     for pick in sorted(picks, key=lambda p: p.get("pick_no") or 0):
@@ -257,6 +272,7 @@ def summarize(board: dict, order: dict, draft: dict, picks: list[dict],
             "tier": (row or {}).get("tier"),
             "bye": (row or {}).get("bye"),
             "on_board": row is not None,
+            "is_keeper": bool(pick.get("is_keeper")),
         }
         history.append(entry)
         if pid:
@@ -265,56 +281,17 @@ def summarize(board: dict, order: dict, draft: dict, picks: list[dict],
             off_board.append(entry)
         slot = entry["draft_slot"]
         if isinstance(slot, int):
-            by_roster.setdefault(slot, []).append(entry)
+            # Keyed by string so the map survives a JSON round-trip unchanged --
+            # the page reads this file back and would otherwise see "7" != 7.
+            by_roster.setdefault(str(slot), []).append(entry)
 
     picks_made = len(history)
     current_pick = picks_made + 1 if picks_made < total_picks else None
     current_round = ((current_pick - 1) // teams + 1) if current_pick else None
     on_the_clock = order["slot_by_pick"].get(str(current_pick)) if current_pick else None
 
-    # --- my picks and the two horizons that drive every timing decision ---
-    my_picks = [int(n) for n in order["picks_by_slot"].get(str(my_slot), [])] if my_slot else []
-    upcoming = [n for n in my_picks if current_pick and n >= current_pick]
-    my_next = upcoming[0] if upcoming else None
-    my_after_next = upcoming[1] if len(upcoming) > 1 else None
-    is_my_turn = bool(my_next and current_pick and my_next == current_pick)
-
-    # The pick a player must survive until to still be there for me. On the
-    # clock that is my following pick; otherwise it is this one.
-    horizon = my_after_next if is_my_turn else my_next
-    # How many picks OTHER teams make between now and the horizon. On the clock I
-    # consume current_pick myself, so it is not one of theirs; waiting, it is.
-    # PLAYBOOK D3 states the on-the-clock form (next - current - 1); the waiting
-    # form is one larger because current_pick has not been used up yet.
-    picks_before_horizon = (
-        horizon - current_pick - (1 if is_my_turn else 0)
-    ) if (horizon and current_pick) else None
-
-    my_roster = by_roster.get(my_slot, []) if my_slot else []
-    needs = roster_needs(my_roster, league.get("roster_positions") or [])
-
-    bye_counts: dict[str, int] = {}
-    for player in my_roster:
-        if player["bye"] is not None:
-            key = str(player["bye"])
-            bye_counts[key] = bye_counts.get(key, 0) + 1
-
-    # --- the board, minus everyone taken ---
-    # Urgency is a property of a player, not a second board. Every shown row
-    # carries whether the market expects him gone before I pick again, so the
-    # board can be read once, top down: PLAYBOOK D1 is "the highest-value player
-    # who will NOT survive", which is the first row marked leaving.
     available = [row for row in board["players"] if row["player_id"] not in drafted]
-    threshold = (horizon + cushion) if horizon is not None else None
-
-    shown = []
-    for row in available[:available_limit]:
-        entry = display_row(row)
-        if threshold is not None:
-            adp = market_adp(row)
-            entry["leaving"] = adp is not None and adp <= threshold
-        shown.append(entry)
-    leaving_count = sum(1 for entry in shown if entry.get("leaving"))
+    shown = [display_row(row) for row in available[:available_limit]]
 
     tier_status: dict[str, dict[str, int]] = {}
     for row in available:
@@ -335,32 +312,149 @@ def summarize(board: dict, order: dict, draft: dict, picks: list[dict],
         "league_name": league.get("league_name"),
         "teams": teams,
         "rounds": rounds,
+        "roster_positions": league.get("roster_positions") or [],
         "total_picks": total_picks,
         "picks_made": picks_made,
         "picks_remaining": total_picks - picks_made,
         "current_pick": current_pick,
         "current_round": current_round,
         "on_the_clock_slot": on_the_clock,
-        "my_slot": my_slot,
+        "available_count": len(available),
+        "best_available": shown,
+        "tier_status": tier_status,
+        "recent_picks": recent,
+        "position_run": run,
+        "off_board_picks": off_board,
+        "drafted_count": len(drafted),
+        "rosters_by_slot": by_roster,
+    }
+
+
+def slot_view(league: dict, order: dict, slot: int | None, cushion: int) -> dict:
+    """One seat's read on the shared state: timing, roster, and what is leaving.
+
+    Urgency comes back as `leaving_ids` rather than a flag on each row because
+    the board is shared across twelve seats and duplicating thirty rows apiece
+    to carry one boolean is the wrong trade. `flatten` puts it back on the row
+    for rendering, so "urgency is a property of a player, not a second board"
+    still holds everywhere it is read.
+    """
+    current_pick = league["current_pick"]
+    my_picks = [int(n) for n in order["picks_by_slot"].get(str(slot), [])] if slot else []
+    upcoming = [n for n in my_picks if current_pick and n >= current_pick]
+    my_next = upcoming[0] if upcoming else None
+    my_after_next = upcoming[1] if len(upcoming) > 1 else None
+    is_my_turn = bool(my_next and current_pick and my_next == current_pick)
+
+    # The pick a player must survive until to still be there for me. On the
+    # clock that is my following pick; otherwise it is this one.
+    horizon = my_after_next if is_my_turn else my_next
+    # How many picks OTHER teams make between now and the horizon. On the clock I
+    # consume current_pick myself, so it is not one of theirs; waiting, it is.
+    # PLAYBOOK D3 states the on-the-clock form (next - current - 1); the waiting
+    # form is one larger because current_pick has not been used up yet.
+    picks_before_horizon = (
+        horizon - current_pick - (1 if is_my_turn else 0)
+    ) if (horizon and current_pick) else None
+
+    my_roster = league["rosters_by_slot"].get(str(slot), []) if slot else []
+    needs = roster_needs(my_roster, league.get("roster_positions") or [])
+
+    bye_counts: dict[str, int] = {}
+    for player in my_roster:
+        if player["bye"] is not None:
+            key = str(player["bye"])
+            bye_counts[key] = bye_counts.get(key, 0) + 1
+
+    threshold = (horizon + cushion) if horizon is not None else None
+    leaving_ids = [] if threshold is None else [
+        row["player_id"] for row in league["best_available"]
+        if row.get("adp") is not None and row["adp"] <= threshold
+    ]
+
+    return {
+        "my_slot": slot,
         "is_my_turn": is_my_turn,
         "my_picks": my_picks,
         "my_next_pick": my_next,
         "my_pick_after_next": my_after_next,
         "survive_until_pick": horizon,
         "picks_before_horizon": picks_before_horizon,
-        "cushion": cushion,
         "my_roster": my_roster,
         "roster": needs,
         "bye_counts": bye_counts,
-        "available_count": len(available),
-        "best_available": shown,
-        "leaving_count": leaving_count,
-        "tier_status": tier_status,
-        "recent_picks": recent,
-        "position_run": run,
-        "off_board_picks": off_board,
-        "drafted_count": len(drafted),
+        "leaving_ids": leaving_ids,
+        "leaving_count": len(leaving_ids),
     }
+
+
+def flatten(league: dict, view: dict, cushion: int) -> dict:
+    """Merge one seat's view onto the shared state -- the flat shape NOW.md renders.
+
+    Both `summarize` and `team_state` end here, so the merge that could drift
+    between the one-seat and twelve-seat paths has a single implementation.
+    """
+    out = {key: value for key, value in league.items() if key not in LEAGUE_ONLY_FIELDS}
+    if view["survive_until_pick"] is not None:
+        ids = set(view["leaving_ids"])
+        out["best_available"] = [{**row, "leaving": row["player_id"] in ids}
+                                 for row in league["best_available"]]
+    out["cushion"] = cushion
+    out.update({key: value for key, value in view.items()
+                if key not in ("leaving_ids", "name")})
+    if view.get("name"):
+        out["my_team_name"] = view["name"]
+    return out
+
+
+def empty_view(league: dict) -> dict:
+    """The no-seat view: timing skipped rather than guessed, as it always was."""
+    return {
+        "my_slot": None, "is_my_turn": False, "my_picks": [], "my_next_pick": None,
+        "my_pick_after_next": None, "survive_until_pick": None,
+        "picks_before_horizon": None, "my_roster": [],
+        "roster": roster_needs([], league.get("roster_positions") or []),
+        "bye_counts": {}, "leaving_ids": [], "leaving_count": 0,
+    }
+
+
+def summarize_all(board: dict, order: dict, draft: dict, picks: list[dict],
+                  cushion: int, available_limit: int,
+                  team_names: dict[int, str] | None = None,
+                  default_slot: int | None = None) -> dict:
+    """The whole league: shared state once, plus one war room per draft slot.
+
+    `default_slot` is only which seat a reader should open on -- the operator's
+    own. It is deliberately not part of any seat's state, so a war room reads
+    the same whoever is looking at it.
+    """
+    league = summarize_league(board, order, draft, picks, available_limit)
+    war_rooms = {}
+    for key in sorted(order["picks_by_slot"], key=int):
+        view = slot_view(league, order, int(key), cushion)
+        view["name"] = (team_names or {}).get(int(key)) or f"Slot {key}"
+        war_rooms[key] = view
+    return {**league, "cushion": cushion, "default_slot": default_slot,
+            "war_rooms": war_rooms}
+
+
+def team_state(all_state: dict, slot: int | None) -> dict:
+    """Flatten the twelve-seat state down to one seat.
+
+    This is what `summarize` returns, projected out of the league state rather
+    than computed again, so a NOW.md written for slot 7 and the slot-7 block in
+    state.json cannot disagree.
+    """
+    view = (all_state.get("war_rooms") or {}).get(str(slot)) if slot else None
+    return flatten(all_state, view or empty_view(all_state), all_state["cushion"])
+
+
+def summarize(board: dict, order: dict, draft: dict, picks: list[dict],
+              my_slot: int | None, cushion: int, available_limit: int) -> dict:
+    """One seat's whole state. The shape `render_now_md` and the tests expect."""
+    league = summarize_league(board, order, draft, picks, available_limit)
+    view = slot_view(league, order, my_slot, cushion) if my_slot else empty_view(league)
+    return flatten(league, view, cushion)
 
 
 def _flags(row: dict) -> str:
@@ -396,7 +490,10 @@ def _player_table(rows: list[dict], horizon: int | None) -> list[str]:
 
 def render_now_md(state: dict) -> str:
     out: list[str] = []
-    out.append(f"# Draft state — {state.get('league_name') or 'league'}")
+    seat = state.get("my_team_name") or (
+        f"slot {state['my_slot']}" if state.get("my_slot") else None)
+    title = f"# Draft state — {state.get('league_name') or 'league'}"
+    out.append(f"{title} — {seat}" if seat else title)
     out.append("")
     out.append(f"_{state['generated_at']} · regenerated every poll · "
                f"doctrine: `draft/PLAYBOOK.md` · full board: `draft/board.md`_")
@@ -496,8 +593,9 @@ def render_now_md(state: dict) -> str:
         for entry in reversed(state["recent_picks"]):
             mine = " ← me" if entry["draft_slot"] == state["my_slot"] else ""
             rank = f"#{entry['rank']}" if entry["rank"] else "unranked"
+            kept = " _(keeper)_" if entry.get("is_keeper") else ""
             out.append(f"- `{entry['pick_no']}` slot {entry['draft_slot']}: "
-                       f"{entry['name']} ({entry['pos']}, {rank}){mine}")
+                       f"{entry['name']} ({entry['pos']}, {rank}){kept}{mine}")
         out.append("")
 
     if state["off_board_picks"]:
@@ -520,13 +618,67 @@ def write_state(state: dict, out_dir: Path) -> tuple[Path, Path]:
     return md_path, json_path
 
 
+def write_all_state(all_state: dict, out_dir: Path, my_slot: int | None) -> tuple[Path, Path]:
+    """state.json for the league, NOW.md for my seat, one file per other seat.
+
+    NOW.md keeps meaning "my team" at its old path, which is what lets the
+    draft-day skill go on reading it unchanged while the league view develops
+    alongside. The other eleven land under teams/ so nothing has to guess which
+    file is the one it wants.
+    """
+    out_dir.mkdir(parents=True, exist_ok=True)
+    json_path = out_dir / "state.json"
+    md_path = out_dir / "NOW.md"
+    json_path.write_text(json.dumps(all_state, indent=1) + "\n")
+    md_path.write_text(render_now_md(team_state(all_state, my_slot)))
+
+    teams_dir = out_dir / "teams"
+    teams_dir.mkdir(parents=True, exist_ok=True)
+    for key in all_state.get("war_rooms") or {}:
+        if my_slot is not None and int(key) == my_slot:
+            continue
+        (teams_dir / f"NOW-slot-{key}.md").write_text(
+            render_now_md(team_state(all_state, int(key))))
+    return md_path, json_path
+
+
+def resolve_team_names(client: SleeperClient, league_id: str | None,
+                       draft: dict) -> dict[int, str]:
+    """slot -> team name, resolved once at startup rather than every poll.
+
+    draft_order maps user_id -> slot and the league user list maps user_id -> a
+    name; neither is required. Without them the war rooms are numbered, which is
+    all the single-seat tool ever showed, so a league that has not drawn its
+    order yet still gets a working board.
+    """
+    draft_order = draft.get("draft_order")
+    if not league_id or not isinstance(draft_order, dict) or not draft_order:
+        return {}
+    try:
+        users = client.get_league_users(str(league_id))
+    except SleeperError:
+        return {}
+    names: dict[int, str] = {}
+    for user in users:
+        slot = draft_order.get(str(user.get("user_id")))
+        if slot is None:
+            continue
+        meta = user.get("metadata") or {}
+        name = meta.get("team_name") or user.get("display_name")
+        if name:
+            names[int(slot)] = str(name)
+    return names
+
+
 def poll_once(client: SleeperClient, draft_id: str, board: dict, order: dict,
-              my_slot: int | None, args: argparse.Namespace) -> dict:
+              my_slot: int | None, args: argparse.Namespace,
+              team_names: dict[int, str] | None = None) -> dict:
     draft = client.get_draft(draft_id)
     picks = client.get_draft_picks(draft_id)
-    state = summarize(board, order, draft, picks, my_slot, args.cushion, args.available)
-    write_state(state, args.out_dir)
-    return state
+    all_state = summarize_all(board, order, draft, picks, args.cushion, args.available,
+                              team_names, my_slot)
+    write_all_state(all_state, args.out_dir, my_slot)
+    return team_state(all_state, my_slot)
 
 
 def main() -> int:
@@ -544,7 +696,10 @@ def main() -> int:
     client = SleeperClient(**({"cache_dir": args.cache_dir} if args.cache_dir else {}))
     draft = client.get_draft(str(draft_id))
     my_slot, provenance = resolve_slot(draft, order, args.slot, args.username, client)
-    print(f"draft {draft_id} ({draft.get('status')}) · my slot: {provenance}", file=sys.stderr)
+    team_names = resolve_team_names(client, board["league"].get("league_id"), draft)
+    named = f"{len(team_names)}/{len(order['picks_by_slot'])} war rooms named"
+    print(f"draft {draft_id} ({draft.get('status')}) · my slot: {provenance} · {named}",
+          file=sys.stderr)
 
     if args.serve:
         from .serve import serve_in_background
@@ -560,7 +715,8 @@ def main() -> int:
 
     last_seen = -1
     while True:
-        state = poll_once(client, str(draft_id), board, order, my_slot, args)
+        state = poll_once(client, str(draft_id), board, order, my_slot, args,
+                          team_names)
         if state["picks_made"] != last_seen:
             last_seen = state["picks_made"]
             where = (f"pick {state['current_pick']} (slot {state['on_the_clock_slot']})"
@@ -575,7 +731,9 @@ def main() -> int:
             break
         time.sleep(args.interval)
 
-    print(f"wrote {args.out_dir}/NOW.md and {args.out_dir}/state.json", file=sys.stderr)
+    print(f"wrote {args.out_dir}/NOW.md, {args.out_dir}/state.json and "
+          f"{args.out_dir}/teams/ ({len(order['picks_by_slot'])} war rooms)",
+          file=sys.stderr)
 
     if args.serve:
         # Polling is done -- the draft finished, or this was a one-shot run --
