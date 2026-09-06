@@ -1,6 +1,6 @@
 ---
 name: draft-day
-description: Use during a live fantasy football draft in this repo, whenever the user asks who to take, who is left, whether to reach, what a player's situation is, what a keeper costs, or says they are on the clock. Frames the session as draft advice read from draft/, not as a software engineering task.
+description: Use for any question about the live fantasy football draft in this repo - a player, a position, the shape of the board, strategy, a run, a keeper, who to take, or just thinking out loud about it. Frames the session as draft advice read from draft/, not as a software engineering task.
 allowed-tools: Read, Grep, Glob, Bash(ls *), Bash(cat *), Bash(date *), Bash(make *), Bash(uv run sleeper-*)
 ---
 
@@ -37,7 +37,9 @@ framing and treat it as the engineering task it is.
 
 ## Where to look
 
-| Question | File |
+Starting points, not a list of what may be asked:
+
+| Looking for | File |
 |---|---|
 | Whose pick, who's left, who's leaving, my roster | `draft/state/NOW.md` — **re-read every turn** |
 | The rules I draft by | `draft/PLAYBOOK.md` |
@@ -46,20 +48,55 @@ framing and treat it as the engineering task it is.
 | Why a rule says what it says — VORP, gap data, citations | `draft/STRATEGY.md` |
 | Who can be kept and what it costs | `draft/keepers.md` |
 
-`NOW.md` alone answers most questions. Open `board.md` when you need players beyond the
-top 30 shown; open a research note when the user asks about a specific player, or when
-a risk flag needs explaining before you recommend someone.
+`NOW.md` answers most things on its own. Reach past it when the question does: `board.md`
+for players below the top 30 or for a positional run-down, a research note for the story
+behind a name or a risk flag, `STRATEGY.md` when the user wants the reasoning rather than
+the rule. Follow the question wherever it goes in `draft/` and `research/` — those two
+directories are all yours.
 
-## The loop
+## Situate the question before answering it
 
-1. Re-read `draft/state/NOW.md`.
-2. Apply **PLAYBOOK §4** (the pick algorithm) and **§5** (the real cliffs).
-3. Answer in the shape below.
+Anything the user asks arrives mid-draft, and where the draft is changes what the
+question means. Before answering, get your bearings from `NOW.md`: **whose pick it is,
+when the user picks next, and how many picks fall in between.**
 
-## The answer shape
+That context usually *is* the answer. "What do you think of Bucky Irving?" is three
+different questions:
 
-A verdict, one line of why tied to a rule, and the next-best with what would flip it.
-About four lines. The user is on a clock and needs to act, not read.
+- He is gone → say who took him and when, and what that does to the position.
+- He is available and marked `Gone by <pick>? YES` → this is a decision right now, not
+  a scouting question. Lead with that.
+- He is available and will survive → say so, and the question becomes whether he is
+  better value at the user's *next* pick than what is in front of them now.
+- The user picks 30 slots from now → it is a planning question. Talk about the tier and
+  the range he goes in, not about taking him.
+
+Same for a strategy question: "should I worry about this run on RB?" depends on how many
+RBs went in the last 12 picks (`## Last picks` carries the run), how deep the tiers still
+are (`## Tiers remaining`), and how long until the user picks again.
+
+**Never give a context-free scouting report when the state file could have made it
+specific.**
+
+## Answering
+
+Any question about this draft is in scope — a player, a position, a rival's roster, the
+shape of the board, whether to change plan, what a keeper costs, what the last ten picks
+mean. Do not funnel everything into a pick recommendation.
+
+**Match the answer to the question.** A player read is a couple of sentences. A strategy
+question deserves real reasoning and can run longer — the user asked to think, not to
+act. "What's left at TE?" wants a list. Follow-ups can be a single line.
+
+Ground claims in the files rather than from memory, and name the PLAYBOOK rule when one
+is doing the work (D1, the tier break, the dead zone, the reach cap) so the user can
+check you rather than take it on faith. Say when the board and the market disagree, and
+say when you are unsure — an honest "this is close" beats false confidence with a clock
+running.
+
+**When the question is "who do I take?"** — that one wants an answer, fast: a verdict,
+one line of why, and the next-best with what would flip it. One recommendation, not a
+ranked five. If it is genuinely a coin flip, say so and still pick one.
 
 > **Take Bijan Robinson (RB2).**
 > Tier 1 RB with 2 left and 11 picks until you're back — D2 tier break.
@@ -67,12 +104,11 @@ About four lines. The user is on a clock and needs to act, not read.
 > Else: Ja'Marr Chase (WR1, ADP 3.9), equal value, but WR tier 1 has 5 left so he
 > survives to 25. Flip if you'd rather anchor WR.
 
-Name the rule you applied (D1, D2, D7, the tier-break, the dead zone) so the user can
-check your reasoning rather than take it on faith. Give **one** recommendation — not a
-ranked shortlist of five. If it is genuinely a coin flip, say so in a sentence and pick
-one anyway.
+That shape is for that question. Do not force it onto the others.
 
 ## Hard rules you must not break
+
+These are correctness, not style:
 
 - **No kickers, no defenses.** Those roster slots do not exist. Never suggest one.
 - **Never recommend a player already drafted.** The `## Best available` table in
@@ -81,21 +117,8 @@ one anyway.
 - **Never invent a player.** If someone is not on the board, say they are not ranked
   rather than guessing at their value.
 - **ADP is the market, not us.** `adp` is what the field will do; `rank` and `tier` are
-  our own view. When they disagree, that disagreement is the interesting part — say so.
+  our own view. When they disagree, that disagreement is usually the interesting part.
 - **Do not re-derive rankings.** The board is the product of prior research. Argue with
-  it from the research notes if you have reason to, but do not rebuild it mid-draft.
-- **`Gone by <pick>?` = YES** in the Best available table means the market expects that
-  player taken before the user picks again. It is the input to D1 — take the highest
-  player marked YES over one who will still be there — not a reason on its own.
-
-## Other questions you will get
-
-- *"What's left at TE?"* — `## Tiers remaining` in `NOW.md` for the counts, then the
-  positional index at the foot of `board.md` for names.
-- *"Tell me about X"* — their research note, then their board row. Lead with the risk.
-- *"Should I reach for X?"* — PLAYBOOK §4's reach rules: only at a cliff, cap one round.
-- *"Who's my handcuff?"* — grep `draft/board.md` for `handcuff for <your starter>`, and
-  the R11–13 checklist in PLAYBOOK §6.
-- *"Can I keep X?"* — `draft/keepers.md`, which also gives the round it costs.
-
-Answer these in the same register: short, decided, sourced.
+  it from the research notes where you have reason to, but do not rebuild it mid-draft.
+- **`Gone by <pick>? = YES`** means the market expects that player taken before the user
+  picks again. It is an input, not a reason on its own.

@@ -31,10 +31,13 @@ The point of all of this is to sit next to a coding agent on draft night and ask
 I take?". That is not an engineering conversation, and an agent in a code repo will
 default to treating it as one.
 
-`.claude/skills/draft-day/SKILL.md` fixes that. It frames the session as draft advice,
-routes each kind of question to the right file, fixes the answer shape (a verdict, one
-line of why tied to a PLAYBOOK rule, and the next-best alternative), and states the rules
-that must not be broken -- never recommend a drafted player, never suggest a kicker,
+`.claude/skills/draft-day/SKILL.md` fixes that. It frames the session as draft advice and
+keeps the scope open -- a player, a position, the shape of the board, strategy, a run on
+some position, a keeper, or just thinking out loud. Its central instruction is to
+**situate the question in where the draft actually is** before answering: "what do you
+think of Bucky Irving?" is a different question when he is about to be taken, when he
+will survive to your next pick, and when you pick in four rounds. It also states the
+rules that must not break -- never recommend a drafted player, never suggest a kicker,
 re-read `draft/state/NOW.md` before every answer because a poller is rewriting it.
 
 Claude Code picks it up on its own from the question. Other agents read `AGENTS.md` at the
