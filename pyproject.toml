@@ -13,6 +13,7 @@ sleeper-discover = "sleeper_draft.discover:cli"
 sleeper-batches = "sleeper_draft.batches:cli"
 sleeper-past-draft = "sleeper_draft.past_draft:cli"
 sleeper-board = "sleeper_draft.board:cli"
+sleeper-live = "sleeper_draft.live:cli"
 
 [dependency-groups]
 dev = [

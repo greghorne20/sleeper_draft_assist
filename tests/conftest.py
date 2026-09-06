@@ -278,3 +278,56 @@ def league_config(tmp_path):
         "scoring_settings": {"rec": 0.5},
     }))
     return path
+
+
+@pytest.fixture
+def draft_artifacts(tmp_path, players_cache, rankings_file, notes_dir, scouting_file,
+                    league_config):
+    """Real board.json + pick_order.json, built by the real generator.
+
+    The live poller consumes exactly these two files, so building them through
+    sleeper-board keeps the two modules honest about the shape they share.
+    """
+    import sys
+
+    from sleeper_draft import board
+
+    out = tmp_path / "draft"
+    sys.argv = ["sleeper-board", "--cache-dir", str(players_cache),
+                "--rankings", str(rankings_file), "--notes-dir", str(notes_dir),
+                "--config", str(league_config), "--scouting", str(scouting_file),
+                "--out-dir", str(out)]
+    board.main()
+    return out
+
+
+def make_picks(order: dict, board: dict, count: int) -> list[dict]:
+    """`count` picks in draft order, taking the board from the top.
+
+    Once the board runs out the picks keep coming with player_ids that are not
+    on it -- the off-board case, which is normal in a real draft.
+    """
+    rows = board["players"]
+    picks = []
+    for pick_no in range(1, count + 1):
+        slot = order["slot_by_pick"][str(pick_no)]
+        if pick_no <= len(rows):
+            row = rows[pick_no - 1]
+            pid, meta = row["player_id"], {
+                "first_name": row["name"].split()[0],
+                "last_name": " ".join(row["name"].split()[1:]),
+                "position": row["pos"], "team": row["team"],
+            }
+        else:
+            pid = f"offboard-{pick_no}"
+            meta = {"first_name": "Off", "last_name": f"Board{pick_no}",
+                    "position": "WR", "team": "KC"}
+        picks.append({
+            "pick_no": pick_no,
+            "round": (pick_no - 1) // order["teams"] + 1,
+            "draft_slot": slot,
+            "roster_id": slot,
+            "player_id": pid,
+            "metadata": meta,
+        })
+    return picks

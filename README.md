@@ -13,6 +13,7 @@ src/sleeper_draft/
     batches.py            ordered research list, chunked into YAML files
     past_draft.py         walk previous_league_id back, save a draft fixture
     board.py              rankings + research notes -> the in-draft board
+    live.py               poll the live draft -> the current-state files
     yamlio.py             shared YAML output settings
 research/rankings_2026.json    aggregate rankings, keyed by name -- the board's input
 research/scouting_notes.json  one-line scouting + flags + handcuff pairs, keyed by player_id
@@ -150,6 +151,36 @@ before a draft gets planned around them.
 
 ---
 
+### 5. `sleeper-live`
+
+```bash
+uv run sleeper-live --slot 12                 # one shot
+uv run sleeper-live --slot 12 --watch         # poll until the draft completes
+uv run sleeper-live --username greg --watch --interval 5
+```
+
+Polls `/draft/<id>/picks` and rewrites `draft/state/NOW.md` and
+`draft/state/state.json`. Everything except the picks comes from what
+`sleeper-board` already built -- `board.json` supplies rank, tier, ADP, flags and
+scouting for a `player_id`, `pick_order.json` supplies the 3RR pick numbers -- so
+a poll is one small request.
+
+`NOW.md` is written in reading order: whose pick it is and how many picks until
+yours comes back, your roster and which starting slots are still open, who is at
+risk before your next pick (ADP within `--cushion` of the pick you have to
+survive until), the best available board, how many players are left in each
+positional tier, the recent picks and any positional run.
+
+Your slot comes from `--slot`, or from `--username` resolved through the draft's
+`draft_order`. Without one the pick-timing maths is skipped rather than guessed --
+the at-risk list and "picks until my next" are simply absent.
+
+The board ranks 208 players and 156 picks get made, so a rival drafting someone
+unranked is normal, not an error: those picks are recorded from Sleeper's own
+pick metadata and listed under "Off-board picks".
+
+---
+
 ## The `draft/` directory
 
 Everything the in-draft assistant reads, and nothing else:
@@ -161,6 +192,8 @@ Everything the in-draft assistant reads, and nothing else:
 | `board.md` | 208 ranked players grouped by tier, with `player_id`, source ranks and risk flags, plus a positional index and the researched-but-unranked bin. | `sleeper-board` |
 | `board.json` | The same board, machine-readable. | `sleeper-board` |
 | `pick_order.json` | `picks_by_slot` and `slot_by_pick` for all 12 slots x 13 rounds. | `sleeper-board` |
+| `state/NOW.md` | Live draft state: whose pick, your roster and gaps, at-risk players, best available, tiers left, recent picks and runs. | `sleeper-live` |
+| `state/state.json` | The same, machine-readable. | `sleeper-live` |
 
 The join key is `player_id` throughout: live pick -> board row -> `research/players/*-<player_id>.md`.
 

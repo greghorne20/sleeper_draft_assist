@@ -5,32 +5,35 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## What this is
 
 Read-only helpers for a personal, single-user fantasy football draft assistant built on the
-Sleeper public API. Nothing is ever written back to Sleeper; nothing is scraped. Four console
+Sleeper public API. Nothing is ever written back to Sleeper; nothing is scraped. Five console
 commands turn a Sleeper league into offline artifacts: a config YAML, chunked player research
-batches, a past-draft JSON fixture, and the in-draft board.
+batches, a past-draft JSON fixture, the in-draft board, and the live draft state.
 
-**The end use is live: during the draft, a TUI assistant reads `draft/` while draft state is
-polled from Sleeper.** `draft/PLAYBOOK.md` is the standing doctrine and is loaded first every
-session; `draft/board.md` is the ranked board. See "The draft/ directory" below.
+**The end use is live: during the draft, a TUI assistant reads `draft/` while `sleeper-live`
+polls Sleeper.** `draft/PLAYBOOK.md` is the standing doctrine and is loaded first every session;
+`draft/board.md` is the ranked board; `draft/state/NOW.md` is what is true right now. See "The
+draft/ directory" below.
 
 ## Repo layout
 
 ```
-src/sleeper_draft/   client.py discover.py batches.py past_draft.py board.py yamlio.py __init__.py
+src/sleeper_draft/   client.py discover.py batches.py past_draft.py board.py live.py
+                     yamlio.py __init__.py
 tests/               test_client.py test_batches.py test_discover_and_past_draft.py
-                     test_board.py conftest.py
+                     test_board.py test_live.py conftest.py
 research/rankings_2026.json    aggregate rankings keyed by NAME -- the board's input
 research/scouting_notes.json  one-line scouting + flags + handcuff pairs, keyed by player_id
 research/players/    one markdown note per player; filename ends in the Sleeper player_id
 research/batches/    the input lists those notes were written from
 draft/               PLAYBOOK.md + STRATEGY.md (hand-maintained) + board.md/board.json/
                      pick_order.json (generated) -- what the in-draft assistant reads
+draft/state/         NOW.md + state.json, rewritten every poll (gitignored)
 ```
 
 The modules use **relative imports** (`from .client import ...`), so run them via the console
 scripts or as the `sleeper_draft` package — not `python discover.py` directly. `pyproject.toml`
 declares `packages = ["src/sleeper_draft"]`, `testpaths = ["tests"]`, and console scripts pointing
-at `sleeper_draft.discover:cli`, etc.; the layout above is what makes all four resolve.
+at `sleeper_draft.discover:cli`, etc.; the layout above is what makes all five resolve.
 
 ## Commands
 
@@ -42,13 +45,14 @@ uv run ruff check .                  # lint (E, F, I, UP, B; line-length 110, ta
 ```
 
 Runtime deps are deliberately minimal: only PyYAML. Everything except YAML emitting is standard
-library (`urllib`, `json`). The four console scripts:
+library (`urllib`, `json`). The five console scripts:
 
 ```bash
 uv run sleeper-discover --league-id <id> --out config.yaml
 uv run sleeper-batches --byes byes.2026.json
 uv run sleeper-past-draft --league-id <id> --back 1
 uv run sleeper-board
+uv run sleeper-live --slot <n> --watch
 ```
 
 No league ID, draft ID, username, or season is hardcoded — everything comes from CLI args or the
@@ -100,6 +104,17 @@ is why `SleeperError` is the one exception type worth catching at the boundary.
   against the rankings file's own pick map** — 3RR is undocumented, so two derivations
   must agree.
 
+- **`live.py`** — the only module that runs *during* the draft. Polls `/draft/<id>/picks` and
+  rewrites `draft/state/`. It reads `draft/board.json` and `draft/pick_order.json` rather than
+  the rankings, so a poll is one small request and every board field (tier, ADP, flags,
+  scouting, research note path) is already attached to the `player_id` the pick feed returns.
+  `summarize()` is pure — draft + picks + board in, whole state out — which is why the tests
+  cover the pick-timing maths without any HTTP. Two deliberate asymmetries with the rest of the
+  repo: an **off-board pick is not an error** (208 ranked, 156 picks, rivals draft whoever they
+  like — those are recorded from Sleeper's pick metadata and listed separately), and a
+  **missing slot is not an error either** — without `--slot`/`--username` the timing maths is
+  skipped rather than guessed, since a wrong "picks until my next" is worse than none.
+
 `yamlio.py` — one shared `dump_yaml` so `discover` and `batches` emit identical style
 (`sort_keys=False` to preserve field order; PyYAML's resolver quotes traps like the team
 abbreviation `NO`, which bare YAML 1.1 would read as boolean `false`).
@@ -117,6 +132,10 @@ Tests are fully offline. `conftest.py` provides:
   notes covering the three real entry shapes (text-only, flags-only, handcuff pair), and a
   league config, for the board join. `tests/test_board.py` pins the generated 3RR pick table
   against the real 12x13 numbers.
+- `draft_artifacts` / `make_picks()` — builds a real `board.json` + `pick_order.json` by running
+  the actual generator, then synthesises picks in draft order. `tests/test_live.py` uses them so
+  the two modules stay honest about the file shape they share; `make_picks` runs past the end of
+  the board on purpose to exercise the off-board path.
 
 When adding behavior, extend these fixtures rather than reaching for the network, and preserve the
 edge-case rows — several tests exist specifically to pin behavior against them (e.g. the `NO`
@@ -141,6 +160,10 @@ everywhere: live pick → `draft/board.md` row → `research/players/*-<player_i
   the path to each player's research note. Plus a positional index, the researched-but-unranked
   bin (late-round material), and a provenance section carrying the ranking sources and weights.
 - **`pick_order.json`** — `picks_by_slot` and `slot_by_pick` for all 12 slots × 13 rounds.
+- **`state/NOW.md`** and **`state/state.json`** — written by `sleeper-live` every poll, and
+  gitignored because they turn over every few seconds during a draft. `NOW.md` is in reading
+  order: whose pick, picks until mine comes back, my roster and open starting slots, who is at
+  risk before my next pick, best available, tiers remaining, recent picks and runs.
 
 Regenerate the three generated files with `uv run sleeper-board` after editing anything in
 `research/`. `PLAYBOOK.md` and `STRATEGY.md` do not regenerate — update them by hand.

@@ -12,6 +12,7 @@ This file is the operational subset — the part you actually run during the dra
 
 | I need… | Read |
 |---|---|
+| **What is true right now — whose pick, my roster, who's at risk** | `draft/state/NOW.md` (rewritten every poll by `sleeper-live`) |
 | League rules, scoring, roster slots | `config.yaml` (fetched from Sleeper — authoritative) |
 | The ranked board, tiers, ADP, risk flags | `draft/board.md` (human) · `draft/board.json` (machine) |
 | My pick numbers for a given draft slot | `draft/pick_order.json` — or the table in §3 |
