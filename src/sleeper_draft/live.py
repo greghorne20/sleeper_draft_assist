@@ -37,6 +37,7 @@ import sys
 import time
 from pathlib import Path
 
+from .board import market_adp
 from .client import SleeperClient, SleeperError
 
 # Starting slots this league fills, and what FLEX accepts. Read from the league
@@ -153,14 +154,6 @@ def pick_player_name(pick: dict) -> str:
     if first or last:
         return f"{first} {last}".strip()
     return str(pick.get("player_id") or "unknown")
-
-
-def market_adp(row: dict) -> float | None:
-    """The market's own read on a player, for the at-risk maths."""
-    adp = (row.get("source_ranks") or {}).get("ffc_halfppr_12team_adp")
-    if isinstance(adp, (int, float)) and not isinstance(adp, bool):
-        return float(adp)
-    return None
 
 
 # What a live view of a player actually shows. Everything else on a board row --

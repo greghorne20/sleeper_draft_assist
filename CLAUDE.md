@@ -126,6 +126,9 @@ is why `SleeperError` is the one exception type worth catching at the boundary.
   failing the second. They happened to agree for every 2025 roster, so any disagreement is
   reported rather than silently resolved. Trades need no special case — Sleeper puts the losing
   side in `drops`. `eligible_keepers()` is pure, so every rule has a test with no HTTP.
+  **`keepers.md` is circulated to the league, so it carries only public data**: the optional
+  board enrichment takes the market ADP and nothing else — never our rank, tier, scouting or
+  flags. A test asserts none of those strings can reach the report.
 
 `yamlio.py` — one shared `dump_yaml` so `discover` and `batches` emit identical style
 (`sort_keys=False` to preserve field order; PyYAML's resolver quotes traps like the team
@@ -183,7 +186,8 @@ exists as a machine input: `board.json` and `pick_order.json` are what `live.py`
   bin (late-round material), and a provenance section carrying the ranking sources and weights.
 - **`pick_order.json`** — `picks_by_slot` and `slot_by_pick` for all 12 slots × 13 rounds.
 - **`keepers.md`** / **`keepers.json`** — per-team keeper eligibility with the round each
-  would cost, plus who is blocked and why. Regenerate with `uv run sleeper-keepers`.
+  would cost, plus who is blocked and why. Regenerate with `uv run sleeper-keepers`. Unlike
+  everything else in `draft/`, this one leaves the machine — keep it to public data only.
 - **`state/NOW.md`** and **`state/state.json`** — written by `sleeper-live` every poll, and
   gitignored because they turn over every few seconds during a draft. `NOW.md` is in reading
   order: whose pick, picks until mine comes back, my roster and open starting slots, who is at

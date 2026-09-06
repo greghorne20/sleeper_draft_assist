@@ -206,10 +206,14 @@ admitted or dropped. Trades need no special case: Sleeper records the losing
 side in `drops`, so a player traded away fails "never left" and a player traded
 for fails "you drafted him".
 
-When `draft/board.json` exists it also shows this year's rank and tier next to
-each eligible player, which is what turns eligibility into a decision -- keeping
-Jaxon Smith-Njigba at his round-3 cost reads differently once you see he is
-ranked 4th this year. The board is optional; without it the ruling is unchanged.
+When `draft/board.json` exists it also shows this year's **public market ADP**
+next to each eligible player, which is what turns eligibility into a decision --
+keeping George Pickens at his round-5 cost reads differently once you see the
+market has him going around pick 19.
+
+Only the ADP is taken off the board. This report is circulated to the league, so
+our own rank, tier, scouting notes and flags never reach it; a test asserts that.
+The board is optional, and a player with no ADP renders as a dash.
 
 ---
 

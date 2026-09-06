@@ -84,6 +84,19 @@ def parse_args() -> argparse.Namespace:
     return p.parse_args()
 
 
+def market_adp(row: dict) -> float | None:
+    """The market's own read on a player, from a board row.
+
+    Lives here because this module writes `source_ranks`, so the field name is
+    defined once next to the code that produces it. `live` and `keepers` both
+    read it back.
+    """
+    adp = (row.get("source_ranks") or {}).get("ffc_halfppr_12team_adp")
+    if isinstance(adp, (int, float)) and not isinstance(adp, bool):
+        return float(adp)
+    return None
+
+
 def normalize_name(name: str) -> str:
     """Strip accents, punctuation, case and generational suffixes.
 
@@ -509,7 +522,7 @@ def render_board_md(rows: list[dict], extras: list[dict], league: dict, rankings
                 annotations.append("_no research note_")
             out.append(
                 f"| {row['rank']} | {row['pos_rank']} | {row['name']} | {row['team']} | {row['bye']} | "
-                f"{row['player_id']} | {cell(src.get('ffc_halfppr_12team_adp'))} | "
+                f"{row['player_id']} | {cell(market_adp(row))} | "
                 f"{cell(src.get('underdog_adp'))} | {cell(src.get('rotoworld_rank'))} | "
                 f"{cell(row['value_vs_market'])} | {' · '.join(annotations)} |"
             )

@@ -43,6 +43,7 @@ import sys
 import time
 from pathlib import Path
 
+from .board import market_adp
 from .client import SleeperClient, SleeperError
 from .past_draft import walk_back
 
@@ -118,6 +119,9 @@ def dropped_by_roster(transactions: list[dict]) -> dict[int, set[str]]:
 def load_board(path: Path) -> dict[str, dict]:
     """This year's board keyed by player_id, or {} if there isn't one.
 
+    Only the public market ADP is taken off it. This report gets circulated to
+    the league, and our own rank, tier and scouting are not for sharing.
+
     Optional by design: keeper eligibility is a fact about last season and does
     not depend on how we rank players now.
     """
@@ -182,10 +186,11 @@ def eligible_keepers(picks: list[dict], rosters: list[dict], users: list[dict],
                 "drafted_at_pick": pick.get("pick_no"),
             }
             row = board.get(player_id)
-            if row:
-                entry["board_rank"] = row.get("rank")
-                entry["board_pos_rank"] = row.get("pos_rank")
-                entry["board_tier"] = row.get("tier")
+            if row is not None:
+                # Public ADP only -- never our own rank, tier or scouting.
+                adp = market_adp(row)
+                if adp is not None:
+                    entry["adp"] = adp
 
             if pick.get("is_keeper"):
                 blocked.append({**entry, "reason": "kept last season"})
@@ -259,22 +264,21 @@ def render_keepers_md(report: dict, source: dict) -> str:
         out.append(f"## {team['display_name']}")
         out.append("")
         if team["eligible"]:
-            has_board = any("board_rank" in p for p in team["eligible"])
+            has_adp = any("adp" in p for p in team["eligible"])
             header = "| Costs | Player | Pos | Tm | Drafted |"
             divider = "|---|---|---|---|---:|"
-            if has_board:
-                header += " 2026 rank | Tier |"
-                divider += "---:|---:|"
+            if has_adp:
+                header += " 2026 ADP |"
+                divider += "---:|"
             out.append(header)
             out.append(divider)
             for player in team["eligible"]:
                 row = (f"| **R{player['round_cost']}** | {player['name']} | "
                        f"{player['pos'] or '-'} | {player['nfl_team'] or '-'} | "
                        f"{player['drafted_at_pick']} |")
-                if has_board:
-                    rank = player.get("board_rank")
-                    row += (f" {rank if rank else '-'} | "
-                            f"{player.get('board_tier') if player.get('board_tier') else '-'} |")
+                if has_adp:
+                    adp = player.get("adp")
+                    row += f" {adp if adp is not None else '-'} |"
                 out.append(row)
         else:
             out.append("_No eligible keepers._")

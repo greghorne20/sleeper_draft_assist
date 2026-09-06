@@ -108,18 +108,43 @@ def test_eligible_players_are_ordered_by_round_cost():
         assert costs == sorted(costs)
 
 
-def test_board_enrichment_is_attached_when_a_board_is_supplied():
-    board = {"1001": {"player_id": "1001", "rank": 12, "pos_rank": "WR5", "tier": 2}}
-    entry = next(p for p in team(rule(board), 1)["eligible"] if p["player_id"] == "1001")
-    assert (entry["board_rank"], entry["board_pos_rank"], entry["board_tier"]) == (12, "WR5", 2)
-    md = keepers.render_keepers_md(rule(board), {"for_league_name": "L", "for_season": "2026",
+BOARD = {"1001": {"player_id": "1001", "rank": 12, "pos_rank": "WR5", "tier": 2,
+                  "scouting": "our private read", "flags": ["value"],
+                  "source_ranks": {"ffc_halfppr_12team_adp": 18.4, "ffc_rank": 18}}}
+
+
+def test_public_adp_is_attached_when_a_board_is_supplied():
+    entry = next(p for p in team(rule(BOARD), 1)["eligible"] if p["player_id"] == "1001")
+    assert entry["adp"] == 18.4
+    md = keepers.render_keepers_md(rule(BOARD), {"for_league_name": "L", "for_season": "2026",
                                                  "target_season": "2025"})
-    assert "2026 rank" in md
+    assert "2026 ADP" in md
+    assert "18.4" in md
+
+
+def test_our_own_rank_tier_and_scouting_never_reach_the_report():
+    """keepers.md gets circulated to the league; the aggregate board does not."""
+    report = rule(BOARD)
+    entry = next(p for p in team(report, 1)["eligible"] if p["player_id"] == "1001")
+    for private in ("rank", "pos_rank", "tier", "scouting", "flags",
+                    "board_rank", "board_tier", "board_pos_rank"):
+        assert private not in entry, private
+
+    blob = json.dumps(report) + keepers.render_keepers_md(
+        report, {"for_league_name": "L", "for_season": "2026", "target_season": "2025"})
+    assert "our private read" not in blob
+    assert "WR5" not in blob
+
+
+def test_a_board_row_without_adp_adds_nothing():
+    entry = next(p for p in team(rule({"1001": {"player_id": "1001", "rank": 12}}), 1)["eligible"]
+                 if p["player_id"] == "1001")
+    assert "adp" not in entry
 
 
 def test_board_is_optional():
     entry = next(p for p in team(rule(), 1)["eligible"] if p["player_id"] == "1001")
-    assert "board_rank" not in entry
+    assert "adp" not in entry
 
 
 def test_missing_board_file_is_not_an_error(tmp_path):
