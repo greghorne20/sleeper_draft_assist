@@ -1,0 +1,517 @@
+{
+ "source": "FILE C tier tables, fantasy-draft-research.md (compiled 2026-09-05)",
+ "join_key": "player_id",
+ "flag_vocabulary": {
+  "risk": "injury or situation risk",
+  "riser": "trending up",
+  "faller": "trending down",
+  "value": "under-drafted relative to projection",
+  "handcuff": "contingent value behind a starter",
+  "dead_zone": "sits in the 2026 RB dead zone"
+ },
+ "notes": {
+  "1466": {
+   "text": "Route floor",
+   "tier_label": "late streamers"
+  },
+  "1479": {
+   "text": "elite targets/route; hurts Pierce/Downs",
+   "flags": [
+    "riser"
+   ]
+  },
+  "2133": {
+   "text": "New team LAR"
+  },
+  "2216": {
+   "text": "New team SF"
+  },
+  "2449": {
+   "text": "signed WAS Aug 7; WR49 ADP value",
+   "flags": [
+    "riser",
+    "value"
+   ]
+  },
+  "3163": {
+   "text": "Leads NFL pass TDs since '22; no rush"
+  },
+  "3198": {
+   "text": "late-career; still elite",
+   "flags": [
+    "risk"
+   ]
+  },
+  "3294": {
+   "text": "Lamb+Pickens",
+   "tier_label": "TARGET ZONE R8–11"
+  },
+  "4034": {
+   "text": "age/injury history; handcuff Jordan James",
+   "flags": [
+    "risk"
+   ]
+  },
+  "4037": {
+   "text": "injury recovery",
+   "flags": [
+    "risk"
+   ]
+  },
+  "4046": {
+   "text": "rush volume expected down; ceiling capped",
+   "flags": [
+    "faller"
+   ]
+  },
+  "4217": {
+   "text": "Achilles recovery",
+   "flags": [
+    "risk"
+   ],
+   "tier_label": "streaming-plus R8–11"
+  },
+  "4866": {
+   "text": "New OC Mannion; RB14 in '25 down yr"
+  },
+  "4881": {
+   "text": "Bounce-back after injury-marred '25; rushing floor",
+   "flags": [
+    "riser"
+   ]
+  },
+  "4892": {
+   "text": "Targets RBs; Egbuka",
+   "tier_label": "darts"
+  },
+  "4983": {
+   "text": "New team BUF"
+  },
+  "4984": {
+   "text": "Only QB >24 proj PPG; QB1/QB2 five straight yrs; DJ Moore added. Pay up ONLY if he slides to R4–5."
+  },
+  "5045": {
+   "text": "Waddle lowers ceiling",
+   "flags": [
+    "faller"
+   ]
+  },
+  "5844": {
+   "flags": [
+    "faller"
+   ]
+  },
+  "5846": {
+   "text": "New team PIT"
+  },
+  "5849": {
+   "text": "named MIN starter; O'Connell scheme + Jefferson; rushing",
+   "flags": [
+    "value"
+   ]
+  },
+  "5850": {
+   "text": "huge ADP stdev (19.5) — uncertainty; verify status",
+   "flags": [
+    "risk"
+   ]
+  },
+  "5859": {
+   "text": "New team NE; reunites w/ Vrabel"
+  },
+  "5872": {
+   "text": "New team SF"
+  },
+  "5892": {
+   "text": "New team; ~12.3 proj PPG",
+   "flags": [
+    "dead_zone",
+    "value"
+   ]
+  },
+  "5967": {
+   "tier_label": "upside/contingent R7–10"
+  },
+  "6770": {
+   "text": "Full health = Chase/Higgins ceiling"
+  },
+  "6790": {
+   "text": "Receiving",
+   "flags": [
+    "dead_zone"
+   ],
+   "tier_label": "dead zone R5–7"
+  },
+  "6794": {
+   "text": "Kyler QB upgrade could unlock ceiling"
+  },
+  "6797": {
+   "text": "value",
+   "flags": [
+    "value"
+   ]
+  },
+  "6801": {
+   "text": "heel contusion (minor, Wk1 OK); injury-prone history",
+   "flags": [
+    "risk"
+   ]
+  },
+  "6806": {
+   "text": "injury history",
+   "flags": [
+    "risk"
+   ]
+  },
+  "6813": {
+   "text": "Workhorse"
+  },
+  "7021": {
+   "text": "standalone value",
+   "flags": [
+    "handcuff"
+   ],
+   "handcuff_for": "8228"
+  },
+  "7523": {
+   "text": "safe late, easy schedule",
+   "flags": [
+    "value"
+   ]
+  },
+  "7525": {
+   "text": "absorbs A.J. Brown targets",
+   "flags": [
+    "riser"
+   ]
+  },
+  "7526": {
+   "text": "New team DEN"
+  },
+  "7543": {
+   "text": "New team",
+   "flags": [
+    "dead_zone"
+   ]
+  },
+  "7547": {
+   "text": "3 straight WR4 finishes; safe"
+  },
+  "7553": {
+   "text": "erupted 2nd-half '25",
+   "flags": [
+    "riser"
+   ]
+  },
+  "7564": {
+   "text": "minor knee (practice, Aug 25) — expected fine",
+   "flags": [
+    "risk"
+   ]
+  },
+  "7567": {
+   "tier_label": "handcuffs/darts R10+"
+  },
+  "7569": {
+   "text": "Higgins ACL → more targets",
+   "flags": [
+    "riser"
+   ]
+  },
+  "7588": {
+   "flags": [
+    "dead_zone"
+   ]
+  },
+  "7611": {
+   "text": "momentum",
+   "flags": [
+    "dead_zone",
+    "riser"
+   ]
+  },
+  "8110": {
+   "text": "squeezed by Lamb/Pickens",
+   "flags": [
+    "faller"
+   ]
+  },
+  "8130": {
+   "text": "252.9 half-PPR pts in '25 (~90 more than next TE); NFL-record 126 catches; TD regression risk"
+  },
+  "8131": {
+   "text": "New team NYG"
+  },
+  "8132": {
+   "flags": [
+    "handcuff"
+   ]
+  },
+  "8137": {
+   "text": "New team DAL"
+  },
+  "8138": {
+   "text": "TD-dependent"
+  },
+  "8150": {
+   "text": "Corum lurks",
+   "flags": [
+    "dead_zone"
+   ]
+  },
+  "8151": {
+   "text": "New team KC; TD upside"
+  },
+  "8155": {
+   "flags": [
+    "dead_zone"
+   ]
+  },
+  "8161": {
+   "text": "100+ rush att projected; bad environment",
+   "flags": [
+    "risk"
+   ]
+  },
+  "8167": {
+   "text": "ACL recovery",
+   "flags": [
+    "risk"
+   ]
+  },
+  "8183": {
+   "text": "major value (QB1 per-game late '25 per CBS)",
+   "flags": [
+    "value"
+   ]
+  },
+  "8205": {
+   "text": "elite if Gibbs out",
+   "flags": [
+    "handcuff"
+   ],
+   "handcuff_for": "9221"
+  },
+  "8228": {
+   "text": "Dowdle competition",
+   "flags": [
+    "dead_zone"
+   ]
+  },
+  "8408": {
+   "flags": [
+    "handcuff"
+   ]
+  },
+  "9221": {
+   "text": "Consensus 1.01; Montgomery gone → bigger role; proj ~300"
+  },
+  "9224": {
+   "text": "Volume"
+  },
+  "9226": {
+   "text": "Receiving upside (half-PPR )",
+   "flags": [
+    "value"
+   ]
+  },
+  "9484": {
+   "text": "Elite YAC",
+   "flags": [
+    "value"
+   ]
+  },
+  "9488": {
+   "text": "Led NFL with 33.9% target share in '25 — \"the biggest mark since DeAndre Hopkins' 34.7% back in 2017\" (Draft Sharks); 163 targets, WR2 in PPR"
+  },
+  "9493": {
+   "text": "All-time WR1 PPG; monitor recovery",
+   "flags": [
+    "risk"
+   ]
+  },
+  "9509": {
+   "text": "1.01-caliber"
+  },
+  "9753": {
+   "text": "elite pure HC",
+   "flags": [
+    "handcuff"
+   ]
+  },
+  "9758": {
+   "text": "Higgins ACL hurt WR room ; sneaky value",
+   "flags": [
+    "risk"
+   ]
+  },
+  "10222": {
+   "tier_label": "darts R8–11"
+  },
+  "10236": {
+   "text": "Boom/bust"
+  },
+  "10859": {
+   "text": "Career-high efficiency '25"
+  },
+  "11560": {
+   "text": "Yr-2 Ben Johnson leap; rushing"
+  },
+  "11563": {
+   "text": "rushing; Waddle added; 4th ankle surgery",
+   "flags": [
+    "risk",
+    "value"
+   ]
+  },
+  "11564": {
+   "text": "Led NFL passing efficiency '25; rushing upside"
+  },
+  "11566": {
+   "text": "Elite rush profile; Diggs+McLaurin",
+   "flags": [
+    "value"
+   ]
+  },
+  "11581": {
+   "flags": [
+    "handcuff"
+   ]
+  },
+  "11584": {
+   "text": "full-speed post-shoulder surgery",
+   "flags": [
+    "dead_zone",
+    "riser"
+   ]
+  },
+  "11586": {
+   "text": "best standalone handcuff",
+   "flags": [
+    "handcuff",
+    "value"
+   ],
+   "handcuff_for": "8150"
+  },
+  "11604": {
+   "text": "Proj TE1 ~203; new HC Kubiak/QB Cousins; healthy = MVP candidate",
+   "tier_label": "draft at value R3–4"
+  },
+  "11620": {
+   "text": "Yr-2 upside"
+  },
+  "11628": {
+   "text": "Bounce-back"
+  },
+  "11631": {
+   "text": "talent > ADP",
+   "flags": [
+    "value"
+   ]
+  },
+  "11632": {
+   "text": "on track Wk1; Dart QB",
+   "flags": [
+    "riser"
+   ]
+  },
+  "12481": {
+   "text": "recovered, sharing w/ Tracy",
+   "flags": [
+    "dead_zone",
+    "riser"
+   ]
+  },
+  "12489": {
+   "text": "Zero-RB target"
+  },
+  "12490": {
+   "text": "Upside",
+   "flags": [
+    "dead_zone"
+   ]
+  },
+  "12501": {
+   "text": "Rookie"
+  },
+  "12506": {
+   "text": "Most productive college TE ever"
+  },
+  "12508": {
+   "text": "QB3 in FP/dropback '25; elite rushing; weak WRs",
+   "flags": [
+    "value"
+   ]
+  },
+  "12512": {
+   "flags": [
+    "dead_zone"
+   ]
+  },
+  "12514": {
+   "text": "sprained toe, questionable Wk1; Evans gone = target upside",
+   "flags": [
+    "risk"
+   ]
+  },
+  "12517": {
+   "text": "elite late-'25 stretch; Ben Johnson offense",
+   "flags": [
+    "riser"
+   ],
+   "tier_label": "young studs R5–7"
+  },
+  "12518": {
+   "text": "Rookie stud"
+  },
+  "12519": {
+   "text": "groin, ~month out",
+   "flags": [
+    "risk"
+   ],
+   "tier_label": "upside R6–8"
+  },
+  "12526": {
+   "text": "Yr-2 OROY; possible slot boost = WR1 ceiling"
+  },
+  "12527": {
+   "text": "low ankle sprain (Aug 23); trending Wk1 but uncertain; Mike Washington Jr. eating early role",
+   "flags": [
+    "risk"
+   ]
+  },
+  "12529": {
+   "text": "Could seize job",
+   "flags": [
+    "dead_zone"
+   ]
+  },
+  "12533": {
+   "text": "Upside"
+  },
+  "12534": {
+   "text": "banged up",
+   "flags": [
+    "risk"
+   ]
+  },
+  "13286": {
+   "text": "Rookie, wide-open room"
+  },
+  "13287": {
+   "text": "rookie, high-ankle sprain reported; 3rd overall pick talent",
+   "flags": [
+    "dead_zone",
+    "risk"
+   ]
+  },
+  "13305": {
+   "text": "rookie, Jeanty insurance + standalone; \"led the AFC in rushing yards (168) in the preseason while averaging 7.3 yards a carry\" on 23 carries (Raiders.com); Rapoport: \"is going to be a thing\" (NBC, Sep 3)",
+   "flags": [
+    "handcuff",
+    "riser"
+   ],
+   "handcuff_for": "12527"
+  }
+ }
+}

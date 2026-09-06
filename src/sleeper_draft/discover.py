@@ -79,6 +79,11 @@ def main() -> int:
         print(f"# user_id: {user_id}\n")
 
     if not league_id:
+        if not user_id:
+            raise SleeperError(
+                "Cannot list leagues without a user. Pass --username (with --season), or "
+                "--league-id to skip the user lookup entirely."
+            )
         leagues = client.get_user_leagues(user_id, str(args.season))
         if not leagues:
             raise SleeperError(

@@ -130,6 +130,37 @@ class SleeperClient:
             raise SleeperError(f"/league/{league_id}/drafts returned {type(drafts).__name__}, expected list")
         return drafts
 
+    def get_rosters(self, league_id: str) -> list[dict]:
+        rosters = self._get(f"/league/{league_id}/rosters")
+        if not isinstance(rosters, list):
+            raise SleeperError(
+                f"/league/{league_id}/rosters returned {type(rosters).__name__}, expected list"
+            )
+        return rosters
+
+    def get_league_users(self, league_id: str) -> list[dict]:
+        users = self._get(f"/league/{league_id}/users")
+        if not isinstance(users, list):
+            raise SleeperError(
+                f"/league/{league_id}/users returned {type(users).__name__}, expected list"
+            )
+        return users
+
+    def get_transactions(self, league_id: str, week: int) -> list[dict]:
+        """Adds, drops and trades for one scoring week.
+
+        Sleeper calls the week a `leg` on the transaction objects themselves, and
+        returns an empty list for a week that never happened -- which is normal,
+        not an error.
+        """
+        moves = self._get(f"/league/{league_id}/transactions/{week}")
+        if not isinstance(moves, list):
+            raise SleeperError(
+                f"/league/{league_id}/transactions/{week} returned {type(moves).__name__}, "
+                "expected list"
+            )
+        return moves
+
     # ------------------------------------------------------------ drafts
 
     def get_draft(self, draft_id: str) -> dict:

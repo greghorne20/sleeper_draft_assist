@@ -12,9 +12,63 @@ src/sleeper_draft/
     discover.py           league -> draft/scoring/roster config
     batches.py            ordered research list, chunked into YAML files
     past_draft.py         walk previous_league_id back, save a draft fixture
+    board.py              rankings + research notes -> the in-draft board
+    live.py               poll the live draft -> the current-state files
+    serve.py              two-route stdlib server for the live page
+    live_view.html        the live page itself (vanilla JS, no build step)
+    keepers.py            last season's draft + rosters + trades -> keeper eligibility
     yamlio.py             shared YAML output settings
+research/rankings_2026.json    aggregate rankings, keyed by name -- the board's input
+research/scouting_notes.json  one-line scouting + flags + handcuff pairs, keyed by player_id
+research/players/         one markdown note per player, filename ends in player_id
+draft/                    what the in-draft assistant reads (see "The draft/ directory")
 tests/                    offline tests; no test touches the network
 ```
+
+## Talking to an assistant during the draft
+
+The point of all of this is to sit next to a coding agent on draft night and ask "who do
+I take?". That is not an engineering conversation, and an agent in a code repo will
+default to treating it as one.
+
+`.claude/skills/draft-day/SKILL.md` fixes that. It frames the session as draft advice and
+keeps the scope open -- a player, a position, the shape of the board, strategy, a run on
+some position, a keeper, or just thinking out loud. Its central instruction is to
+**situate the question in where the draft actually is** before answering: "what do you
+think of Bucky Irving?" is a different question when he is about to be taken, when he
+will survive to your next pick, and when you pick in four rounds. It also states the
+rules that must not break -- never recommend a drafted player, never suggest a kicker,
+re-read `draft/state/NOW.md` before every answer because a poller is rewriting it.
+
+Claude Code picks it up on its own from the question. Other agents read `AGENTS.md` at the
+repo root, which points at the same file, so there is one copy of the framing.
+
+Run the watcher in one terminal and talk to the agent in another:
+
+```bash
+make watch SLOT=12     # terminal 1: polls, serves the page, rewrites NOW.md
+                       # terminal 2: your agent, reading draft/
+```
+
+## Make targets
+
+`make help` lists everything. The targets are thin wrappers over the `uv run`
+commands documented below -- nothing in the Makefile does work the console
+scripts do not.
+
+```bash
+make setup            # uv sync
+make check            # lint + types + test; run this before committing
+make board            # rebuild draft/board.*
+make keepers          # rebuild draft/keepers.*
+make watch SLOT=12    # poll the draft and serve the live page
+```
+
+`LEAGUE` defaults to the `league_id` in `config.yaml`; override any of
+`SLOT`, `LEAGUE`, `PORT`, `BYES` on the command line.
+
+**GNU make is not installed on a bare WSL/Debian box** -- `sudo apt install make`
+once. Everything works without it; the Makefile is convenience, not a dependency.
 
 ## Setup
 
@@ -110,6 +164,174 @@ pairs in the fixture. If your maths is right, every row matches.
 
 It refuses to save a draft whose pick count isn't `teams * rounds`; pass
 `--allow-partial` to override.
+
+### 4. `sleeper-board`
+
+```bash
+uv run sleeper-board
+uv run sleeper-board --rankings research/rankings_2026.json --out-dir draft
+```
+
+`research/rankings_2026.json` ranks players by **name**. Sleeper's live draft feed
+identifies picks by **`player_id`**. Nothing can be crossed off a board keyed by
+name, so this does that join once, offline, and writes `draft/board.json`,
+`draft/board.md` and `draft/pick_order.json`.
+
+`research/scouting_notes.json` is already keyed by `player_id` and is merged straight
+onto the board rows: a one-line scouting note, flags (`risk`, `riser`, `faller`,
+`value`, `handcuff`, `dead_zone`), and `handcuff_for` links pairing a backup to the
+starter he backs up. An unknown `player_id`, an unknown flag, or a `handcuff_for`
+pointing nowhere is a hard error -- a dropped note is research that silently
+disappears.
+
+Matching is on normalised name + fantasy position — accents, punctuation and
+generational suffixes folded away, and indexed on `fantasy_positions` rather than
+`position` so that players Sleeper files under a defensive position still match
+(Travis Hunter is `position: DB`, `fantasy_positions: [DB, WR]`). A ranking row that
+matches nothing, or matches two players the tiebreakers can't separate, is a hard
+error naming every offender; nothing is written. `NAME_ALIASES` carries the handful
+of spelling disagreements between the ranking sources and Sleeper.
+
+`pick_order.json` is generated from the snake + reversal-round rule and then checked
+against the rankings file's own pick map. A disagreement is an error — third-round
+reversal is undocumented by Sleeper, so two independent derivations have to agree
+before a draft gets planned around them.
+
+---
+
+### 5. `sleeper-live`
+
+```bash
+uv run sleeper-live --slot 12                 # one shot
+uv run sleeper-live --slot 12 --watch         # poll until the draft completes
+uv run sleeper-live --username greg --watch --interval 5
+uv run sleeper-live --slot 12 --watch --serve     # + a live page in the browser
+```
+
+Polls `/draft/<id>/picks` and rewrites `draft/state/NOW.md` and
+`draft/state/state.json`. Everything except the picks comes from what
+`sleeper-board` already built -- `board.json` supplies rank, tier, ADP, flags and
+scouting for a `player_id`, `pick_order.json` supplies the 3RR pick numbers -- so
+a poll is one small request.
+
+`NOW.md` is written in reading order: whose pick it is and how many picks until
+yours comes back, your roster and which starting slots are still open, then **one**
+board of best available with a `Gone by <pick>?` column marking everyone whose
+market ADP falls within `--cushion` of the pick you have to survive until,
+followed by how many players are left in each positional tier, the recent picks
+and any positional run.
+
+Urgency is a column rather than a second table on purpose. Filtering the board by
+ADP produces a strict subset of it in the same order, so showing both meant
+printing the same players twice and making the reader diff two lists. One ranked
+board read top-down, taking the highest row marked `YES`, *is* PLAYBOOK D1.
+
+Your slot comes from `--slot`, or from `--username` resolved through the draft's
+`draft_order`. Without one the pick-timing maths is skipped rather than guessed --
+nothing is marked as leaving and "picks until my next" is simply absent.
+
+The board ranks 208 players and 156 picks get made, so a rival drafting someone
+unranked is normal, not an error: those picks are recorded from Sleeper's own
+pick metadata and listed under "Off-board picks".
+
+#### `--serve`: the live page
+
+`--serve` starts a stdlib HTTP server on a daemon thread while the main thread
+polls exactly as before. The two share nothing but the filesystem -- the loop
+writes the files, the server reads them.
+
+    /            live_view.html, packaged next to the module
+    /state.json  <out-dir>/state.json, with Cache-Control: no-store
+
+Those are the only two routes; the handler never joins a request path to a
+directory, so traversal is impossible by construction. `no-store` is not
+optional -- without it the browser serves a cached state and the page freezes
+mid-draft while looking perfectly healthy.
+
+The page fetches every few seconds and re-renders in place, so your scroll
+position in the available list survives an update. It shows the same things as
+`NOW.md` in the same order, warns visibly if a poll stops arriving, and needs no
+build step. When polling stops -- draft over, or a one-shot run -- the page stays
+up until Ctrl-C.
+
+Positions are colour-coded the way every fantasy board is (QB magenta, RB green,
+WR blue, TE amber), so you scan by shape rather than reading. The pick rail
+across the top shows your own pick numbers with the next one ringed, which makes
+the third-round-reversal cluster visible -- slot 12's 12 · 13 · 25. Tier counts
+are drawn as bars and turn red at two or fewer left, which is the tier-break
+trigger from `PLAYBOOK.md`.
+
+Fonts come from Google Fonts with a full system fallback stack, so the page is
+readable if that fails; the *data* never depends on anything but localhost. The
+tool needs the internet to poll Sleeper anyway, so this adds no failure mode
+that matters.
+
+**`--host` defaults to `127.0.0.1`.** `--host 0.0.0.0` publishes your at-risk
+list, roster plan and scouting notes to everyone on the network, which is
+exactly what you would not hand a rival at the table. It warns when you do it.
+
+---
+
+### 6. `sleeper-keepers`
+
+```bash
+uv run sleeper-keepers --league-id LEAGUE_ID
+uv run sleeper-keepers --league-id <id> --season 2025
+```
+
+Rules who each team may keep, and what the pick costs. Walks `previous_league_id`
+back to last season (reusing `walk_back` from `past_draft.py`), then reads that
+season's draft, final rosters and the whole transaction log.
+
+A player is eligible for a team iff **all four** hold: that team drafted him, he
+is on their final roster, no completed transaction ever dropped him from that
+roster, and he was not last season's keeper. The cost is the round he was
+drafted in.
+
+It reads the transaction log rather than trusting the final roster because they
+answer different questions -- a player dropped in week 3 and re-added in week 9
+is on the final roster but did not stay all year. Any player where the two
+answers differ is listed at the foot of the report instead of being silently
+admitted or dropped. Trades need no special case: Sleeper records the losing
+side in `drops`, so a player traded away fails "never left" and a player traded
+for fails "you drafted him".
+
+When `draft/board.json` exists it also shows this year's **public market ADP**
+next to each eligible player, which is what turns eligibility into a decision --
+keeping George Pickens at his round-5 cost reads differently once you see the
+market has him going around pick 19.
+
+Sections are headed by each manager's Sleeper team name, falling back to their
+username when they have never set one (four of twelve, currently).
+
+Only the ADP is taken off the board. This report is circulated to the league, so
+our own rank, tier, scouting notes and flags never reach it; a test asserts that.
+The board is optional, and a player with no ADP renders as a dash.
+
+---
+
+## The `draft/` directory
+
+Everything the in-draft assistant reads, and nothing else:
+
+| File | What it is | Written by |
+|---|---|---|
+| `PLAYBOOK.md` | Standing doctrine: constraints, pick order, the pick algorithm, cliffs, thresholds, risk flags. Load first, every session. | hand-maintained |
+| `STRATEGY.md` | The reasoning behind the playbook: VORP math, structural approaches, QB/TE gap data, dead zone, handcuffing, stacking, slot playbooks, market inefficiencies, citations. | hand-maintained |
+| `board.md` | 208 ranked players grouped by tier, with `player_id`, source ranks and risk flags, plus a positional index and the researched-but-unranked bin. | `sleeper-board` |
+| `board.json` | The same board, machine-readable. | `sleeper-board` |
+| `pick_order.json` | `picks_by_slot` and `slot_by_pick` for all 12 slots x 13 rounds. | `sleeper-board` |
+| `state/NOW.md` | Live draft state: whose pick, your roster and gaps, the board with everyone leaving before your pick marked, tiers left, recent picks and runs. | `sleeper-live` |
+| `state/state.json` | The same, machine-readable. | `sleeper-live` |
+| `keepers.md` | Per-team keeper eligibility and the round each would cost. The report to circulate. | `sleeper-keepers` |
+| `keepers.json` | The same ruling, machine-readable. | `sleeper-keepers` |
+
+The join key is `player_id` throughout: live pick -> board row -> `research/players/*-<player_id>.md`.
+
+The `.md` files are for reading; the `.json` files are inputs for tooling. They hold the same
+information 4-7x larger, because JSON repeats every field name on every row. `board.json` and
+`pick_order.json` are what `sleeper-live` parses; `state/state.json` is there for a renderer or
+status line, and carries only the fields a live view displays.
 
 ---
 
