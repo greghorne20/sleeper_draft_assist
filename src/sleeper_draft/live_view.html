@@ -256,6 +256,25 @@ tbody tr.leaving .rk { color: var(--danger); }
 .seg button + button { border-left: 1px solid var(--line-firm); }
 .seg button.on { background: var(--ink); color: var(--panel); }
 
+/* the war room: an agent's read on this seat, above the evidence for it */
+.panel.wr { border-left: 3px solid var(--live); }
+.panel.wr.stale { border-left-color: var(--line-firm); }
+.wr-strategy { margin: 0 0 12px; font-size: 14.5px; line-height: 1.5; color: var(--ink); }
+.wr-lab {
+  font-family: "Barlow Condensed", ui-sans-serif, sans-serif;
+  font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--muted); margin: 10px 0 4px;
+}
+.wr-cand { display: flex; gap: 8px; align-items: baseline; flex-wrap: wrap; }
+.wr-cand .nm { font-weight: 600; }
+.wr-cand .why { flex: 1 1 100%; color: var(--ink-2); font-size: 13.5px; line-height: 1.45; }
+.wr-cand.alt .nm, .wr-cand.alt .why { color: var(--muted); }
+.wr-risks { margin: 0; padding-left: 18px; color: var(--ink-2); font-size: 13.5px; }
+.wr-err {
+  background: var(--danger-bg); color: var(--danger); border-radius: 5px;
+  padding: 6px 9px; margin-bottom: 10px; font-size: 13px;
+}
+
 /* the twelve war rooms: one strip, the seat you are reading lit */
 .rooms {
   display: flex; gap: 5px; overflow-x: auto; padding: 8px 20px;
@@ -304,6 +323,14 @@ footer { padding: 0 20px 30px; color: var(--muted); font-size: 12.5px; }
 
 <main>
   <div class="col">
+    <section class="panel wr" id="warroom" hidden>
+      <div class="phead">
+        <span class="ptitle">War room</span>
+        <span class="pnote" id="wr-note"></span>
+      </div>
+      <div class="pbody" id="wr-body"></div>
+    </section>
+
     <section class="panel">
       <div class="phead">
         <span class="ptitle">Best available</span>
@@ -348,7 +375,7 @@ footer { padding: 0 20px 30px; color: var(--muted); font-size: 12.5px; }
 "use strict";
 const REFRESH_MS = 4000, STALE_AFTER_S = 120;
 const $ = (id) => document.getElementById(id);
-let lastStamp = null, lastChange = Date.now(), latestAll = null;
+let lastStamp = null, lastChange = Date.now(), latestAll = null, latestBriefs = null;
 
 const esc = (v) => String(v == null ? "" : v).replace(/[&<>"]/g,
   (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
@@ -412,7 +439,7 @@ $("filter").addEventListener("click", (ev) => {
   const btn = ev.target.closest("button[data-mode]");
   if (!btn) return;
   mode = btn.dataset.mode;
-  for (const b of $("filter").children) b.classList.toggle("on", b === btn);
+  for (const el of $("filter").children) el.classList.toggle("on", el === btn);
   if (latest) drawBoard(latest);
 });
 
@@ -626,12 +653,43 @@ function renderLeague(lg, slot) {
   }).join("")}</tbody></table>`;
 }
 
+/* The agent's brief for the seat being read. Optional by construction: no
+   briefs.json, no room, or a room with no strategy all hide the panel, because
+   sleeper-warroom may never have been started and the board must not care. */
+function renderWarRoom(briefs, s, slot) {
+  const panel = $("warroom");
+  const b = briefs && briefs.rooms ? briefs.rooms[String(slot)] : null;
+  if (!b || !b.strategy) { panel.hidden = true; return; }
+  panel.hidden = false;
+
+  const stale = b.picks_made !== s.picks_made;
+  panel.classList.toggle("stale", stale);
+  $("wr-note").innerHTML = `as of pick ${esc(b.picks_made)}`
+    + (stale ? ` · <b>stale, ${s.picks_made - b.picks_made} pick(s) ago</b>` : "");
+
+  const cand = (c, cls) => (c ? `<div class="wr-cand ${cls}">
+      ${posChip(c.pos, c.pos)}<span class="nm">${esc(c.name)}</span>
+      <span class="why">${esc(c.why)}</span></div>` : "");
+  const watch = (b.watch_names || []).map((n) => `<span class="slot">${esc(n)}</span>`).join("");
+  const risks = (b.risks || []).map((r) => `<li>${esc(r)}</li>`).join("");
+
+  $("wr-body").innerHTML =
+    (b.status === "error"
+      ? `<div class="wr-err">Could not regenerate — this is the previous brief.</div>` : "")
+    + `<p class="wr-strategy">${esc(b.strategy)}</p>`
+    + `<div class="wr-lab">Take</div>${cand(b.pick, "take")}`
+    + `<div class="wr-lab">Instead</div>${cand(b.alternative, "alt")}`
+    + (watch ? `<div class="wr-lab">Watch</div><div class="slots">${watch}</div>` : "")
+    + (risks ? `<div class="wr-lab">Risks</div><ul class="wr-risks">${risks}</ul>` : "");
+}
+
 function render(lg) {
   latestAll = lg;
   const slot = activeSlot(lg);
   const s = seatState(lg, slot);
   latest = s;
   renderRooms(lg, slot);
+  renderWarRoom(latestBriefs, s, slot);
   renderBoard(s);
   renderRail(s);
   drawBoard(s);
@@ -654,8 +712,20 @@ function stale(msg) {
   if (msg) { el.textContent = msg; el.classList.add("on"); } else { el.classList.remove("on"); }
 }
 
+/* Never throws and never reports. A 404 is the normal case when the agent layer
+   is not running, and a parse error must not take the board down with it. */
+async function fetchBriefs() {
+  try {
+    const res = await fetch("/briefs.json", { cache: "no-store" });
+    return res.ok ? await res.json() : null;
+  } catch (err) {
+    return null;
+  }
+}
+
 async function tick() {
   try {
+    latestBriefs = await fetchBriefs();
     const res = await fetch("/state.json", { cache: "no-store" });
     if (res.status === 404) { stale("Waiting for the first poll…"); return; }
     if (!res.ok) { stale(`Server returned ${res.status}.`); return; }

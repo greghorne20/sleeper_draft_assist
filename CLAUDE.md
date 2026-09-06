@@ -25,8 +25,10 @@ draft/ directory" below.
 ```
 src/sleeper_draft/   client.py discover.py batches.py past_draft.py board.py live.py
                      serve.py live_view.html keepers.py yamlio.py __init__.py
+src/sleeper_draft/warroom/  brief.py tools.py agent.py runner.py INSTRUCTIONS.md
 tests/               test_client.py test_batches.py test_discover_and_past_draft.py
-                     test_board.py test_live.py test_keepers.py test_serve.py conftest.py
+                     test_board.py test_live.py test_keepers.py test_serve.py
+                     test_warroom.py conftest.py
 research/rankings_2026.json    aggregate rankings keyed by NAME -- the board's input
 research/scouting_notes.json  one-line scouting + flags + handcuff pairs, keyed by player_id
 research/players/    one markdown note per player; filename ends in the Sleeper player_id
@@ -64,6 +66,7 @@ uv run sleeper-past-draft --league-id <id> --back 1
 uv run sleeper-board
 uv run sleeper-live --slot <n> --watch
 uv run sleeper-keepers --league-id <id>
+uv run sleeper-warroom --watch          # optional: needs `uv sync --extra warroom`
 ```
 
 A `Makefile` wraps all of the above (`make help`). It is convenience only -- every
@@ -189,6 +192,34 @@ is why `SleeperError` is the one exception type worth catching at the boundary.
   board enrichment takes the market ADP and nothing else — never our rank, tier, scouting or
   flags. A test asserts none of those strings can reach the report.
 
+- **`warroom/`** — the optional agent layer, and the only part of the repo that calls a model.
+  `sleeper-warroom` watches the state `sleeper-live` writes and produces one agent-written brief
+  per team — strategy, a proposed pick with reasoning, an alternative with what would flip it —
+  into `draft/state/briefs.json`. **It is strictly additive and must stay that way:** it makes no
+  Sleeper requests, holds no lock, shares nothing with the poller or the server but the
+  filesystem, and is an optional extra (`agent-framework-core` + the Anthropic provider, 21
+  packages; the umbrella `agent-framework` pulls 180). Kill it mid-draft and the page loses one
+  panel — nothing else changes. The split inside mirrors the rest of the repo: `brief.py` is pure
+  and holds every decision that does not need a model, `tools.py` is plain annotated callables
+  with no framework import, and `agent.py` is the only file that imports Agent Framework.
+  - **`validate_brief` is the correctness gate.** The worst failure here is recommending a player
+    who is already gone, because it reads exactly like a good brief. Model output is checked
+    against the board the way `board.py` checks a rankings row — available-set membership, id and
+    name agreeing, no K or DST — then retried once with the problems fed back, then refused. An
+    unvalidated brief never reaches the page.
+  - **`refresh_targets` decides who regenerates.** Not all twelve on every pick: a room refreshes
+    when it is near its turn, just picked, had its proposal drafted, errored, or aged out.
+    `--refresh all` forces every seat, at roughly four times the cost.
+  - **Cross-team needs are colour, not an urgency input.** The prompt says so outright. Twelve
+    rooms reading each other's needs and all reaching a round early is a feedback loop market ADP
+    does not have, so `leaving` stays anchored to ADP.
+  - **The hard rules are shared with the live advisor.** `INSTRUCTIONS.md` carries
+    `.claude/skills/draft-day/SKILL.md`'s correctness rules verbatim and a test asserts both files
+    still say them, so editing one alone fails the suite.
+  - **Measured, not estimated:** ~33k input and ~5k output tokens and ~70s per room, and Agent
+    Framework's Anthropic provider sets no `cache_control`, so none of it is cached yet. Most of
+    the input is the agentic loop re-sending the conversation per tool call, not the prompt.
+
 `yamlio.py` — one shared `dump_yaml` so `discover` and `batches` emit identical style
 (`sort_keys=False` to preserve field order; PyYAML's resolver quotes traps like the team
 abbreviation `NO`, which bare YAML 1.1 would read as boolean `false`).
@@ -244,6 +275,11 @@ exists as a machine input: `board.json` and `pick_order.json` are what `live.py`
   the path to each player's research note. Plus a positional index, the researched-but-unranked
   bin (late-round material), and a provenance section carrying the ranking sources and weights.
 - **`pick_order.json`** — `picks_by_slot` and `slot_by_pick` for all 12 slots × 13 rounds.
+- **`state/briefs.json`**, **`state/briefs.md`** and **`state/teams/BRIEF-slot-<n>.md`** — written
+  by `sleeper-warroom` when it is running, gitignored with the rest of `state/`. Deliberately not
+  merged into `NOW.md`: the draft-day skill reads facts derived from Sleeper and reasons from the
+  board, rather than reading another model's opinion and agreeing with it. Two independent
+  advisors, not one echoing the other.
 - **`keepers.md`** / **`keepers.json`** — per-team keeper eligibility with the round each
   would cost, plus who is blocked and why. Regenerate with `uv run sleeper-keepers`. Unlike
   everything else in `draft/`, this one leaves the machine — keep it to public data only.

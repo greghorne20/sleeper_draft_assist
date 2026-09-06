@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 """Serve the live draft page and the state file it reads.
 
-Two literal routes and nothing else:
+Three literal routes and nothing else:
 
     /            live_view.html, packaged next to this module
     /state.json  <out-dir>/state.json, written by the poll loop
+    /briefs.json <out-dir>/briefs.json, written by sleeper-warroom if it is running
 
 The poll loop and the server share nothing but the filesystem: the loop writes
 files, the server reads them. No locks, no shared mutable state, no coupling
@@ -12,7 +13,7 @@ beyond a directory path.
 
 WHY NOT SimpleHTTPRequestHandler
     Because it maps request paths onto a directory, which means every request is
-    a path-traversal question. This handler matches two literal strings and never
+    a path-traversal question. This handler matches a fixed set of literal strings and never
     joins a request path to anything, so traversal is impossible by construction
     rather than by sanitising.
 
@@ -35,7 +36,11 @@ from .client import SleeperError
 ASSET = Path(__file__).parent / "live_view.html"
 
 PAGE_ROUTES = ("/", "/index.html")
-STATE_ROUTE = "/state.json"
+
+# Route -> the literal filename it serves. Both halves are constants: the request
+# path is matched against a fixed key and the filename comes from this table, so
+# nothing the client sends is ever joined to a directory.
+JSON_ROUTES = {"/state.json": "state.json", "/briefs.json": "briefs.json"}
 
 
 class StateHandler(BaseHTTPRequestHandler):
@@ -70,13 +75,16 @@ class StateHandler(BaseHTTPRequestHandler):
             self._send(200, ASSET.read_bytes(), "text/html; charset=utf-8")
             return
 
-        if route == STATE_ROUTE:
-            path = self.out_dir / "state.json"
+        filename = JSON_ROUTES.get(route)
+        if filename:
+            path = self.out_dir / filename
             if not path.exists():
-                # The server can be up before the first poll finishes. Say so in
-                # JSON so the page can render "waiting" instead of erroring.
-                self._send(404, json.dumps({"error": "no state yet",
-                                            "detail": "waiting for the first poll"}).encode(),
+                # The server can be up before the first poll finishes, and briefs
+                # may never arrive at all -- sleeper-warroom is optional. Say so in
+                # JSON so the page can render "waiting" or hide a panel rather than
+                # treating either as an error.
+                self._send(404, json.dumps({"error": f"no {filename} yet",
+                                            "detail": "waiting for the first write"}).encode(),
                            "application/json", no_store=True)
                 return
             self._send(200, path.read_bytes(), "application/json", no_store=True)
