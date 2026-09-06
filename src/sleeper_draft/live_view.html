@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Draft state</title>
+<style>
+  :root {
+    --bg: #f7f7f5; --panel: #fff; --ink: #1b1b1a; --muted: #6b6b66;
+    --line: #e2e2dd; --accent: #1f6feb; --mine: #17803d; --mine-bg: #e8f6ed;
+    --warn: #9a6700; --warn-bg: #fff8e6; --bad: #b42318; --chip: #efefec;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #16161a; --panel: #1e1e23; --ink: #ececec; --muted: #9b9b96;
+      --line: #32323a; --accent: #6aa6ff; --mine: #4ade80; --mine-bg: #16301f;
+      --warn: #f0c674; --warn-bg: #3a2f14; --bad: #ff7b72; --chip: #2a2a31;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font: 14px/1.45 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  header {
+    position: sticky; top: 0; z-index: 10; background: var(--panel);
+    border-bottom: 1px solid var(--line); padding: 10px 16px;
+  }
+  .bar { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; }
+  .pick { font-size: 20px; font-weight: 650; }
+  .turn {
+    font-weight: 700; padding: 3px 10px; border-radius: 6px;
+    background: var(--chip); color: var(--muted);
+  }
+  .turn.mine { background: var(--mine-bg); color: var(--mine); }
+  .until { color: var(--muted); }
+  .until b { color: var(--ink); }
+  main { display: grid; grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr); gap: 16px; padding: 16px; }
+  @media (max-width: 900px) { main { grid-template-columns: 1fr; } }
+  section { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; margin-bottom: 16px; }
+  section > h2 {
+    margin: 0; padding: 9px 12px; font-size: 12px; font-weight: 650;
+    text-transform: uppercase; letter-spacing: .06em; color: var(--muted);
+    border-bottom: 1px solid var(--line);
+  }
+  section.risk { border-color: var(--warn); }
+  section.risk > h2 { color: var(--warn); background: var(--warn-bg); }
+  .body { padding: 10px 12px; }
+  table { width: 100%; border-collapse: collapse; }
+  th, td { text-align: left; padding: 5px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { font-size: 11px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); font-weight: 600; }
+  tr:last-child td { border-bottom: 0; }
+  td.n, th.n { text-align: right; font-variant-numeric: tabular-nums; }
+  .nm { font-weight: 600; }
+  .sub { color: var(--muted); font-size: 12px; }
+  .flag {
+    display: inline-block; font-size: 11px; padding: 0 5px; margin-right: 4px;
+    border-radius: 4px; background: var(--chip); color: var(--muted);
+  }
+  .flag.risk { background: var(--warn-bg); color: var(--warn); }
+  .flag.value { background: var(--mine-bg); color: var(--mine); }
+  .empty { color: var(--muted); padding: 10px 12px; }
+  ul.plain { margin: 0; padding: 0 0 0 16px; }
+  footer { padding: 8px 16px 24px; color: var(--muted); font-size: 12px; }
+  #stale {
+    display: none; background: var(--bad); color: #fff; padding: 6px 16px;
+    font-weight: 600;
+  }
+  #stale.on { display: block; }
+</style>
+</head>
+<body>
+<div id="stale"></div>
+<header>
+  <div class="bar">
+    <span class="pick" id="pick">connecting…</span>
+    <span class="turn" id="turn"></span>
+    <span class="until" id="until"></span>
+  </div>
+</header>
+
+<main>
+  <div>
+    <section class="risk" id="risk-section" hidden>
+      <h2 id="risk-title">At risk</h2>
+      <div id="at-risk"></div>
+    </section>
+
+    <section>
+      <h2 id="avail-title">Best available</h2>
+      <div id="best-available"></div>
+    </section>
+  </div>
+
+  <div>
+    <section>
+      <h2>My roster</h2>
+      <div id="roster"></div>
+    </section>
+
+    <section>
+      <h2>Tiers remaining</h2>
+      <div class="body" id="tiers"></div>
+    </section>
+
+    <section>
+      <h2>Last picks</h2>
+      <div id="recent"></div>
+    </section>
+  </div>
+</main>
+
+<footer id="foot"></footer>
+
+<script>
+"use strict";
+const REFRESH_MS = 4000;
+const $ = (id) => document.getElementById(id);
+let lastStamp = null, lastChange = Date.now();
+
+const esc = (s) => String(s == null ? "" : s).replace(/[&<>"]/g,
+  (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const dash = (v) => (v == null || v === "" ? "-" : esc(v));
+
+function flags(p) {
+  let out = "";
+  if (p.risk_flag) out += `<span class="flag risk">${esc(p.risk_flag)}</span>`;
+  if (p.sleeper_injury_status) out += `<span class="flag risk">${esc(p.sleeper_injury_status)}</span>`;
+  for (const f of p.flags || []) {
+    const cls = f === "value" ? "value" : f === "risk" ? "risk" : "";
+    out += `<span class="flag ${cls}">${esc(f)}</span>`;
+  }
+  if (p.handcuff_for_name) out += `<span class="flag">✂ ${esc(p.handcuff_for_name)}</span>`;
+  const note = [p.scouting, p.note].filter(Boolean).join(" · ");
+  if (note) out += `<div class="sub">${esc(note)}</div>`;
+  return out;
+}
+
+function playerTable(rows) {
+  if (!rows || !rows.length) return `<div class="empty">Nobody.</div>`;
+  const body = rows.map((p) => `<tr>
+      <td class="n">${dash(p.rank)}</td>
+      <td>${dash(p.pos_rank)}</td>
+      <td><span class="nm">${esc(p.name)}</span>
+          <span class="sub">${dash(p.team)} · bye ${dash(p.bye)}</span></td>
+      <td class="n">${dash(p.adp)}</td>
+      <td>${flags(p)}</td>
+    </tr>`).join("");
+  return `<table><thead><tr>
+      <th class="n">#</th><th>Pos</th><th>Player</th><th class="n">ADP</th><th>Notes</th>
+    </tr></thead><tbody>${body}</tbody></table>`;
+}
+
+function renderHeader(s) {
+  if (s.current_pick == null) {
+    $("pick").textContent = `Draft complete — all ${s.total_picks} picks in`;
+    $("turn").textContent = ""; $("turn").className = "turn";
+    $("until").textContent = "";
+    return;
+  }
+  $("pick").textContent = `Pick ${s.current_pick} of ${s.total_picks} · Round ${s.current_round}`;
+  const turn = $("turn");
+  if (s.is_my_turn) { turn.textContent = "YOUR PICK"; turn.className = "turn mine"; }
+  else if (s.on_the_clock_slot != null) { turn.textContent = `slot ${s.on_the_clock_slot} on the clock`; turn.className = "turn"; }
+  else { turn.textContent = ""; turn.className = "turn"; }
+
+  if (s.my_slot == null) {
+    $("until").innerHTML = `<b>No slot set</b> — pass --slot or --username for pick timing.`;
+  } else if (s.survive_until_pick != null) {
+    $("until").innerHTML = `<b>${s.picks_before_horizon}</b> picks by others before your pick <b>${s.survive_until_pick}</b>`;
+  } else if (s.my_next_pick != null) {
+    $("until").innerHTML = `your next pick: <b>${s.my_next_pick}</b>`;
+  } else {
+    $("until").textContent = "no picks left";
+  }
+}
+
+function renderRoster(s) {
+  if (s.my_slot == null) { $("roster").innerHTML = `<div class="empty">No slot set.</div>`; return; }
+  const r = s.my_roster || [];
+  const rows = r.length
+    ? `<table><thead><tr><th class="n">Pk</th><th>Player</th><th>Pos</th></tr></thead><tbody>` +
+      r.map((p) => `<tr><td class="n">${dash(p.pick_no)}</td>
+        <td><span class="nm">${esc(p.name)}</span>
+            <span class="sub">${dash(p.team)} · bye ${dash(p.bye)}</span></td>
+        <td>${dash(p.pos)}</td></tr>`).join("") + `</tbody></table>`
+    : `<div class="empty">Nothing drafted yet.</div>`;
+
+  const need = s.roster || {};
+  const open = (need.open_starters || []).concat(need.flex_open ? ["FLEX"] : []);
+  const counts = Object.entries(need.counts || {}).map(([k, v]) => `${k} ${v}`).join(" · ") || "empty";
+  const heavy = Object.entries(s.bye_counts || {}).filter(([, n]) => n >= 3)
+    .map(([w, n]) => `week ${w} (${n})`);
+  $("roster").innerHTML = rows + `<div class="body">
+      <div><b>Have:</b> ${esc(counts)}</div>
+      <div><b>Open:</b> ${open.length ? esc(open.join(", ")) : "all starters filled"}</div>
+      ${heavy.length ? `<div style="color:var(--warn)"><b>Bye stack:</b> ${esc(heavy.join(", "))}</div>` : ""}
+    </div>`;
+}
+
+function renderTiers(s) {
+  const t = s.tier_status || {};
+  const lines = ["RB", "WR", "TE", "QB"].filter((p) => t[p]).map((pos) => {
+    const tiers = Object.keys(t[pos]).sort((a, b) => a - b)
+      .map((k) => `T${k} ${t[pos][k]}`).join(" · ");
+    return `<div><b>${pos}</b> — ${esc(tiers)}</div>`;
+  });
+  $("tiers").innerHTML = lines.length ? lines.join("") : `<span class="sub">Nothing left.</span>`;
+}
+
+function renderRecent(s) {
+  const r = s.recent_picks || [];
+  if (!r.length) { $("recent").innerHTML = `<div class="empty">No picks yet.</div>`; return; }
+  const run = Object.entries(s.position_run || {}).sort((a, b) => b[1] - a[1])
+    .map(([p, n]) => `${p} ${n}`).join(" · ");
+  const rows = r.slice().reverse().map((p) => `<tr>
+      <td class="n">${dash(p.pick_no)}</td>
+      <td><span class="nm">${esc(p.name)}</span>
+          <span class="sub">${dash(p.pos)}${p.rank ? " · #" + p.rank : " · unranked"}</span></td>
+      <td class="sub">${p.draft_slot === s.my_slot ? "me" : "slot " + dash(p.draft_slot)}</td>
+    </tr>`).join("");
+  $("recent").innerHTML = `<div class="body sub">Run over last ${r.length}: ${esc(run)}</div>
+    <table><tbody>${rows}</tbody></table>`;
+}
+
+function render(s) {
+  renderHeader(s);
+  const risk = s.at_risk || [];
+  $("risk-section").hidden = !risk.length;
+  if (risk.length) {
+    $("risk-title").textContent =
+      `At risk before pick ${s.survive_until_pick} — ${risk.length} players (cushion ${s.cushion})`;
+    $("at-risk").innerHTML = playerTable(risk);
+  }
+  $("avail-title").textContent = `Best available — ${s.available_count} left on the board`;
+  $("best-available").innerHTML = playerTable(s.best_available);
+  renderRoster(s);
+  renderTiers(s);
+  renderRecent(s);
+  $("foot").textContent =
+    `${s.league_name || ""} · ${s.picks_made}/${s.total_picks} picks · updated ${s.generated_at}`;
+}
+
+function stale(msg) {
+  const el = $("stale");
+  if (msg) { el.textContent = msg; el.classList.add("on"); }
+  else { el.classList.remove("on"); }
+}
+
+async function tick() {
+  try {
+    const res = await fetch("/state.json", { cache: "no-store" });
+    if (res.status === 404) { stale("Waiting for the first poll…"); return; }
+    if (!res.ok) { stale(`Server returned ${res.status}`); return; }
+    const s = await res.json();
+    if (s.generated_at !== lastStamp) { lastStamp = s.generated_at; lastChange = Date.now(); }
+    render(s);
+    // A page that has quietly stopped updating is worse than one that says so.
+    const age = Math.round((Date.now() - lastChange) / 1000);
+    stale(age > 120 ? `No new poll for ${age}s — is sleeper-live still running?` : null);
+  } catch (err) {
+    stale(`Cannot reach the server (${err.message}) — is sleeper-live still running?`);
+  }
+}
+
+tick();
+setInterval(tick, REFRESH_MS);
+</script>
+</body>
+</html>

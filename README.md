@@ -14,6 +14,8 @@ src/sleeper_draft/
     past_draft.py         walk previous_league_id back, save a draft fixture
     board.py              rankings + research notes -> the in-draft board
     live.py               poll the live draft -> the current-state files
+    serve.py              two-route stdlib server for the live page
+    live_view.html        the live page itself (vanilla, no build, no CDN)
     keepers.py            last season's draft + rosters + trades -> keeper eligibility
     yamlio.py             shared YAML output settings
 research/rankings_2026.json    aggregate rankings, keyed by name -- the board's input
@@ -158,6 +160,7 @@ before a draft gets planned around them.
 uv run sleeper-live --slot 12                 # one shot
 uv run sleeper-live --slot 12 --watch         # poll until the draft completes
 uv run sleeper-live --username greg --watch --interval 5
+uv run sleeper-live --slot 12 --watch --serve     # + a live page in the browser
 ```
 
 Polls `/draft/<id>/picks` and rewrites `draft/state/NOW.md` and
@@ -179,6 +182,30 @@ the at-risk list and "picks until my next" are simply absent.
 The board ranks 208 players and 156 picks get made, so a rival drafting someone
 unranked is normal, not an error: those picks are recorded from Sleeper's own
 pick metadata and listed under "Off-board picks".
+
+#### `--serve`: the live page
+
+`--serve` starts a stdlib HTTP server on a daemon thread while the main thread
+polls exactly as before. The two share nothing but the filesystem -- the loop
+writes the files, the server reads them.
+
+    /            live_view.html, packaged next to the module
+    /state.json  <out-dir>/state.json, with Cache-Control: no-store
+
+Those are the only two routes; the handler never joins a request path to a
+directory, so traversal is impossible by construction. `no-store` is not
+optional -- without it the browser serves a cached state and the page freezes
+mid-draft while looking perfectly healthy.
+
+The page fetches every few seconds and re-renders in place, so your scroll
+position in the available list survives an update. It shows the same things as
+`NOW.md` in the same order, warns visibly if a poll stops arriving, and needs no
+build step and no CDN (draft-day wifi is not worth betting the board on). When
+polling stops -- draft over, or a one-shot run -- the page stays up until Ctrl-C.
+
+**`--host` defaults to `127.0.0.1`.** `--host 0.0.0.0` publishes your at-risk
+list, roster plan and scouting notes to everyone on the network, which is
+exactly what you would not hand a rival at the table. It warns when you do it.
 
 ---
 

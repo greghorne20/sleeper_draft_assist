@@ -36,6 +36,7 @@ import os
 import sys
 import time
 from pathlib import Path
+from threading import Event
 
 from .board import market_adp
 from .client import SleeperClient, SleeperError
@@ -73,6 +74,13 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--watch", action="store_true", help="Poll until the draft completes")
     p.add_argument("--interval", type=float, default=10.0,
                    help="Seconds between polls when --watch (default 10)")
+    p.add_argument("--serve", action="store_true",
+                   help="Also serve a live HTML view of the state")
+    p.add_argument("--port", type=int, default=8765, help="Port for --serve (default 8765)")
+    p.add_argument("--host", default="127.0.0.1",
+                   help="Bind address for --serve (default 127.0.0.1). 0.0.0.0 puts your "
+                        "at-risk list and roster plan on the local network -- exactly what "
+                        "you would not hand a rival at the table.")
     p.add_argument("--cache-dir", default=None, help="Override the players cache directory")
     args = p.parse_args()
     if args.interval < 1:
@@ -524,6 +532,18 @@ def main() -> int:
     my_slot, provenance = resolve_slot(draft, order, args.slot, args.username, client)
     print(f"draft {draft_id} ({draft.get('status')}) · my slot: {provenance}", file=sys.stderr)
 
+    if args.serve:
+        from .serve import serve_in_background
+
+        args.out_dir.mkdir(parents=True, exist_ok=True)
+        server = serve_in_background(args.out_dir, args.host, args.port)
+        shown = "localhost" if args.host in ("127.0.0.1", "0.0.0.0") else args.host
+        print(f"serving http://{shown}:{server.server_address[1]}  (Ctrl-C to stop)",
+              file=sys.stderr)
+        if args.host == "0.0.0.0":  # noqa: S104 - deliberate, and warned about
+            print("  WARNING: bound to all interfaces -- anyone on this network can read "
+                  "your board, roster plan and at-risk list", file=sys.stderr)
+
     last_seen = -1
     while True:
         state = poll_once(client, str(draft_id), board, order, my_slot, args)
@@ -542,6 +562,12 @@ def main() -> int:
         time.sleep(args.interval)
 
     print(f"wrote {args.out_dir}/NOW.md and {args.out_dir}/state.json", file=sys.stderr)
+
+    if args.serve:
+        # Polling is done -- the draft finished, or this was a one-shot run --
+        # but the page should stay up so it can still be read.
+        print("polling stopped; still serving the page. Ctrl-C to stop.", file=sys.stderr)
+        Event().wait()
     return 0
 
 

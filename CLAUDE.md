@@ -19,9 +19,9 @@ draft/ directory" below.
 
 ```
 src/sleeper_draft/   client.py discover.py batches.py past_draft.py board.py live.py
-                     keepers.py yamlio.py __init__.py
+                     serve.py live_view.html keepers.py yamlio.py __init__.py
 tests/               test_client.py test_batches.py test_discover_and_past_draft.py
-                     test_board.py test_live.py test_keepers.py conftest.py
+                     test_board.py test_live.py test_keepers.py test_serve.py conftest.py
 research/rankings_2026.json    aggregate rankings keyed by NAME -- the board's input
 research/scouting_notes.json  one-line scouting + flags + handcuff pairs, keyed by player_id
 research/players/    one markdown note per player; filename ends in the Sleeper player_id
@@ -117,6 +117,16 @@ is why `SleeperError` is the one exception type worth catching at the boundary.
   **missing slot is not an error either** — without `--slot`/`--username` the timing maths is
   skipped rather than guessed, since a wrong "picks until my next" is worse than none.
 
+- **`serve.py`** + **`live_view.html`** — the optional `sleeper-live --serve` page. A stdlib
+  `ThreadingHTTPServer` on a daemon thread with exactly two literal routes (`/` → the packaged
+  HTML, `/state.json` → the out-dir file, `no-store`); everything else 404s. It is deliberately
+  **not** `SimpleHTTPRequestHandler` — never joining a request path to a directory makes
+  traversal impossible by construction rather than by sanitising. `log_message` is a no-op so
+  request logs do not bury the poll output. The poll loop and the server share nothing but the
+  filesystem. The page is vanilla JS with no build step and no CDN, re-renders in place to keep
+  scroll position, and shows a banner when polls stop arriving — a silently frozen page during
+  a draft is the dangerous failure. Two tests parse the field names the page reads and assert
+  they all exist in a generated state, so binding to a dropped field fails the suite.
 - **`keepers.py`** — rules who may keep whom. Reuses `past_draft.walk_back` to reach last
   season, then reads that season's draft, final rosters and the full transaction log. Eligible
   = that team drafted him **and** he is on their final roster **and** no completed transaction
