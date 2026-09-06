@@ -16,6 +16,7 @@ import pytest
 from conftest import make_picks
 
 from sleeper_draft import live
+from sleeper_draft.client import SleeperError
 from sleeper_draft.warroom import agent as A
 from sleeper_draft.warroom import brief as B
 from sleeper_draft.warroom import runner as R
@@ -536,3 +537,11 @@ def test_one_model_everywhere_when_cold_matches_hot(tmp_path, draft_artifacts):
     briefs = asyncio.run(R.run_cycle(state, board, {"rooms": {}}, args))
     assert briefs["rooms"] == {}          # dry run, so nothing generated
     assert (tmp_path / "prompts").exists()
+
+
+def test_a_missing_api_key_is_one_legible_line_not_a_traceback(monkeypatch):
+    """The provider raises a bare ValueError. During a draft the operator needs a
+    sentence naming the variable, not a stack trace from inside a dependency."""
+    monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
+    with pytest.raises(SleeperError, match="ANTHROPIC_API_KEY"):
+        A.build_agent("x" * 6000, [], "claude-sonnet-5")

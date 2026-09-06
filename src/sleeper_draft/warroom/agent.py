@@ -115,8 +115,21 @@ def build_agent(instructions: str, tools: list[Callable[..., str]], model: str,
     if cache and ttl and ttl != "5m":
         client_kwargs["additional_beta_flags"] = [CACHE_TTL_BETA]
 
+    try:
+        client = AnthropicClient(**client_kwargs)
+    except ValueError as exc:
+        # The provider raises a bare ValueError with a traceback when the key is
+        # missing. This layer is optional and its failure has to read as one
+        # legible line, not a stack trace during a draft.
+        raise SleeperError(
+            f"{exc} The war room needs ANTHROPIC_API_KEY: export it, put it in .env, or -- on a "
+            "host like Railway -- make sure the variable is actually attached to this service "
+            "rather than only defined at the project level. The board runs fine without it; "
+            "the page just renders no brief panel."
+        ) from exc
+
     return Agent(
-        client=AnthropicClient(**client_kwargs),
+        client=client,
         name="WarRoom",
         tools=tools,
         default_options=options,
