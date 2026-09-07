@@ -56,16 +56,27 @@ DEFAULT_WEEKS = 18
 def parse_args() -> argparse.Namespace:
     load_dotenv()
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    p.add_argument("--league-id", default=os.environ.get("SLEEPER_LEAGUE_ID"),
-                   help="This season's league (or set SLEEPER_LEAGUE_ID)")
-    p.add_argument("--back", type=int, default=1,
-                   help="Seasons to walk back for the source draft (default 1)")
-    p.add_argument("--season", default=None,
-                   help="Walk back until this season. Overrides --back.")
-    p.add_argument("--weeks", type=int, default=DEFAULT_WEEKS,
-                   help=f"Scoring weeks of transactions to scan (default {DEFAULT_WEEKS})")
-    p.add_argument("--board", type=Path, default=Path("draft/board.json"),
-                   help="Optional: this year's board, to show what a keeper is worth now")
+    p.add_argument(
+        "--league-id",
+        default=os.environ.get("SLEEPER_LEAGUE_ID"),
+        help="This season's league (or set SLEEPER_LEAGUE_ID)",
+    )
+    p.add_argument(
+        "--back", type=int, default=1, help="Seasons to walk back for the source draft (default 1)"
+    )
+    p.add_argument("--season", default=None, help="Walk back until this season. Overrides --back.")
+    p.add_argument(
+        "--weeks",
+        type=int,
+        default=DEFAULT_WEEKS,
+        help=f"Scoring weeks of transactions to scan (default {DEFAULT_WEEKS})",
+    )
+    p.add_argument(
+        "--board",
+        type=Path,
+        default=Path("draft/board.json"),
+        help="Optional: this year's board, to show what a keeper is worth now",
+    )
     p.add_argument("--out-dir", type=Path, default=Path("draft"))
     p.add_argument("--cache-dir", default=None, help="Override the players cache directory")
     args = p.parse_args()
@@ -96,8 +107,7 @@ def player_label(player_id: str, players: dict[str, dict], pick: dict | None) ->
             "nfl_team": player.get("team") or meta.get("team"),
         }
     name = " ".join(part for part in (meta.get("first_name"), meta.get("last_name")) if part)
-    return {"name": name.strip() or player_id,
-            "pos": meta.get("position"), "nfl_team": meta.get("team")}
+    return {"name": name.strip() or player_id, "pos": meta.get("position"), "nfl_team": meta.get("team")}
 
 
 def team_label(user: dict | None, roster_id: int) -> dict:
@@ -153,13 +163,17 @@ def load_board(path: Path) -> dict[str, dict]:
     rows = board.get("players") if isinstance(board, dict) else None
     if not isinstance(rows, list):
         return {}
-    return {str(row["player_id"]): row for row in rows
-            if isinstance(row, dict) and row.get("player_id")}
+    return {str(row["player_id"]): row for row in rows if isinstance(row, dict) and row.get("player_id")}
 
 
-def eligible_keepers(picks: list[dict], rosters: list[dict], users: list[dict],
-                     transactions: list[dict], players: dict[str, dict],
-                     board: dict[str, dict] | None = None) -> dict:
+def eligible_keepers(
+    picks: list[dict],
+    rosters: list[dict],
+    users: list[dict],
+    transactions: list[dict],
+    players: dict[str, dict],
+    board: dict[str, dict] | None = None,
+) -> dict:
     """The whole ruling, computed from data in hand. No I/O, so testable."""
     board = board or {}
     if not rosters:
@@ -167,8 +181,7 @@ def eligible_keepers(picks: list[dict], rosters: list[dict], users: list[dict],
     if not picks:
         raise SleeperError("The source draft returned no picks, so no keeper can have a round cost.")
 
-    by_user = {str(u["user_id"]): u for u in users
-               if isinstance(u, dict) and u.get("user_id")}
+    by_user = {str(u["user_id"]): u for u in users if isinstance(u, dict) and u.get("user_id")}
 
     picks_by_roster: dict[int, list[dict]] = {}
     for pick in picks:
@@ -220,8 +233,13 @@ def eligible_keepers(picks: list[dict], rosters: list[dict], users: list[dict],
             # A player on the final roster who was nonetheless dropped at some
             # point is the case the two definitions disagree about. Record it.
             if player_id in final and player_id in left:
-                divergences.append({"roster_id": roster_id, **entry,
-                                    "note": "on the final roster but was dropped during the season"})
+                divergences.append(
+                    {
+                        "roster_id": roster_id,
+                        **entry,
+                        "note": "on the final roster but was dropped during the season",
+                    }
+                )
             if player_id not in final:
                 continue
             if player_id in left:
@@ -229,17 +247,19 @@ def eligible_keepers(picks: list[dict], rosters: list[dict], users: list[dict],
             eligible.append(entry)
 
         drafted_ids = {str(p.get("player_id")) for p in mine}
-        teams.append({
-            "roster_id": roster_id,
-            "owner_id": roster.get("owner_id"),
-            **team_label(by_user.get(str(roster.get("owner_id"))), roster_id),
-            "eligible": eligible,
-            "blocked": blocked,
-            "excluded": {
-                "held_but_undrafted": len(final - drafted_ids),
-                "drafted_but_left": len(drafted_ids - final),
-            },
-        })
+        teams.append(
+            {
+                "roster_id": roster_id,
+                "owner_id": roster.get("owner_id"),
+                **team_label(by_user.get(str(roster.get("owner_id"))), roster_id),
+                "eligible": eligible,
+                "blocked": blocked,
+                "excluded": {
+                    "held_but_undrafted": len(final - drafted_ids),
+                    "drafted_but_left": len(drafted_ids - final),
+                },
+            }
+        )
 
     return {
         "generated_at": time.strftime("%Y-%m-%dT%H:%M:%S%z"),
@@ -262,13 +282,17 @@ def eligible_keepers(picks: list[dict], rosters: list[dict], users: list[dict],
 
 def render_keepers_md(report: dict, source: dict) -> str:
     out: list[str] = []
-    out.append(f"# Keeper eligibility — {source.get('for_league_name') or 'league'} "
-               f"({source.get('for_season')} draft)")
+    out.append(
+        f"# Keeper eligibility — {source.get('for_league_name') or 'league'} "
+        f"({source.get('for_season')} draft)"
+    )
     out.append("")
-    out.append(f"_Ruled from the {source.get('target_season')} draft, final rosters and "
-               f"transaction log. Generated {report['generated_at']}. "
-               "**This file is the one to read** — `draft/keepers.json` is the same "
-               "ruling for tooling._")
+    out.append(
+        f"_Ruled from the {source.get('target_season')} draft, final rosters and "
+        f"transaction log. Generated {report['generated_at']}. "
+        "**This file is the one to read** — `draft/keepers.json` is the same "
+        "ruling for tooling._"
+    )
     out.append("")
     out.append("## The rules")
     out.append("")
@@ -276,10 +300,12 @@ def render_keepers_md(report: dict, source: dict) -> str:
         out.append(f"- {rule}")
     out.append("")
     totals = report["totals"]
-    out.append(f"**{totals['eligible']} eligible players across {totals['teams']} teams.** "
-               f"{totals['blocked']} blocked as last season's keeper; "
-               f"{totals['held_but_undrafted']} players were held to the end of the season but "
-               "not drafted by their team, so they do not qualify.")
+    out.append(
+        f"**{totals['eligible']} eligible players across {totals['teams']} teams.** "
+        f"{totals['blocked']} blocked as last season's keeper; "
+        f"{totals['held_but_undrafted']} players were held to the end of the season but "
+        "not drafted by their team, so they do not qualify."
+    )
     out.append("")
 
     for team in report["teams"]:
@@ -295,9 +321,11 @@ def render_keepers_md(report: dict, source: dict) -> str:
             out.append(header)
             out.append(divider)
             for player in team["eligible"]:
-                row = (f"| **R{player['round_cost']}** | {player['name']} | "
-                       f"{player['pos'] or '-'} | {player['nfl_team'] or '-'} | "
-                       f"{player['drafted_at_pick']} |")
+                row = (
+                    f"| **R{player['round_cost']}** | {player['name']} | "
+                    f"{player['pos'] or '-'} | {player['nfl_team'] or '-'} | "
+                    f"{player['drafted_at_pick']} |"
+                )
                 if has_adp:
                     adp = player.get("adp")
                     row += f" {adp if adp is not None else '-'} |"
@@ -308,19 +336,22 @@ def render_keepers_md(report: dict, source: dict) -> str:
         for player in team["blocked"]:
             out.append(f"- **Blocked:** {player['name']} — {player['reason']}.")
         excluded = team["excluded"]
-        out.append(f"- Not eligible: {excluded['held_but_undrafted']} held but undrafted, "
-                   f"{excluded['drafted_but_left']} drafted but left the roster.")
+        out.append(
+            f"- Not eligible: {excluded['held_but_undrafted']} held but undrafted, "
+            f"{excluded['drafted_but_left']} drafted but left the roster."
+        )
         out.append("")
 
     if report["divergences"]:
         out.append("## Dropped and re-acquired")
         out.append("")
-        out.append("These players finished the season on the roster that drafted them, but were "
-                   "dropped at some point along the way, so they did not stay all year:")
+        out.append(
+            "These players finished the season on the roster that drafted them, but were "
+            "dropped at some point along the way, so they did not stay all year:"
+        )
         out.append("")
         for player in report["divergences"]:
-            out.append(f"- roster {player['roster_id']}: {player['name']} "
-                       f"(drafted R{player['round_cost']})")
+            out.append(f"- roster {player['roster_id']}: {player['name']} (drafted R{player['round_cost']})")
         out.append("")
     return "\n".join(out)
 
@@ -346,8 +377,11 @@ def main() -> int:
     for week in range(1, args.weeks + 1):
         transactions.extend(client.get_transactions(league_id, week))
     completed = sum(1 for t in transactions if t.get("status") == "complete")
-    print(f"{len(picks)} picks · {len(rosters)} rosters · {len(transactions)} transactions "
-          f"({completed} completed) over {args.weeks} weeks", file=sys.stderr)
+    print(
+        f"{len(picks)} picks · {len(rosters)} rosters · {len(transactions)} transactions "
+        f"({completed} completed) over {args.weeks} weeks",
+        file=sys.stderr,
+    )
 
     players = client.get_players()
     board = load_board(args.board)
@@ -376,14 +410,20 @@ def main() -> int:
 
     totals = report["totals"]
     print(f"\nwrote {md_path} and {json_path}", file=sys.stderr)
-    print(f"{totals['eligible']} eligible across {totals['teams']} teams · "
-          f"{totals['blocked']} blocked as last season's keeper · "
-          f"{totals['held_but_undrafted']} held but undrafted", file=sys.stderr)
+    print(
+        f"{totals['eligible']} eligible across {totals['teams']} teams · "
+        f"{totals['blocked']} blocked as last season's keeper · "
+        f"{totals['held_but_undrafted']} held but undrafted",
+        file=sys.stderr,
+    )
     for team in report["teams"]:
         print(f"  {team['team_name']:<22} {len(team['eligible']):>2} eligible", file=sys.stderr)
     if report["divergences"]:
-        print(f"{len(report['divergences'])} player(s) were dropped and re-acquired -- "
-              "listed at the foot of the report", file=sys.stderr)
+        print(
+            f"{len(report['divergences'])} player(s) were dropped and re-acquired -- "
+            "listed at the foot of the report",
+            file=sys.stderr,
+        )
     return 0
 
 

@@ -11,9 +11,38 @@ import pytest
 from sleeper_draft.client import SleeperClient, SleeperError
 
 TEAMS = [
-    "ARI", "ATL", "BAL", "BUF", "CAR", "CHI", "CIN", "CLE", "DAL", "DEN", "DET", "GB",
-    "HOU", "IND", "JAX", "KC", "LAC", "LAR", "LV", "MIA", "MIN", "NE", "NO", "NYG",
-    "NYJ", "PHI", "PIT", "SEA", "SF", "TB", "TEN", "WAS",
+    "ARI",
+    "ATL",
+    "BAL",
+    "BUF",
+    "CAR",
+    "CHI",
+    "CIN",
+    "CLE",
+    "DAL",
+    "DEN",
+    "DET",
+    "GB",
+    "HOU",
+    "IND",
+    "JAX",
+    "KC",
+    "LAC",
+    "LAR",
+    "LV",
+    "MIA",
+    "MIN",
+    "NE",
+    "NO",
+    "NYG",
+    "NYJ",
+    "PHI",
+    "PIT",
+    "SEA",
+    "SF",
+    "TB",
+    "TEN",
+    "WAS",
 ]
 
 
@@ -41,28 +70,54 @@ def build_players(count: int = 600) -> dict[str, dict]:
 
     for i, team in enumerate(TEAMS):
         players[f"K{i}"] = {
-            "player_id": f"K{i}", "full_name": f"Kicker {team}", "position": "K",
-            "fantasy_positions": ["K"], "team": team, "active": True, "search_rank": 2000 + i,
+            "player_id": f"K{i}",
+            "full_name": f"Kicker {team}",
+            "position": "K",
+            "fantasy_positions": ["K"],
+            "team": team,
+            "active": True,
+            "search_rank": 2000 + i,
         }
         # Defenses: player_id is the team abbreviation, full_name is absent, and
         # -- as in the real dump -- search_rank is null for every defense.
         players[team] = {
-            "player_id": team, "full_name": None, "first_name": team, "last_name": "Defense",
-            "position": "DEF", "fantasy_positions": ["DEF"], "team": team, "active": True,
+            "player_id": team,
+            "full_name": None,
+            "first_name": team,
+            "last_name": "Defense",
+            "position": "DEF",
+            "fantasy_positions": ["DEF"],
+            "team": team,
+            "active": True,
             "search_rank": None,
         }
 
     players["9001"] = {
-        "player_id": "9001", "full_name": "Duplicate Player", "position": None,
-        "fantasy_positions": None, "team": None, "active": False, "search_rank": None,
+        "player_id": "9001",
+        "full_name": "Duplicate Player",
+        "position": None,
+        "fantasy_positions": None,
+        "team": None,
+        "active": False,
+        "search_rank": None,
     }
     players["9002"] = {
-        "player_id": "9002", "full_name": "Sentinel Guy", "position": "WR",
-        "fantasy_positions": ["WR"], "team": "KC", "active": True, "search_rank": 9999999,
+        "player_id": "9002",
+        "full_name": "Sentinel Guy",
+        "position": "WR",
+        "fantasy_positions": ["WR"],
+        "team": "KC",
+        "active": True,
+        "search_rank": 9999999,
     }
     players["9003"] = {
-        "player_id": "9003", "full_name": "Free Agent", "position": "RB",
-        "fantasy_positions": ["RB"], "team": None, "active": True, "search_rank": 50,
+        "player_id": "9003",
+        "full_name": "Free Agent",
+        "position": "RB",
+        "fantasy_positions": ["RB"],
+        "team": None,
+        "active": True,
+        "search_rank": 50,
     }
     return players
 
@@ -89,38 +144,61 @@ def byes_file(tmp_path):
 
 LEAGUES = {
     "L2026": {
-        "league_id": "L2026", "name": "The League", "season": "2026", "status": "pre_draft",
-        "total_rosters": 12, "previous_league_id": "L2025",
+        "league_id": "L2026",
+        "name": "The League",
+        "season": "2026",
+        "status": "pre_draft",
+        "total_rosters": 12,
+        "previous_league_id": "L2025",
         "roster_positions": ["QB", "RB", "RB", "WR", "WR", "TE", "FLEX", "K", "DEF"],
         "scoring_settings": {"pass_td": 4.0, "rec": 0.5},
     },
     "L2025": {
-        "league_id": "L2025", "name": "The League", "season": "2025", "status": "complete",
-        "total_rosters": 12, "previous_league_id": "L2024",
-        "roster_positions": ["QB"], "scoring_settings": {"rec": 0.5},
+        "league_id": "L2025",
+        "name": "The League",
+        "season": "2025",
+        "status": "complete",
+        "total_rosters": 12,
+        "previous_league_id": "L2024",
+        "roster_positions": ["QB"],
+        "scoring_settings": {"rec": 0.5},
     },
     "L2024": {
-        "league_id": "L2024", "name": "The League", "season": "2024", "status": "complete",
-        "total_rosters": 12, "previous_league_id": None,
-        "roster_positions": ["QB"], "scoring_settings": {"rec": 0.5},
+        "league_id": "L2024",
+        "name": "The League",
+        "season": "2024",
+        "status": "complete",
+        "total_rosters": 12,
+        "previous_league_id": None,
+        "roster_positions": ["QB"],
+        "scoring_settings": {"rec": 0.5},
     },
 }
 
 DRAFTS = {
     "D2026": {
-        "draft_id": "D2026", "type": "snake", "status": "pre_draft", "league_id": "L2026",
+        "draft_id": "D2026",
+        "type": "snake",
+        "status": "pre_draft",
+        "league_id": "L2026",
         "settings": {"teams": 12, "rounds": 14, "reversal_round": 3, "pick_timer": 90},
         "slot_to_roster_id": {str(i): i for i in range(1, 13)},
         "draft_order": {"U1": 1, "U2": 2},
     },
     "D2025": {
-        "draft_id": "D2025", "type": "snake", "status": "complete", "league_id": "L2025",
+        "draft_id": "D2025",
+        "type": "snake",
+        "status": "complete",
+        "league_id": "L2025",
         "settings": {"teams": 12, "rounds": 14, "reversal_round": 3},
         "slot_to_roster_id": {str(i): i for i in range(1, 13)},
         "draft_order": {"U1": 1},
     },
     "D2024": {
-        "draft_id": "D2024", "type": "snake", "status": "complete", "league_id": "L2024",
+        "draft_id": "D2024",
+        "type": "snake",
+        "status": "complete",
+        "league_id": "L2024",
         "settings": {"teams": 12, "rounds": 14},  # no reversal_round key at all
         "slot_to_roster_id": {"1": 1},
         "draft_order": {},
@@ -130,8 +208,11 @@ DRAFTS = {
 PICKS = {
     "D2025": [
         {
-            "pick_no": n, "round": (n - 1) // 12 + 1, "draft_slot": ((n - 1) % 12) + 1,
-            "player_id": str(n), "roster_id": ((n - 1) % 12) + 1,
+            "pick_no": n,
+            "round": (n - 1) // 12 + 1,
+            "draft_slot": ((n - 1) % 12) + 1,
+            "player_id": str(n),
+            "roster_id": ((n - 1) % 12) + 1,
             "metadata": {"first_name": "P", "last_name": str(n), "position": "RB", "team": "KC"},
         }
         for n in range(1, 12 * 14 + 1)
@@ -159,41 +240,92 @@ KEEPER_USERS = [
 ]
 
 KEEPER_PICKS = [
-    {"pick_no": 1, "round": 1, "roster_id": 1, "player_id": "1002", "is_keeper": True,
-     "metadata": {"first_name": "Kept", "last_name": "Last Year", "position": "RB", "team": "KC"}},
-    {"pick_no": 2, "round": 2, "roster_id": 1, "player_id": "1001", "is_keeper": None,
-     "metadata": {"first_name": "Held", "last_name": "Allyear", "position": "WR", "team": "BUF"}},
-    {"pick_no": 3, "round": 3, "roster_id": 1, "player_id": "1003", "is_keeper": None,
-     "metadata": {"first_name": "Dropped", "last_name": "Readded", "position": "RB", "team": "SF"}},
-    {"pick_no": 4, "round": 4, "roster_id": 1, "player_id": "1004", "is_keeper": None,
-     "metadata": {"first_name": "Gone", "last_name": "Forgood", "position": "TE", "team": "NYJ"}},
+    {
+        "pick_no": 1,
+        "round": 1,
+        "roster_id": 1,
+        "player_id": "1002",
+        "is_keeper": True,
+        "metadata": {"first_name": "Kept", "last_name": "Last Year", "position": "RB", "team": "KC"},
+    },
+    {
+        "pick_no": 2,
+        "round": 2,
+        "roster_id": 1,
+        "player_id": "1001",
+        "is_keeper": None,
+        "metadata": {"first_name": "Held", "last_name": "Allyear", "position": "WR", "team": "BUF"},
+    },
+    {
+        "pick_no": 3,
+        "round": 3,
+        "roster_id": 1,
+        "player_id": "1003",
+        "is_keeper": None,
+        "metadata": {"first_name": "Dropped", "last_name": "Readded", "position": "RB", "team": "SF"},
+    },
+    {
+        "pick_no": 4,
+        "round": 4,
+        "roster_id": 1,
+        "player_id": "1004",
+        "is_keeper": None,
+        "metadata": {"first_name": "Gone", "last_name": "Forgood", "position": "TE", "team": "NYJ"},
+    },
     # Roster 2 traded for 1005: roster 3 drafted him, so he is nobody's keeper.
-    {"pick_no": 5, "round": 5, "roster_id": 3, "player_id": "1005", "is_keeper": None,
-     "metadata": {"first_name": "Traded", "last_name": "Away", "position": "WR", "team": "MIA"}},
+    {
+        "pick_no": 5,
+        "round": 5,
+        "roster_id": 3,
+        "player_id": "1005",
+        "is_keeper": None,
+        "metadata": {"first_name": "Traded", "last_name": "Away", "position": "WR", "team": "MIA"},
+    },
     # A player the /players/nfl dump does not know; name must come from metadata.
-    {"pick_no": 6, "round": 6, "roster_id": 2, "player_id": "MISSING", "is_keeper": None,
-     "metadata": {"first_name": "Off", "last_name": "Dump", "position": "QB", "team": "LAR"}},
+    {
+        "pick_no": 6,
+        "round": 6,
+        "roster_id": 2,
+        "player_id": "MISSING",
+        "is_keeper": None,
+        "metadata": {"first_name": "Off", "last_name": "Dump", "position": "QB", "team": "LAR"},
+    },
 ]
 
 KEEPER_TRANSACTIONS = [
     # 1003 dropped in week 3 and re-added in week 9 -- on the final roster, but
     # did not stay all year. This is the case the transaction check exists for.
-    {"status": "complete", "leg": 3, "type": "free_agent",
-     "adds": None, "drops": {"1003": 1}, "roster_ids": [1]},
-    {"status": "complete", "leg": 9, "type": "waiver",
-     "adds": {"1003": 1}, "drops": None, "roster_ids": [1]},
+    {
+        "status": "complete",
+        "leg": 3,
+        "type": "free_agent",
+        "adds": None,
+        "drops": {"1003": 1},
+        "roster_ids": [1],
+    },
+    {"status": "complete", "leg": 9, "type": "waiver", "adds": {"1003": 1}, "drops": None, "roster_ids": [1]},
     # 1004 dropped for good.
-    {"status": "complete", "leg": 5, "type": "free_agent",
-     "adds": None, "drops": {"1004": 1}, "roster_ids": [1]},
+    {
+        "status": "complete",
+        "leg": 5,
+        "type": "free_agent",
+        "adds": None,
+        "drops": {"1004": 1},
+        "roster_ids": [1],
+    },
     # 1900 picked up off waivers and held to the end.
-    {"status": "complete", "leg": 2, "type": "waiver",
-     "adds": {"1900": 1}, "drops": None, "roster_ids": [1]},
+    {"status": "complete", "leg": 2, "type": "waiver", "adds": {"1900": 1}, "drops": None, "roster_ids": [1]},
     # A trade: roster 3 sends 1005 to roster 2.
-    {"status": "complete", "leg": 6, "type": "trade",
-     "adds": {"1005": 2}, "drops": {"1005": 3}, "roster_ids": [2, 3]},
+    {
+        "status": "complete",
+        "leg": 6,
+        "type": "trade",
+        "adds": {"1005": 2},
+        "drops": {"1005": 3},
+        "roster_ids": [2, 3],
+    },
     # Failed claim that would have dropped the one clean keeper -- must be ignored.
-    {"status": "failed", "leg": 4, "type": "waiver",
-     "adds": None, "drops": {"1001": 1}, "roster_ids": [1]},
+    {"status": "failed", "leg": 4, "type": "waiver", "adds": None, "drops": {"1001": 1}, "roster_ids": [1]},
 ]
 
 
@@ -250,8 +382,11 @@ def build_rankings(players: dict[str, dict], count: int = 40) -> dict:
     and a player whose research note is missing.
     """
     pool = sorted(
-        ((pid, p) for pid, p in players.items()
-         if p.get("position") in ("QB", "RB", "WR", "TE") and p.get("full_name")),
+        (
+            (pid, p)
+            for pid, p in players.items()
+            if p.get("position") in ("QB", "RB", "WR", "TE") and p.get("full_name")
+        ),
         key=lambda item: item[1]["search_rank"],
     )[:count]
     by_pos: dict[str, int] = {}
@@ -259,21 +394,26 @@ def build_rankings(players: dict[str, dict], count: int = 40) -> dict:
     for rank, (_pid, player) in enumerate(pool, start=1):
         pos = player["position"]
         by_pos[pos] = by_pos.get(pos, 0) + 1
-        ranked.append({
-            "rank": rank,
-            "name": player["full_name"],
-            "pos": pos,
-            "team": player["team"],
-            "bye": 5 + (rank % 9),
-            "pos_rank": f"{pos}{by_pos[pos]}",
-            "tier": (rank - 1) // 10 + 1,
-            "tier_pos": (rank - 1) % 10 + 1,
-            "composite_score": float(rank),
-            "source_ranks": {"ffc_halfppr_12team_adp": rank + 0.5, "underdog_adp": rank + 1.0,
-                             "rotoworld_rank": rank},
-            "value_vs_market": 0,
-            "note": None,
-        })
+        ranked.append(
+            {
+                "rank": rank,
+                "name": player["full_name"],
+                "pos": pos,
+                "team": player["team"],
+                "bye": 5 + (rank % 9),
+                "pos_rank": f"{pos}{by_pos[pos]}",
+                "tier": (rank - 1) // 10 + 1,
+                "tier_pos": (rank - 1) % 10 + 1,
+                "composite_score": float(rank),
+                "source_ranks": {
+                    "ffc_halfppr_12team_adp": rank + 0.5,
+                    "underdog_adp": rank + 1.0,
+                    "rotoworld_rank": rank,
+                },
+                "value_vs_market": 0,
+                "note": None,
+            }
+        )
     return {
         "meta": {"title": "Test rankings", "generated": "2026-09-05", "scoring": "0.5 PPR"},
         "risk_flags": {ranked[0]["name"]: "Test flag - do not draft"},
@@ -319,15 +459,22 @@ def scouting_file(tmp_path, rankings_file, players_cache):
     by_name = {p["full_name"]: pid for pid, p in players.items() if p.get("full_name")}
     starter, backup, plain = (by_name[row["name"]] for row in ranked[:3])
     path = tmp_path / "scouting.json"
-    path.write_text(json.dumps({
-        "source": "test",
-        "notes": {
-            starter: {"text": "workhorse", "flags": ["value"]},
-            backup: {"text": "best standalone handcuff", "flags": ["handcuff"],
-                     "handcuff_for": starter},
-            plain: {"flags": ["faller"], "tier_label": "dead zone R5-7"},
-        },
-    }))
+    path.write_text(
+        json.dumps(
+            {
+                "source": "test",
+                "notes": {
+                    starter: {"text": "workhorse", "flags": ["value"]},
+                    backup: {
+                        "text": "best standalone handcuff",
+                        "flags": ["handcuff"],
+                        "handcuff_for": starter,
+                    },
+                    plain: {"flags": ["faller"], "tier_label": "dead zone R5-7"},
+                },
+            }
+        )
+    )
     return path
 
 
@@ -336,19 +483,27 @@ def league_config(tmp_path):
     import yaml as _yaml
 
     path = tmp_path / "config.yaml"
-    path.write_text(_yaml.safe_dump({
-        "league_name": "Test League", "league_id": "L2026", "draft_id": "D2026",
-        "season": "2026", "teams": 12, "rounds": 13, "reversal_round": 3,
-        "draft_type": "snake",
-        "roster_positions": ["QB", "RB", "RB", "WR", "WR", "TE", "FLEX"] + ["BN"] * 6,
-        "scoring_settings": {"rec": 0.5},
-    }))
+    path.write_text(
+        _yaml.safe_dump(
+            {
+                "league_name": "Test League",
+                "league_id": "L2026",
+                "draft_id": "D2026",
+                "season": "2026",
+                "teams": 12,
+                "rounds": 13,
+                "reversal_round": 3,
+                "draft_type": "snake",
+                "roster_positions": ["QB", "RB", "RB", "WR", "WR", "TE", "FLEX"] + ["BN"] * 6,
+                "scoring_settings": {"rec": 0.5},
+            }
+        )
+    )
     return path
 
 
 @pytest.fixture
-def draft_artifacts(tmp_path, players_cache, rankings_file, notes_dir, scouting_file,
-                    league_config):
+def draft_artifacts(tmp_path, players_cache, rankings_file, notes_dir, scouting_file, league_config):
     """Real board.json + pick_order.json, built by the real generator.
 
     The live poller consumes exactly these two files, so building them through
@@ -359,10 +514,21 @@ def draft_artifacts(tmp_path, players_cache, rankings_file, notes_dir, scouting_
     from sleeper_draft import board
 
     out = tmp_path / "draft"
-    sys.argv = ["sleeper-board", "--cache-dir", str(players_cache),
-                "--rankings", str(rankings_file), "--notes-dir", str(notes_dir),
-                "--config", str(league_config), "--scouting", str(scouting_file),
-                "--out-dir", str(out)]
+    sys.argv = [
+        "sleeper-board",
+        "--cache-dir",
+        str(players_cache),
+        "--rankings",
+        str(rankings_file),
+        "--notes-dir",
+        str(notes_dir),
+        "--config",
+        str(league_config),
+        "--scouting",
+        str(scouting_file),
+        "--out-dir",
+        str(out),
+    ]
     board.main()
     return out
 
@@ -379,19 +545,22 @@ def make_keeper_picks(order: dict, board: dict, rounds_by_slot: dict[int, int]) 
     for index, (slot, rnd) in enumerate(sorted(rounds_by_slot.items())):
         pick_no = int(order["picks_by_slot"][str(slot)][rnd - 1])
         row = board["players"][index]
-        picks.append({
-            "pick_no": pick_no,
-            "round": rnd,
-            "draft_slot": slot,
-            "roster_id": slot,
-            "player_id": row["player_id"],
-            "is_keeper": True,
-            "metadata": {
-                "first_name": row["name"].split()[0],
-                "last_name": " ".join(row["name"].split()[1:]),
-                "position": row["pos"], "team": row["team"],
-            },
-        })
+        picks.append(
+            {
+                "pick_no": pick_no,
+                "round": rnd,
+                "draft_slot": slot,
+                "roster_id": slot,
+                "player_id": row["player_id"],
+                "is_keeper": True,
+                "metadata": {
+                    "first_name": row["name"].split()[0],
+                    "last_name": " ".join(row["name"].split()[1:]),
+                    "position": row["pos"],
+                    "team": row["team"],
+                },
+            }
+        )
     return sorted(picks, key=lambda p: p["pick_no"])
 
 
@@ -407,21 +576,26 @@ def make_picks(order: dict, board: dict, count: int) -> list[dict]:
         slot = order["slot_by_pick"][str(pick_no)]
         if pick_no <= len(rows):
             row = rows[pick_no - 1]
-            pid, meta = row["player_id"], {
-                "first_name": row["name"].split()[0],
-                "last_name": " ".join(row["name"].split()[1:]),
-                "position": row["pos"], "team": row["team"],
-            }
+            pid, meta = (
+                row["player_id"],
+                {
+                    "first_name": row["name"].split()[0],
+                    "last_name": " ".join(row["name"].split()[1:]),
+                    "position": row["pos"],
+                    "team": row["team"],
+                },
+            )
         else:
             pid = f"offboard-{pick_no}"
-            meta = {"first_name": "Off", "last_name": f"Board{pick_no}",
-                    "position": "WR", "team": "KC"}
-        picks.append({
-            "pick_no": pick_no,
-            "round": (pick_no - 1) // order["teams"] + 1,
-            "draft_slot": slot,
-            "roster_id": slot,
-            "player_id": pid,
-            "metadata": meta,
-        })
+            meta = {"first_name": "Off", "last_name": f"Board{pick_no}", "position": "WR", "team": "KC"}
+        picks.append(
+            {
+                "pick_no": pick_no,
+                "round": (pick_no - 1) // order["teams"] + 1,
+                "draft_slot": slot,
+                "roster_id": slot,
+                "player_id": pid,
+                "metadata": meta,
+            }
+        )
     return picks

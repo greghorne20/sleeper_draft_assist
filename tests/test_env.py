@@ -21,6 +21,7 @@ def test_reads_pairs_and_skips_comments_and_blanks(tmp_path, monkeypatch):
     assert sorted(load_env_file(path)) == ["SLEEPER_LEAGUE_ID", "SLEEPER_SEASON"]
 
     import os
+
     assert os.environ["SLEEPER_LEAGUE_ID"] == "123"
     assert os.environ["SLEEPER_SEASON"] == "2026"
 
@@ -33,6 +34,7 @@ def test_quotes_are_stripped(tmp_path, monkeypatch):
     load_env_file(path)
 
     import os
+
     assert os.environ["SLEEPER_USERNAME"] == "greg"
 
 
@@ -45,6 +47,7 @@ def test_a_real_export_wins_over_the_file(tmp_path, monkeypatch):
     assert load_env_file(path) == []
 
     import os
+
     assert os.environ["SLEEPER_LEAGUE_ID"] == "exported"
 
 
@@ -58,6 +61,7 @@ def test_the_warroom_model_can_come_from_the_file(tmp_path, monkeypatch):
     assert load_env_file(path) == ["ANTHROPIC_CHAT_MODEL"]
 
     import os
+
     assert os.environ["ANTHROPIC_CHAT_MODEL"] == "claude-from-file"
 
 
@@ -70,4 +74,5 @@ def test_load_dotenv_honours_the_env_file_override(tmp_path, monkeypatch):
     assert load_dotenv(announce=False) == ["SLEEPER_SLOT"]
 
     import os
+
     assert os.environ["SLEEPER_SLOT"] == "12"

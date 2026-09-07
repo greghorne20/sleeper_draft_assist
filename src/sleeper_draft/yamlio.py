@@ -13,5 +13,4 @@ def dump_yaml(document: dict) -> str:
     back in -- notably the team abbreviation "NO", which bare YAML 1.1 reads as
     the boolean false.
     """
-    return yaml.safe_dump(document, sort_keys=False, default_flow_style=False,
-                          allow_unicode=True, width=100)
+    return yaml.safe_dump(document, sort_keys=False, default_flow_style=False, allow_unicode=True, width=100)

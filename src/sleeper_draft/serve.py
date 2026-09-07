@@ -63,8 +63,9 @@ class StateHandler(BaseHTTPRequestHandler):
     def log_message(self, format: str, *args) -> None:  # noqa: A002, ARG002
         """Silence per-request logging -- it would bury the poll output."""
 
-    def _send(self, status: int, body: bytes, content_type: str,
-              revalidate: bool = False, etag: str | None = None) -> None:
+    def _send(
+        self, status: int, body: bytes, content_type: str, revalidate: bool = False, etag: str | None = None
+    ) -> None:
         self.send_response(status)
         self.send_header("Content-Type", content_type)
         self.send_header("Content-Length", str(len(body)))
@@ -87,8 +88,7 @@ class StateHandler(BaseHTTPRequestHandler):
 
         if route in PAGE_ROUTES:
             if not ASSET.exists():
-                self._send(500, b"live_view.html is missing from the package",
-                           "text/plain; charset=utf-8")
+                self._send(500, b"live_view.html is missing from the package", "text/plain; charset=utf-8")
                 return
             self._send(200, ASSET.read_bytes(), "text/html; charset=utf-8")
             return
@@ -101,9 +101,14 @@ class StateHandler(BaseHTTPRequestHandler):
                 # may never arrive at all -- sleeper-warroom is optional. Say so in
                 # JSON so the page can render "waiting" or hide a panel rather than
                 # treating either as an error.
-                self._send(404, json.dumps({"error": f"no {filename} yet",
-                                            "detail": "waiting for the first write"}).encode(),
-                           "application/json", revalidate=True)
+                self._send(
+                    404,
+                    json.dumps(
+                        {"error": f"no {filename} yet", "detail": "waiting for the first write"}
+                    ).encode(),
+                    "application/json",
+                    revalidate=True,
+                )
                 return
             # Hashed rather than derived from mtime and size: the whole point of
             # this route is that the page must never be told "unchanged" about a

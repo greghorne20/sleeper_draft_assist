@@ -60,8 +60,10 @@ class Candidate(BaseModel):
     player_id: str = Field(description="Sleeper player_id, exactly as it appears on the board")
     name: str = Field(description="Player name, exactly as the board spells it")
     pos: str = Field(description="QB, RB, WR or TE")
-    why: str = Field(description="One or two sentences grounded in the board row or research "
-                                 "note. Name the PLAYBOOK rule if one is doing the work.")
+    why: str = Field(
+        description="One or two sentences grounded in the board row or research "
+        "note. Name the PLAYBOOK rule if one is doing the work."
+    )
 
 
 class Brief(BaseModel):
@@ -69,15 +71,19 @@ class Brief(BaseModel):
 
     model_config = ConfigDict(extra="forbid")
 
-    strategy: str = Field(description="Where this team stands and the plan for its next two or "
-                                      "three picks. Amend the standing plan rather than "
-                                      "replacing it; say what changed.")
+    strategy: str = Field(
+        description="Where this team stands and the plan for its next two or "
+        "three picks. Amend the standing plan rather than "
+        "replacing it; say what changed."
+    )
     pick: Candidate = Field(description="The recommendation right now")
     alternative: Candidate = Field(description="Next best, and in `why` say what would flip it")
-    watch: list[str] = Field(default_factory=list,
-                             description="player_ids likely gone before this team picks again")
-    risks: list[str] = Field(default_factory=list,
-                             description="Bye stacks, positional holes, injury flags. Short.")
+    watch: list[str] = Field(
+        default_factory=list, description="player_ids likely gone before this team picks again"
+    )
+    risks: list[str] = Field(
+        default_factory=list, description="Bye stacks, positional holes, injury flags. Short."
+    )
 
 
 def drafted_ids(all_state: dict) -> set[str]:
@@ -87,10 +93,12 @@ def drafted_ids(all_state: dict) -> set[str]:
     included, since those are recorded against a slot like any other -- so the
     drafted set falls out of state the poller already writes.
     """
-    return {entry["player_id"]
-            for picks in (all_state.get("rosters_by_slot") or {}).values()
-            for entry in picks
-            if entry.get("player_id")}
+    return {
+        entry["player_id"]
+        for picks in (all_state.get("rosters_by_slot") or {}).values()
+        for entry in picks
+        if entry.get("player_id")
+    }
 
 
 def available_index(board: dict, all_state: dict) -> dict[str, dict]:
@@ -101,8 +109,7 @@ def available_index(board: dict, all_state: dict) -> dict[str, dict]:
     a round-11 handcuff is a legitimate recommendation.
     """
     taken = drafted_ids(all_state)
-    return {row["player_id"]: row for row in board["players"]
-            if row["player_id"] not in taken}
+    return {row["player_id"]: row for row in board["players"] if row["player_id"] not in taken}
 
 
 def validate_brief(brief: Brief, available: dict[str, dict]) -> list[str]:
@@ -130,8 +137,7 @@ def validate_brief(brief: Brief, available: dict[str, dict]) -> list[str]:
         if row["pos"].upper() in FORBIDDEN_POSITIONS:
             problems.append(f"{slot}: {row['name']} is a {row['pos']}; this league has no such slot.")
         if candidate.pos.upper() in FORBIDDEN_POSITIONS:
-            problems.append(f"{slot}: pos {candidate.pos!r} -- this league has no kicker or "
-                            "defense slot.")
+            problems.append(f"{slot}: pos {candidate.pos!r} -- this league has no kicker or defense slot.")
 
     if brief.pick.player_id == brief.alternative.player_id:
         problems.append("pick and alternative are the same player; the alternative has to differ.")
@@ -165,8 +171,13 @@ def hot_slots(all_state: dict, hot_within: int = HOT_WITHIN) -> set[int]:
     return hot
 
 
-def refresh_targets(all_state: dict, briefs: dict, hot_within: int = HOT_WITHIN,
-                    cold_every: int = COLD_EVERY, mode: str = "hot") -> set[int]:
+def refresh_targets(
+    all_state: dict,
+    briefs: dict,
+    hot_within: int = HOT_WITHIN,
+    cold_every: int = COLD_EVERY,
+    mode: str = "hot",
+) -> set[int]:
     """Which rooms this pick actually invalidated.
 
     `mode="all"` regenerates every seat on every pick, which is the literal
@@ -200,7 +211,7 @@ def refresh_targets(all_state: dict, briefs: dict, hot_within: int = HOT_WITHIN,
             targets.add(slot)
             continue
 
-        proposed = ((brief.get("pick") or {}).get("player_id"))
+        proposed = (brief.get("pick") or {}).get("player_id")
         if proposed and proposed in taken:
             targets.add(slot)
             continue
@@ -216,10 +227,12 @@ def _roster_block(seat: dict) -> list[str]:
     if not roster:
         out += ["Nothing drafted yet.", ""]
     else:
-        out += ["| Pick | Rd | Player | Pos | Tm | Bye | Tier |",
-                "|---:|---:|---|---|---|---:|---:|"]
-        out += [f"| {p['pick_no']} | {p['round']} | {p['name']} | {p['pos']} | {p['team']} | "
-                f"{p['bye'] or '-'} | {p['tier'] or '-'} |" for p in roster]
+        out += ["| Pick | Rd | Player | Pos | Tm | Bye | Tier |", "|---:|---:|---|---|---|---:|---:|"]
+        out += [
+            f"| {p['pick_no']} | {p['round']} | {p['name']} | {p['pos']} | {p['team']} | "
+            f"{p['bye'] or '-'} | {p['tier'] or '-'} |"
+            for p in roster
+        ]
         out.append("")
 
     need = seat.get("roster") or {}
@@ -229,8 +242,11 @@ def _roster_block(seat: dict) -> list[str]:
     out.append(f"**Starting slots still open:** {', '.join(gaps) if gaps else 'none'}")
     heavy = sorted((week for week, n in (seat.get("bye_counts") or {}).items() if n >= 3), key=int)
     if heavy:
-        out.append("**Bye stack:** " + ", ".join(f"week {w}" for w in heavy)
-                   + " — PLAYBOOK caps this at 2 projected starters per bye week.")
+        out.append(
+            "**Bye stack:** "
+            + ", ".join(f"week {w}" for w in heavy)
+            + " — PLAYBOOK caps this at 2 projected starters per bye week."
+        )
     out.append("")
     return out
 
@@ -249,13 +265,17 @@ def _league_block(all_state: dict, my_slot: int) -> list[str]:
         counts = " ".join(f"{pos}{n}" for pos, n in sorted((need.get("counts") or {}).items()))
         gaps = list(need.get("open_starters") or []) + (["FLEX"] if need.get("flex_open") else [])
         mine = " ← you" if int(key) == my_slot else ""
-        out.append(f"- **{room.get('name')}** — has {counts or 'nothing'} — "
-                   f"needs {' '.join(gaps) if gaps else 'nothing, starters set'}{mine}")
-    out += ["",
-            "Use this to read the room, not to decide who survives. Whether a player lasts is the "
-            "`Gone by` column, which is market ADP measured over thousands of drafts. Do not "
-            "reach a round early because several rivals share a need.",
-            ""]
+        out.append(
+            f"- **{room.get('name')}** — has {counts or 'nothing'} — "
+            f"needs {' '.join(gaps) if gaps else 'nothing, starters set'}{mine}"
+        )
+    out += [
+        "",
+        "Use this to read the room, not to decide who survives. Whether a player lasts is the "
+        "`Gone by` column, which is market ADP measured over thousands of drafts. Do not "
+        "reach a round early because several rivals share a need.",
+        "",
+    ]
     return out
 
 
@@ -265,9 +285,11 @@ def build_prompt(seat: dict, all_state: dict, previous: dict | None = None) -> s
     out: list[str] = []
     out.append(f"# War room — {seat.get('my_team_name') or f'slot {slot}'} (draft slot {slot})")
     out.append("")
-    out.append(f"{all_state.get('league_name')} · {all_state['teams']} teams · "
-               f"{all_state['rounds']} rounds · roster "
-               f"{', '.join(all_state.get('roster_positions') or [])}")
+    out.append(
+        f"{all_state.get('league_name')} · {all_state['teams']} teams · "
+        f"{all_state['rounds']} rounds · roster "
+        f"{', '.join(all_state.get('roster_positions') or [])}"
+    )
     out.append("")
 
     out.append("## Where the draft is")
@@ -275,19 +297,24 @@ def build_prompt(seat: dict, all_state: dict, previous: dict | None = None) -> s
     if seat["current_pick"] is None:
         out.append("The draft is complete.")
     else:
-        out.append(f"- Pick {seat['current_pick']} of {seat['total_picks']}, round "
-                   f"{seat['current_round']}. On the clock: "
-                   f"{team_label(seat, seat['on_the_clock_slot'])}.")
+        out.append(
+            f"- Pick {seat['current_pick']} of {seat['total_picks']}, round "
+            f"{seat['current_round']}. On the clock: "
+            f"{team_label(seat, seat['on_the_clock_slot'])}."
+        )
         if seat["is_my_turn"]:
             out.append("- **You are on the clock. This pick is being made now.**")
         if seat["my_next_pick"]:
-            out.append(f"- Your next pick: **{seat['my_next_pick']}**"
-                       + (f", then {seat['my_pick_after_next']}."
-                          if seat["my_pick_after_next"] else " (your last)."))
+            out.append(
+                f"- Your next pick: **{seat['my_next_pick']}**"
+                + (f", then {seat['my_pick_after_next']}." if seat["my_pick_after_next"] else " (your last).")
+            )
         if seat["survive_until_pick"]:
-            out.append(f"- **{seat['picks_before_horizon']} picks by other teams** before pick "
-                       f"{seat['survive_until_pick']} comes back to you. A player has to survive "
-                       "all of them to still be there.")
+            out.append(
+                f"- **{seat['picks_before_horizon']} picks by other teams** before pick "
+                f"{seat['survive_until_pick']} comes back to you. A player has to survive "
+                "all of them to still be there."
+            )
     out.append("")
 
     out += _roster_block(seat)
@@ -297,36 +324,42 @@ def build_prompt(seat: dict, all_state: dict, previous: dict | None = None) -> s
     out.append(f"## Best available — top {len(shown)} of {seat['available_count']} left")
     out.append("")
     if horizon:
-        out.append(f"`Gone by {horizon}?` is market ADP within {seat['cushion']} of that pick. "
-                   "PLAYBOOK D1: prefer the highest-value player who will NOT survive over one "
-                   "who will.")
+        out.append(
+            f"`Gone by {horizon}?` is market ADP within {seat['cushion']} of that pick. "
+            "PLAYBOOK D1: prefer the highest-value player who will NOT survive over one "
+            "who will."
+        )
         out.append("")
     out += _player_table(shown, horizon)
     out.append("")
 
     out.append("## Tiers remaining")
     out.append("")
-    out.append("PLAYBOOK D2: take the last man in a tier when the count drops to the number of "
-               "teams drafting before you return.")
+    out.append(
+        "PLAYBOOK D2: take the last man in a tier when the count drops to the number of "
+        "teams drafting before you return."
+    )
     for pos in ("RB", "WR", "TE", "QB"):
         tiers = (seat.get("tier_status") or {}).get(pos)
         if tiers:
-            out.append(f"- **{pos}** — " + " · ".join(f"T{t} {tiers[t]}"
-                                                      for t in sorted(tiers, key=int)))
+            out.append(f"- **{pos}** — " + " · ".join(f"T{t} {tiers[t]}" for t in sorted(tiers, key=int)))
     out.append("")
 
     recent = seat.get("recent_picks") or []
     if recent:
-        run = " · ".join(f"{pos} {n}" for pos, n in
-                         sorted((seat.get("position_run") or {}).items(), key=lambda kv: -kv[1]))
+        run = " · ".join(
+            f"{pos} {n}" for pos, n in sorted((seat.get("position_run") or {}).items(), key=lambda kv: -kv[1])
+        )
         out.append(f"## Last {len(recent)} picks — run: {run}")
         out.append("")
         for entry in reversed(recent):
             who = "you" if entry["draft_slot"] == slot else team_label(seat, entry["draft_slot"])
             kept = " (keeper)" if entry.get("is_keeper") else ""
-            out.append(f"- `{entry['pick_no']}` {who}: {entry['name']} "
-                       f"({entry['pos']}, {'#' + str(entry['rank']) if entry['rank'] else 'unranked'})"
-                       f"{kept}")
+            out.append(
+                f"- `{entry['pick_no']}` {who}: {entry['name']} "
+                f"({entry['pos']}, {'#' + str(entry['rank']) if entry['rank'] else 'unranked'})"
+                f"{kept}"
+            )
         out.append("")
 
     out += _league_block(all_state, slot)
@@ -336,17 +369,21 @@ def build_prompt(seat: dict, all_state: dict, previous: dict | None = None) -> s
         out.append("")
         out.append(previous["strategy"])
         out.append("")
-        out.append("Amend this rather than starting over. Say what changed since. If nothing "
-                   "material changed, keep the plan and say so plainly.")
+        out.append(
+            "Amend this rather than starting over. Say what changed since. If nothing "
+            "material changed, keep the plan and say so plainly."
+        )
         out.append("")
 
     out.append("## Now write the brief")
     out.append("")
-    out.append("Use `read_player_note` before recommending anyone you have not already justified "
-               "— the reasoning has to come from the research, not from memory. Use `board_rows` "
-               "to look past the top of the board, and `read_strategy_section` when you need the "
-               "reasoning behind a rule. Every player_id you name must appear on the board above "
-               "or come back from `board_rows`.")
+    out.append(
+        "Use `read_player_note` before recommending anyone you have not already justified "
+        "— the reasoning has to come from the research, not from memory. Use `board_rows` "
+        "to look past the top of the board, and `read_strategy_section` when you need the "
+        "reasoning behind a rule. Every player_id you name must appear on the board above "
+        "or come back from `board_rows`."
+    )
     return "\n".join(out)
 
 
@@ -354,12 +391,17 @@ def render_brief_md(room: dict) -> str:
     """One room's brief as markdown, so it reads with `cat` like everything else."""
     out = [f"# War room — {room.get('name')} (slot {room.get('slot')})", ""]
     status = room.get("status")
-    stamp = (f"_As of pick {room.get('picks_made')} · written {room.get('generated_at')}"
-             f" · {room.get('model', 'unknown model')}_")
+    stamp = (
+        f"_As of pick {room.get('picks_made')} · written {room.get('generated_at')}"
+        f" · {room.get('model', 'unknown model')}_"
+    )
     out += [stamp, ""]
     if status == "error":
-        out += ["> **⚠ This brief could not be regenerated and is the previous one.** "
-                + str(room.get("error") or ""), ""]
+        out += [
+            "> **⚠ This brief could not be regenerated and is the previous one.** "
+            + str(room.get("error") or ""),
+            "",
+        ]
 
     if not room.get("strategy"):
         out += ["_No brief yet._", ""]
@@ -370,14 +412,21 @@ def render_brief_md(room: dict) -> str:
     for heading, key in (("The pick", "pick"), ("Instead", "alternative")):
         candidate = room.get(key) or {}
         if candidate:
-            out += [f"## {heading} — {candidate.get('name')} "
-                    f"({candidate.get('pos')}, `{candidate.get('player_id')}`)", "",
-                    str(candidate.get("why") or ""), ""]
+            out += [
+                f"## {heading} — {candidate.get('name')} "
+                f"({candidate.get('pos')}, `{candidate.get('player_id')}`)",
+                "",
+                str(candidate.get("why") or ""),
+                "",
+            ]
 
     if room.get("watch_names"):
-        out += ["## Watch", "",
-                "Likely gone before this team picks again: "
-                + ", ".join(room["watch_names"]), ""]
+        out += [
+            "## Watch",
+            "",
+            "Likely gone before this team picks again: " + ", ".join(room["watch_names"]),
+            "",
+        ]
     if room.get("risks"):
         out += ["## Risks", ""] + [f"- {risk}" for risk in room["risks"]] + [""]
     return "\n".join(out)
@@ -385,24 +434,41 @@ def render_brief_md(room: dict) -> str:
 
 def render_briefs_md(briefs: dict) -> str:
     """Every room in one document, for reading the league at a glance."""
-    out = [f"# War rooms — pick {briefs.get('picks_made')}", "",
-           f"_{briefs.get('generated_at')} · {briefs.get('model')}_", ""]
+    out = [
+        f"# War rooms — pick {briefs.get('picks_made')}",
+        "",
+        f"_{briefs.get('generated_at')} · {briefs.get('model')}_",
+        "",
+    ]
     for key in sorted(briefs.get("rooms") or {}, key=int):
         room = briefs["rooms"][key]
         pick = room.get("pick") or {}
-        out.append(f"- **{room.get('name')}** (slot {key}) — "
-                   + (f"{pick.get('name')} ({pick.get('pos')})" if pick else "no brief yet")
-                   + (f" · _stale, from pick {room.get('picks_made')}_"
-                      if room.get("picks_made") != briefs.get("picks_made") else ""))
+        out.append(
+            f"- **{room.get('name')}** (slot {key}) — "
+            + (f"{pick.get('name')} ({pick.get('pos')})" if pick else "no brief yet")
+            + (
+                f" · _stale, from pick {room.get('picks_made')}_"
+                if room.get("picks_made") != briefs.get("picks_made")
+                else ""
+            )
+        )
     out.append("")
     for key in sorted(briefs.get("rooms") or {}, key=int):
         out += [render_brief_md(briefs["rooms"][key]), "---", ""]
     return "\n".join(out)
 
 
-def new_room(seat: dict, all_state: dict, brief: Brief | None, *, model: str,
-             status: str = "ok", error: str | None = None,
-             usage: dict | None = None, available: dict[str, dict] | None = None) -> dict:
+def new_room(
+    seat: dict,
+    all_state: dict,
+    brief: Brief | None,
+    *,
+    model: str,
+    status: str = "ok",
+    error: str | None = None,
+    usage: dict | None = None,
+    available: dict[str, dict] | None = None,
+) -> dict:
     """A brief plus the provenance the model is not asked for and cannot forge."""
     slot = seat["my_slot"]
     room: dict[str, Any] = {

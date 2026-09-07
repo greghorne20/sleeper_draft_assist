@@ -41,24 +41,34 @@ def require(obj: dict, key: str, where: str):
 def parse_args() -> argparse.Namespace:
     load_dotenv()
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    p.add_argument("--username", default=os.environ.get("SLEEPER_USERNAME"),
-                   help="Sleeper username (or set SLEEPER_USERNAME)")
-    p.add_argument("--season", default=os.environ.get("SLEEPER_SEASON"),
-                   help="Season, e.g. 2026 (or set SLEEPER_SEASON)")
-    p.add_argument("--league-id", default=os.environ.get("SLEEPER_LEAGUE_ID"),
-                   help="League to detail (or set SLEEPER_LEAGUE_ID)")
-    p.add_argument("--draft-id", default=None,
-                   help="Specific draft within the league. Default: the league's most recent draft.")
-    p.add_argument("--out", type=Path, default=None,
-                   help="Also write the YAML config block to this path.")
+    p.add_argument(
+        "--username",
+        default=os.environ.get("SLEEPER_USERNAME"),
+        help="Sleeper username (or set SLEEPER_USERNAME)",
+    )
+    p.add_argument(
+        "--season", default=os.environ.get("SLEEPER_SEASON"), help="Season, e.g. 2026 (or set SLEEPER_SEASON)"
+    )
+    p.add_argument(
+        "--league-id",
+        default=os.environ.get("SLEEPER_LEAGUE_ID"),
+        help="League to detail (or set SLEEPER_LEAGUE_ID)",
+    )
+    p.add_argument(
+        "--draft-id",
+        default=None,
+        help="Specific draft within the league. Default: the league's most recent draft.",
+    )
+    p.add_argument("--out", type=Path, default=None, help="Also write the YAML config block to this path.")
     p.add_argument("--cache-dir", default=None, help="Override the players cache directory.")
     args = p.parse_args()
 
     # A league ID is enough on its own: league -> drafts -> draft needs no user.
     # Without one, we have to go username + season -> league list.
     if not args.league_id:
-        missing = [name for name, value in (("--username", args.username), ("--season", args.season))
-                   if not value]
+        missing = [
+            name for name, value in (("--username", args.username), ("--season", args.season)) if not value
+        ]
         if missing:
             p.error(
                 f"missing required argument(s): {', '.join(missing)} "
@@ -122,8 +132,10 @@ def main() -> int:
     else:
         draft_stub = drafts[0]  # Sleeper returns drafts most-recent first.
         if len(drafts) > 1:
-            print(f"# league has {len(drafts)} drafts; using the most recent. "
-                  f"Others: {[d.get('draft_id') for d in drafts[1:]]}\n")
+            print(
+                f"# league has {len(drafts)} drafts; using the most recent. "
+                f"Others: {[d.get('draft_id') for d in drafts[1:]]}\n"
+            )
 
     draft = client.get_draft(require(draft_stub, "draft_id", "draft stub"))
     settings = require(draft, "settings", f"draft {draft['draft_id']}")
@@ -141,8 +153,10 @@ def main() -> int:
         print(f"#       settings keys present: {sorted(settings)}")
         print("#       Set reversal_round manually in your config if the league uses 3RR.\n")
     elif reversal_round in (0, None):
-        print(f"# NOTE: reversal_round is {reversal_round!r} -- Sleeper is reporting NO reversal "
-              "for this draft.\n")
+        print(
+            f"# NOTE: reversal_round is {reversal_round!r} -- Sleeper is reporting NO reversal "
+            "for this draft.\n"
+        )
 
     config = {
         "user_id": user_id,

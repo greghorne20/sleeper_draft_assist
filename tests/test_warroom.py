@@ -43,8 +43,12 @@ def candidate(row, why="Because the board says so."):
 
 def a_brief(available, first=0, second=1, **kw):
     rows = list(available.values())
-    return B.Brief(strategy="Anchor RB, then best available.",
-                   pick=candidate(rows[first]), alternative=candidate(rows[second]), **kw)
+    return B.Brief(
+        strategy="Anchor RB, then best available.",
+        pick=candidate(rows[first]),
+        alternative=candidate(rows[second]),
+        **kw,
+    )
 
 
 # --- what is still on the board ---------------------------------------------
@@ -83,8 +87,7 @@ def test_a_drafted_player_is_refused(draft_artifacts):
     available = B.available_index(board, state)
     gone = state["rosters_by_slot"]["1"][0]
     bad = a_brief(available)
-    bad.pick = B.Candidate(player_id=gone["player_id"], name=gone["name"],
-                           pos=gone["pos"], why="Stale.")
+    bad.pick = B.Candidate(player_id=gone["player_id"], name=gone["name"], pos=gone["pos"], why="Stale.")
     problems = B.validate_brief(bad, available)
     assert any("already drafted" in p for p in problems)
     assert gone["player_id"] in problems[0]
@@ -94,8 +97,7 @@ def test_an_unknown_player_id_is_refused(draft_artifacts):
     board, state = league(draft_artifacts, 10)
     available = B.available_index(board, state)
     bad = a_brief(available)
-    bad.pick = B.Candidate(player_id="not-a-player", name="Imaginary Man",
-                           pos="RB", why="Invented.")
+    bad.pick = B.Candidate(player_id="not-a-player", name="Imaginary Man", pos="RB", why="Invented.")
     assert any("not available" in p for p in B.validate_brief(bad, available))
 
 
@@ -105,8 +107,9 @@ def test_an_id_paired_with_the_wrong_name_is_refused(draft_artifacts):
     available = B.available_index(board, state)
     row = next(iter(available.values()))
     bad = a_brief(available)
-    bad.pick = B.Candidate(player_id=row["player_id"], name="Somebody Else",
-                           pos=row["pos"], why="Mismatched.")
+    bad.pick = B.Candidate(
+        player_id=row["player_id"], name="Somebody Else", pos=row["pos"], why="Mismatched."
+    )
     problems = B.validate_brief(bad, available)
     assert any("is " + row["name"] in p for p in problems)
 
@@ -116,8 +119,9 @@ def test_a_kicker_or_defense_is_refused(draft_artifacts):
     available = B.available_index(board, state)
     row = next(iter(available.values()))
     bad = a_brief(available)
-    bad.pick = B.Candidate(player_id=row["player_id"], name=row["name"],
-                           pos="DST", why="No such slot exists.")
+    bad.pick = B.Candidate(
+        player_id=row["player_id"], name=row["name"], pos="DST", why="No such slot exists."
+    )
     assert any("no kicker or defense slot" in p for p in B.validate_brief(bad, available))
 
 
@@ -143,9 +147,13 @@ def briefs_for(state, picks_made=None, available=None, status="ok"):
     rows = list((available or {}).values())
     rooms = {}
     for i, key in enumerate(sorted(state["war_rooms"], key=int)):
-        room = {"slot": int(key), "name": state["war_rooms"][key]["name"], "status": status,
-                "picks_made": state["picks_made"] if picks_made is None else picks_made,
-                "strategy": "Standing plan."}
+        room = {
+            "slot": int(key),
+            "name": state["war_rooms"][key]["name"],
+            "status": status,
+            "picks_made": state["picks_made"] if picks_made is None else picks_made,
+            "strategy": "Standing plan.",
+        }
         if rows:
             room["pick"] = {"player_id": rows[i]["player_id"], "name": rows[i]["name"]}
         rooms[key] = room
@@ -175,8 +183,8 @@ def test_hot_rooms_generate_before_cold_ones(draft_artifacts):
     ordered = R.refresh_order(targets, warm)
 
     assert set(ordered) == targets
-    assert ordered[:len(warm)] == sorted(warm)
-    assert ordered[len(warm):] == sorted(targets - warm)
+    assert ordered[: len(warm)] == sorted(warm)
+    assert ordered[len(warm) :] == sorted(targets - warm)
     # Slot 11 only refreshes because it just picked; slot 10 is on the clock.
     assert ordered.index(10) < ordered.index(11)
 
@@ -268,8 +276,13 @@ def test_a_room_renders_the_fields_a_reader_needs(draft_artifacts):
     board, state = league(draft_artifacts, 10)
     available = B.available_index(board, state)
     seat = live.team_state(state, 3)
-    room = B.new_room(seat, state, a_brief(available, watch=[next(iter(available))]),
-                      model="claude-sonnet-5", available=available)
+    room = B.new_room(
+        seat,
+        state,
+        a_brief(available, watch=[next(iter(available))]),
+        model="claude-sonnet-5",
+        available=available,
+    )
     md = B.render_brief_md(room)
     assert room["name"] in md
     assert room["pick"]["name"] in md and room["pick"]["player_id"] in md
@@ -290,8 +303,7 @@ def test_provenance_comes_from_code_not_the_model(draft_artifacts):
     board, state = league(draft_artifacts, 10)
     available = B.available_index(board, state)
     seat = live.team_state(state, 3)
-    room = B.new_room(seat, state, a_brief(available), model="claude-sonnet-5",
-                      available=available)
+    room = B.new_room(seat, state, a_brief(available), model="claude-sonnet-5", available=available)
     assert room["slot"] == 3
     assert room["picks_made"] == state["picks_made"]
     assert room["for_pick"] == seat["my_next_pick"]
@@ -406,11 +418,26 @@ def test_a_missing_playbook_is_survivable(tmp_path):
 
 def runner_args(tmp_path, **kw):
     import argparse
-    base = dict(state_dir=tmp_path, board=Path("draft/board.json"),
-                playbook=Path("draft/PLAYBOOK.md"), model="test-model", refresh="hot",
-                slot=None, hot_within=B.HOT_WITHIN, cold_every=B.COLD_EVERY, timeout=5.0,
-                concurrency=2, watch=False, interval=1.0, once=True, dry_run=True,
-                no_cache=False, cache_ttl="1h", cold_model="claude-haiku-4-5")
+
+    base = dict(
+        state_dir=tmp_path,
+        board=Path("draft/board.json"),
+        playbook=Path("draft/PLAYBOOK.md"),
+        model="test-model",
+        refresh="hot",
+        slot=None,
+        hot_within=B.HOT_WITHIN,
+        cold_every=B.COLD_EVERY,
+        timeout=5.0,
+        concurrency=2,
+        watch=False,
+        interval=1.0,
+        once=True,
+        dry_run=True,
+        no_cache=False,
+        cache_ttl="1h",
+        cold_model="claude-haiku-4-5",
+    )
     base.update(kw)
     return argparse.Namespace(**base)
 
@@ -419,9 +446,12 @@ def test_briefs_are_written_atomically_and_leave_no_temp_files(tmp_path, draft_a
     board, state = league(draft_artifacts, 10)
     available = B.available_index(board, state)
     seat = live.team_state(state, 4)
-    briefs = {"generated_at": "now", "picks_made": state["picks_made"], "model": "m",
-              "rooms": {"4": B.new_room(seat, state, a_brief(available), model="m",
-                                        available=available)}}
+    briefs = {
+        "generated_at": "now",
+        "picks_made": state["picks_made"],
+        "model": "m",
+        "rooms": {"4": B.new_room(seat, state, a_brief(available), model="m", available=available)},
+    }
     R.write_briefs(briefs, tmp_path)
     R.write_briefs(briefs, tmp_path)
 
@@ -443,8 +473,8 @@ def test_a_dry_run_writes_prompts_and_calls_nothing(tmp_path, draft_artifacts):
     board, state = league(draft_artifacts, 14)
     briefs = asyncio.run(R.run_cycle(state, board, {"rooms": {}}, runner_args(tmp_path)))
     written = sorted(f.name for f in (tmp_path / "prompts").iterdir())
-    assert len(written) == 12          # no briefs yet, so every seat is a target
-    assert briefs["rooms"] == {}       # and nothing was generated
+    assert len(written) == 12  # no briefs yet, so every seat is a target
+    assert briefs["rooms"] == {}  # and nothing was generated
     body = (tmp_path / "prompts" / "slot-12.md").read_text()
     assert body.startswith("# War room")
 
@@ -538,7 +568,7 @@ def test_one_model_everywhere_when_cold_matches_hot(tmp_path, draft_artifacts):
     board, state = league(draft_artifacts, 14)
     args = runner_args(tmp_path, model="claude-sonnet-5", cold_model="claude-sonnet-5")
     briefs = asyncio.run(R.run_cycle(state, board, {"rooms": {}}, args))
-    assert briefs["rooms"] == {}          # dry run, so nothing generated
+    assert briefs["rooms"] == {}  # dry run, so nothing generated
     assert (tmp_path / "prompts").exists()
 
 
@@ -555,11 +585,10 @@ def test_the_endpoint_exists_before_the_first_brief_does(tmp_path):
     R.write_briefs_json({"rooms": {}, "picks_made": 0}, tmp_path)
     doc = json.loads((tmp_path / "briefs.json").read_text())
     assert doc["rooms"] == {}
-    assert not (tmp_path / "briefs.md").exists()   # markdown waits for the cycle
+    assert not (tmp_path / "briefs.md").exists()  # markdown waits for the cycle
 
 
-def test_each_room_is_persisted_as_it_lands_not_after_the_slowest(
-        tmp_path, draft_artifacts, monkeypatch):
+def test_each_room_is_persisted_as_it_lands_not_after_the_slowest(tmp_path, draft_artifacts, monkeypatch):
     """The bug this fixes: gather() held every brief until the slowest finished,
     so /briefs.json 404'd for the whole first cycle -- 78 seconds, measured."""
     board, state = league(draft_artifacts, 14)

@@ -70,18 +70,36 @@ SCOUTING_FLAGS = ("risk", "riser", "faller", "value", "handcuff", "dead_zone")
 def parse_args() -> argparse.Namespace:
     load_dotenv()
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    p.add_argument("--rankings", type=Path, default=Path("research/rankings_2026.json"),
-                   help="Aggregate rankings JSON (default research/rankings_2026.json)")
-    p.add_argument("--scouting", type=Path, default=Path("research/scouting_notes.json"),
-                   help="Per-player scouting notes keyed by player_id "
-                        "(default research/scouting_notes.json)")
-    p.add_argument("--notes-dir", type=Path, default=Path("research/players"),
-                   help="Per-player research markdown, named <stem>-<POS>-<player_id>.md")
-    p.add_argument("--config", type=Path, default=Path("config.yaml"),
-                   help="League config from sleeper-discover (default config.yaml)")
+    p.add_argument(
+        "--rankings",
+        type=Path,
+        default=Path("research/rankings_2026.json"),
+        help="Aggregate rankings JSON (default research/rankings_2026.json)",
+    )
+    p.add_argument(
+        "--scouting",
+        type=Path,
+        default=Path("research/scouting_notes.json"),
+        help="Per-player scouting notes keyed by player_id (default research/scouting_notes.json)",
+    )
+    p.add_argument(
+        "--notes-dir",
+        type=Path,
+        default=Path("research/players"),
+        help="Per-player research markdown, named <stem>-<POS>-<player_id>.md",
+    )
+    p.add_argument(
+        "--config",
+        type=Path,
+        default=Path("config.yaml"),
+        help="League config from sleeper-discover (default config.yaml)",
+    )
     p.add_argument("--out-dir", type=Path, default=Path("draft"))
-    p.add_argument("--refresh-players", action="store_true",
-                   help="Force a re-fetch of /players/nfl even if the cache is fresh")
+    p.add_argument(
+        "--refresh-players",
+        action="store_true",
+        help="Force a re-fetch of /players/nfl even if the cache is fresh",
+    )
     p.add_argument("--cache-dir", default=None, help="Override the players cache directory")
     return p.parse_args()
 
@@ -216,8 +234,7 @@ def load_scouting(path: Path, players: dict[str, dict]) -> dict[str, dict]:
         )
     if dangling:
         problems.append(
-            f"{len(dangling)} handcuff_for link(s) point at an unknown player_id:\n  "
-            + "\n  ".join(dangling)
+            f"{len(dangling)} handcuff_for link(s) point at an unknown player_id:\n  " + "\n  ".join(dangling)
         )
     if problems:
         raise SleeperError(f"{path}:\n" + "\n\n".join(problems) + "\n\nNothing was written.")
@@ -274,8 +291,9 @@ def resolve(row: dict, candidates: list[tuple[str, dict]]) -> tuple[str, dict] |
     return None
 
 
-def join(rankings: dict, players: dict[str, dict], notes: dict[str, Path],
-         scouting: dict[str, dict]) -> list[dict]:
+def join(
+    rankings: dict, players: dict[str, dict], notes: dict[str, Path], scouting: dict[str, dict]
+) -> list[dict]:
     """Ranking rows + player_id + research note path + scouting. Fails loud on any miss."""
     index = index_players(players)
     risk_flags = rankings.get("risk_flags") or {}
@@ -310,33 +328,35 @@ def join(rankings: dict, players: dict[str, dict], notes: dict[str, Path],
         note_path = notes.get(pid)
         scout = scouting.get(pid) or {}
         handcuff_for = scout.get("handcuff_for")
-        rows.append({
-            "player_id": pid,
-            "rank": row["rank"],
-            "name": row["name"],
-            "sleeper_name": player.get("full_name"),
-            "pos": row["pos"],
-            "pos_rank": row["pos_rank"],
-            "tier": row["tier"],
-            "tier_pos": row.get("tier_pos"),
-            "team": row["team"],
-            "sleeper_team": sleeper_team,
-            "team_disagreement": bool(sleeper_team) and sleeper_team != row["team"],
-            "bye": row["bye"],
-            "composite_score": row.get("composite_score"),
-            "source_ranks": row.get("source_ranks") or {},
-            "value_vs_market": row.get("value_vs_market"),
-            "note": row.get("note"),
-            "risk_flag": flags_by_name.get(normalize_name(row["name"])),
-            "sleeper_status": player.get("status"),
-            "sleeper_injury_status": player.get("injury_status"),
-            "scouting": scout.get("text"),
-            "flags": scout.get("flags") or [],
-            "tier_label": scout.get("tier_label"),
-            "handcuff_for": handcuff_for,
-            "handcuff_for_name": (players[handcuff_for].get("full_name") if handcuff_for else None),
-            "research_note": str(note_path) if note_path else None,
-        })
+        rows.append(
+            {
+                "player_id": pid,
+                "rank": row["rank"],
+                "name": row["name"],
+                "sleeper_name": player.get("full_name"),
+                "pos": row["pos"],
+                "pos_rank": row["pos_rank"],
+                "tier": row["tier"],
+                "tier_pos": row.get("tier_pos"),
+                "team": row["team"],
+                "sleeper_team": sleeper_team,
+                "team_disagreement": bool(sleeper_team) and sleeper_team != row["team"],
+                "bye": row["bye"],
+                "composite_score": row.get("composite_score"),
+                "source_ranks": row.get("source_ranks") or {},
+                "value_vs_market": row.get("value_vs_market"),
+                "note": row.get("note"),
+                "risk_flag": flags_by_name.get(normalize_name(row["name"])),
+                "sleeper_status": player.get("status"),
+                "sleeper_injury_status": player.get("injury_status"),
+                "scouting": scout.get("text"),
+                "flags": scout.get("flags") or [],
+                "tier_label": scout.get("tier_label"),
+                "handcuff_for": handcuff_for,
+                "handcuff_for_name": (players[handcuff_for].get("full_name") if handcuff_for else None),
+                "research_note": str(note_path) if note_path else None,
+            }
+        )
 
     problems = []
     if unmatched:
@@ -344,7 +364,7 @@ def join(rankings: dict, players: dict[str, dict], notes: dict[str, Path],
             f"{len(unmatched)} ranking row(s) matched no player in the Sleeper dump:\n  "
             + "\n  ".join(unmatched)
             + "\nAdd a NAME_ALIASES entry (ranking spelling -> Sleeper spelling, normalised) "
-              "or refresh the players cache."
+            "or refresh the players cache."
         )
     if ambiguous:
         problems.append(
@@ -371,14 +391,16 @@ def notes_only(rows: list[dict], notes: dict[str, Path], players: dict[str, dict
                 f"Research note {path} has player_id {pid}, which is not in the Sleeper players "
                 "dump. Fix the filename or refresh the cache."
             )
-        extras.append({
-            "player_id": pid,
-            "name": player.get("full_name") or pid,
-            "pos": player.get("position"),
-            "team": player.get("team"),
-            "search_rank": player.get("search_rank"),
-            "research_note": str(path),
-        })
+        extras.append(
+            {
+                "player_id": pid,
+                "name": player.get("full_name") or pid,
+                "pos": player.get("position"),
+                "team": player.get("team"),
+                "search_rank": player.get("search_rank"),
+                "research_note": str(path),
+            }
+        )
     extras.sort(key=lambda e: (e["search_rank"] is None, e["search_rank"] or 0, e["name"]))
     return extras
 
@@ -440,16 +462,24 @@ def load_league(path: Path) -> dict:
     if not isinstance(raw, dict):
         raise SleeperError(f"League config {path} must be a mapping, got {type(raw).__name__}")
     league = {}
-    for field in ("league_name", "league_id", "draft_id", "season", "teams", "rounds",
-                  "reversal_round", "draft_type", "roster_positions", "scoring_settings"):
+    for field in (
+        "league_name",
+        "league_id",
+        "draft_id",
+        "season",
+        "teams",
+        "rounds",
+        "reversal_round",
+        "draft_type",
+        "roster_positions",
+        "scoring_settings",
+    ):
         league[field] = raw.get(field)
     for field in ("teams", "rounds"):
         value = league[field]
         # bool is a subclass of int, so `teams: true` would otherwise pass as 1.
         if not isinstance(value, int) or isinstance(value, bool) or value < 1:
-            raise SleeperError(
-                f"League config {path}: {field} is {value!r}, expected a positive int"
-            )
+            raise SleeperError(f"League config {path}: {field} is {value!r}, expected a positive int")
     return league
 
 
@@ -469,28 +499,38 @@ def render_board_md(rows: list[dict], extras: list[dict], league: dict, rankings
         + f" · starters {'/'.join(positions)} · **no K, no DST**"
     )
     out.append("")
-    out.append(f"{len(rows)} ranked players. Source: {meta.get('title', 'rankings')} "
-               f"(generated {meta.get('generated', 'unknown')}). Scoring: {meta.get('scoring', 'unknown')}.")
+    out.append(
+        f"{len(rows)} ranked players. Source: {meta.get('title', 'rankings')} "
+        f"(generated {meta.get('generated', 'unknown')}). Scoring: {meta.get('scoring', 'unknown')}."
+    )
     out.append("")
-    out.append("Regenerate with `uv run sleeper-board`. **This file is the one to read** — "
-               "`draft/board.json` holds the same board plus join fields, and exists as the input "
-               "`sleeper-live` and other tooling parse. It is ~4.6x this file.")
+    out.append(
+        "Regenerate with `uv run sleeper-board`. **This file is the one to read** — "
+        "`draft/board.json` holds the same board plus join fields, and exists as the input "
+        "`sleeper-live` and other tooling parse. It is ~4.6x this file."
+    )
     out.append("")
-    out.append("**Columns** — `#` overall rank · `Pos` positional rank · `Bye` bye week · "
-               "`id` Sleeper player_id (the join key to live picks) · `FFC`/`UD`/`RW` source ranks "
-               "(FantasyFootballCalculator ADP / Underdog ADP / Rotoworld) · `Δ` this board minus the "
-               "market, positive means we like them more than ADP does.")
+    out.append(
+        "**Columns** — `#` overall rank · `Pos` positional rank · `Bye` bye week · "
+        "`id` Sleeper player_id (the join key to live picks) · `FFC`/`UD`/`RW` source ranks "
+        "(FantasyFootballCalculator ADP / Underdog ADP / Rotoworld) · `Δ` this board minus the "
+        "market, positive means we like them more than ADP does."
+    )
     out.append("")
-    out.append("**Flags** — `risk` injury or situation risk · `riser` trending up · `faller` "
-               "trending down · `value` under-drafted relative to projection · `handcuff` "
-               "contingent value behind a starter · `dead_zone` sits in the 2026 RB dead zone. "
-               "Strategy behind all of it: `draft/STRATEGY.md`.")
+    out.append(
+        "**Flags** — `risk` injury or situation risk · `riser` trending up · `faller` "
+        "trending down · `value` under-drafted relative to projection · `handcuff` "
+        "contingent value behind a starter · `dead_zone` sits in the 2026 RB dead zone. "
+        "Strategy behind all of it: `draft/STRATEGY.md`."
+    )
     out.append("")
     out.append("Full research on a player: `research/players/` — the filename ends in their `id`.")
     out.append("")
 
-    header = ("| # | Pos | Player | Tm | Bye | id | FFC | UD | RW | Δ | Notes |\n"
-              "|---:|---|---|---|---:|---|---:|---:|---:|---:|---|")
+    header = (
+        "| # | Pos | Player | Tm | Bye | id | FFC | UD | RW | Δ | Notes |\n"
+        "|---:|---|---|---|---:|---|---:|---:|---:|---:|---|"
+    )
 
     def cell(value: object) -> str:
         return "-" if value is None else str(value)
@@ -542,22 +582,29 @@ def render_board_md(rows: list[dict], extras: list[dict], league: dict, rankings
         pos_rows = [row for row in rows if row["pos"] == pos]
         if not pos_rows:
             continue
-        out.append(f"**{pos}** — " + " · ".join(
-            f"{row['pos_rank']} {row['name']} (#{row['rank']}, T{row['tier']}, bye {row['bye']})"
-            for row in pos_rows
-        ))
+        out.append(
+            f"**{pos}** — "
+            + " · ".join(
+                f"{row['pos_rank']} {row['name']} (#{row['rank']}, T{row['tier']}, bye {row['bye']})"
+                for row in pos_rows
+            )
+        )
         out.append("")
 
     out.append("## Researched but unranked")
     out.append("")
-    out.append(f"{len(extras)} players with a research note that fell outside the ranked "
-               f"{len(rows)}. Late-round and waiver material only.")
+    out.append(
+        f"{len(extras)} players with a research note that fell outside the ranked "
+        f"{len(rows)}. Late-round and waiver material only."
+    )
     out.append("")
     out.append("| Player | Pos | Tm | id | search_rank |")
     out.append("|---|---|---|---|---:|")
     for extra in extras:
-        out.append(f"| {extra['name']} | {cell(extra['pos'])} | {cell(extra['team'])} | "
-                   f"{extra['player_id']} | {cell(extra['search_rank'])} |")
+        out.append(
+            f"| {extra['name']} | {cell(extra['pos'])} | {cell(extra['team'])} | "
+            f"{extra['player_id']} | {cell(extra['search_rank'])} |"
+        )
     out.append("")
 
     out.append("## Provenance")
@@ -575,8 +622,10 @@ def render_board_md(rows: list[dict], extras: list[dict], league: dict, rankings
         out.append("| Source | Date | Weight | Why |")
         out.append("|---|---|---|---|")
         for src in sources:
-            out.append(f"| {cell(src.get('name'))} | {cell(src.get('date'))} | "
-                       f"{cell(src.get('weight'))} | {cell(src.get('why'))} |")
+            out.append(
+                f"| {cell(src.get('name'))} | {cell(src.get('date'))} | "
+                f"{cell(src.get('weight'))} | {cell(src.get('why'))} |"
+            )
         out.append("")
     mechanics = (rankings.get("draft_mechanics") or {}).get("explanation")
     if mechanics:
@@ -611,57 +660,77 @@ def main() -> int:
     args.out_dir.mkdir(parents=True, exist_ok=True)
 
     board_path = args.out_dir / "board.json"
-    board_path.write_text(json.dumps({
-        "generated_at": generated_at,
-        "join_key": "player_id",
-        "source": {
-            "rankings": str(args.rankings),
-            "scouting_notes": str(args.scouting),
-            "title": (rankings.get("meta") or {}).get("title"),
-            "generated": (rankings.get("meta") or {}).get("generated"),
-            "scoring": (rankings.get("meta") or {}).get("scoring"),
-            "player_pool": (rankings.get("meta") or {}).get("player_pool"),
-            "method": (rankings.get("meta") or {}).get("method"),
-            "sources": (rankings.get("meta") or {}).get("sources"),
-            "draft_mechanics": (rankings.get("draft_mechanics") or {}).get("explanation"),
-        },
-        "league": league,
-        "counts": {
-            "ranked": len(rows),
-            "ranked_with_research_note": sum(1 for row in rows if row["research_note"]),
-            "researched_unranked": len(extras),
-            "with_scouting_note": sum(1 for row in rows if has_scouting(row)),
-        },
-        "plan": rankings.get("draft_day_plan"),
-        "structural_notes": rankings.get("structural_notes"),
-        "players": rows,
-        "researched_unranked": extras,
-    }, indent=1) + "\n")
+    board_path.write_text(
+        json.dumps(
+            {
+                "generated_at": generated_at,
+                "join_key": "player_id",
+                "source": {
+                    "rankings": str(args.rankings),
+                    "scouting_notes": str(args.scouting),
+                    "title": (rankings.get("meta") or {}).get("title"),
+                    "generated": (rankings.get("meta") or {}).get("generated"),
+                    "scoring": (rankings.get("meta") or {}).get("scoring"),
+                    "player_pool": (rankings.get("meta") or {}).get("player_pool"),
+                    "method": (rankings.get("meta") or {}).get("method"),
+                    "sources": (rankings.get("meta") or {}).get("sources"),
+                    "draft_mechanics": (rankings.get("draft_mechanics") or {}).get("explanation"),
+                },
+                "league": league,
+                "counts": {
+                    "ranked": len(rows),
+                    "ranked_with_research_note": sum(1 for row in rows if row["research_note"]),
+                    "researched_unranked": len(extras),
+                    "with_scouting_note": sum(1 for row in rows if has_scouting(row)),
+                },
+                "plan": rankings.get("draft_day_plan"),
+                "structural_notes": rankings.get("structural_notes"),
+                "players": rows,
+                "researched_unranked": extras,
+            },
+            indent=1,
+        )
+        + "\n"
+    )
 
     order_path = args.out_dir / "pick_order.json"
-    order_path.write_text(json.dumps({
-        "generated_at": generated_at,
-        "teams": league["teams"],
-        "rounds": league["rounds"],
-        "reversal_round": league.get("reversal_round"),
-        "verified_against": str(args.rankings) if reference else None,
-        "picks_by_slot": picks,
-        "slot_by_pick": {str(pick): int(slot) for slot, slot_picks in picks.items() for pick in slot_picks},
-    }, indent=1) + "\n")
+    order_path.write_text(
+        json.dumps(
+            {
+                "generated_at": generated_at,
+                "teams": league["teams"],
+                "rounds": league["rounds"],
+                "reversal_round": league.get("reversal_round"),
+                "verified_against": str(args.rankings) if reference else None,
+                "picks_by_slot": picks,
+                "slot_by_pick": {
+                    str(pick): int(slot) for slot, slot_picks in picks.items() for pick in slot_picks
+                },
+            },
+            indent=1,
+        )
+        + "\n"
+    )
 
     md_path = args.out_dir / "board.md"
     md_path.write_text(render_board_md(rows, extras, league, rankings))
 
     without_notes = [f"#{row['rank']} {row['name']}" for row in rows if not row["research_note"]]
     print(f"\nwrote {board_path}, {md_path}, {order_path}", file=sys.stderr)
-    print(f"{len(rows)} ranked players joined to player_ids; "
-          f"{len(rows) - len(without_notes)} have a research note", file=sys.stderr)
+    print(
+        f"{len(rows)} ranked players joined to player_ids; "
+        f"{len(rows) - len(without_notes)} have a research note",
+        file=sys.stderr,
+    )
     merged = sum(1 for row in rows if has_scouting(row))
     orphaned = sorted(set(scouting) - {row["player_id"] for row in rows})
     print(f"{merged} scouting notes merged from {args.scouting}", file=sys.stderr)
     if orphaned:
-        print(f"{len(orphaned)} scouting note(s) for unranked players (not shown on the board): "
-              + ", ".join(orphaned), file=sys.stderr)
+        print(
+            f"{len(orphaned)} scouting note(s) for unranked players (not shown on the board): "
+            + ", ".join(orphaned),
+            file=sys.stderr,
+        )
     if without_notes:
         print(f"no research note for {len(without_notes)}: {', '.join(without_notes)}", file=sys.stderr)
     print(f"{len(extras)} researched players outside the ranked list", file=sys.stderr)

@@ -98,44 +98,80 @@ TERMINAL_STATUSES = ("complete", "completed")
 def parse_args() -> argparse.Namespace:
     load_dotenv()
 
-    p = argparse.ArgumentParser(description=__doc__,
-                                formatter_class=argparse.RawDescriptionHelpFormatter)
-    p.add_argument("--state-dir", type=Path, default=Path("draft/state"),
-                   help="Where sleeper-live writes state.json (default draft/state)")
+    p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    p.add_argument(
+        "--state-dir",
+        type=Path,
+        default=Path("draft/state"),
+        help="Where sleeper-live writes state.json (default draft/state)",
+    )
     p.add_argument("--board", type=Path, default=Path("draft/board.json"))
     p.add_argument("--playbook", type=Path, default=Path("draft/PLAYBOOK.md"))
-    p.add_argument("--model", default=os.environ.get("ANTHROPIC_CHAT_MODEL", DEFAULT_MODEL),
-                   help=f"Anthropic model (or ANTHROPIC_CHAT_MODEL; default {DEFAULT_MODEL})")
-    p.add_argument("--cold-model",
-                   default=os.environ.get("ANTHROPIC_COLD_MODEL", DEFAULT_COLD_MODEL),
-                   help=f"Model for rooms nowhere near their turn (or ANTHROPIC_COLD_MODEL; "
-                        f"default {DEFAULT_COLD_MODEL}). Set it equal to --model to use one "
-                        f"model for everything.")
-    p.add_argument("--refresh", choices=("hot", "all"), default="hot",
-                   help="hot: only rooms this pick invalidated (default). all: every seat, "
-                        "every pick -- roughly four times the cost.")
-    p.add_argument("--slot", type=int, default=None,
-                   help="Generate only this seat. Useful for trying a prompt change cheaply.")
-    p.add_argument("--hot-within", type=int, default=B.HOT_WITHIN,
-                   help=f"Picks from its turn a room counts as hot (default {B.HOT_WITHIN})")
-    p.add_argument("--cold-every", type=int, default=B.COLD_EVERY,
-                   help=f"Refresh an idle room this often (default {B.COLD_EVERY})")
-    p.add_argument("--no-cache", action="store_true",
-                   help="Do not attach cache_control to the system prompt. The prefix is "
-                        "identical across all twelve rooms and every poll, so caching is "
-                        "normally a large win; this exists to measure it.")
-    p.add_argument("--cache-ttl", default="1h", choices=("5m", "1h"),
-                   help="Prompt-cache lifetime (default 1h). 5m is Anthropic's default but "
-                        "this league's pick timer is 300s, so a slow pick can expire the "
-                        "prefix exactly when the next brief needs it.")
+    p.add_argument(
+        "--model",
+        default=os.environ.get("ANTHROPIC_CHAT_MODEL", DEFAULT_MODEL),
+        help=f"Anthropic model (or ANTHROPIC_CHAT_MODEL; default {DEFAULT_MODEL})",
+    )
+    p.add_argument(
+        "--cold-model",
+        default=os.environ.get("ANTHROPIC_COLD_MODEL", DEFAULT_COLD_MODEL),
+        help=f"Model for rooms nowhere near their turn (or ANTHROPIC_COLD_MODEL; "
+        f"default {DEFAULT_COLD_MODEL}). Set it equal to --model to use one "
+        f"model for everything.",
+    )
+    p.add_argument(
+        "--refresh",
+        choices=("hot", "all"),
+        default="hot",
+        help="hot: only rooms this pick invalidated (default). all: every seat, "
+        "every pick -- roughly four times the cost.",
+    )
+    p.add_argument(
+        "--slot",
+        type=int,
+        default=None,
+        help="Generate only this seat. Useful for trying a prompt change cheaply.",
+    )
+    p.add_argument(
+        "--hot-within",
+        type=int,
+        default=B.HOT_WITHIN,
+        help=f"Picks from its turn a room counts as hot (default {B.HOT_WITHIN})",
+    )
+    p.add_argument(
+        "--cold-every",
+        type=int,
+        default=B.COLD_EVERY,
+        help=f"Refresh an idle room this often (default {B.COLD_EVERY})",
+    )
+    p.add_argument(
+        "--no-cache",
+        action="store_true",
+        help="Do not attach cache_control to the system prompt. The prefix is "
+        "identical across all twelve rooms and every poll, so caching is "
+        "normally a large win; this exists to measure it.",
+    )
+    p.add_argument(
+        "--cache-ttl",
+        default="1h",
+        choices=("5m", "1h"),
+        help="Prompt-cache lifetime (default 1h). 5m is Anthropic's default but "
+        "this league's pick timer is 300s, so a slow pick can expire the "
+        "prefix exactly when the next brief needs it.",
+    )
     p.add_argument("--timeout", type=float, default=TIMEOUT_S)
     p.add_argument("--concurrency", type=int, default=CONCURRENCY)
     p.add_argument("--watch", action="store_true", help="Keep going until the draft completes")
-    p.add_argument("--interval", type=float, default=WATCH_INTERVAL_S,
-                   help=f"Seconds between state checks (default {WATCH_INTERVAL_S})")
+    p.add_argument(
+        "--interval",
+        type=float,
+        default=WATCH_INTERVAL_S,
+        help=f"Seconds between state checks (default {WATCH_INTERVAL_S})",
+    )
     p.add_argument("--once", action="store_true", help="One cycle, then stop (the default)")
-    p.add_argument("--dry-run", action="store_true",
-                   help="Write the prompts to <state-dir>/prompts/ and call no model")
+    p.add_argument(
+        "--dry-run", action="store_true", help="Write the prompts to <state-dir>/prompts/ and call no model"
+    )
     args = p.parse_args()
     if args.concurrency < 1:
         p.error("--concurrency must be >= 1")
@@ -202,8 +238,13 @@ def refresh_order(targets: set[int], warm: set[int]) -> list[int]:
     return sorted(targets, key=lambda slot: (slot not in warm, slot))
 
 
-async def run_cycle(all_state: dict, board: dict, briefs: dict, args: argparse.Namespace,
-                    persist: Callable[[dict], Any] | None = None) -> dict:
+async def run_cycle(
+    all_state: dict,
+    board: dict,
+    briefs: dict,
+    args: argparse.Namespace,
+    persist: Callable[[dict], Any] | None = None,
+) -> dict:
     """One pass: pick the rooms that need work, generate them, merge the rest.
 
     `persist` is called with the whole document each time a room finishes, so the
@@ -211,8 +252,7 @@ async def run_cycle(all_state: dict, board: dict, briefs: dict, args: argparse.N
     done.
     """
     available = B.available_index(board, all_state)
-    targets = B.refresh_targets(all_state, briefs, args.hot_within, args.cold_every,
-                                mode=args.refresh)
+    targets = B.refresh_targets(all_state, briefs, args.hot_within, args.cold_every, mode=args.refresh)
     if args.slot is not None:
         targets &= {args.slot}
 
@@ -225,9 +265,12 @@ async def run_cycle(all_state: dict, board: dict, briefs: dict, args: argparse.N
 
     warm = B.hot_slots(all_state, args.hot_within) & targets
     ordered = refresh_order(targets, warm)
-    print(f"pick {picks_made}: regenerating {len(ordered)} room(s) -- "
-          f"{len(warm)} near their turn on {args.model}, "
-          f"{len(ordered) - len(warm)} on {args.cold_model}", file=sys.stderr)
+    print(
+        f"pick {picks_made}: regenerating {len(ordered)} room(s) -- "
+        f"{len(warm)} near their turn on {args.model}, "
+        f"{len(ordered) - len(warm)} on {args.cold_model}",
+        file=sys.stderr,
+    )
 
     if args.dry_run:
         out = args.state_dir / "prompts"
@@ -247,8 +290,9 @@ async def run_cycle(all_state: dict, board: dict, briefs: dict, args: argparse.N
 
     def agent_for(model: str) -> Any:
         if model not in agents:
-            agents[model] = build_agent(instructions, tools, model,
-                                        cache=not args.no_cache, ttl=args.cache_ttl)
+            agents[model] = build_agent(
+                instructions, tools, model, cache=not args.no_cache, ttl=args.cache_ttl
+            )
         return agents[model]
 
     # The rooms someone is actually reading get the better model. Most rooms over
@@ -265,7 +309,8 @@ async def run_cycle(all_state: dict, board: dict, briefs: dict, args: argparse.N
         prompt = B.build_prompt(seat, all_state, previous)
         async with gate:
             written, problems, usage, took = await generate_with_timeout(
-                agent_for(model), prompt, available, args.timeout)
+                agent_for(model), prompt, available, args.timeout
+            )
         if written is None:
             why = "; ".join(problems) or "unknown"
             print(f"  slot {slot} [{model}]: FAILED after {took:.1f}s -- {why}", file=sys.stderr)
@@ -274,12 +319,12 @@ async def run_cycle(all_state: dict, board: dict, briefs: dict, args: argparse.N
                 kept["status"] = "error"
                 kept["error"] = why
                 return slot, kept
-            return slot, B.new_room(seat, all_state, None, model=model,
-                                    status="error", error=why)
-        print(f"  slot {slot} [{model}]: {written.pick.name} ({written.pick.pos}) "
-              f"in {took:.1f}s", file=sys.stderr)
-        return slot, B.new_room(seat, all_state, written, model=model,
-                                usage=usage, available=available)
+            return slot, B.new_room(seat, all_state, None, model=model, status="error", error=why)
+        print(
+            f"  slot {slot} [{model}]: {written.pick.name} ({written.pick.pos}) in {took:.1f}s",
+            file=sys.stderr,
+        )
+        return slot, B.new_room(seat, all_state, written, model=model, usage=usage, available=available)
 
     def document() -> dict:
         return {
@@ -331,8 +376,12 @@ async def run(args: argparse.Namespace) -> int:
             if not briefs_path.exists():
                 write_briefs_json({"rooms": {}, "picks_made": picks_made}, args.state_dir)
             briefs = await run_cycle(
-                all_state, board, load_briefs(briefs_path), args,
-                persist=lambda doc: write_briefs_json(doc, args.state_dir))
+                all_state,
+                board,
+                load_briefs(briefs_path),
+                args,
+                persist=lambda doc: write_briefs_json(doc, args.state_dir),
+            )
             write_briefs(briefs, args.state_dir)
 
         if not args.watch:

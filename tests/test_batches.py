@@ -33,8 +33,7 @@ def test_writes_expected_batches(tmp_path, players_cache, byes_file):
         # Defenses have a null search_rank (Sleeper never ranks them), which sorts
         # to the end; every other row carries an int. Normalize null to a sentinel
         # so the ordering check mirrors the code's own sort key.
-        ranks = [p["search_rank"] if p["search_rank"] is not None else 9999999
-                 for p in doc["players"]]
+        ranks = [p["search_rank"] if p["search_rank"] is not None else 9999999 for p in doc["players"]]
         assert ranks == sorted(ranks), f"{path} is not in search_rank order"
         for player in doc["players"]:
             assert set(player) == {"player_id", "name", "pos", "team", "bye", "search_rank"}
@@ -47,13 +46,9 @@ def test_writes_expected_batches(tmp_path, players_cache, byes_file):
 def test_excludes_junk_rows(tmp_path, players_cache, byes_file):
     out = tmp_path / "b"
     run(["--byes", str(byes_file), "--out-dir", str(out)], players_cache)
-    names = {
-        p["name"]
-        for path in out.glob("*.yaml")
-        for p in yaml.safe_load(path.read_text())["players"]
-    }
-    assert "Sentinel Guy" not in names   # search_rank 9999999
-    assert "Free Agent" not in names     # team is null
+    names = {p["name"] for path in out.glob("*.yaml") for p in yaml.safe_load(path.read_text())["players"]}
+    assert "Sentinel Guy" not in names  # search_rank 9999999
+    assert "Free Agent" not in names  # team is null
     assert "Duplicate Player" not in names  # inactive, null positions
 
 
@@ -70,11 +65,7 @@ def test_team_no_survives_yaml_roundtrip(tmp_path, players_cache, byes_file):
     """Bare YAML 1.1 reads NO as false. Make sure it comes back as a string."""
     out = tmp_path / "b"
     run(["--byes", str(byes_file), "--out-dir", str(out)], players_cache)
-    teams = {
-        p["team"]
-        for path in out.glob("*.yaml")
-        for p in yaml.safe_load(path.read_text())["players"]
-    }
+    teams = {p["team"] for path in out.glob("*.yaml") for p in yaml.safe_load(path.read_text())["players"]}
     assert "NO" in teams
     assert False not in teams
 
@@ -107,5 +98,4 @@ def test_missing_bye_file_errors(tmp_path, players_cache):
 
 def test_limit_larger_than_pool_errors(tmp_path, players_cache, byes_file):
     with pytest.raises(SleeperError, match="but 5000 were requested"):
-        run(["--byes", str(byes_file), "--limit", "5000", "--out-dir", str(tmp_path / "b")],
-            players_cache)
+        run(["--byes", str(byes_file), "--limit", "5000", "--out-dir", str(tmp_path / "b")], players_cache)

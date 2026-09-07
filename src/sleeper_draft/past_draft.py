@@ -32,18 +32,26 @@ MAX_CHAIN_HOPS = 30
 def parse_args() -> argparse.Namespace:
     load_dotenv()
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    p.add_argument("--league-id", default=os.environ.get("SLEEPER_LEAGUE_ID"),
-                   help="League to start from (or set SLEEPER_LEAGUE_ID)")
-    p.add_argument("--back", type=int, default=1,
-                   help="How many seasons to walk back via previous_league_id (default 1)")
-    p.add_argument("--season", default=None,
-                   help="Walk back until this season is reached. Overrides --back.")
-    p.add_argument("--draft-id", default=None,
-                   help="Specific draft in the target league. Default: most recent.")
-    p.add_argument("--out", type=Path, default=None,
-                   help="Output path (default fixtures/draft_<season>_<draft_id>.json)")
-    p.add_argument("--allow-partial", action="store_true",
-                   help="Save even if the pick count does not equal teams * rounds")
+    p.add_argument(
+        "--league-id",
+        default=os.environ.get("SLEEPER_LEAGUE_ID"),
+        help="League to start from (or set SLEEPER_LEAGUE_ID)",
+    )
+    p.add_argument(
+        "--back", type=int, default=1, help="How many seasons to walk back via previous_league_id (default 1)"
+    )
+    p.add_argument("--season", default=None, help="Walk back until this season is reached. Overrides --back.")
+    p.add_argument(
+        "--draft-id", default=None, help="Specific draft in the target league. Default: most recent."
+    )
+    p.add_argument(
+        "--out", type=Path, default=None, help="Output path (default fixtures/draft_<season>_<draft_id>.json)"
+    )
+    p.add_argument(
+        "--allow-partial",
+        action="store_true",
+        help="Save even if the pick count does not equal teams * rounds",
+    )
     p.add_argument("--cache-dir", default=None, help="Override the players cache directory")
     args = p.parse_args()
     if not args.league_id:
@@ -58,8 +66,9 @@ def walk_back(
 ) -> tuple[dict, list[dict]]:
     """Follow previous_league_id. Returns (target_league, chain_walked)."""
     league = client.get_league(league_id)
-    chain = [{"league_id": league.get("league_id"), "season": league.get("season"),
-              "name": league.get("name")}]
+    chain = [
+        {"league_id": league.get("league_id"), "season": league.get("season"), "name": league.get("name")}
+    ]
 
     if season is not None:
         hops = 0
@@ -67,17 +76,20 @@ def walk_back(
             prev = league.get("previous_league_id")
             if not prev or prev == "0":
                 walked = " -> ".join(f"{c['season']}:{c['league_id']}" for c in chain)
-                raise SleeperError(
-                    f"Chain ended before reaching season {season}. Walked: {walked}"
-                )
+                raise SleeperError(f"Chain ended before reaching season {season}. Walked: {walked}")
             hops += 1
             if hops > MAX_CHAIN_HOPS:
                 raise SleeperError(
                     f"previous_league_id chain exceeded {MAX_CHAIN_HOPS} hops -- likely a loop."
                 )
             league = client.get_league(str(prev))
-            chain.append({"league_id": league.get("league_id"), "season": league.get("season"),
-                          "name": league.get("name")})
+            chain.append(
+                {
+                    "league_id": league.get("league_id"),
+                    "season": league.get("season"),
+                    "name": league.get("name"),
+                }
+            )
         return league, chain
 
     for step in range(back):
@@ -89,8 +101,9 @@ def walk_back(
                 f"previous_league_id, so it cannot go back {back} season(s) -- got {step}. Walked: {walked}"
             )
         league = client.get_league(str(prev))
-        chain.append({"league_id": league.get("league_id"), "season": league.get("season"),
-                      "name": league.get("name")})
+        chain.append(
+            {"league_id": league.get("league_id"), "season": league.get("season"), "name": league.get("name")}
+        )
     return league, chain
 
 
@@ -143,14 +156,16 @@ def main() -> int:
 
     expected = settings["rounds"] * settings["teams"]
     if len(picks) != expected:
-        message = (f"Draft {draft_id} has {len(picks)} picks but rounds*teams = {expected}.")
+        message = f"Draft {draft_id} has {len(picks)} picks but rounds*teams = {expected}."
         if not args.allow_partial:
             raise SleeperError(message + " Pass --allow-partial to save it anyway.")
         print(f"WARNING: {message} Saving anyway (--allow-partial).", file=sys.stderr)
 
     if "reversal_round" not in settings:
-        print(f"NOTE: draft {draft_id} settings has no 'reversal_round' key. "
-              f"Keys present: {sorted(settings)}", file=sys.stderr)
+        print(
+            f"NOTE: draft {draft_id} settings has no 'reversal_round' key. Keys present: {sorted(settings)}",
+            file=sys.stderr,
+        )
     else:
         print(f"reversal_round: {settings['reversal_round']!r}", file=sys.stderr)
 
@@ -179,8 +194,11 @@ def main() -> int:
     out.write_text(json.dumps(fixture, indent=2, sort_keys=False))
 
     print(f"\nwrote {out}", file=sys.stderr)
-    print(f"  season {league.get('season')}  draft {draft_id}  type {draft.get('type')!r}  "
-          f"{settings['teams']} teams x {settings['rounds']} rounds  {len(picks)} picks", file=sys.stderr)
+    print(
+        f"  season {league.get('season')}  draft {draft_id}  type {draft.get('type')!r}  "
+        f"{settings['teams']} teams x {settings['rounds']} rounds  {len(picks)} picks",
+        file=sys.stderr,
+    )
     return 0
 
 

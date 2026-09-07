@@ -141,9 +141,7 @@ class SleeperClient:
     def get_league_users(self, league_id: str) -> list[dict]:
         users = self._get(f"/league/{league_id}/users")
         if not isinstance(users, list):
-            raise SleeperError(
-                f"/league/{league_id}/users returned {type(users).__name__}, expected list"
-            )
+            raise SleeperError(f"/league/{league_id}/users returned {type(users).__name__}, expected list")
         return users
 
     def get_transactions(self, league_id: str, week: int) -> list[dict]:
@@ -156,8 +154,7 @@ class SleeperClient:
         moves = self._get(f"/league/{league_id}/transactions/{week}")
         if not isinstance(moves, list):
             raise SleeperError(
-                f"/league/{league_id}/transactions/{week} returned {type(moves).__name__}, "
-                "expected list"
+                f"/league/{league_id}/transactions/{week} returned {type(moves).__name__}, expected list"
             )
         return moves
 
@@ -205,11 +202,7 @@ class SleeperClient:
         Served from disk unless the cache is missing, stale, or force_refresh is set.
         """
         age = self.players_cache_age_hours()
-        use_cache = (
-            not force_refresh
-            and age is not None
-            and age <= self.players_max_age_hours
-        )
+        use_cache = not force_refresh and age is not None and age <= self.players_max_age_hours
 
         if use_cache:
             try:

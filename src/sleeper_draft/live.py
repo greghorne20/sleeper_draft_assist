@@ -73,36 +73,58 @@ def _env_int(name: str) -> int | None:
 def parse_args() -> argparse.Namespace:
     load_dotenv()
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    p.add_argument("--draft-id", default=None,
-                   help="Draft to poll. Default: draft_id from the board's league config.")
+    p.add_argument(
+        "--draft-id", default=None, help="Draft to poll. Default: draft_id from the board's league config."
+    )
     p.add_argument("--board", type=Path, default=Path("draft/board.json"))
     p.add_argument("--pick-order", type=Path, default=Path("draft/pick_order.json"))
     p.add_argument("--out-dir", type=Path, default=Path("draft/state"))
-    p.add_argument("--slot", type=int, default=_env_int("SLEEPER_SLOT"),
-                   help="My draft slot (1-based, or SLEEPER_SLOT). Overrides --username. "
-                        "Only sets which seat NOW.md and the page open on -- all twelve are "
-                        "written either way.")
-    p.add_argument("--username", default=os.environ.get("SLEEPER_USERNAME"),
-                   help="Resolve my slot through the draft order (or set SLEEPER_USERNAME)")
-    p.add_argument("--cushion", type=int, default=DEFAULT_CUSHION,
-                   help=f"ADP cushion for the at-risk list (default {DEFAULT_CUSHION})")
-    p.add_argument("--available", type=int, default=30,
-                   help="How many available players to list (default 30)")
+    p.add_argument(
+        "--slot",
+        type=int,
+        default=_env_int("SLEEPER_SLOT"),
+        help="My draft slot (1-based, or SLEEPER_SLOT). Overrides --username. "
+        "Only sets which seat NOW.md and the page open on -- all twelve are "
+        "written either way.",
+    )
+    p.add_argument(
+        "--username",
+        default=os.environ.get("SLEEPER_USERNAME"),
+        help="Resolve my slot through the draft order (or set SLEEPER_USERNAME)",
+    )
+    p.add_argument(
+        "--cushion",
+        type=int,
+        default=DEFAULT_CUSHION,
+        help=f"ADP cushion for the at-risk list (default {DEFAULT_CUSHION})",
+    )
+    p.add_argument(
+        "--available", type=int, default=30, help="How many available players to list (default 30)"
+    )
     p.add_argument("--watch", action="store_true", help="Poll until the draft completes")
-    p.add_argument("--interval", type=float, default=2.0,
-                   help="Seconds between polls when --watch (default 2). The clock catching "
-                        "up is what anyone at the table notices, and one picks request every "
-                        "two seconds is a fraction of the rate the client already allows.")
-    p.add_argument("--serve", action="store_true",
-                   help="Also serve a live HTML view of the state")
-    p.add_argument("--port", type=int, default=_env_int("PORT") or 8765,
-                   help="Port for --serve (default 8765, or $PORT -- which is what a host "
-                        "like Railway injects)")
-    p.add_argument("--host", default=os.environ.get("HOST", "127.0.0.1"),
-                   help="Bind address for --serve (default 127.0.0.1, or $HOST). 0.0.0.0 puts "
-                        "your at-risk list and roster plan on the network -- not something to "
-                        "hand a rival at the table, and the deliberate setting inside a "
-                        "container where the platform edge is the front door.")
+    p.add_argument(
+        "--interval",
+        type=float,
+        default=2.0,
+        help="Seconds between polls when --watch (default 2). The clock catching "
+        "up is what anyone at the table notices, and one picks request every "
+        "two seconds is a fraction of the rate the client already allows.",
+    )
+    p.add_argument("--serve", action="store_true", help="Also serve a live HTML view of the state")
+    p.add_argument(
+        "--port",
+        type=int,
+        default=_env_int("PORT") or 8765,
+        help="Port for --serve (default 8765, or $PORT -- which is what a host like Railway injects)",
+    )
+    p.add_argument(
+        "--host",
+        default=os.environ.get("HOST", "127.0.0.1"),
+        help="Bind address for --serve (default 127.0.0.1, or $HOST). 0.0.0.0 puts "
+        "your at-risk list and roster plan on the network -- not something to "
+        "hand a rival at the table, and the deliberate setting inside a "
+        "container where the platform edge is the front door.",
+    )
     p.add_argument("--cache-dir", default=None, help="Override the players cache directory")
     args = p.parse_args()
     if args.interval < 1:
@@ -143,8 +165,9 @@ def load_pick_order(path: Path) -> dict:
     return order
 
 
-def resolve_slot(draft: dict, order: dict, slot: int | None, username: str | None,
-                 client: SleeperClient) -> tuple[int | None, str]:
+def resolve_slot(
+    draft: dict, order: dict, slot: int | None, username: str | None, client: SleeperClient
+) -> tuple[int | None, str]:
     """My draft slot, and a one-line account of where it came from."""
     slots = order["picks_by_slot"]
     if slot is not None:
@@ -189,9 +212,23 @@ def pick_player_name(pick: dict) -> str:
 # What a live view of a player actually shows. Everything else on a board row --
 # sleeper_name, tier_pos, composite_score, research_note and friends -- exists for
 # the board or for the join, and would only widen the contract a renderer binds to.
-DISPLAY_FIELDS = ("player_id", "rank", "pos_rank", "pos", "name", "team", "bye", "tier",
-                  "value_vs_market", "risk_flag", "sleeper_injury_status", "flags",
-                  "handcuff_for_name", "scouting", "note")
+DISPLAY_FIELDS = (
+    "player_id",
+    "rank",
+    "pos_rank",
+    "pos",
+    "name",
+    "team",
+    "bye",
+    "tier",
+    "value_vs_market",
+    "risk_flag",
+    "sleeper_injury_status",
+    "flags",
+    "handcuff_for_name",
+    "scouting",
+    "note",
+)
 
 
 def display_row(row: dict) -> dict:
@@ -200,8 +237,7 @@ def display_row(row: dict) -> dict:
     NOW.md and state.json both render from this, so the two outputs cannot drift:
     anything the markdown shows has to survive the projection.
     """
-    out = {field: row[field] for field in DISPLAY_FIELDS
-           if row.get(field) not in (None, [], "")}
+    out = {field: row[field] for field in DISPLAY_FIELDS if row.get(field) not in (None, [], "")}
     adp = market_adp(row)
     if adp is not None:
         out["adp"] = adp
@@ -230,9 +266,11 @@ def roster_needs(roster: list[dict], roster_positions: list[str]) -> dict:
         counts[player["pos"]] = counts.get(player["pos"], 0) + 1
 
     filled = {pos: min(counts.get(pos, 0), need) for pos, need in required.items()}
-    spare = sum(counts.get(pos, 0) - filled.get(pos, 0)
-                for pos in set(counts) | set(required)
-                if pos in FLEX_POSITIONS)
+    spare = sum(
+        counts.get(pos, 0) - filled.get(pos, 0)
+        for pos in set(counts) | set(required)
+        if pos in FLEX_POSITIONS
+    )
     flex_filled = min(spare, flex_slots)
 
     needs = [pos for pos, need in required.items() if filled.get(pos, 0) < need]
@@ -266,9 +304,15 @@ def team_label(state: dict, slot: object) -> str:
     return (state.get("team_names") or {}).get(str(slot)) or f"slot {slot}"
 
 
-def summarize_league(board: dict, order: dict, draft: dict, picks: list[dict],
-                     available_limit: int, team_names: dict[int, str] | None = None,
-                     seating_provisional: bool = False) -> dict:
+def summarize_league(
+    board: dict,
+    order: dict,
+    draft: dict,
+    picks: list[dict],
+    available_limit: int,
+    team_names: dict[int, str] | None = None,
+    seating_provisional: bool = False,
+) -> dict:
     """The seat-independent half of the state. Pure, so it tests without HTTP.
 
     Keepers arrive here as ordinary picks carrying `is_keeper`, at the pick
@@ -320,8 +364,7 @@ def summarize_league(board: dict, order: dict, draft: dict, picks: list[dict],
     # Keepers are entered before the draft opens and land at scattered pick
     # numbers -- their round cost, not the order they were entered in -- so the
     # next pick is the lowest number nobody has used, never the count plus one.
-    made_picks = sorted(entry["pick_no"] for entry in history
-                        if isinstance(entry["pick_no"], int))
+    made_picks = sorted(entry["pick_no"] for entry in history if isinstance(entry["pick_no"], int))
     taken = set(made_picks)
     open_picks = [n for n in range(1, total_picks + 1) if n not in taken]
     current_pick = open_picks[0] if open_picks else None
@@ -345,8 +388,7 @@ def summarize_league(board: dict, order: dict, draft: dict, picks: list[dict],
 
     # Resolved for every seat up front, fallbacks included, so no renderer has
     # to carry its own "or slot N" branch.
-    named = {key: (team_names or {}).get(int(key)) or f"Slot {key}"
-             for key in order["picks_by_slot"]}
+    named = {key: (team_names or {}).get(int(key)) or f"Slot {key}" for key in order["picks_by_slot"]}
 
     return {
         "generated_at": time.strftime("%Y-%m-%dT%H:%M:%S%z"),
@@ -390,8 +432,7 @@ def slot_view(league: dict, order: dict, slot: int | None, cushion: int) -> dict
     my_picks = [int(n) for n in order["picks_by_slot"].get(str(slot), [])] if slot else []
     # A keeper spends one of my pick numbers before the draft opens, so "still
     # ahead of me" is a different question from "not behind me".
-    upcoming = [n for n in my_picks
-                if current_pick and n >= current_pick and n not in taken]
+    upcoming = [n for n in my_picks if current_pick and n >= current_pick and n not in taken]
     my_next = upcoming[0] if upcoming else None
     my_after_next = upcoming[1] if len(upcoming) > 1 else None
     is_my_turn = bool(my_next and current_pick and my_next == current_pick)
@@ -405,10 +446,11 @@ def slot_view(league: dict, order: dict, slot: int | None, cushion: int) -> dict
     # arithmetic, which holds only while every number in between is unspent --
     # a keeper already off the board is a pick nobody makes, so count the open
     # numbers rather than subtracting.
-    picks_before_horizon = len(
-        [n for n in range(current_pick + (1 if is_my_turn else 0), horizon)
-         if n not in taken]
-    ) if (horizon and current_pick) else None
+    picks_before_horizon = (
+        len([n for n in range(current_pick + (1 if is_my_turn else 0), horizon) if n not in taken])
+        if (horizon and current_pick)
+        else None
+    )
 
     my_roster = league["rosters_by_slot"].get(str(slot), []) if slot else []
     needs = roster_needs(my_roster, league.get("roster_positions") or [])
@@ -420,10 +462,15 @@ def slot_view(league: dict, order: dict, slot: int | None, cushion: int) -> dict
             bye_counts[key] = bye_counts.get(key, 0) + 1
 
     threshold = (horizon + cushion) if horizon is not None else None
-    leaving_ids = [] if threshold is None else [
-        row["player_id"] for row in league["best_available"]
-        if row.get("adp") is not None and row["adp"] <= threshold
-    ]
+    leaving_ids = (
+        []
+        if threshold is None
+        else [
+            row["player_id"]
+            for row in league["best_available"]
+            if row.get("adp") is not None and row["adp"] <= threshold
+        ]
+    )
 
     return {
         "my_slot": slot,
@@ -450,11 +497,11 @@ def flatten(league: dict, view: dict, cushion: int) -> dict:
     out = {key: value for key, value in league.items() if key not in LEAGUE_ONLY_FIELDS}
     if view["survive_until_pick"] is not None:
         ids = set(view["leaving_ids"])
-        out["best_available"] = [{**row, "leaving": row["player_id"] in ids}
-                                 for row in league["best_available"]]
+        out["best_available"] = [
+            {**row, "leaving": row["player_id"] in ids} for row in league["best_available"]
+        ]
     out["cushion"] = cushion
-    out.update({key: value for key, value in view.items()
-                if key not in ("leaving_ids", "name")})
+    out.update({key: value for key, value in view.items() if key not in ("leaving_ids", "name")})
     if view.get("name"):
         out["my_team_name"] = view["name"]
     return out
@@ -463,34 +510,45 @@ def flatten(league: dict, view: dict, cushion: int) -> dict:
 def empty_view(league: dict) -> dict:
     """The no-seat view: timing skipped rather than guessed, as it always was."""
     return {
-        "my_slot": None, "is_my_turn": False, "my_picks": [], "my_next_pick": None,
-        "my_pick_after_next": None, "survive_until_pick": None,
-        "picks_before_horizon": None, "my_roster": [],
+        "my_slot": None,
+        "is_my_turn": False,
+        "my_picks": [],
+        "my_next_pick": None,
+        "my_pick_after_next": None,
+        "survive_until_pick": None,
+        "picks_before_horizon": None,
+        "my_roster": [],
         "roster": roster_needs([], league.get("roster_positions") or []),
-        "bye_counts": {}, "leaving_ids": [], "leaving_count": 0,
+        "bye_counts": {},
+        "leaving_ids": [],
+        "leaving_count": 0,
     }
 
 
-def summarize_all(board: dict, order: dict, draft: dict, picks: list[dict],
-                  cushion: int, available_limit: int,
-                  team_names: dict[int, str] | None = None,
-                  default_slot: int | None = None,
-                  seating_provisional: bool = False) -> dict:
+def summarize_all(
+    board: dict,
+    order: dict,
+    draft: dict,
+    picks: list[dict],
+    cushion: int,
+    available_limit: int,
+    team_names: dict[int, str] | None = None,
+    default_slot: int | None = None,
+    seating_provisional: bool = False,
+) -> dict:
     """The whole league: shared state once, plus one war room per draft slot.
 
     `default_slot` is only which seat a reader should open on -- the operator's
     own. It is deliberately not part of any seat's state, so a war room reads
     the same whoever is looking at it.
     """
-    league = summarize_league(board, order, draft, picks, available_limit, team_names,
-                              seating_provisional)
+    league = summarize_league(board, order, draft, picks, available_limit, team_names, seating_provisional)
     war_rooms = {}
     for key in sorted(order["picks_by_slot"], key=int):
         view = slot_view(league, order, int(key), cushion)
         view["name"] = league["team_names"][key]
         war_rooms[key] = view
-    return {**league, "cushion": cushion, "default_slot": default_slot,
-            "war_rooms": war_rooms}
+    return {**league, "cushion": cushion, "default_slot": default_slot, "war_rooms": war_rooms}
 
 
 def team_state(all_state: dict, slot: int | None) -> dict:
@@ -504,9 +562,16 @@ def team_state(all_state: dict, slot: int | None) -> dict:
     return flatten(all_state, view or empty_view(all_state), all_state["cushion"])
 
 
-def summarize(board: dict, order: dict, draft: dict, picks: list[dict],
-              my_slot: int | None, cushion: int, available_limit: int,
-              team_names: dict[int, str] | None = None) -> dict:
+def summarize(
+    board: dict,
+    order: dict,
+    draft: dict,
+    picks: list[dict],
+    my_slot: int | None,
+    cushion: int,
+    available_limit: int,
+    team_names: dict[int, str] | None = None,
+) -> dict:
     """One seat's whole state. The shape `render_now_md` and the tests expect."""
     league = summarize_league(board, order, draft, picks, available_limit, team_names)
     view = slot_view(league, order, my_slot, cushion) if my_slot else empty_view(league)
@@ -531,8 +596,10 @@ def _flags(row: dict) -> str:
 def _player_table(rows: list[dict], horizon: int | None) -> list[str]:
     """One board. The `Gone?` column is the urgency layer, not a second table."""
     gone = f"Gone by {horizon}?" if horizon else "Gone?"
-    out = [f"| # | Pos | Player | Tm | Bye | id | ADP | {gone} | Notes |",
-           "|---:|---|---|---|---:|---|---:|---|---|"]
+    out = [
+        f"| # | Pos | Player | Tm | Bye | id | ADP | {gone} | Notes |",
+        "|---:|---|---|---|---:|---|---:|---|---|",
+    ]
     for row in rows:
         adp = row.get("adp")
         leaving = "**YES**" if row.get("leaving") else ""
@@ -547,48 +614,67 @@ def _player_table(rows: list[dict], horizon: int | None) -> list[str]:
 def render_now_md(state: dict) -> str:
     out: list[str] = []
     seat = state.get("my_team_name") or (
-        team_label(state, state["my_slot"]) if state.get("my_slot") else None)
+        team_label(state, state["my_slot"]) if state.get("my_slot") else None
+    )
     title = f"# Draft state — {state.get('league_name') or 'league'}"
     out.append(f"{title} — {seat}" if seat else title)
     out.append("")
-    out.append(f"_{state['generated_at']} · regenerated every poll · "
-               f"doctrine: `draft/PLAYBOOK.md` · full board: `draft/board.md`_")
+    out.append(
+        f"_{state['generated_at']} · regenerated every poll · "
+        f"doctrine: `draft/PLAYBOOK.md` · full board: `draft/board.md`_"
+    )
     out.append("")
     if state.get("seating_provisional"):
-        out.append("> **⚠ Seating is provisional.** The draft order is not drawn yet, so team "
-                   "names are matched by roster id. The names are real; which one sits in "
-                   "which slot is not settled.")
+        out.append(
+            "> **⚠ Seating is provisional.** The draft order is not drawn yet, so team "
+            "names are matched by roster id. The names are real; which one sits in "
+            "which slot is not settled."
+        )
         out.append("")
 
     if state["current_pick"] is None:
         out.append(f"## Draft complete — all {state['total_picks']} picks are in.")
         out.append("")
     else:
-        turn = "**YOUR PICK — you are on the clock.**" if state["is_my_turn"] else (
-            f"On the clock: {team_label(state, state['on_the_clock_slot'])}."
+        turn = (
+            "**YOUR PICK — you are on the clock.**"
+            if state["is_my_turn"]
+            else (f"On the clock: {team_label(state, state['on_the_clock_slot'])}.")
         )
-        out.append(f"## Pick {state['current_pick']} of {state['total_picks']} "
-                   f"(round {state['current_round']}) — {turn}")
+        out.append(
+            f"## Pick {state['current_pick']} of {state['total_picks']} "
+            f"(round {state['current_round']}) — {turn}"
+        )
         out.append("")
         out.append(f"- {state['picks_made']} picks made, {state['picks_remaining']} remaining.")
         if state["my_slot"]:
             # Struck-through numbers are already spent -- which for a keeper
             # means spent before the draft opened, out of order.
             used = {player["pick_no"] for player in state["my_roster"]}
-            out.append(f"- Me: **{team_label(state, state['my_slot'])}** "
-                       f"(slot {state['my_slot']}) · my picks: "
-                       + ", ".join(f"~~{n}~~" if n in used else str(n)
-                                   for n in state["my_picks"]))
+            out.append(
+                f"- Me: **{team_label(state, state['my_slot'])}** "
+                f"(slot {state['my_slot']}) · my picks: "
+                + ", ".join(f"~~{n}~~" if n in used else str(n) for n in state["my_picks"])
+            )
             if state["my_next_pick"]:
-                out.append(f"- My next pick: **{state['my_next_pick']}**"
-                           + (f", then {state['my_pick_after_next']}"
-                              if state["my_pick_after_next"] else " (last one)"))
+                out.append(
+                    f"- My next pick: **{state['my_next_pick']}**"
+                    + (
+                        f", then {state['my_pick_after_next']}"
+                        if state["my_pick_after_next"]
+                        else " (last one)"
+                    )
+                )
             if state["survive_until_pick"]:
-                out.append(f"- **{state['picks_before_horizon']} picks by other teams** before "
-                           f"pick {state['survive_until_pick']} comes back to me.")
+                out.append(
+                    f"- **{state['picks_before_horizon']} picks by other teams** before "
+                    f"pick {state['survive_until_pick']} comes back to me."
+                )
         else:
-            out.append("- My slot is not set, so pick-timing and the at-risk list are off. "
-                       "Pass `--slot N` or `--username`.")
+            out.append(
+                "- My slot is not set, so pick-timing and the at-risk list are off. "
+                "Pass `--slot N` or `--username`."
+            )
         out.append("")
 
     # --- my roster ---
@@ -602,9 +688,11 @@ def render_now_md(state: dict) -> str:
             out.append("| Pick | Rd | Player | Pos | Tm | Bye | Tier |")
             out.append("|---:|---:|---|---|---|---:|---:|")
             for player in state["my_roster"]:
-                out.append(f"| {player['pick_no']} | {player['round']} | {player['name']} | "
-                           f"{player['pos']} | {player['team']} | {player['bye'] or '-'} | "
-                           f"{player['tier'] or '-'} |")
+                out.append(
+                    f"| {player['pick_no']} | {player['round']} | {player['name']} | "
+                    f"{player['pos']} | {player['team']} | {player['bye'] or '-'} | "
+                    f"{player['tier'] or '-'} |"
+                )
         out.append("")
         counts = " · ".join(f"{pos} {n}" for pos, n in sorted(roster["counts"].items())) or "empty"
         out.append(f"**Have:** {counts}")
@@ -615,8 +703,9 @@ def render_now_md(state: dict) -> str:
         heavy = sorted((week for week, n in byes.items() if n >= 3), key=int)
         if heavy:
             stacked = ", ".join(f"week {week} ({byes[week]} players)" for week in heavy)
-            out.append(f"**⚠ Bye stack:** {stacked} — PLAYBOOK caps this at 2 "
-                       "projected starters per bye week.")
+            out.append(
+                f"**⚠ Bye stack:** {stacked} — PLAYBOOK caps this at 2 projected starters per bye week."
+            )
         out.append("")
 
     # --- the board, with urgency marked on the row ---
@@ -624,10 +713,12 @@ def render_now_md(state: dict) -> str:
     out.append(f"## Best available ({state['available_count']} left on the board)")
     out.append("")
     if horizon:
-        out.append(f"**{state['leaving_count']} of the {len(state['best_available'])} below are "
-                   f"gone before pick {horizon}** — market ADP within {state['cushion']} of it. "
-                   "PLAYBOOK D1: take the highest player marked YES over one who will still be "
-                   "there.")
+        out.append(
+            f"**{state['leaving_count']} of the {len(state['best_available'])} below are "
+            f"gone before pick {horizon}** — market ADP within {state['cushion']} of it. "
+            "PLAYBOOK D1: take the highest player marked YES over one who will still be "
+            "there."
+        )
     else:
         out.append("No slot set, so nothing can be marked as leaving.")
     out.append("")
@@ -637,33 +728,39 @@ def render_now_md(state: dict) -> str:
     # --- tier status ---
     out.append("## Tiers remaining")
     out.append("")
-    out.append("How many available at each position and tier. PLAYBOOK D2: take the last man in "
-               "a tier when the count drops to the number of drafters picking before you return.")
+    out.append(
+        "How many available at each position and tier. PLAYBOOK D2: take the last man in "
+        "a tier when the count drops to the number of drafters picking before you return."
+    )
     out.append("")
     for pos in ("RB", "WR", "TE", "QB"):
         tiers = state["tier_status"].get(pos)
         if not tiers:
             continue
-        out.append(f"- **{pos}** — " + " · ".join(
-            f"T{tier} {tiers[tier]}" for tier in sorted(tiers, key=int)))
+        out.append(
+            f"- **{pos}** — " + " · ".join(f"T{tier} {tiers[tier]}" for tier in sorted(tiers, key=int))
+        )
     out.append("")
 
     # --- runs and recent picks ---
     if state["recent_picks"]:
         out.append("## Last picks")
         out.append("")
-        run = " · ".join(f"{pos} {n}" for pos, n in
-                         sorted(state["position_run"].items(), key=lambda kv: -kv[1]))
+        run = " · ".join(
+            f"{pos} {n}" for pos, n in sorted(state["position_run"].items(), key=lambda kv: -kv[1])
+        )
         out.append(f"Position run over the last {len(state['recent_picks'])} picks: {run}")
         out.append("")
         for entry in reversed(state["recent_picks"]):
             # "you" rather than my own team name, which `← me` would only repeat.
-            who = ("**you**" if entry["draft_slot"] == state["my_slot"]
-                   else team_label(state, entry["draft_slot"]))
+            who = (
+                "**you**"
+                if entry["draft_slot"] == state["my_slot"]
+                else team_label(state, entry["draft_slot"])
+            )
             rank = f"#{entry['rank']}" if entry["rank"] else "unranked"
             kept = " _(keeper)_" if entry.get("is_keeper") else ""
-            out.append(f"- `{entry['pick_no']}` {who}: "
-                       f"{entry['name']} ({entry['pos']}, {rank}){kept}")
+            out.append(f"- `{entry['pick_no']}` {who}: {entry['name']} ({entry['pos']}, {rank}){kept}")
         out.append("")
 
     if state["off_board_picks"]:
@@ -671,8 +768,9 @@ def render_now_md(state: dict) -> str:
         out.append("")
         out.append(f"{len(state['off_board_picks'])} player(s) drafted who are not on our board:")
         for entry in state["off_board_picks"]:
-            out.append(f"- `{entry['pick_no']}` {entry['name']} "
-                       f"({entry['pos'] or '?'}, {entry['team'] or '?'})")
+            out.append(
+                f"- `{entry['pick_no']}` {entry['name']} ({entry['pos'] or '?'}, {entry['team'] or '?'})"
+            )
         out.append("")
     return "\n".join(out)
 
@@ -727,13 +825,13 @@ def write_all_state(all_state: dict, out_dir: Path, my_slot: int | None) -> tupl
     for key in all_state.get("war_rooms") or {}:
         if my_slot is not None and int(key) == my_slot:
             continue
-        write_atomic(teams_dir / f"NOW-slot-{key}.md",
-                     render_now_md(team_state(all_state, int(key))))
+        write_atomic(teams_dir / f"NOW-slot-{key}.md", render_now_md(team_state(all_state, int(key))))
     return md_path, json_path
 
 
-def resolve_team_names(client: SleeperClient, league_id: str | None,
-                       draft: dict) -> tuple[dict[int, str], str]:
+def resolve_team_names(
+    client: SleeperClient, league_id: str | None, draft: dict
+) -> tuple[dict[int, str], str]:
     """slot -> team name, and one line on how sure we are of the seating.
 
     Two chains, and which one answered matters enough to report:
@@ -766,8 +864,7 @@ def resolve_team_names(client: SleeperClient, league_id: str | None,
 
     draft_order = draft.get("draft_order")
     if isinstance(draft_order, dict) and draft_order:
-        drawn = {int(slot): by_user[uid]
-                 for uid, slot in draft_order.items() if uid in by_user}
+        drawn = {int(slot): by_user[uid] for uid, slot in draft_order.items() if uid in by_user}
         return drawn, f"{len(drawn)} named from the drawn draft order"
 
     slots = draft.get("slot_to_roster_id")
@@ -778,15 +875,15 @@ def resolve_team_names(client: SleeperClient, league_id: str | None,
     except SleeperError:
         return {}, "rosters unavailable, so seats are numbered"
 
-    owner_of = {roster.get("roster_id"): str(roster.get("owner_id"))
-                for roster in rosters}
+    owner_of = {roster.get("roster_id"): str(roster.get("owner_id")) for roster in rosters}
     provisional: dict[int, str] = {}
     for slot, roster_id in slots.items():
         owner = owner_of.get(roster_id)
         if owner in by_user:
             provisional[int(slot)] = by_user[owner]
-    return provisional, (f"{len(provisional)} named via roster ids -- PROVISIONAL, "
-                         "the draft order is not drawn yet")
+    return provisional, (
+        f"{len(provisional)} named via roster ids -- PROVISIONAL, the draft order is not drawn yet"
+    )
 
 
 # How often the draft object itself is re-read. Picks change every few seconds;
@@ -797,17 +894,24 @@ def resolve_team_names(client: SleeperClient, league_id: str | None,
 DRAFT_REFRESH_S = 30.0
 
 
-def poll_once(client: SleeperClient, draft_id: str, board: dict, order: dict,
-              my_slot: int | None, args: argparse.Namespace,
-              team_names: dict[int, str] | None = None,
-              seating_provisional: bool = False,
-              draft: dict | None = None) -> dict:
+def poll_once(
+    client: SleeperClient,
+    draft_id: str,
+    board: dict,
+    order: dict,
+    my_slot: int | None,
+    args: argparse.Namespace,
+    team_names: dict[int, str] | None = None,
+    seating_provisional: bool = False,
+    draft: dict | None = None,
+) -> dict:
     """One poll. `draft` reuses an already-fetched draft object; omit it to fetch."""
     if draft is None:
         draft = client.get_draft(draft_id)
     picks = client.get_draft_picks(draft_id)
-    all_state = summarize_all(board, order, draft, picks, args.cushion, args.available,
-                              team_names, my_slot, seating_provisional)
+    all_state = summarize_all(
+        board, order, draft, picks, args.cushion, args.available, team_names, my_slot, seating_provisional
+    )
     write_all_state(all_state, args.out_dir, my_slot)
     return team_state(all_state, my_slot)
 
@@ -829,8 +933,7 @@ def main() -> int:
     my_slot, provenance = resolve_slot(draft, order, args.slot, args.username, client)
     team_names, naming = resolve_team_names(client, board["league"].get("league_id"), draft)
     provisional = "PROVISIONAL" in naming
-    print(f"draft {draft_id} ({draft.get('status')}) · my slot: {provenance} · {naming}",
-          file=sys.stderr)
+    print(f"draft {draft_id} ({draft.get('status')}) · my slot: {provenance} · {naming}", file=sys.stderr)
 
     if args.serve:
         from .serve import serve_in_background
@@ -838,11 +941,13 @@ def main() -> int:
         args.out_dir.mkdir(parents=True, exist_ok=True)
         server = serve_in_background(args.out_dir, args.host, args.port)
         shown = "localhost" if args.host in ("127.0.0.1", "0.0.0.0") else args.host
-        print(f"serving http://{shown}:{server.server_address[1]}  (Ctrl-C to stop)",
-              file=sys.stderr)
+        print(f"serving http://{shown}:{server.server_address[1]}  (Ctrl-C to stop)", file=sys.stderr)
         if args.host == "0.0.0.0":  # noqa: S104 - deliberate, and warned about
-            print("  WARNING: bound to all interfaces -- anyone on this network can read "
-                  "your board, roster plan and at-risk list", file=sys.stderr)
+            print(
+                "  WARNING: bound to all interfaces -- anyone on this network can read "
+                "your board, roster plan and at-risk list",
+                file=sys.stderr,
+            )
 
     last_seen = -1
     # `draft` was fetched above for the slot and name lookups, so the first poll
@@ -852,16 +957,18 @@ def main() -> int:
         if time.monotonic() - draft_fetched_at >= DRAFT_REFRESH_S:
             draft = client.get_draft(str(draft_id))
             draft_fetched_at = time.monotonic()
-        state = poll_once(client, str(draft_id), board, order, my_slot, args,
-                          team_names, provisional, draft=draft)
+        state = poll_once(
+            client, str(draft_id), board, order, my_slot, args, team_names, provisional, draft=draft
+        )
         if state["picks_made"] != last_seen:
             last_seen = state["picks_made"]
-            where = (f"pick {state['current_pick']} "
-                     f"({team_label(state, state['on_the_clock_slot'])})"
-                     if state["current_pick"] else "complete")
+            where = (
+                f"pick {state['current_pick']} ({team_label(state, state['on_the_clock_slot'])})"
+                if state["current_pick"]
+                else "complete"
+            )
             mine = " -- YOUR PICK" if state["is_my_turn"] else ""
-            print(f"{state['picks_made']}/{state['total_picks']} picks · {where}{mine}",
-                  file=sys.stderr)
+            print(f"{state['picks_made']}/{state['total_picks']} picks · {where}{mine}", file=sys.stderr)
         if not args.watch:
             break
         if (state["status"] or "").lower() in TERMINAL_STATUSES or state["current_pick"] is None:
@@ -869,9 +976,11 @@ def main() -> int:
             break
         time.sleep(args.interval)
 
-    print(f"wrote {args.out_dir}/NOW.md, {args.out_dir}/state.json and "
-          f"{args.out_dir}/teams/ ({len(order['picks_by_slot'])} war rooms)",
-          file=sys.stderr)
+    print(
+        f"wrote {args.out_dir}/NOW.md, {args.out_dir}/state.json and "
+        f"{args.out_dir}/teams/ ({len(order['picks_by_slot'])} war rooms)",
+        file=sys.stderr,
+    )
 
     if args.serve:
         # Polling is done -- the draft finished, or this was a one-shot run --

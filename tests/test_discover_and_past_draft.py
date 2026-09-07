@@ -34,10 +34,10 @@ def test_league_id_alone_is_enough(tmp_path, stub_client, capsys):
     assert config["teams"] == 12
     assert config["reversal_round"] == 3
     assert config["previous_league_id"] == "L2025"
-    assert config["season"] == "2026"          # taken from the league itself
+    assert config["season"] == "2026"  # taken from the league itself
     assert config["slot_to_roster_id"]["1"] == 1
     assert "rec" in config["scoring_settings"]
-    assert config["user_id"] is None           # no user lookup happened
+    assert config["user_id"] is None  # no user lookup happened
 
 
 def test_username_path_lists_leagues(stub_client, capsys):
@@ -52,8 +52,12 @@ def test_missing_reversal_round_is_reported_not_assumed(stub_client, capsys):
     run_discover(["--league-id", "L2024"])
     out = capsys.readouterr().out
     assert "no 'reversal_round' key" in out
-    assert yaml.safe_load(out.split("paste below into your config ----------")[1]
-                          .split("# ---------- end")[0])["reversal_round"] is None
+    assert (
+        yaml.safe_load(out.split("paste below into your config ----------")[1].split("# ---------- end")[0])[
+            "reversal_round"
+        ]
+        is None
+    )
 
 
 def test_unknown_league_errors(stub_client):
@@ -86,8 +90,7 @@ def test_walks_back_one_season(tmp_path, stub_client):
 
 def test_walk_to_named_season(tmp_path, stub_client):
     with pytest.raises(SleeperError, match="zero picks"):
-        run_past_draft(["--league-id", "L2026", "--season", "2024",
-                        "--out", str(tmp_path / "f.json")])
+        run_past_draft(["--league-id", "L2026", "--season", "2024", "--out", str(tmp_path / "f.json")])
 
 
 def test_chain_too_short_names_where_it_stopped(tmp_path, stub_client):

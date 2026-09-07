@@ -25,7 +25,7 @@ from __future__ import annotations
 
 import time
 from pathlib import Path
-from typing import Any, Callable
+from typing import Any, Callable, cast
 
 from ..client import SleeperError
 from .brief import Brief, validate_brief
@@ -70,14 +70,14 @@ def cache_floor_chars(model: str) -> int:
     """The shortest prefix worth offering for caching, for this model."""
     return MIN_CACHEABLE_CHARS_HAIKU if "haiku" in model.lower() else MIN_CACHEABLE_CHARS
 
+
 # The default cache lives 5 minutes. This league's pick timer is 300 seconds, so
 # a slow pick can expire the prefix exactly when the next brief needs it. The
 # extended TTL keeps it warm across a whole draft for a one-off higher write cost.
 CACHE_TTL_BETA = "extended-cache-ttl-2025-04-11"
 
 
-def system_blocks(instructions: str, cache: bool, ttl: str = "1h",
-                  model: str = DEFAULT_MODEL) -> Any:
+def system_blocks(instructions: str, cache: bool, ttl: str = "1h", model: str = DEFAULT_MODEL) -> Any:
     """The system prompt, as one cached block or as plain text.
 
     `AnthropicChatOptions.instructions` takes either a string or Anthropic system
@@ -94,9 +94,14 @@ def system_blocks(instructions: str, cache: bool, ttl: str = "1h",
     return [{"type": "text", "text": instructions, "cache_control": control}]
 
 
-def build_agent(instructions: str, tools: list[Callable[..., str]], model: str,
-                max_tokens: int = DEFAULT_MAX_TOKENS, cache: bool = True,
-                ttl: str = "1h") -> Any:
+def build_agent(
+    instructions: str,
+    tools: list[Callable[..., str]],
+    model: str,
+    max_tokens: int = DEFAULT_MAX_TOKENS,
+    cache: bool = True,
+    ttl: str = "1h",
+) -> Any:
     """An Agent Framework agent over Anthropic, with this poll's tools bound."""
     try:
         from agent_framework import Agent
@@ -132,7 +137,11 @@ def build_agent(instructions: str, tools: list[Callable[..., str]], model: str,
         client=client,
         name="WarRoom",
         tools=tools,
-        default_options=options,
+        # The provider accepts a mapping and unpacks it into AnthropicChatOptions,
+        # but the parameter is annotated as the dataclass. Constructing one here
+        # would mean importing it under the optional extra for a call that already
+        # takes the dict, so the cast is the honest version of what runs.
+        default_options=cast(Any, options),
     )
 
 
@@ -144,23 +153,28 @@ def _usage(result: Any) -> dict:
             continue
         if isinstance(raw, dict):
             return {k: v for k, v in raw.items() if isinstance(v, int)}
-        return {name: getattr(raw, name) for name in
-                ("input_token_count", "output_token_count", "input_tokens", "output_tokens")
-                if isinstance(getattr(raw, name, None), int)}
+        return {
+            name: getattr(raw, name)
+            for name in ("input_token_count", "output_token_count", "input_tokens", "output_tokens")
+            if isinstance(getattr(raw, name, None), int)
+        }
     return {}
 
 
 def _rejection_note(problems: list[str]) -> str:
-    return ("\n\n## Your previous attempt was rejected\n\n"
-            "It was checked against the board and these are the problems:\n\n"
-            + "\n".join(f"- {p}" for p in problems)
-            + "\n\nWrite the brief again, fixing every one. Take player_ids and names together "
-              "from the available rows above or from `board_rows`; do not carry over a name you "
-              "remember. This is the last attempt before the previous brief is kept instead.")
+    return (
+        "\n\n## Your previous attempt was rejected\n\n"
+        "It was checked against the board and these are the problems:\n\n"
+        + "\n".join(f"- {p}" for p in problems)
+        + "\n\nWrite the brief again, fixing every one. Take player_ids and names together "
+        "from the available rows above or from `board_rows`; do not carry over a name you "
+        "remember. This is the last attempt before the previous brief is kept instead."
+    )
 
 
-async def generate_brief(agent: Any, prompt: str, available: dict[str, dict],
-                         retries: int = 1) -> tuple[Brief | None, list[str], dict]:
+async def generate_brief(
+    agent: Any, prompt: str, available: dict[str, dict], retries: int = 1
+) -> tuple[Brief | None, list[str], dict]:
     """One room's brief, validated. Returns (brief, problems, usage).
 
     A brief is only returned when it passes `validate_brief`, so a caller can
@@ -176,8 +190,10 @@ async def generate_brief(agent: Any, prompt: str, available: dict[str, dict],
         usage = _usage(result)
         brief = getattr(result, "value", None)
         if not isinstance(brief, Brief):
-            problems = [f"the model did not return a brief matching the schema: "
-                        f"{str(getattr(result, 'text', result))[:200]}"]
+            problems = [
+                f"the model did not return a brief matching the schema: "
+                f"{str(getattr(result, 'text', result))[:200]}"
+            ]
         else:
             problems = validate_brief(brief, available)
             if not problems:
@@ -187,15 +203,17 @@ async def generate_brief(agent: Any, prompt: str, available: dict[str, dict],
     return None, problems, usage
 
 
-async def generate_with_timeout(agent: Any, prompt: str, available: dict[str, dict],
-                                timeout_s: float) -> tuple[Brief | None, list[str], dict, float]:
+async def generate_with_timeout(
+    agent: Any, prompt: str, available: dict[str, dict], timeout_s: float
+) -> tuple[Brief | None, list[str], dict, float]:
     """As above, bounded. A brief that arrives after the pick is worth nothing."""
     import asyncio
 
     started = time.monotonic()
     try:
         brief, problems, usage = await asyncio.wait_for(
-            generate_brief(agent, prompt, available), timeout=timeout_s)
+            generate_brief(agent, prompt, available), timeout=timeout_s
+        )
     except asyncio.TimeoutError:
         return None, [f"timed out after {timeout_s:.0f}s"], {}, time.monotonic() - started
     except Exception as exc:  # noqa: BLE001 - one room must not take the others down

@@ -43,8 +43,9 @@ def write_state(out, draft_artifacts, count=12):
     """What the poller actually writes now: the whole league in one file."""
     board = json.loads((draft_artifacts / "board.json").read_text())
     order = json.loads((draft_artifacts / "pick_order.json").read_text())
-    state = live.summarize_all(board, order, DRAFT, make_picks(order, board, count),
-                               4, 30, {3: "Comeback Kids"}, MY_SLOT)
+    state = live.summarize_all(
+        board, order, DRAFT, make_picks(order, board, count), 4, 30, {3: "Comeback Kids"}, MY_SLOT
+    )
     live.write_all_state(state, out, MY_SLOT)
     return state
 
@@ -78,8 +79,7 @@ def test_state_json_is_served_and_must_not_be_cached(server, draft_artifacts):
     assert json.loads(body)["picks_made"] == state["picks_made"]
 
 
-@pytest.mark.parametrize("route,name", [("/state.json", "state.json"),
-                                        ("/briefs.json", "briefs.json")])
+@pytest.mark.parametrize("route,name", [("/state.json", "state.json"), ("/briefs.json", "briefs.json")])
 def test_a_file_that_has_not_been_written_is_a_json_404_not_a_crash(server, route, name):
     """The poller may not have finished, and sleeper-warroom may never run at all."""
     srv, _ = server
@@ -147,12 +147,15 @@ def test_unknown_route_404s(server):
     assert get(srv, "/nope")[0] == 404
 
 
-@pytest.mark.parametrize("path", [
-    "/../../../etc/passwd",
-    "/..%2f..%2f..%2fetc%2fpasswd",
-    "/state.json/../../../etc/passwd",
-    "/board.json",
-])
+@pytest.mark.parametrize(
+    "path",
+    [
+        "/../../../etc/passwd",
+        "/..%2f..%2f..%2fetc%2fpasswd",
+        "/state.json/../../../etc/passwd",
+        "/board.json",
+    ],
+)
 def test_no_path_traversal(server, path):
     """Only two literal routes exist, so nothing else can be reached at all."""
     srv, _ = server
@@ -205,19 +208,21 @@ def test_page_only_reads_brief_fields_the_war_room_emits(draft_artifacts, tmp_pa
     """Fourth shape: `b.` is one room's brief, as sleeper-warroom writes it."""
     board = json.loads((draft_artifacts / "board.json").read_text())
     order = json.loads((draft_artifacts / "pick_order.json").read_text())
-    state = live.summarize_all(board, order, DRAFT, make_picks(order, board, 12), 4, 30,
-                               None, MY_SLOT)
+    state = live.summarize_all(board, order, DRAFT, make_picks(order, board, 12), 4, 30, None, MY_SLOT)
     available = B.available_index(board, state)
     rows = list(available.values())
-    written = B.Brief(strategy="Plan.",
-                      pick=B.Candidate(player_id=rows[0]["player_id"], name=rows[0]["name"],
-                                       pos=rows[0]["pos"], why="Because."),
-                      alternative=B.Candidate(player_id=rows[1]["player_id"],
-                                              name=rows[1]["name"], pos=rows[1]["pos"],
-                                              why="Or this."),
-                      watch=[rows[2]["player_id"]], risks=["A risk."])
-    room = B.new_room(live.team_state(state, MY_SLOT), state, written,
-                      model="m", available=available)
+    written = B.Brief(
+        strategy="Plan.",
+        pick=B.Candidate(
+            player_id=rows[0]["player_id"], name=rows[0]["name"], pos=rows[0]["pos"], why="Because."
+        ),
+        alternative=B.Candidate(
+            player_id=rows[1]["player_id"], name=rows[1]["name"], pos=rows[1]["pos"], why="Or this."
+        ),
+        watch=[rows[2]["player_id"]],
+        risks=["A risk."],
+    )
+    room = B.new_room(live.team_state(state, MY_SLOT), state, written, model="m", available=available)
 
     html = serve.ASSET.read_text()
     referenced = set(re.findall(r"\bb\.([a-z_]+)", html))
@@ -232,8 +237,12 @@ def test_page_reads_only_projected_player_fields(draft_artifacts, tmp_path):
     seat = live.team_state(state, MY_SLOT)
     html = serve.ASSET.read_text()
     referenced = set(re.findall(r"\bp\.([a-z_]+)", html))
-    allowed = set(live.DISPLAY_FIELDS) | {"adp", "leaving"} | set(seat["my_roster"][0]) \
+    allowed = (
+        set(live.DISPLAY_FIELDS)
+        | {"adp", "leaving"}
+        | set(seat["my_roster"][0])
         | set(seat["recent_picks"][0])
+    )
     missing = sorted(referenced - allowed)
     assert not missing, f"page reads player fields nothing emits: {missing}"
 
@@ -251,6 +260,5 @@ def test_page_has_a_room_for_every_seat(draft_artifacts, tmp_path):
 
 def test_page_has_an_anchor_for_every_section():
     html = serve.ASSET.read_text()
-    for anchor in ("at-risk", "best-available", "tiers", "roster", "recent", "stale",
-                   "rooms", "league"):
+    for anchor in ("at-risk", "best-available", "tiers", "roster", "recent", "stale", "rooms", "league"):
         assert f'id="{anchor}"' in html, anchor

@@ -41,9 +41,16 @@ MAX_ROWS = 40
 
 def _row_line(row: dict) -> str:
     adp = market_adp(row)
-    bits = [f"#{row['rank']}", row["pos_rank"], row["name"], row["team"] or "-",
-            f"bye {row['bye']}", f"id {row['player_id']}",
-            f"ADP {'-' if adp is None else adp}", f"tier {row['tier']}"]
+    bits = [
+        f"#{row['rank']}",
+        row["pos_rank"],
+        row["name"],
+        row["team"] or "-",
+        f"bye {row['bye']}",
+        f"id {row['player_id']}",
+        f"ADP {'-' if adp is None else adp}",
+        f"tier {row['tier']}",
+    ]
     if row.get("risk_flag"):
         bits.append(f"RISK {row['risk_flag']}")
     if row.get("sleeper_injury_status"):
@@ -77,8 +84,10 @@ def build_tools(board: dict, available: dict[str, dict]) -> list[Callable[..., s
         """
         row = by_id.get(player_id)
         if row is None:
-            return (f"No player with id {player_id!r} is on the board. Use an id from the "
-                    "board rows you were given, or from board_rows.")
+            return (
+                f"No player with id {player_id!r} is on the board. Use an id from the "
+                "board rows you were given, or from board_rows."
+            )
         header = _row_line(row)
         note = row.get("research_note")
         if not note:
@@ -90,8 +99,9 @@ def build_tools(board: dict, available: dict[str, dict]) -> list[Callable[..., s
 
     def board_rows(
         pos: Annotated[str, "QB, RB, WR, TE, or ALL for every position"] = "ALL",
-        start_rank: Annotated[int, "Overall rank to start from; the prompt already "
-                                   "shows the top of the board"] = 1,
+        start_rank: Annotated[
+            int, "Overall rank to start from; the prompt already shows the top of the board"
+        ] = 1,
         limit: Annotated[int, f"How many rows to return, at most {MAX_ROWS}"] = 20,
     ) -> str:
         """List available players from the ranked board, deeper than the prompt shows.
@@ -101,16 +111,20 @@ def build_tools(board: dict, available: dict[str, dict]) -> list[Callable[..., s
         thin a position has gone.
         """
         wanted = pos.strip().upper()
-        rows = [row for row in board["players"]
-                if row["player_id"] in available
-                and row["rank"] >= max(1, start_rank)
-                and (wanted in ("ALL", "") or row["pos"].upper() == wanted)]
+        rows = [
+            row
+            for row in board["players"]
+            if row["player_id"] in available
+            and row["rank"] >= max(1, start_rank)
+            and (wanted in ("ALL", "") or row["pos"].upper() == wanted)
+        ]
         if not rows:
-            return (f"No available players match pos={pos!r} from rank {start_rank}. "
-                    f"{len(available)} players are still on the board.")
-        capped = rows[:max(1, min(limit, MAX_ROWS))]
-        head = (f"{len(rows)} available at pos={wanted} from rank {start_rank}; "
-                f"showing {len(capped)}.")
+            return (
+                f"No available players match pos={pos!r} from rank {start_rank}. "
+                f"{len(available)} players are still on the board."
+            )
+        capped = rows[: max(1, min(limit, MAX_ROWS))]
+        head = f"{len(rows)} available at pos={wanted} from rank {start_rank}; showing {len(capped)}."
         return head + "\n" + "\n".join(_row_line(row) for row in capped)
 
     return [read_player_note, board_rows]

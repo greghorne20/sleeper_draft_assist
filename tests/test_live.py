@@ -70,8 +70,7 @@ def test_the_count_is_the_picks_actually_made_by_other_teams(draft_artifacts):
         # Every pick strictly before the horizon that is not one I make myself.
         expected = len([n for n in range(current, horizon) if n not in mine])
         assert state["picks_before_horizon"] == expected, (
-            f"{made} made, on the clock={state['is_my_turn']}, "
-            f"current={current}, horizon={horizon}"
+            f"{made} made, on the clock={state['is_my_turn']}, current={current}, horizon={horizon}"
         )
 
 
@@ -87,8 +86,7 @@ def test_one_pick_away_counts_exactly_one(draft_artifacts):
 # Every slot keeps one player, at the round it cost them -- the real 2026 shape.
 # The pick numbers land at 1, 18, 23, 29, 34, 45, 46, 50, 66, 96, 104 and 129, so
 # twelve picks are made and none of them is pick 2.
-KEEPER_ROUNDS = {1: 1, 2: 2, 3: 3, 4: 11, 5: 9, 6: 6,
-                 7: 2, 8: 3, 9: 4, 10: 4, 11: 5, 12: 8}
+KEEPER_ROUNDS = {1: 1, 2: 2, 3: 3, 4: 11, 5: 9, 6: 6, 7: 2, 8: 3, 9: 4, 10: 4, 11: 5, 12: 8}
 
 
 def keeper_state(draft_artifacts, my_slot):
@@ -300,7 +298,7 @@ def test_now_md_carries_the_decision_surface(draft_artifacts):
     state = state_after(draft_artifacts, 5, my_slot=12)
     md = live.render_now_md(state)
     assert "## Pick 6 of 156" in md
-    assert "On the clock: Slot 6" in md   # no names known: the seat is its own name
+    assert "On the clock: Slot 6" in md  # no names known: the seat is its own name
     assert "## My roster" in md
     assert "## Best available" in md
     assert "## Tiers remaining" in md
@@ -371,7 +369,8 @@ def test_missing_board_errors_and_points_at_the_generator(tmp_path):
 
 
 def test_end_to_end_writes_state_without_touching_the_network(
-        tmp_path, monkeypatch, draft_artifacts, players_cache):
+    tmp_path, monkeypatch, draft_artifacts, players_cache
+):
     board, order = artifacts(draft_artifacts)
     picks = make_picks(order, board, 12)
 
@@ -386,14 +385,25 @@ def test_end_to_end_writes_state_without_touching_the_network(
             return picks
 
         def get_league_users(self, league_id):
-            return [{"user_id": "U1", "display_name": "manager_one",
-                     "metadata": {"team_name": "Comeback Kids"}}]
+            return [
+                {"user_id": "U1", "display_name": "manager_one", "metadata": {"team_name": "Comeback Kids"}}
+            ]
 
     monkeypatch.setattr(live, "SleeperClient", Client)
     out = tmp_path / "state"
-    sys.argv = ["sleeper-live", "--board", str(draft_artifacts / "board.json"),
-                "--pick-order", str(draft_artifacts / "pick_order.json"),
-                "--draft-id", "D2026", "--slot", "12", "--out-dir", str(out)]
+    sys.argv = [
+        "sleeper-live",
+        "--board",
+        str(draft_artifacts / "board.json"),
+        "--pick-order",
+        str(draft_artifacts / "pick_order.json"),
+        "--draft-id",
+        "D2026",
+        "--slot",
+        "12",
+        "--out-dir",
+        str(out),
+    ]
     assert live.main() == 0
 
     state = json.loads((out / "state.json").read_text())
@@ -411,22 +421,47 @@ def test_end_to_end_writes_state_without_touching_the_network(
 
 def test_display_row_keeps_the_display_fields_and_flattens_adp():
     row = {
-        "player_id": "1", "rank": 5, "pos_rank": "RB3", "pos": "RB", "name": "A Back",
-        "team": "KC", "bye": 6, "tier": 1, "value_vs_market": 2, "scouting": "workhorse",
-        "flags": ["value"], "risk_flag": None, "note": None, "handcuff_for_name": None,
+        "player_id": "1",
+        "rank": 5,
+        "pos_rank": "RB3",
+        "pos": "RB",
+        "name": "A Back",
+        "team": "KC",
+        "bye": 6,
+        "tier": 1,
+        "value_vs_market": 2,
+        "scouting": "workhorse",
+        "flags": ["value"],
+        "risk_flag": None,
+        "note": None,
+        "handcuff_for_name": None,
         "sleeper_injury_status": None,
         "source_ranks": {"ffc_halfppr_12team_adp": 4.5, "ffc_rank": 4},
         # None of these belong in a live view.
-        "sleeper_name": "A Back", "sleeper_team": "KC", "team_disagreement": False,
-        "tier_pos": 3, "composite_score": 5.0, "sleeper_status": "Active",
-        "tier_label": "tier 1", "handcuff_for": None,
+        "sleeper_name": "A Back",
+        "sleeper_team": "KC",
+        "team_disagreement": False,
+        "tier_pos": 3,
+        "composite_score": 5.0,
+        "sleeper_status": "Active",
+        "tier_label": "tier 1",
+        "handcuff_for": None,
         "research_note": "research/players/back-a-RB-1.md",
     }
     out = live.display_row(row)
     assert out == {
-        "player_id": "1", "rank": 5, "pos_rank": "RB3", "pos": "RB", "name": "A Back",
-        "team": "KC", "bye": 6, "tier": 1, "value_vs_market": 2, "flags": ["value"],
-        "scouting": "workhorse", "adp": 4.5,
+        "player_id": "1",
+        "rank": 5,
+        "pos_rank": "RB3",
+        "pos": "RB",
+        "name": "A Back",
+        "team": "KC",
+        "bye": 6,
+        "tier": 1,
+        "value_vs_market": 2,
+        "flags": ["value"],
+        "scouting": "workhorse",
+        "adp": 4.5,
     }
     # Empty values are dropped rather than carried as nulls.
     assert "risk_flag" not in out
@@ -434,8 +469,17 @@ def test_display_row_keeps_the_display_fields_and_flattens_adp():
 
 
 def test_display_row_survives_a_player_with_no_adp():
-    row = {"player_id": "2", "rank": 200, "pos_rank": "WR90", "pos": "WR", "name": "Deep Cut",
-           "team": "NYJ", "bye": 9, "tier": 12, "source_ranks": {}}
+    row = {
+        "player_id": "2",
+        "rank": 200,
+        "pos_rank": "WR90",
+        "pos": "WR",
+        "name": "Deep Cut",
+        "team": "NYJ",
+        "bye": 9,
+        "tier": 12,
+        "source_ranks": {},
+    }
     out = live.display_row(row)
     assert "adp" not in out
     assert out["name"] == "Deep Cut"
@@ -451,8 +495,15 @@ def test_state_json_rows_carry_adp_and_drop_the_join_fields(tmp_path, draft_arti
     assert rows, "expected players on the board"
     for row in rows:
         assert set(row) <= set(live.DISPLAY_FIELDS) | {"adp", "leaving"}
-        for absent in ("source_ranks", "research_note", "sleeper_name", "composite_score",
-                       "tier_pos", "team_disagreement", "sleeper_status"):
+        for absent in (
+            "source_ranks",
+            "research_note",
+            "sleeper_name",
+            "composite_score",
+            "tier_pos",
+            "team_disagreement",
+            "sleeper_status",
+        ):
             assert absent not in row
     assert any("adp" in row for row in rows)
 
@@ -482,9 +533,15 @@ def test_state_json_is_much_smaller_than_the_full_rows(tmp_path, draft_artifacts
 
 def all_state(draft_artifacts, count, cushion=4, limit=30, names=None, picks=None):
     board, order = artifacts(draft_artifacts)
-    return live.summarize_all(board, order, DRAFT,
-                              picks if picks is not None else make_picks(order, board, count),
-                              cushion, limit, names)
+    return live.summarize_all(
+        board,
+        order,
+        DRAFT,
+        picks if picks is not None else make_picks(order, board, count),
+        cushion,
+        limit,
+        names,
+    )
 
 
 def test_every_war_room_matches_the_single_seat_state(draft_artifacts):
@@ -569,7 +626,7 @@ def test_team_label_falls_back_to_the_slot_it_cannot_name(draft_artifacts):
     state = live.team_state(all_state(draft_artifacts, 5, names={2: "Sunday Scaries"}), 2)
     assert live.team_label(state, 2) == "Sunday Scaries"
     assert live.team_label(state, 9) == "Slot 9"
-    assert live.team_label(state, 99) == "slot 99"   # not a seat in this draft
+    assert live.team_label(state, 99) == "slot 99"  # not a seat in this draft
     assert live.team_label(state, None) == "an unknown seat"
 
 
@@ -631,10 +688,12 @@ def test_before_the_draw_names_come_through_roster_ids_and_say_so():
     """Sleeper leaves draft_order null until the order is drawn but publishes
     slot_to_roster_id from the start, so twelve names are reachable -- with the
     seating unsettled, which the caller has to be told."""
-    draft = {"draft_id": "D", "draft_order": None,
-             "slot_to_roster_id": {"1": 1, "2": 2, "3": 3}}
-    rosters = [{"roster_id": 1, "owner_id": "U1"}, {"roster_id": 2, "owner_id": "U2"},
-               {"roster_id": 3, "owner_id": "NOBODY"}]
+    draft = {"draft_id": "D", "draft_order": None, "slot_to_roster_id": {"1": 1, "2": 2, "3": 3}}
+    rosters = [
+        {"roster_id": 1, "owner_id": "U1"},
+        {"roster_id": 2, "owner_id": "U2"},
+        {"roster_id": 3, "owner_id": "NOBODY"},
+    ]
     names, why = live.resolve_team_names(NameClient(rosters), "L1", draft)
     assert names == {1: "Comeback Kids", 2: "nameless"}
     assert "PROVISIONAL" in why
@@ -658,8 +717,7 @@ def test_naming_degrades_to_numbered_seats_rather_than_failing():
 def test_provisional_seating_is_stated_in_the_document(draft_artifacts):
     board, order = artifacts(draft_artifacts)
     picks = make_picks(order, board, 5)
-    state = live.summarize_all(board, order, DRAFT, picks, 4, 30, {1: "Comeback Kids"}, 1,
-                               True)
+    state = live.summarize_all(board, order, DRAFT, picks, 4, 30, {1: "Comeback Kids"}, 1, True)
     assert state["seating_provisional"] is True
     assert "Seating is provisional" in live.render_now_md(live.team_state(state, 1))
     settled = live.summarize_all(board, order, DRAFT, picks, 4, 30, {1: "Comeback Kids"}, 1)
@@ -676,6 +734,7 @@ def test_a_reader_never_sees_a_half_written_file(tmp_path):
     live.write_atomic(path, '{"picks_made": 1}')
 
     import os as _os
+
     real = _os.replace
     try:
         _os.replace = lambda *a, **k: (_ for _ in ()).throw(OSError("disk full"))
@@ -693,7 +752,7 @@ def test_writing_the_league_leaves_no_temp_files(tmp_path, draft_artifacts):
     state = all_state(draft_artifacts, 26)
     out = tmp_path / "state"
     live.write_all_state(state, out, 12)
-    live.write_all_state(state, out, 12)   # a second poll overwrites cleanly
+    live.write_all_state(state, out, 12)  # a second poll overwrites cleanly
     strays = [f.name for f in out.rglob("*") if f.name.endswith(".tmp")]
     assert not strays, strays
     assert json.loads((out / "state.json").read_text())["picks_made"] == 26

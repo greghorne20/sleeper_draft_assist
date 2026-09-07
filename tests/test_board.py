@@ -22,12 +22,24 @@ def run(args, players_cache):
     return board.main()
 
 
-def invoke(tmp_path, players_cache, rankings_file, notes_dir, league_config, scouting_file,
-           extra=()):
+def invoke(tmp_path, players_cache, rankings_file, notes_dir, league_config, scouting_file, extra=()):
     out = tmp_path / "draft"
-    run(["--rankings", str(rankings_file), "--notes-dir", str(notes_dir),
-         "--config", str(league_config), "--scouting", str(scouting_file),
-         "--out-dir", str(out), *extra], players_cache)
+    run(
+        [
+            "--rankings",
+            str(rankings_file),
+            "--notes-dir",
+            str(notes_dir),
+            "--config",
+            str(league_config),
+            "--scouting",
+            str(scouting_file),
+            "--out-dir",
+            str(out),
+            *extra,
+        ],
+        players_cache,
+    )
     return out
 
 
@@ -68,7 +80,8 @@ def test_verify_pick_numbers_rejects_a_disagreement(tmp_path):
 
 
 def test_board_joins_every_ranking_row_to_a_player_id(
-        tmp_path, players_cache, rankings_file, notes_dir, league_config, scouting_file):
+    tmp_path, players_cache, rankings_file, notes_dir, league_config, scouting_file
+):
     out = invoke(tmp_path, players_cache, rankings_file, notes_dir, league_config, scouting_file)
     doc = json.loads((out / "board.json").read_text())
 
@@ -85,24 +98,37 @@ def test_board_joins_every_ranking_row_to_a_player_id(
 
 
 def test_unmatched_ranking_row_errors_and_names_it_and_writes_nothing(
-        tmp_path, players_cache, rankings_file, notes_dir, league_config, scouting_file):
+    tmp_path, players_cache, rankings_file, notes_dir, league_config, scouting_file
+):
     doc = json.loads(rankings_file.read_text())
     doc["players"][3]["name"] = "Nobody Whatsoever"
     rankings_file.write_text(json.dumps(doc))
 
     out = tmp_path / "draft"
     with pytest.raises(SleeperError) as exc:
-        run(["--rankings", str(rankings_file), "--notes-dir", str(notes_dir),
-             "--config", str(league_config), "--scouting", str(scouting_file),
-             "--out-dir", str(out)], players_cache)
+        run(
+            [
+                "--rankings",
+                str(rankings_file),
+                "--notes-dir",
+                str(notes_dir),
+                "--config",
+                str(league_config),
+                "--scouting",
+                str(scouting_file),
+                "--out-dir",
+                str(out),
+            ],
+            players_cache,
+        )
     assert "Nobody Whatsoever" in str(exc.value)
     assert "Nothing was written" in str(exc.value)
     assert not out.exists()
 
 
 def test_ranked_player_without_a_research_note_is_kept_and_reported(
-        tmp_path, players_cache, rankings_file, notes_dir, league_config, scouting_file,
-        capsys):
+    tmp_path, players_cache, rankings_file, notes_dir, league_config, scouting_file, capsys
+):
     out = invoke(tmp_path, players_cache, rankings_file, notes_dir, league_config, scouting_file)
     doc = json.loads((out / "board.json").read_text())
 
@@ -118,12 +144,17 @@ def test_ranked_player_without_a_research_note_is_kept_and_reported(
 
 
 def test_research_note_for_an_unranked_player_lands_in_the_extras_bin(
-        tmp_path, players_cache, rankings_file, notes_dir, league_config, scouting_file):
+    tmp_path, players_cache, rankings_file, notes_dir, league_config, scouting_file
+):
     players = json.loads((players_cache / "players_nfl.json").read_text())
     ranked = {row["name"] for row in json.loads(rankings_file.read_text())["players"]}
-    pid, player = next((pid, p) for pid, p in sorted(players.items())
-                       if p.get("full_name") and p["full_name"] not in ranked
-                       and p.get("position") in ("QB", "RB", "WR", "TE"))
+    pid, player = next(
+        (pid, p)
+        for pid, p in sorted(players.items())
+        if p.get("full_name")
+        and p["full_name"] not in ranked
+        and p.get("position") in ("QB", "RB", "WR", "TE")
+    )
     (notes_dir / f"stub-{player['position']}-{pid}.md").write_text("## unranked\n")
 
     out = invoke(tmp_path, players_cache, rankings_file, notes_dir, league_config, scouting_file)
@@ -133,7 +164,8 @@ def test_research_note_for_an_unranked_player_lands_in_the_extras_bin(
 
 
 def test_risk_flag_is_attached_to_the_flagged_player(
-        tmp_path, players_cache, rankings_file, notes_dir, league_config, scouting_file):
+    tmp_path, players_cache, rankings_file, notes_dir, league_config, scouting_file
+):
     out = invoke(tmp_path, players_cache, rankings_file, notes_dir, league_config, scouting_file)
     doc = json.loads((out / "board.json").read_text())
     flagged = [row for row in doc["players"] if row["risk_flag"]]
@@ -143,7 +175,8 @@ def test_risk_flag_is_attached_to_the_flagged_player(
 
 
 def test_kicker_or_defense_in_the_rankings_is_rejected(
-        tmp_path, players_cache, rankings_file, notes_dir, league_config, scouting_file):
+    tmp_path, players_cache, rankings_file, notes_dir, league_config, scouting_file
+):
     doc = json.loads(rankings_file.read_text())
     doc["players"][0]["pos"] = "K"
     rankings_file.write_text(json.dumps(doc))
@@ -152,7 +185,8 @@ def test_kicker_or_defense_in_the_rankings_is_rejected(
 
 
 def test_ranking_row_missing_a_required_field_is_rejected(
-        tmp_path, players_cache, rankings_file, notes_dir, league_config, scouting_file):
+    tmp_path, players_cache, rankings_file, notes_dir, league_config, scouting_file
+):
     doc = json.loads(rankings_file.read_text())
     del doc["players"][2]["tier"]
     rankings_file.write_text(json.dumps(doc))
@@ -175,7 +209,8 @@ def test_two_notes_claiming_one_player_id_are_rejected(notes_dir):
 
 
 def test_pick_order_file_covers_every_pick(
-        tmp_path, players_cache, rankings_file, notes_dir, league_config, scouting_file):
+    tmp_path, players_cache, rankings_file, notes_dir, league_config, scouting_file
+):
     out = invoke(tmp_path, players_cache, rankings_file, notes_dir, league_config, scouting_file)
     order = json.loads((out / "pick_order.json").read_text())
     assert order["picks_by_slot"]["12"] == REAL_3RR["12"]
@@ -184,7 +219,8 @@ def test_pick_order_file_covers_every_pick(
 
 
 def test_board_md_is_grouped_by_tier_and_carries_the_join_key(
-        tmp_path, players_cache, rankings_file, notes_dir, league_config, scouting_file):
+    tmp_path, players_cache, rankings_file, notes_dir, league_config, scouting_file
+):
     out = invoke(tmp_path, players_cache, rankings_file, notes_dir, league_config, scouting_file)
     md = (out / "board.md").read_text()
     doc = json.loads((out / "board.json").read_text())
@@ -196,7 +232,8 @@ def test_board_md_is_grouped_by_tier_and_carries_the_join_key(
 
 
 def test_scouting_notes_merge_onto_the_right_rows(
-        tmp_path, players_cache, rankings_file, notes_dir, league_config, scouting_file):
+    tmp_path, players_cache, rankings_file, notes_dir, league_config, scouting_file
+):
     out = invoke(tmp_path, players_cache, rankings_file, notes_dir, league_config, scouting_file)
     doc = json.loads((out / "board.json").read_text())
     rows = {row["rank"]: row for row in doc["players"]}
@@ -215,7 +252,8 @@ def test_scouting_notes_merge_onto_the_right_rows(
 
 
 def test_scouting_renders_in_board_md(
-        tmp_path, players_cache, rankings_file, notes_dir, league_config, scouting_file):
+    tmp_path, players_cache, rankings_file, notes_dir, league_config, scouting_file
+):
     out = invoke(tmp_path, players_cache, rankings_file, notes_dir, league_config, scouting_file)
     md = (out / "board.md").read_text()
     doc = json.loads((out / "board.json").read_text())
@@ -228,23 +266,37 @@ def test_scouting_renders_in_board_md(
 
 
 def test_scouting_note_for_an_unknown_player_id_errors_and_writes_nothing(
-        tmp_path, players_cache, rankings_file, notes_dir, league_config, scouting_file):
+    tmp_path, players_cache, rankings_file, notes_dir, league_config, scouting_file
+):
     doc = json.loads(scouting_file.read_text())
     doc["notes"]["not-a-real-player"] = {"text": "ghost"}
     scouting_file.write_text(json.dumps(doc))
 
     out = tmp_path / "draft"
     with pytest.raises(SleeperError) as exc:
-        run(["--rankings", str(rankings_file), "--notes-dir", str(notes_dir),
-             "--config", str(league_config), "--scouting", str(scouting_file),
-             "--out-dir", str(out)], players_cache)
+        run(
+            [
+                "--rankings",
+                str(rankings_file),
+                "--notes-dir",
+                str(notes_dir),
+                "--config",
+                str(league_config),
+                "--scouting",
+                str(scouting_file),
+                "--out-dir",
+                str(out),
+            ],
+            players_cache,
+        )
     assert "not-a-real-player" in str(exc.value)
     assert "Nothing was written" in str(exc.value)
     assert not out.exists()
 
 
 def test_dangling_handcuff_for_errors(
-        tmp_path, players_cache, rankings_file, notes_dir, league_config, scouting_file):
+    tmp_path, players_cache, rankings_file, notes_dir, league_config, scouting_file
+):
     doc = json.loads(scouting_file.read_text())
     pid = next(iter(doc["notes"]))
     doc["notes"][pid]["handcuff_for"] = "9999999999"
@@ -254,7 +306,8 @@ def test_dangling_handcuff_for_errors(
 
 
 def test_unknown_scouting_flag_errors_and_names_it(
-        tmp_path, players_cache, rankings_file, notes_dir, league_config, scouting_file):
+    tmp_path, players_cache, rankings_file, notes_dir, league_config, scouting_file
+):
     doc = json.loads(scouting_file.read_text())
     pid = next(iter(doc["notes"]))
     doc["notes"][pid]["flags"] = ["sleeper-pick"]
@@ -263,28 +316,33 @@ def test_unknown_scouting_flag_errors_and_names_it(
         invoke(tmp_path, players_cache, rankings_file, notes_dir, league_config, scouting_file)
 
 
-def test_missing_scouting_file_errors(
-        tmp_path, players_cache, rankings_file, notes_dir, league_config):
+def test_missing_scouting_file_errors(tmp_path, players_cache, rankings_file, notes_dir, league_config):
     with pytest.raises(SleeperError, match="does not exist"):
-        invoke(tmp_path, players_cache, rankings_file, notes_dir, league_config,
-               tmp_path / "absent.json")
+        invoke(tmp_path, players_cache, rankings_file, notes_dir, league_config, tmp_path / "absent.json")
 
 
 def test_board_md_carries_the_rankings_provenance(
-        tmp_path, players_cache, rankings_file, notes_dir, league_config, scouting_file):
+    tmp_path, players_cache, rankings_file, notes_dir, league_config, scouting_file
+):
     doc = json.loads(rankings_file.read_text())
     doc["meta"]["player_pool"] = "QB/RB/WR/TE only"
     doc["meta"]["method"] = "blended on weights"
-    doc["meta"]["sources"] = [{"name": "Test ADP", "date": "2026-09-05", "weight": 0.45,
-                              "why": "format match"}]
+    doc["meta"]["sources"] = [
+        {"name": "Test ADP", "date": "2026-09-05", "weight": 0.45, "why": "format match"}
+    ]
     doc["draft_mechanics"]["explanation"] = "round 3 repeats round 2"
     rankings_file.write_text(json.dumps(doc))
 
     out = invoke(tmp_path, players_cache, rankings_file, notes_dir, league_config, scouting_file)
     md = (out / "board.md").read_text()
     assert "## Provenance" in md
-    for expected in ("QB/RB/WR/TE only", "blended on weights", "Test ADP", "format match",
-                     "round 3 repeats round 2"):
+    for expected in (
+        "QB/RB/WR/TE only",
+        "blended on weights",
+        "Test ADP",
+        "format match",
+        "round 3 repeats round 2",
+    ):
         assert expected in md
     source = json.loads((out / "board.json").read_text())["source"]
     assert source["sources"][0]["name"] == "Test ADP"

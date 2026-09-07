@@ -43,16 +43,24 @@ VALID_BYE_WEEKS = range(1, 23)
 def parse_args() -> argparse.Namespace:
     load_dotenv()
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    p.add_argument("--byes", type=Path, required=True,
-                   help='JSON file mapping team abbreviation to bye week, e.g. {"BUF": 12, "KC": 10}')
-    p.add_argument("--limit", type=int, default=220,
-                   help="How many QB/RB/WR/TE players to include (default 220)")
+    p.add_argument(
+        "--byes",
+        type=Path,
+        required=True,
+        help='JSON file mapping team abbreviation to bye week, e.g. {"BUF": 12, "KC": 10}',
+    )
+    p.add_argument(
+        "--limit", type=int, default=220, help="How many QB/RB/WR/TE players to include (default 220)"
+    )
     p.add_argument("--kickers", type=int, default=12, help="Kickers in the final batch (default 12)")
     p.add_argument("--defenses", type=int, default=12, help="Defenses in the final batch (default 12)")
     p.add_argument("--chunk-size", type=int, default=15, help="Players per YAML file (default 15)")
     p.add_argument("--out-dir", type=Path, default=Path("research/batches"))
-    p.add_argument("--refresh-players", action="store_true",
-                   help="Force a re-fetch of /players/nfl even if the cache is fresh")
+    p.add_argument(
+        "--refresh-players",
+        action="store_true",
+        help="Force a re-fetch of /players/nfl even if the cache is fresh",
+    )
     p.add_argument("--cache-dir", default=None, help="Override the players cache directory")
     args = p.parse_args()
     for name, value in (("--limit", args.limit), ("--chunk-size", args.chunk_size)):
@@ -139,12 +147,14 @@ def rank_key(player: dict) -> int:
 
 def select(players: dict[str, dict], positions: tuple[str, ...], limit: int) -> list[tuple[str, dict]]:
     pool = [(pid, p) for pid, p in players.items() if eligible(p, positions)]
-    pool.sort(key=lambda item: (
-        rank_key(item[1]),
-        item[1].get("position") or "",
-        (item[1].get("full_name") or item[1].get("last_name") or ""),
-        item[0],
-    ))
+    pool.sort(
+        key=lambda item: (
+            rank_key(item[1]),
+            item[1].get("position") or "",
+            (item[1].get("full_name") or item[1].get("last_name") or ""),
+            item[0],
+        )
+    )
     if len(pool) < limit:
         raise SleeperError(
             f"Only {len(pool)} players matched {positions} after filtering, but {limit} were requested. "
@@ -168,8 +178,9 @@ def primary_position(pid: str, player: dict, positions: tuple[str, ...]) -> str:
     )
 
 
-def to_entries(selection: list[tuple[str, dict]], positions: tuple[str, ...],
-               byes: dict[str, int]) -> list[dict]:
+def to_entries(
+    selection: list[tuple[str, dict]], positions: tuple[str, ...], byes: dict[str, int]
+) -> list[dict]:
     entries: list[dict] = []
     missing_byes: dict[str, list[str]] = {}
 
@@ -181,14 +192,16 @@ def to_entries(selection: list[tuple[str, dict]], positions: tuple[str, ...],
         if team not in byes:
             missing_byes.setdefault(team, []).append(player_name(pid, player))
             continue
-        entries.append({
-            "player_id": str(pid),
-            "name": player_name(pid, player),
-            "pos": primary_position(pid, player, positions),
-            "team": team,
-            "bye": byes[team],
-            "search_rank": player.get("search_rank"),
-        })
+        entries.append(
+            {
+                "player_id": str(pid),
+                "name": player_name(pid, player),
+                "pos": primary_position(pid, player, positions),
+                "team": team,
+                "bye": byes[team],
+                "search_rank": player.get("search_rank"),
+            }
+        )
 
     if missing_byes:
         detail = "; ".join(
@@ -201,12 +214,19 @@ def to_entries(selection: list[tuple[str, dict]], positions: tuple[str, ...],
     return entries
 
 
-def write_batches(entries: list[dict], label: str, positions: tuple[str, ...],
-                  out_dir: Path, chunk_size: int, start_index: int, total_batches: int) -> list[Path]:
+def write_batches(
+    entries: list[dict],
+    label: str,
+    positions: tuple[str, ...],
+    out_dir: Path,
+    chunk_size: int,
+    start_index: int,
+    total_batches: int,
+) -> list[Path]:
     written = []
     generated_at = time.strftime("%Y-%m-%dT%H:%M:%S%z")
     for offset in range(0, len(entries), chunk_size):
-        chunk = entries[offset:offset + chunk_size]
+        chunk = entries[offset : offset + chunk_size]
         number = start_index + offset // chunk_size
         suffix = f"_{label}" if label else ""
         path = out_dir / f"batch_{number:02d}{suffix}.yaml"
@@ -255,8 +275,9 @@ def main() -> int:
     args.out_dir.mkdir(parents=True, exist_ok=True)
     written = write_batches(skill, "", SKILL_POSITIONS, args.out_dir, args.chunk_size, 1, total_batches)
     if kdef:
-        written += write_batches(kdef, "k_def", KDEF_POSITIONS, args.out_dir, args.chunk_size,
-                                 skill_batches + 1, total_batches)
+        written += write_batches(
+            kdef, "k_def", KDEF_POSITIONS, args.out_dir, args.chunk_size, skill_batches + 1, total_batches
+        )
 
     by_pos: dict[str, int] = {}
     for entry in skill + kdef:
@@ -265,8 +286,11 @@ def main() -> int:
     print(f"\nwrote {len(written)} files to {args.out_dir}/", file=sys.stderr)
     for path in written:
         print(f"  {path}", file=sys.stderr)
-    print(f"\n{len(skill) + len(kdef)} players total: "
-          + ", ".join(f"{pos} {count}" for pos, count in sorted(by_pos.items())), file=sys.stderr)
+    print(
+        f"\n{len(skill) + len(kdef)} players total: "
+        + ", ".join(f"{pos} {count}" for pos, count in sorted(by_pos.items())),
+        file=sys.stderr,
+    )
     return 0
 
 
