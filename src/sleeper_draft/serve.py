@@ -38,6 +38,7 @@ from functools import partial
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from threading import Thread
+from typing import Any
 
 from .client import SleeperError
 
@@ -56,11 +57,11 @@ class StateHandler(BaseHTTPRequestHandler):
 
     protocol_version = "HTTP/1.1"
 
-    def __init__(self, *args, out_dir: Path, **kwargs) -> None:
+    def __init__(self, *args: Any, out_dir: Path, **kwargs: Any) -> None:
         self.out_dir = out_dir
         super().__init__(*args, **kwargs)
 
-    def log_message(self, format: str, *args) -> None:  # noqa: A002, ARG002
+    def log_message(self, format: str, *args: Any) -> None:  # noqa: A002, ARG002
         """Silence per-request logging -- it would bury the poll output."""
 
     def _send(

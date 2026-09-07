@@ -20,6 +20,7 @@ import argparse
 import os
 import sys
 from pathlib import Path
+from typing import Any
 
 from .client import SleeperClient, SleeperError
 from .env import load_dotenv
@@ -28,7 +29,7 @@ from .yamlio import dump_yaml
 REQUIRED_DRAFT_SETTINGS = ("rounds", "teams")
 
 
-def require(obj: dict, key: str, where: str):
+def require(obj: dict[str, Any], key: str, where: str) -> Any:
     """Fetch obj[key] or die naming the missing field. Never defaults."""
     if key not in obj:
         raise SleeperError(f"{where} has no '{key}' field. Keys present: {sorted(obj)}")

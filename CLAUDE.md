@@ -53,7 +53,7 @@ uv sync                              # create .venv, install PyYAML + dev group,
 uv run pytest                        # run the offline suite (no test touches the network)
 uv run pyright                       # type-check src/ (standard mode, clean)
 uv run pytest tests/test_batches.py::<name>   # run a single test
-uv run ruff check .                  # lint (E, F, I, UP, B; line-length 110, target py39)
+uv run ruff check .                  # lint (E, F, I, UP, B, ANN; line-length 110, target py39)
 ```
 
 Runtime deps are deliberately minimal: only PyYAML. Everything except YAML emitting is standard
@@ -72,8 +72,9 @@ uv run sleeper-warroom --watch          # optional: needs `uv sync --extra warro
 A `Makefile` wraps all of the above (`make help`). It is convenience only -- every
 target is a thin `uv run` wrapper -- and GNU make is not installed on a bare WSL box.
 `ruff format` **is** adopted -- `make check` fails on an unformatted file, and CI
-runs the same four steps in the same order. **pyright runs in standard mode, not
-strict** (strict reports a wall of "annotate this dict literal" on this dict-heavy
+runs the same four steps in the same order. Every signature in `src/` is annotated and
+ruff's **ANN** rules keep it that way (`tests/*` is exempt -- a test's signature is
+its fixture list). **pyright runs in standard mode, not strict** (strict reports a wall of "annotate this dict literal" on this dict-heavy
 code; standard catches the thing worth catching, unvalidated None flowing into a
 typed call).
 

@@ -498,6 +498,9 @@ Fully offline, against a synthetic players dump and a stubbed client: the filter
 ordering, the YAML round-trip, the 3RR pick table against real numbers, the keeper rules, the
 pick-timing maths, and every failure path above.
 
+Every function in `src/` carries parameter and return annotations, enforced by ruff's `ANN`
+rules rather than by review; `tests/*` is exempt, since a test's signature is its fixture list.
+
 `.github/workflows/ci.yml` runs `ruff format --check`, `ruff check`, `pyright` and `pytest` on
 every push to `master` and every pull request — the same four steps as `make check`, in the same
 order, so a green tick means the local gate would have passed. No network and no API key: the
