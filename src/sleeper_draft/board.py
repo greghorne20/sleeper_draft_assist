@@ -492,7 +492,10 @@ def render_board_md(rows: list[dict], extras: list[dict], league: dict, rankings
     meta = rankings.get("meta") or {}
     positions = [p for p in (league.get("roster_positions") or []) if p != "BN"]
     out: list[str] = []
-    out.append(f"# Draft board — {league.get('league_name') or 'league'} ({league.get('season')})")
+    # The board carries no league name by design, so the season is the title in
+    # the normal case rather than the fallback.
+    named = f"{league['league_name']} " if league.get("league_name") else ""
+    out.append(f"# Draft board — {named}{league.get('season')}")
     out.append("")
     out.append(
         f"{league['teams']} teams · {league['rounds']} rounds · {league.get('draft_type')}"

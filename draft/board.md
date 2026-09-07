@@ -1,8 +1,8 @@
-# Draft board — league (2026)
+# Draft board — 2026
 
 12 teams · 13 rounds · snake w/ round-3 reversal · starters QB/RB/RB/WR/WR/TE/FLEX · **no K, no DST**
 
-208 ranked players. Source: 2026 Aggregate Fantasy Draft Rankings - 12-team half-PPR, Season 22 (generated 2026-09-05). Scoring: 0.5 PPR, 4pt pass TD, 25 yds/passing pt, -2 INT, -2 fumble lost.
+208 ranked players. Source: 2026 Aggregate Fantasy Draft Rankings - 12-team half-PPR, 3RR (generated 2026-09-05). Scoring: 0.5 PPR, 4pt pass TD, 25 yds/passing pt, -2 INT, -2 fumble lost.
 
 Regenerate with `uv run sleeper-board`. **This file is the one to read** — `draft/board.json` holds the same board plus join fields, and exists as the input `sleeper-live` and other tooling parse. It is ~4.6x this file.
 

@@ -1,10 +1,10 @@
 {
- "generated_at": "2026-09-07T19:13:01-0400",
+ "generated_at": "2026-09-07T19:21:47-0400",
  "join_key": "player_id",
  "source": {
   "rankings": "research/rankings_2026.json",
   "scouting_notes": "research/scouting_notes.json",
-  "title": "2026 Aggregate Fantasy Draft Rankings - 12-team half-PPR, Season 22",
+  "title": "2026 Aggregate Fantasy Draft Rankings - 12-team half-PPR, 3RR",
   "generated": "2026-09-05",
   "scoring": "0.5 PPR, 4pt pass TD, 25 yds/passing pt, -2 INT, -2 fumble lost",
   "player_pool": "QB/RB/WR/TE only - this league has NO kicker and NO defense slots",

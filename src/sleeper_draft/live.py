@@ -624,7 +624,8 @@ def render_now_md(state: dict) -> str:
     seat = state.get("my_team_name") or (
         team_label(state, state["my_slot"]) if state.get("my_slot") else None
     )
-    title = f"# Draft state — {state.get('league_name') or 'league'}"
+    named = state.get("league_name")
+    title = f"# Draft state — {named}" if named else "# Draft state"
     out.append(f"{title} — {seat}" if seat else title)
     out.append("")
     out.append(

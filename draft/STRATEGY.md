@@ -1,4 +1,4 @@
-# Strategy reference — 12-team half-PPR, Season 22 (2026)
+# Strategy reference — 12-team half-PPR, 3RR (2026)
 
 The reasoning, numbers and citations behind `draft/PLAYBOOK.md`. The playbook is what you run
 during the draft; this is what you consult when a decision is close, when a rule needs
