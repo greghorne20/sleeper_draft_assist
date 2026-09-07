@@ -195,7 +195,7 @@ make watch SLOT=12     # terminal 1: polls, serves the page, rewrites NOW.md
 ## Setup and make targets
 
 ```bash
-uv sync                             # .venv + PyYAML + dev group + this package
+uv sync --extra warroom             # .venv + PyYAML + dev group + this package
 cp .env.example .env                # then fill in SLEEPER_LEAGUE_ID
 uv run sleeper-discover --out config.yaml
 uv run pytest                       # the whole suite, offline
@@ -222,7 +222,7 @@ No league ID, draft ID, username or season is hardcoded — CLI args, or `SLEEPE
 
 ```bash
 make setup            # uv sync
-make check            # lint + types + test; the pre-commit gate
+make check            # format + lint + types + test; the pre-commit gate
 make board            # rebuild draft/board.*
 make keepers          # rebuild draft/keepers.*
 make watch SLOT=12    # poll the draft and serve the live page
@@ -492,8 +492,13 @@ Every command raises and exits 1 rather than defaulting:
 The client spaces requests at least 100ms apart and caches the players dump for 24h. Live
 polling nets ~0.53 req/s against Sleeper's 1000/min guidance.
 
-## Testing
+## Testing and CI
 
 Fully offline, against a synthetic players dump and a stubbed client: the filters, the
 ordering, the YAML round-trip, the 3RR pick table against real numbers, the keeper rules, the
 pick-timing maths, and every failure path above.
+
+`.github/workflows/ci.yml` runs `ruff format --check`, `ruff check`, `pyright` and `pytest` on
+every push to `master` and every pull request — the same four steps as `make check`, in the same
+order, so a green tick means the local gate would have passed. No network and no API key: the
+suite needs neither.

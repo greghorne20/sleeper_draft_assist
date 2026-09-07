@@ -20,7 +20,7 @@ BYES   ?= byes.2026.json
 SLOT_ARG = $(if $(SLOT),--slot $(SLOT),)
 
 .DEFAULT_GOAL := help
-.PHONY: help setup check lint types test fmt-check board keepers live watch discover past-draft batches clean
+.PHONY: help setup check fmt fmt-check lint types test board keepers live watch discover past-draft batches clean
 
 help:  ## Show this help
 	@echo "Sleeper draft tools"
@@ -36,19 +36,22 @@ setup:  ## Create .venv and install the package + dev group
 
 # ---------------------------------------------------------------- quality
 
-check: lint types test  ## Lint, type-check and test -- run this before committing
+check: fmt-check lint types test  ## Format, lint, type-check and test -- run before committing
+
+fmt:  ## Apply ruff format
+	uv run ruff format .
+
+fmt-check:  ## ruff format --check
+	uv run ruff format --check .
 
 lint:  ## ruff check
 	uv run ruff check .
 
-types:  ## mypy over src/
-	uv run mypy
+types:  ## pyright over src/
+	uv run pyright
 
 test:  ## The offline test suite (no test touches the network)
 	uv run pytest -q
-
-fmt-check:  ## Report what ruff format WOULD change (not adopted -- see README)
-	uv run ruff format --check --diff .
 
 # ---------------------------------------------------------------- artifacts
 

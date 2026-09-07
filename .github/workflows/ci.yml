@@ -1,0 +1,46 @@
+# Runs the same four things `make check` runs, in the same order, so a green
+# tick here means the pre-commit gate would have passed locally.
+#
+# No network: every test uses the synthetic players dump and the stubbed client,
+# so this needs no Sleeper access and no ANTHROPIC_API_KEY.
+
+name: check
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+concurrency:
+  # A second push to the same branch cancels the first -- nothing here is worth
+  # finishing for a commit that has already been replaced.
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      # --frozen honours uv.lock rather than re-solving. The warroom extra is
+      # installed because tests/test_warroom.py covers the pure half of it, and
+      # pyright resolves the provider's types from it.
+      - name: Install
+        run: uv sync --frozen --extra warroom
+
+      - name: Format
+        run: uv run ruff format --check .
+
+      - name: Lint
+        run: uv run ruff check .
+
+      - name: Types
+        run: uv run pyright
+
+      - name: Test
+        run: uv run pytest -q

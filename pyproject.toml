@@ -40,12 +40,13 @@ warroom = [
 dev = [
     "pytest>=8.0",
     "ruff>=0.6",
-    "mypy>=1.11",
+    "pyright>=1.1.400",
     "types-PyYAML",
     # The war-room brief schema. Its pure half -- validation, the refresh
     # trigger, prompt building -- is tested offline, so pydantic is a dev
     # dependency even though agent-framework itself is an optional extra.
     "pydantic>=2",
+    "pyright>=1.1.411",
 ]
 
 [build-system]
@@ -62,13 +63,16 @@ target-version = "py39"
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B"]
 
-[tool.mypy]
-files = ["src/sleeper_draft"]
-# No python_version here: modern mypy refuses anything below 3.10, and ruff's
-# target-version = "py39" plus the UP rules already hold the 3.9 floor.
-# Default strictness on purpose. --strict reports 80 findings on this dict-heavy
-# code, nearly all of them "annotate this dict literal"; the default catches the
-# thing worth catching, which is unvalidated None flowing into a typed call.
+[tool.pyright]
+include = ["src/sleeper_draft"]
+pythonVersion = "3.9"
+# Standard mode on purpose. Strict reports the same wall of "annotate this dict
+# literal" on this dict-heavy code; standard catches the thing worth catching,
+# which is unvalidated None flowing into a typed call.
+typeCheckingMode = "standard"
+# The war room's provider is an optional extra, so a machine without it must
+# still type-check rather than reporting every agent_framework import as missing.
+reportMissingImports = "warning"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
