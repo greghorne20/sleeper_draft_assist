@@ -146,6 +146,8 @@ anything long-lived.
 ```
 pyproject.toml            project metadata, deps, console scripts
 uv.lock                   pinned resolution
+.env.example              copy to .env; league id, slot, optional API key
+config.example.yaml       shape of the generated config (the real one is gitignored)
 byes.template.json        32-team bye map to fill in (see "Bye weeks")
 src/sleeper_draft/
     client.py             API wrapper + disk cache for the 5MB players dump
@@ -157,6 +159,7 @@ src/sleeper_draft/
     serve.py              two-route stdlib server for the live page
     live_view.html        the live page itself (vanilla JS, no build step)
     keepers.py            last season's draft + rosters + trades -> keeper eligibility
+    env.py                reads .env before any parser defaults from os.environ
     yamlio.py             shared YAML output settings
 src/sleeper_draft/warroom/
     brief.py tools.py     pure brief-building + the agent's read-only tools
@@ -192,10 +195,21 @@ make watch SLOT=12     # terminal 1: polls, serves the page, rewrites NOW.md
 ## Setup and make targets
 
 ```bash
-uv sync              # .venv + PyYAML + dev group (pytest, ruff, mypy) + this package
-uv run pytest        # the whole suite, offline
-uv run ruff check .
+uv sync                             # .venv + PyYAML + dev group + this package
+cp .env.example .env                # then fill in SLEEPER_LEAGUE_ID
+uv run sleeper-discover --out config.yaml
+uv run pytest                       # the whole suite, offline
 ```
+
+`.env` is read by every command before argparse builds its defaults, so
+`SLEEPER_LEAGUE_ID` / `SLEEPER_USERNAME` / `SLEEPER_SEASON` / `SLEEPER_SLOT` /
+`ANTHROPIC_API_KEY` can be set once instead of passed each time. Anything already exported
+wins over the file, which is what keeps Railway — real env vars, no `.env` — behaving like a
+laptop.
+
+`config.yaml` and `draft/keepers.*` are gitignored: they name a real league and its twelve
+managers. `config.example.yaml` shows the shape, and `sleeper-discover` regenerates the real
+one.
 
 Everything except YAML emitting is standard library. PyYAML handles one trap: bare YAML 1.1
 reads the team abbreviation `NO` as boolean `false`, and PyYAML's resolver quotes it. There is
@@ -214,8 +228,8 @@ make keepers          # rebuild draft/keepers.*
 make watch SLOT=12    # poll the draft and serve the live page
 ```
 
-`LEAGUE` defaults to the `league_id` in `config.yaml`; override `SLOT`, `LEAGUE`, `PORT`,
-`BYES` on the command line. GNU make is not installed on a bare WSL/Debian box
+`LEAGUE` resolves in order: an exported `SLEEPER_LEAGUE_ID`, then `.env`, then `config.yaml`.
+Override `SLOT`, `LEAGUE`, `PORT`, `BYES` on the command line. GNU make is not installed on a bare WSL/Debian box
 (`sudo apt install make`); everything works without it.
 
 ---
@@ -225,8 +239,9 @@ make watch SLOT=12    # poll the draft and serve the live page
 ### 1. `sleeper-discover`
 
 ```bash
-uv run sleeper-discover --league-id LEAGUE_ID --out config.yaml
-uv run sleeper-discover --username YOUR_SLEEPER_NAME --season 2026   # if you don't know the ID
+uv run sleeper-discover --out config.yaml                            # uses SLEEPER_LEAGUE_ID
+uv run sleeper-discover --league-id <id> --out config.yaml
+uv run sleeper-discover --username <name> --season 2026              # if you don't know the ID
 ```
 
 A league ID needs no user lookup. Prints a pasteable YAML block: `draft_id`, full draft
@@ -266,8 +281,8 @@ old and print the cache age either way.
 ### 3. `sleeper-past-draft`
 
 ```bash
-uv run sleeper-past-draft --league-id LEAGUE_ID --back 1
-uv run sleeper-past-draft --league-id LEAGUE_ID --season 2025
+uv run sleeper-past-draft --back 1
+uv run sleeper-past-draft --league-id <id> --season 2025
 ```
 
 Walks `previous_league_id` back and saves `fixtures/draft_<season>_<draft_id>.json`: the chain
@@ -312,7 +327,7 @@ before a draft is planned around them.
 ```bash
 uv run sleeper-live --slot 12                 # one shot
 uv run sleeper-live --slot 12 --watch         # poll until the draft completes
-uv run sleeper-live --username greg --watch --interval 5
+uv run sleeper-live --username <name> --watch --interval 5
 uv run sleeper-live --slot 12 --watch --serve     # + a live page in the browser
 ```
 
@@ -366,7 +381,7 @@ and scouting notes to the network. It warns when you do it.
 ### 6. `sleeper-keepers`
 
 ```bash
-uv run sleeper-keepers --league-id LEAGUE_ID
+uv run sleeper-keepers
 uv run sleeper-keepers --league-id <id> --season 2025
 ```
 
@@ -402,8 +417,8 @@ scouting and flags never reach it; a test asserts that.
 | `state/NOW.md` | Live state: whose pick, roster and gaps, the board with players leaving before your pick marked, tiers left, recent picks and runs. | `sleeper-live` |
 | `state/state.json` | The same, machine-readable, whole league. | `sleeper-live` |
 | `state/briefs.json` | One agent brief per team. | `sleeper-warroom` |
-| `keepers.md` | Per-team keeper eligibility and cost. The report to circulate. | `sleeper-keepers` |
-| `keepers.json` | The same ruling, machine-readable. | `sleeper-keepers` |
+| `keepers.md` | Per-team keeper eligibility and cost. The report to circulate — gitignored, since it names every manager. | `sleeper-keepers` |
+| `keepers.json` | The same ruling, machine-readable. Gitignored for the same reason. | `sleeper-keepers` |
 
 The join key is `player_id` throughout: live pick -> board row ->
 `research/players/*-<player_id>.md`.

@@ -219,3 +219,20 @@ __marimo__/
 # Streamlit
 .streamlit/secrets.toml
 draft/state/
+
+# --- this repo ---------------------------------------------------------------
+
+# Names a real league and its twelve managers. Generate your own:
+#   uv run sleeper-discover --league-id <id> --out config.yaml
+config.yaml
+
+# The keeper report carries every manager's team name and Sleeper username.
+# It is circulated inside the league, not published. Regenerate with
+#   uv run sleeper-keepers
+draft/keepers.json
+draft/keepers.md
+
+# Past-draft fixtures hold a real league's picks and roster ids.
+fixtures/
+
+.env

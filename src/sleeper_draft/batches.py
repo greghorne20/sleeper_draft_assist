@@ -31,6 +31,7 @@ import time
 from pathlib import Path
 
 from .client import SleeperClient, SleeperError
+from .env import load_dotenv
 from .yamlio import dump_yaml
 
 SEARCH_RANK_SENTINEL = 9999999
@@ -40,6 +41,7 @@ VALID_BYE_WEEKS = range(1, 23)
 
 
 def parse_args() -> argparse.Namespace:
+    load_dotenv()
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument("--byes", type=Path, required=True,
                    help='JSON file mapping team abbreviation to bye week, e.g. {"BUF": 12, "KC": 10}')

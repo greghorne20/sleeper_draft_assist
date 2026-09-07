@@ -9,7 +9,6 @@ from __future__ import annotations
 
 import asyncio
 import json
-import os
 from pathlib import Path
 
 import pytest
@@ -454,20 +453,6 @@ def test_only_one_seat_can_be_targeted(tmp_path, draft_artifacts):
     board, state = league(draft_artifacts, 14)
     asyncio.run(R.run_cycle(state, board, {"rooms": {}}, runner_args(tmp_path, slot=7)))
     assert [f.name for f in (tmp_path / "prompts").iterdir()] == ["slot-7.md"]
-
-
-def test_an_env_file_fills_gaps_but_never_overrides_the_real_environment(tmp_path, monkeypatch):
-    """A stale file must not quietly beat something the operator exported."""
-    env = tmp_path / ".env"
-    env.write_text('# a comment\n\nANTHROPIC_CHAT_MODEL="claude-from-file"\n'
-                   "ALREADY_SET=from-file\nnot a pair\n")
-    monkeypatch.setenv("ALREADY_SET", "from-shell")
-    monkeypatch.delenv("ANTHROPIC_CHAT_MODEL", raising=False)
-
-    assert R.load_env_file(env) == ["ANTHROPIC_CHAT_MODEL"]
-    assert os.environ["ANTHROPIC_CHAT_MODEL"] == "claude-from-file"
-    assert os.environ["ALREADY_SET"] == "from-shell"
-    assert R.load_env_file(tmp_path / "absent") == []
 
 
 # --- prompt caching ----------------------------------------------------------

@@ -5,7 +5,12 @@
 #
 # Requires GNU make (`sudo apt install make` on a bare WSL/Debian box).
 
-LEAGUE ?= $(shell sed -n "s/^league_id: *'\?\([0-9]*\)'\?/\1/p" config.yaml 2>/dev/null)
+# League id, in order: an exported variable, then .env, then config.yaml.
+# make does not read .env itself, so pull the line out rather than teaching
+# every target to source it.
+DOTENV_LEAGUE = $(shell sed -n 's/^SLEEPER_LEAGUE_ID=//p' .env 2>/dev/null)
+CONFIG_LEAGUE = $(shell sed -n "s/^league_id: *'\?\([0-9]*\)'\?/\1/p" config.yaml 2>/dev/null)
+LEAGUE ?= $(if $(SLEEPER_LEAGUE_ID),$(SLEEPER_LEAGUE_ID),$(if $(DOTENV_LEAGUE),$(DOTENV_LEAGUE),$(CONFIG_LEAGUE)))
 SLOT   ?=
 PORT   ?= 8765
 BYES   ?= byes.2026.json
@@ -24,7 +29,7 @@ help:  ## Show this help
 		| awk 'BEGIN {FS = ":.*?## "} {printf "  \033[1m%-14s\033[0m %s\n", $$1, $$2}'
 	@echo
 	@echo "Variables:  SLOT=12  LEAGUE=<id>  PORT=8765  BYES=byes.2026.json"
-	@echo "League id defaults to the one in config.yaml ($(LEAGUE))"
+	@echo "League id: SLEEPER_LEAGUE_ID, else .env, else config.yaml ($(LEAGUE))"
 
 setup:  ## Create .venv and install the package + dev group
 	uv sync

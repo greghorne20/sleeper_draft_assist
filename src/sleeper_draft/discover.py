@@ -22,6 +22,7 @@ import sys
 from pathlib import Path
 
 from .client import SleeperClient, SleeperError
+from .env import load_dotenv
 from .yamlio import dump_yaml
 
 REQUIRED_DRAFT_SETTINGS = ("rounds", "teams")
@@ -38,6 +39,7 @@ def require(obj: dict, key: str, where: str):
 
 
 def parse_args() -> argparse.Namespace:
+    load_dotenv()
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument("--username", default=os.environ.get("SLEEPER_USERNAME"),
                    help="Sleeper username (or set SLEEPER_USERNAME)")

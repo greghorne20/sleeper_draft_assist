@@ -45,6 +45,7 @@ from pathlib import Path
 
 from .board import market_adp
 from .client import SleeperClient, SleeperError
+from .env import load_dotenv
 from .past_draft import walk_back
 
 # Sleeper numbers scoring weeks 1-18; asking for a week that never happened
@@ -53,6 +54,7 @@ DEFAULT_WEEKS = 18
 
 
 def parse_args() -> argparse.Namespace:
+    load_dotenv()
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument("--league-id", default=os.environ.get("SLEEPER_LEAGUE_ID"),
                    help="This season's league (or set SLEEPER_LEAGUE_ID)")

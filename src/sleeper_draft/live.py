@@ -40,6 +40,7 @@ from threading import Event
 
 from .board import market_adp
 from .client import SleeperClient, SleeperError
+from .env import load_dotenv
 
 # Starting slots this league fills, and what FLEX accepts. Read from the league
 # config carried in board.json rather than hardcoded, but FLEX eligibility is a
@@ -70,6 +71,7 @@ def _env_int(name: str) -> int | None:
 
 
 def parse_args() -> argparse.Namespace:
+    load_dotenv()
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument("--draft-id", default=None,
                    help="Draft to poll. Default: draft_id from the board's league config.")

@@ -44,6 +44,7 @@ import unicodedata
 from pathlib import Path
 
 from .client import SleeperClient, SleeperError
+from .env import load_dotenv
 
 SKILL_POSITIONS = ("QB", "RB", "WR", "TE")
 
@@ -67,6 +68,7 @@ SCOUTING_FLAGS = ("risk", "riser", "faller", "value", "handcuff", "dead_zone")
 
 
 def parse_args() -> argparse.Namespace:
+    load_dotenv()
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument("--rankings", type=Path, default=Path("research/rankings_2026.json"),
                    help="Aggregate rankings JSON (default research/rankings_2026.json)")

@@ -24,11 +24,13 @@ import time
 from pathlib import Path
 
 from .client import SleeperClient, SleeperError
+from .env import load_dotenv
 
 MAX_CHAIN_HOPS = 30
 
 
 def parse_args() -> argparse.Namespace:
+    load_dotenv()
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument("--league-id", default=os.environ.get("SLEEPER_LEAGUE_ID"),
                    help="League to start from (or set SLEEPER_LEAGUE_ID)")

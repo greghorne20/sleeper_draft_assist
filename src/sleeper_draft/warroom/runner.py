@@ -65,6 +65,7 @@ from pathlib import Path
 from typing import Any, Callable
 
 from ..client import SleeperError
+from ..env import load_dotenv
 from ..live import load_json, team_state, write_atomic
 from . import brief as B
 from .agent import (
@@ -94,37 +95,8 @@ WATCH_INTERVAL_S = 2.0
 TERMINAL_STATUSES = ("complete", "completed")
 
 
-def load_env_file(path: Path) -> list[str]:
-    """Read KEY=VALUE lines into the environment. Returns the names it set.
-
-    Agent Framework does not read a .env itself, and `--model` wants to default
-    from one, so this runs before the arguments are parsed. Written by hand
-    rather than pulling python-dotenv: --dry-run has to work on a machine where
-    the optional extra was never installed, and this is ten lines.
-
-    Anything already exported wins, so a real environment variable is never
-    silently overridden by a stale file.
-    """
-    if not path.exists():
-        return []
-    names = []
-    for line in path.read_text().splitlines():
-        line = line.strip()
-        if not line or line.startswith("#") or "=" not in line:
-            continue
-        key, _, value = line.partition("=")
-        key = key.strip()
-        value = value.strip().strip('"').strip("'")
-        if key and key not in os.environ:
-            os.environ[key] = value
-            names.append(key)
-    return names
-
-
 def parse_args() -> argparse.Namespace:
-    loaded = load_env_file(Path(os.environ.get("SLEEPER_ENV_FILE", ".env")))
-    if loaded:
-        print(f"loaded {', '.join(sorted(loaded))} from .env", file=sys.stderr)
+    load_dotenv()
 
     p = argparse.ArgumentParser(description=__doc__,
                                 formatter_class=argparse.RawDescriptionHelpFormatter)
