@@ -123,6 +123,11 @@ is why `SleeperError` is the one exception type worth catching at the boundary.
   is written; `NAME_ALIASES` holds the source-vs-Sleeper spelling disagreements.
   `research/scouting_notes.json` is already keyed by `player_id` and merges straight on;
   an unknown id, an unknown flag, or a dangling `handcuff_for` is likewise a hard error.
+  The league block it writes is the league's **shape** and not its identity: no
+  `league_id`, `draft_id` or `league_name`, because the board is committed and
+  `league_id` is a lookup key into a public API that returns every manager's display
+  name. `sleeper-live` takes those from `SLEEPER_DRAFT_ID` / `SLEEPER_LEAGUE_ID`
+  instead, and a test pins it.
   It also derives the pick-order table from the snake + reversal rule and **verifies it
   against the rankings file's own pick map** — 3RR is undocumented, so two derivations
   must agree.

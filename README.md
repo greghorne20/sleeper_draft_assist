@@ -131,7 +131,9 @@ The board is baked into the image and the entrypoint refuses to start without
 run and commit. No players dump ships or is fetched at runtime: ~1.2MB of runtime input, no
 cold start.
 
-Config is env vars on the service: `SLEEPER_SLOT`, `SLEEPER_DRAFT_ID`, `POLL_INTERVAL`, and
+Config is env vars on the service: `SLEEPER_DRAFT_ID` (required — the committed board carries
+the league's shape but not its ids), `SLEEPER_LEAGUE_ID` (optional, and only used to name the
+twelve seats; without it they are numbered), `SLEEPER_SLOT`, `POLL_INTERVAL`, and
 `ANTHROPIC_API_KEY` (without it the entrypoint logs once and starts the poller alone). `PORT`
 and `HOST` come from the platform.
 
@@ -210,6 +212,12 @@ laptop.
 `config.yaml` and `draft/keepers.*` are gitignored: they name a real league and its twelve
 managers. `config.example.yaml` shows the shape, and `sleeper-discover` regenerates the real
 one.
+
+The committed board carries the league's **shape** — teams, rounds, reversal round, roster slots,
+scoring — and not its **identity**. `league_id` is a lookup key into a public unauthenticated
+API, where `GET /league/<id>/users` returns every manager's display name, so a published
+`board.json` holding one would undo the rest of this. `sleeper-live` takes both ids from the
+environment instead: `SLEEPER_DRAFT_ID` is required, `SLEEPER_LEAGUE_ID` only names the seats.
 
 Everything except YAML emitting is standard library. PyYAML handles one trap: bare YAML 1.1
 reads the team abbreviation `NO` as boolean `false`, and PyYAML's resolver quotes it. There is
@@ -330,6 +338,10 @@ uv run sleeper-live --slot 12 --watch         # poll until the draft completes
 uv run sleeper-live --username <name> --watch --interval 5
 uv run sleeper-live --slot 12 --watch --serve     # + a live page in the browser
 ```
+
+The draft comes from `--draft-id` or `SLEEPER_DRAFT_ID`, and the seat names from `--league-id`
+or `SLEEPER_LEAGUE_ID` — the board carries neither. Without a league id the twelve rooms are
+numbered rather than named; without a draft id it exits 1 saying so.
 
 Polls `/draft/<id>/picks` and rewrites `draft/state/`. Everything but the picks comes from what
 `sleeper-board` built — `board.json` supplies rank, tier, ADP, flags and scouting per

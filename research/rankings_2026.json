@@ -35,8 +35,7 @@
   "method": "Each source converted to a rank, blended on the weights above, then adjusted for (a) this league's roster structure and (b) news that postdates one or more sources. A soft penalty is applied at half weight when a source omits a player rather than dropping the signal."
  },
  "league": {
-  "name": "12-team half-PPR - Season 21",
-  "league_id": "LEAGUE_ID",
+  "name": "12-team half-PPR, 3RR",
   "teams": 12,
   "rounds": 13,
   "total_picks": 156,

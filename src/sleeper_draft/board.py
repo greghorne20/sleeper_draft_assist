@@ -462,10 +462,11 @@ def load_league(path: Path) -> dict:
     if not isinstance(raw, dict):
         raise SleeperError(f"League config {path} must be a mapping, got {type(raw).__name__}")
     league = {}
+    # Deliberately the league's *shape* and not its identity. league_id is a key
+    # into a public unauthenticated API -- GET /league/<id>/users returns every
+    # manager's display name -- and this file is committed, so the ids come from
+    # the environment at run time instead. See sleeper-live's --league-id.
     for field in (
-        "league_name",
-        "league_id",
-        "draft_id",
         "season",
         "teams",
         "rounds",

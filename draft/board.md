@@ -1,4 +1,4 @@
-# Draft board — 12-team half-PPR - Season 22 (2026)
+# Draft board — league (2026)
 
 12 teams · 13 rounds · snake w/ round-3 reversal · starters QB/RB/RB/WR/WR/TE/FLEX · **no K, no DST**
 
@@ -277,7 +277,7 @@ Full research on a player: `research/players/` — the filename ends in their `i
 | 204 | TE24 | Darren Waller | CAR | 5 | 2505 | - | 209.5 | 200 | - | _no research note_ |
 | 205 | WR89 | DeMario Douglas | NE | 11 | 9501 | - | 214.0 | - | - | _no research note_ |
 | 206 | TE25 | A.J. Barner | SEA | 11 | 11603 | - | - | 196 | - |  |
-| 207 | QB26 | Michael Penix Jr. | ATL | 11 | 11559 | - | 212.2 | 199 | - | Sleeper: Questionable · _no research note_ |
+| 207 | QB26 | Michael Penix Jr. | ATL | 11 | 11559 | - | 212.2 | 199 | - | **⚠ Sleeper: Out** · _no research note_ |
 | 208 | TE26 | Oronde Gadsden II | LAC | 7 | 12493 | - | 192.8 | 168 | - | **⚠ Buried on the depth chart - avoid** · Working behind both Charlie Kolar and David Njoku in preseason. Route share was already thin; now looks undraftable in a 13-round league. |
 
 ## Positional index
@@ -299,12 +299,12 @@ Positional rank → overall rank, for reading the runs and the cliffs.
 | Player | Pos | Tm | id | search_rank |
 |---|---|---|---|---:|
 | James Conner | RB | ARI | 4137 | 92 |
-| Fernando Mendoza | QB | LV | 13269 | 98 |
-| Cam Ward | QB | TEN | 12522 | 104 |
+| Fernando Mendoza | QB | LV | 13269 | 104 |
+| Cam Ward | QB | TEN | 12522 | 112 |
 | Trey Benson | RB | ARI | 11589 | 114 |
 | Jayden Higgins | WR | HOU | 12484 | 126 |
-| Bryce Young | QB | CAR | 9228 | 130 |
 | David Njoku | TE | LAC | 4033 | 131 |
+| Bryce Young | QB | CAR | 9228 | 133 |
 | Colby Parkinson | TE | LAR | 6865 | 136 |
 | Mason Taylor | TE | NYJ | 12498 | 138 |
 | Eli Stowers | TE | PHI | 13349 | 140 |

@@ -74,7 +74,15 @@ def parse_args() -> argparse.Namespace:
     load_dotenv()
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument(
-        "--draft-id", default=None, help="Draft to poll. Default: draft_id from the board's league config."
+        "--draft-id",
+        default=os.environ.get("SLEEPER_DRAFT_ID"),
+        help="Draft to poll (or set SLEEPER_DRAFT_ID).",
+    )
+    p.add_argument(
+        "--league-id",
+        default=os.environ.get("SLEEPER_LEAGUE_ID"),
+        help="League the draft belongs to (or set SLEEPER_LEAGUE_ID). Only used to name the "
+        "twelve seats; without it they are numbered.",
     )
     p.add_argument("--board", type=Path, default=Path("draft/board.json"))
     p.add_argument("--pick-order", type=Path, default=Path("draft/pick_order.json"))
@@ -921,17 +929,21 @@ def main() -> int:
     board = load_board(args.board)
     order = load_pick_order(args.pick_order)
 
+    # The board carries the league's shape, not its ids -- it is a committed file
+    # and league_id is a lookup key into a public API. Older boards still have
+    # them, so they remain a fallback.
     draft_id = args.draft_id or board["league"].get("draft_id")
     if not draft_id:
         raise SleeperError(
-            "No draft id: pass --draft-id, or regenerate the board from a config.yaml that "
-            "has one (`uv run sleeper-discover`)."
+            "No draft id: pass --draft-id or set SLEEPER_DRAFT_ID (.env works). "
+            "`uv run sleeper-discover` prints the one for your league."
         )
+    league_id = args.league_id or board["league"].get("league_id")
 
     client = SleeperClient(**({"cache_dir": args.cache_dir} if args.cache_dir else {}))
     draft = client.get_draft(str(draft_id))
     my_slot, provenance = resolve_slot(draft, order, args.slot, args.username, client)
-    team_names, naming = resolve_team_names(client, board["league"].get("league_id"), draft)
+    team_names, naming = resolve_team_names(client, league_id, draft)
     provisional = "PROVISIONAL" in naming
     print(f"draft {draft_id} ({draft.get('status')}) · my slot: {provenance} · {naming}", file=sys.stderr)
 

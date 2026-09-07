@@ -347,3 +347,16 @@ def test_board_md_carries_the_rankings_provenance(
     source = json.loads((out / "board.json").read_text())["source"]
     assert source["sources"][0]["name"] == "Test ADP"
     assert source["draft_mechanics"] == "round 3 repeats round 2"
+
+
+def test_the_board_carries_the_leagues_shape_but_not_its_identity(league_config):
+    """board.json is committed and published. league_id is a lookup key into a
+    public unauthenticated API -- GET /league/<id>/users returns every manager's
+    display name -- so the ids come from the environment at run time instead."""
+    league = board.load_league(league_config)
+
+    assert league["teams"] == 12
+    assert league["rounds"] == 13
+    assert league["reversal_round"] == 3
+    for identifying in ("league_id", "draft_id", "league_name"):
+        assert identifying not in league, f"{identifying} must not reach a committed board"

@@ -60,6 +60,9 @@ live_args=(sleeper-live --watch --serve --host "$HOST" --port "$PORT"
            --interval "$POLL_INTERVAL")
 [[ -n "${SLEEPER_SLOT:-}" ]] && live_args+=(--slot "$SLEEPER_SLOT")
 [[ -n "${SLEEPER_DRAFT_ID:-}" ]] && live_args+=(--draft-id "$SLEEPER_DRAFT_ID")
+# Only names the twelve seats. Without it the rooms are numbered, which is a
+# worse page but not a broken one -- the poller does not need it.
+[[ -n "${SLEEPER_LEAGUE_ID:-}" ]] && live_args+=(--league-id "$SLEEPER_LEAGUE_ID")
 
 supervise live "${live_args[@]}" &
 children+=($!)
